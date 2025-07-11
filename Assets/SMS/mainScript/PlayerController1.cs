@@ -15,7 +15,7 @@ public class PlayerController1 : MonoBehaviour
 
     public float mouseSensitivity = 100f; // ���콺 ����
     private float xRotation = 0f; // ���� �þ� ����
-
+    public static bool isMove = true;
     public string job;
     [PunRPC]
     public void SetJob(string _job)
@@ -41,7 +41,7 @@ public class PlayerController1 : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (pv.IsMine) 
+        if (pv.IsMine&&isMove) 
         {
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
@@ -55,6 +55,10 @@ public class PlayerController1 : MonoBehaviour
 
 
 
+            
+        }
+        if (pv.IsMine)
+        {
             float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
             float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
             // ���� �þ� ȸ�� (ī�޶�)
@@ -65,11 +69,14 @@ public class PlayerController1 : MonoBehaviour
             // �¿� �þ� ȸ�� (�÷��̾� ��ü�� �Բ�)
             transform.Rotate(Vector3.up * mouseX);
         }
-       
+        
+            
+        
+
     }
 
     private void Update()
-    {   if(pv.IsMine) 
+    {   if(pv.IsMine&&isMove) 
         {
             if (Input.GetButtonDown("Jump") && !isJump)
             {
