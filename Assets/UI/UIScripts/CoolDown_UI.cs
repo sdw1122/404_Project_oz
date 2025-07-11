@@ -51,12 +51,18 @@ public class CoolDown_UI : MonoBehaviour
         // 'M' 키로 스킬 1 사용 (테스트용)
         if (Input.GetKeyDown(KeyCode.M) && !isCooldown1)
         {
+            Color iconColor1 = skillIcon1.color;
+            iconColor1.a = 0.2f;
+            skillIcon1.color = iconColor1;
             StartCooldown1();
         }
 
         // 'N' 키로 스킬 2 사용 (테스트용)
         if (Input.GetKeyDown(KeyCode.N) && !isCooldown2)
         {
+            Color iconColor2 = skillIcon1.color;
+            iconColor2.a = 0.2f;
+            skillIcon1.color = iconColor2;
             StartCooldown2();
         }
 
@@ -74,6 +80,9 @@ public class CoolDown_UI : MonoBehaviour
             }
             else
             {
+                Color iconColor1 = skillIcon1.color;
+                iconColor1.a = 1f;
+                skillIcon1.color = iconColor1;
                 EndCooldown1();
             }
         }
@@ -92,6 +101,9 @@ public class CoolDown_UI : MonoBehaviour
             }
             else
             {
+                Color iconColor2 = skillIcon1.color;
+                iconColor2.a = 1f;
+                skillIcon1.color = iconColor2;
                 EndCooldown2();
             }
         }
@@ -107,7 +119,7 @@ public class CoolDown_UI : MonoBehaviour
         {
             cooldownText1.gameObject.SetActive(true);
         }
-
+        
         Color overlayColor = cooldownOverlay1.color;
         overlayColor.a = 128f / 255f;
         cooldownOverlay1.color = overlayColor;
