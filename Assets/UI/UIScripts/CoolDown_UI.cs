@@ -1,97 +1,174 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // TextMeshPro¸¦ »ç¿ëÇÏ·Á¸é Ãß°¡
+using TMPro;
 
 public class CoolDown_UI : MonoBehaviour
 {
-    [Header("UI Elements")]
-    public Image skillIcon;         // ½ºÅ³ ¾ÆÀÌÄÜ (Åõ¸íµµ Á¶Àý¿ë)
-    public Image cooldownOverlay;   // ÄðÅ¸ÀÓÀÌ Âû ¶§ µ¹¾Æ°¡´Â ÀÌ¹ÌÁö
-    public TextMeshProUGUI cooldownText;    // ³²Àº ½Ã°£ ÅØ½ºÆ®
+    [Header("--- ìŠ¤í‚¬ 1 ---")]
+    public Image skillIcon1;
+    public Image cooldownOverlay1;
+    public TextMeshProUGUI cooldownText1;
+    public float cooldownTime1 = 5.0f;
 
-    [Header("Cooldown Settings")]
-    public float cooldownTime = 5.0f; // ½ºÅ³ ÄðÅ¸ÀÓ (ÃÊ)
+    private float remainingCooldown1;
+    private bool isCooldown1 = false;
 
-    private float remainingCooldown;  // ³²Àº ÄðÅ¸ÀÓÀ» ÃßÀû
-    private bool isCooldown = false;  // ÄðÅ¸ÀÓ »óÅÂ ÇÃ·¡±×
+    [Header("--- ìŠ¤í‚¬ 2 ---")]
+    public Image skillIcon2;
+    public Image cooldownOverlay2;
+    public TextMeshProUGUI cooldownText2;
+    public float cooldownTime2 = 8.0f;
+
+    private float remainingCooldown2;
+    private bool isCooldown2 = false;
+
 
     void Start()
     {
-        // Ã³À½¿¡´Â ÄðÅ¸ÀÓÀÌ ¾Æ´Ï¹Ç·Î ÅØ½ºÆ®¸¦ ºñÈ°¼ºÈ­
-        if (cooldownText != null)
+        // ìŠ¤í‚¬ 1 UI ì´ˆê¸°í™”
+        if (cooldownText1 != null)
         {
-            cooldownText.gameObject.SetActive(false);
+            cooldownText1.gameObject.SetActive(false);
         }
-        // ÄðÅ¸ÀÓ ¿À¹ö·¹ÀÌµµ ºñÈ°¼ºÈ­
-        cooldownOverlay.fillAmount = 0;
+        cooldownOverlay1.fillAmount = 1;
+        Color startIconColor1 = skillIcon1.color;
+        startIconColor1.a = 1f;
+        skillIcon1.color = startIconColor1;
+
+        // ìŠ¤í‚¬ 2 UI ì´ˆê¸°í™”
+        if (cooldownText2 != null)
+        {
+            cooldownText2.gameObject.SetActive(false);
+        }
+        cooldownOverlay2.fillAmount = 1;
+        Color startIconColor2 = skillIcon2.color;
+        startIconColor2.a = 1f;
+        skillIcon2.color = startIconColor2;
     }
 
     void Update()
     {
-        // QÅ°¸¦ ´©¸£¸é ÄðÅ¸ÀÓ ½ÃÀÛ (Å×½ºÆ®¿ë)
-        if (Input.GetKeyDown(KeyCode.M) && !isCooldown)
+        // 'M' í‚¤ë¡œ ìŠ¤í‚¬ 1 ì‚¬ìš© (í…ŒìŠ¤íŠ¸ìš©)
+        if (Input.GetKeyDown(KeyCode.M) && !isCooldown1)
         {
-            StartCooldown();
+            Color iconColor1 = skillIcon1.color;
+            iconColor1.a = 0.2f;
+            skillIcon1.color = iconColor1;
+            StartCooldown1();
         }
 
-        // ÄðÅ¸ÀÓÀÌ ÁøÇà ÁßÀÏ ¶§¸¸ ·ÎÁ÷ ½ÇÇà
-        if (isCooldown)
+        // 'N' í‚¤ë¡œ ìŠ¤í‚¬ 2 ì‚¬ìš© (í…ŒìŠ¤íŠ¸ìš©)
+        if (Input.GetKeyDown(KeyCode.N) && !isCooldown2)
         {
-            remainingCooldown -= Time.deltaTime;
+            Color iconColor2 = skillIcon1.color;
+            iconColor2.a = 0.2f;
+            skillIcon1.color = iconColor2;
+            StartCooldown2();
+        }
 
-            if (remainingCooldown > 0)
+        // ìŠ¤í‚¬ 1 ì¿¨íƒ€ìž„ ì²˜ë¦¬
+        if (isCooldown1)
+        {
+            remainingCooldown1 -= Time.deltaTime;
+            if (remainingCooldown1 > 0)
             {
-                // ÄðÅ¸ÀÓ UI ¾÷µ¥ÀÌÆ®
-                cooldownOverlay.fillAmount = 1.0f - (remainingCooldown / cooldownTime);
-                if (cooldownText != null)
+                cooldownOverlay1.fillAmount = 1.0f - (remainingCooldown1 / cooldownTime1);
+                if (cooldownText1 != null)
                 {
-                    cooldownText.text = remainingCooldown.ToString("F1"); // ¼Ò¼öÁ¡ ÇÑ ÀÚ¸®±îÁö Ç¥½Ã
+                    cooldownText1.text = remainingCooldown1.ToString("F1");
                 }
             }
             else
             {
-                // ÄðÅ¸ÀÓ Á¾·á
-                EndCooldown();
+                Color iconColor1 = skillIcon1.color;
+                iconColor1.a = 1f;
+                skillIcon1.color = iconColor1;
+                EndCooldown1();
+            }
+        }
+
+        // ìŠ¤í‚¬ 2 ì¿¨íƒ€ìž„ ì²˜ë¦¬
+        if (isCooldown2)
+        {
+            remainingCooldown2 -= Time.deltaTime;
+            if (remainingCooldown2 > 0)
+            {
+                cooldownOverlay2.fillAmount = 1.0f - (remainingCooldown2 / cooldownTime2);
+                if (cooldownText2 != null)
+                {
+                    cooldownText2.text = remainingCooldown2.ToString("F1");
+                }
+            }
+            else
+            {
+                Color iconColor2 = skillIcon1.color;
+                iconColor2.a = 1f;
+                skillIcon1.color = iconColor2;
+                EndCooldown2();
             }
         }
     }
 
-    public void StartCooldown()
+    // --- ìŠ¤í‚¬ 1 ì¿¨íƒ€ìž„ í•¨ìˆ˜ ---
+    public void StartCooldown1()
     {
-        isCooldown = true;
-        remainingCooldown = cooldownTime;
+        isCooldown1 = true;
+        remainingCooldown1 = cooldownTime1;
 
-        // ÄðÅ¸ÀÓ ÅØ½ºÆ® È°¼ºÈ­
-        if (cooldownText != null)
+        if (cooldownText1 != null)
         {
-            cooldownText.gameObject.SetActive(true);
+            cooldownText1.gameObject.SetActive(true);
         }
-
-        // ÄðÅ¸ÀÓ ¿À¹ö·¹ÀÌ ÀÌ¹ÌÁöÀÇ Åõ¸íµµ¸¦ 126À¸·Î ¼³Á¤
-        Color overlayColor = cooldownOverlay.color;
-        overlayColor.a = 126f / 255f; // ¾ËÆÄ°ªÀº 0~1 »çÀÌÀÌ¹Ç·Î 255·Î ³ª´®
-        cooldownOverlay.color = overlayColor;
-
-        cooldownOverlay.fillAmount = 0; // Ã¤¿ì±â¸¦ 0ºÎÅÍ ½ÃÀÛ
+        
+        Color overlayColor = cooldownOverlay1.color;
+        overlayColor.a = 128f / 255f;
+        cooldownOverlay1.color = overlayColor;
+        cooldownOverlay1.fillAmount = 0;
     }
 
-    private void EndCooldown()
+    private void EndCooldown1()
     {
-        isCooldown = false;
-        remainingCooldown = 0;
-
-        // ÄðÅ¸ÀÓ °ü·Ã UI ºñÈ°¼ºÈ­
-        cooldownOverlay.fillAmount = 0; // ¿À¹ö·¹ÀÌ ¼û±â±â
-        if (cooldownText != null)
+        isCooldown1 = false;
+        cooldownOverlay1.fillAmount = 1;
+        if (cooldownText1 != null)
         {
-            cooldownText.gameObject.SetActive(false);
+            cooldownText1.gameObject.SetActive(false);
+        }
+        Color iconColor = skillIcon1.color;
+        iconColor.a = 1f;
+        skillIcon1.color = iconColor;
+        Debug.Log("ìŠ¤í‚¬ 1 ì‚¬ìš© ê°€ëŠ¥!");
+    }
+
+
+    // --- ìŠ¤í‚¬ 2 ì¿¨íƒ€ìž„ í•¨ìˆ˜ ---
+    public void StartCooldown2()
+    {
+        isCooldown2 = true;
+        remainingCooldown2 = cooldownTime2;
+
+        if (cooldownText2 != null)
+        {
+            cooldownText2.gameObject.SetActive(true);
         }
 
-        // ½ºÅ³ ¾ÆÀÌÄÜÀ» ¿ÏÀüÈ÷ ¼±¸íÇÏ°Ô (Åõ¸íµµ 255)
-        Color iconColor = skillIcon.color;
-        iconColor.a = 1f; // ¾ËÆÄ°ª 1 = 255
-        skillIcon.color = iconColor;
+        Color overlayColor = cooldownOverlay2.color;
+        overlayColor.a = 128f / 255f;
+        cooldownOverlay2.color = overlayColor;
+        cooldownOverlay2.fillAmount = 0;
+    }
 
-        Debug.Log("½ºÅ³ »ç¿ë °¡´É!");
+    private void EndCooldown2()
+    {
+        isCooldown2 = false;
+        cooldownOverlay2.fillAmount = 1;
+        if (cooldownText2 != null)
+        {
+            cooldownText2.gameObject.SetActive(false);
+        }
+        Color iconColor = skillIcon2.color;
+        iconColor.a = 1f;
+        skillIcon2.color = iconColor;
+        Debug.Log("ìŠ¤í‚¬ 2 ì‚¬ìš© ê°€ëŠ¥!");
     }
 }

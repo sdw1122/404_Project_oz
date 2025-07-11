@@ -3,17 +3,19 @@ using UnityEngine;
 
 public class Pen_Skill_1 : MonoBehaviour
 {
-    [Header("½ºÅ³ Á¤º¸")]
+    public GameObject PenPlayer;
+    Animator animator;
+    [Header("ìŠ¤í‚¬ ì •ë³´")]
     public string Skill_ID = "Pen_Skill_1";
-    public string Skill_Name = "´ë±Ã";
-    public string Skill_Description = "ÈûÀ» ¸ğ¾Æ °­·ÂÇÑ ¸¶¹ı È­»ìÀ» ¹ß»çÇÕ´Ï´Ù.";
+    public string Skill_Name = "ëŒ€ê¶";
+    public string Skill_Description = "í˜ì„ ëª¨ì•„ ê°•ë ¥í•œ ë§ˆë²• í™”ì‚´ì„ ë°œì‚¬í•©ë‹ˆë‹¤.";
     public string Skill_Type = "Charge";
     public static float ChargeDamage_1 = PenAttack.Damage * 2;
     public static float ChargeDamage_2 = PenAttack.Damage * 4;
     public static float ChargeDamage_3 = PenAttack.Damage * 8;
     public float Cooldown = 1.0f;
     public float Charge_Levels = 3.0f;
-    [Header("¼¼ºÎ Á¤º¸")]
+    [Header("ì„¸ë¶€ ì •ë³´")]
     public float charged_Pen_Speed = 10.0f;
     public float chargeTime = 0.0f;
     public float maxChargeTime = 3.0f;
@@ -24,19 +26,23 @@ public class Pen_Skill_1 : MonoBehaviour
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
+        animator = PenPlayer.GetComponent<Animator>();
     }
     private void Update()
     {
         if (!pv.IsMine) return;
         if (Input.GetKeyDown(KeyCode.R)&&Time.time-lastFireTime>Cooldown)
-        {
+        {   
+
             lastFireTime = Time.time;
             isCharging = true;
             chargeTime = 0.0f;
             PenAttack.isAttack = false;
             PlayerController1.isMove = false;
             Pen_Skill_2.isThrow = false;
-            // ÀÌÆåÆ®,»ç¿îµå ½ÃÀÛ
+            // ì´í™íŠ¸,ì‚¬ìš´ë“œ ì‹œì‘
+            
+            animator.SetBool("Charge",true);
         }
         if(isCharging)
         {
@@ -44,13 +50,14 @@ public class Pen_Skill_1 : MonoBehaviour
         }
         if(Input.GetKeyUp(KeyCode.R) && isCharging)
         {
+            animator.SetBool("Charge", false);
             isCharging = false;
            
 
             float chargeRatio = Mathf.Clamp01(chargeTime/maxChargeTime);
             
             int chargeLevel = GetChargeLevel(chargeRatio);
-
+            
             FireChargePen(chargeLevel);
             
         }
@@ -71,7 +78,7 @@ public class Pen_Skill_1 : MonoBehaviour
             _ => ChargeDamage_1
         };
         float speed = charged_Pen_Speed + 5f * chargeLevel;
-        // Ä«¸Ş¶ó ±âÁØ ¸¶¿ì½º ¹æÇâ °è»ê
+        // ì¹´ë©”ë¼ ê¸°ì¤€ ë§ˆìš°ìŠ¤ ë°©í–¥ ê³„ì‚°
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         Vector3 targetPoint;
@@ -84,7 +91,7 @@ public class Pen_Skill_1 : MonoBehaviour
         Vector3 rayOrigin = Camera.main.transform.position;
         Vector3 rayDir = Camera.main.transform.forward;
 
-        Vector3 spawnPos = rayOrigin + rayDir * 0.5f; // Ä«¸Ş¶ó ¾Õ 0.5m ÁöÁ¡
+        Vector3 spawnPos = rayOrigin + rayDir * 0.5f; // ì¹´ë©”ë¼ ì• 0.5m ì§€ì 
         Quaternion rotation = Quaternion.LookRotation(rayDir);
         rotation *= Quaternion.Euler(90, 0, 0);
         GameObject missile = PhotonNetwork.Instantiate("Pen_Charged_Missile", spawnPos, rotation);
@@ -92,11 +99,25 @@ public class Pen_Skill_1 : MonoBehaviour
         missile.GetComponent<ChargedPenMissile>().Initialize(damage);
         missile.GetComponent<Rigidbody>().linearVelocity = rayDir * speed;
 
+        animator.SetTrigger("ChargeAttack");
+        pv.RPC("RPC_TriggerChargeAttack", RpcTarget.Others);
         PenAttack.isAttack = true;
         PlayerController1.isMove = true;
         Pen_Skill_2.isThrow = true;
     }
-
+    [PunRPC]
+    void RPC_TriggerChargeAttack()
+    {
+        animator.SetTrigger("ChargeAttack");
+    }
+    void RPC_TriggerChargeStart()
+    {
+        animator.SetBool("Charge", true);
+    }
+    void RPC_TriggerChargeFinish()
+    {
+        animator.SetBool("Charge", false);
+    }
 
 
 
