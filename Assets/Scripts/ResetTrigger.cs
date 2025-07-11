@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class ResetTrigger : StateMachineBehaviour
 {
-    public string[] triggers; // Inspector¿¡¼­ ["TriggerA","TriggerB"] ÀÔ·Â
+    public string[] triggers; // Inspectorì—ì„œ ["TriggerA","TriggerB"] ì…ë ¥
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         foreach (var t in triggers)
+        {
             animator.ResetTrigger(t);
+        }
     }
 }
