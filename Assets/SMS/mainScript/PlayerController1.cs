@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerController1 : MonoBehaviour
 {
     [SerializeField] Camera playerCamera;
-    
+
 
     Rigidbody rigid;
     PhotonView pv;
@@ -26,13 +26,13 @@ public class PlayerController1 : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-        pv= GetComponent<PhotonView>();
-        
+        pv = GetComponent<PhotonView>();
+
     }
     private void Start()
     {
         if (!pv.IsMine) return;
-        if(playerCamera != null)
+        if (playerCamera != null)
         {
             playerCamera.gameObject.SetActive(true);
         }
@@ -84,27 +84,27 @@ public class PlayerController1 : MonoBehaviour
                 rigid.AddForce(new Vector3(0, JumpPower, 0), ForceMode.Impulse);
             }
         }
-       
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (pv.IsMine) 
+        if (pv.IsMine)
         {
             if (collision.gameObject.name == "Plane")
                 isJump = false;
         }
-       
+
     }
     [PunRPC]
     void SendMyDataToHost()
     {
         if (!pv.IsMine) return;
-        
+
         PlayerSaveData myData = new PlayerSaveData
         {
             userId = PhotonNetwork.LocalPlayer.UserId,
-            userJob=job,
+            userJob = job,
             position = transform.position,
             // ���߿� ������ ������ �߰�
         };
@@ -115,7 +115,7 @@ public class PlayerController1 : MonoBehaviour
         string json = JsonUtility.ToJson(myData);
         gmView.RPC("ReceivePlayerData", RpcTarget.MasterClient, json);
     }
-    
+
 
 
 }

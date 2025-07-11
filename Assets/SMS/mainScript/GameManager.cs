@@ -10,34 +10,34 @@ public class GameManager : MonoBehaviourPun
     {
         string userId = PhotonNetwork.LocalPlayer.UserId;
 
-        // ÀúÀåµÈ µ¥ÀÌÅÍ ·Îµå
+        // ì €ì¥ëœ ë°ì´í„° ë¡œë“œ
         savedData = SaveSystem.LoadPlayerData(userId);
 
         if (savedData != null)
         {
             spawnPos = savedData.position;
-            Debug.Log($"[GameManager] ÀúÀåµÈ À§Ä¡·Î ½ºÆù: {spawnPos}");
+            Debug.Log($"[GameManager] ì €ì¥ëœ ìœ„ì¹˜ë¡œ ìŠ¤í°: {spawnPos}");
         }
         else
         {
-            Debug.Log("[GameManager] ÀúÀåµÈ µ¥ÀÌÅÍ ¾øÀ½. ±âº» À§Ä¡ »ç¿ë");
+            Debug.Log("[GameManager] ì €ì¥ëœ ë°ì´í„° ì—†ìŒ. ê¸°ë³¸ ìœ„ì¹˜ ì‚¬ìš©");
         }
 
         InstantiatePlayer();
     }
 
-    // ÇÃ·¹ÀÌ¾î ÇÁ¸®ÆÕ »ı¼º
+    // í”Œë ˆì´ì–´ í”„ë¦¬íŒ¹ ìƒì„±
     void InstantiatePlayer()
     {
         string userId = PhotonNetwork.LocalPlayer.UserId;
 
         if (GameObject.Find(userId) != null)
         {
-            Debug.Log("[GameManager] ÀÌ¹Ì ÇÃ·¹ÀÌ¾î°¡ Á¸ÀçÇÕ´Ï´Ù!!");
+            Debug.Log("[GameManager] ì´ë¯¸ í”Œë ˆì´ì–´ê°€ ì¡´ì¬í•©ë‹ˆë‹¤!!");
             return;
         }
-        // job¿¡ µû¶ó ÇÁ¸®ÆÕ ¼±ÅÃ
-        string job = TempMemory.MySaveData != null ? TempMemory.MySaveData.userJob : "pen"; // ±âº»°ªÀº pen
+        // jobì— ë”°ë¼ í”„ë¦¬íŒ¹ ì„ íƒ
+        string job = TempMemory.MySaveData != null ? TempMemory.MySaveData.userJob : "pen"; // ê¸°ë³¸ê°’ì€ pen
         /*if (savedData != null)
         {
             job = savedData.userJob;
@@ -47,28 +47,28 @@ public class GameManager : MonoBehaviourPun
         switch (job)
         {
             case "pen":
-                prefabName = "PenPlayer"; 
+                prefabName = "PenPlayer";
                 break;
             case "eraser":
-                prefabName = "EraserPlayer"; 
+                prefabName = "EraserPlayer";
                 break;
             default:
-                prefabName = "Player"; // ¿¹ºñ ÇÁ¸®ÆÕ
+                prefabName = "Player"; // ì˜ˆë¹„ í”„ë¦¬íŒ¹
                 break;
         }
 
         GameObject player = PhotonNetwork.Instantiate(prefabName, spawnPos, Quaternion.identity);
         player.name = userId;
-        // º»ÀÎ °ÍÀÏ ¶§¸¸ job ¼¼ÆÃ
+        // ë³¸ì¸ ê²ƒì¼ ë•Œë§Œ job ì„¸íŒ…
         if (player.GetComponent<PhotonView>().IsMine)
         {
             player.GetComponent<PhotonView>().RPC("SetJob", RpcTarget.AllBuffered, job);
         }
-        Debug.Log($"[GameManager] Á÷¾÷ ÇÁ¸®ÆÕ »ı¼º ¿Ï·á: {prefabName}");
+        Debug.Log($"[GameManager] ì§ì—… í”„ë¦¬íŒ¹ ìƒì„± ì™„ë£Œ: {prefabName}");
     }
 
 
-    // µ¥ÀÌÅÍ ¹ŞÀ½
+    // ë°ì´í„° ë°›ìŒ
     [PunRPC]
     public void ReceivePlayerData(string json)
     {
@@ -77,6 +77,6 @@ public class GameManager : MonoBehaviourPun
         PlayerSaveData data = JsonUtility.FromJson<PlayerSaveData>(json);
         SaveSystem.SavePlayerData(data);
 
-        Debug.Log($"[GameManager] Player {data.userId} µ¥ÀÌÅÍ ÀúÀå ¿Ï·á: pos={data.position}");
+        Debug.Log($"[GameManager] Player {data.userId} ë°ì´í„° ì €ì¥ ì™„ë£Œ: pos={data.position}");
     }
 }

@@ -8,7 +8,7 @@ public class Hammer : MonoBehaviour
     Rigidbody rb;
     private PlayerController playerController;
 
-    public GameObject weapon;    
+    public GameObject weapon;
     public float damage = 40f;
 
     private bool isAttackButtonPressed = false;
@@ -50,7 +50,7 @@ public class Hammer : MonoBehaviour
             {
                 skill1Pressed = true;
             }
-            
+
         };
 
         // Skill1 해제(뗌)
