@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         if (!pv.IsMine) return;
         lookInput = value.Get<Vector2>();
     }
-
+    
     public void OnJump(InputValue value)
     {
         if (!pv.IsMine) return;
