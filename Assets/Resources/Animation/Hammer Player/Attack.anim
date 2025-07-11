@@ -19843,7 +19843,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.0666667
+    m_StopTime: 1.1666666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -38512,7 +38512,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.0666667
+  - time: 1.1666666
     functionName: UpperAniEnd
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 5b5b3d7de58a8264b8f2540cd4d149c3, type: 3}
