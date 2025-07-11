@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class Player1AniLayerCont : MonoBehaviour
+public class HammerPlayerAniLayerCont : MonoBehaviour
 {
     Animator animator;
     int upperLayerIndex;
