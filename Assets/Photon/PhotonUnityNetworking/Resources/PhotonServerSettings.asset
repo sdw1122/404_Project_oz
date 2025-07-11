@@ -45,6 +45,9 @@ MonoBehaviour:
   - SendMyDataToHost
   - SetJob
   - SetJobButtonVisibility
+  - RPC_TriggerPenAttack
+  - RPC_TriggerChargeAttack
+  - RPC_TriggerPenMove
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

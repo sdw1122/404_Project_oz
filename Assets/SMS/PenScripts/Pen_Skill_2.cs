@@ -3,15 +3,17 @@ using UnityEngine;
 
 public class Pen_Skill_2 : MonoBehaviour
 {
-    [Header("½ºÅ³ Á¤º¸")]
+    public GameObject PenPlayer;
+    Animator animator;
+    [Header("ìŠ¤í‚¬ ì •ë³´")]
     public string Skill_ID = "Pen_Skill_2";
-    public string Skill_Name = "À×Å© °¨¿Á";
-    public string Skill_Description = "ÁöÁ¤ÇÑ À§Ä¡¿¡ ÀûÀ» ¼Ó¹ÚÇÏ´Â ¸¶¹ıÁøÀ» »ı¼ºÇÕ´Ï´Ù.";
+    public string Skill_Name = "ì‰í¬ ê°ì˜¥";
+    public string Skill_Description = "ì§€ì •í•œ ìœ„ì¹˜ì— ì ì„ ì†ë°•í•˜ëŠ” ë§ˆë²•ì§„ì„ ìƒì„±í•©ë‹ˆë‹¤.";
     public string Skill_Type = "AreaOfEffect";
     public float Damage = PenAttack.Damage / 2;
     public float Cooldown = 1.0f;
     public float Charge_Levels = 1.0f;
-    [Header("¼¼ºÎ Á¤º¸")]
+    [Header("ì„¸ë¶€ ì •ë³´")]
     float lastFireTime;
     float throwForce=15.0f;
 
@@ -20,6 +22,7 @@ public class Pen_Skill_2 : MonoBehaviour
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
+        animator = PenPlayer.GetComponent<Animator>();
     }
     private void Update()
     {
@@ -39,9 +42,16 @@ public class Pen_Skill_2 : MonoBehaviour
         Vector3 spawnPos = Camera.main.transform.position + Camera.main.transform.forward * 0.5f;
         Quaternion rot = Quaternion.identity;
         GameObject obj = PhotonNetwork.Instantiate("Pen_Skill2_Projectile", spawnPos, rot);
+        animator.SetTrigger("Attack");
+        pv.RPC("RPC_TriggerPenAttack", RpcTarget.Others);
 
         Rigidbody rb = obj.GetComponent<Rigidbody>();
         Vector3 throwDir = Camera.main.transform.forward;
         rb.linearVelocity = throwDir * throwForce;
+    }
+    [PunRPC]
+    void RPC_TriggerPenAttack()
+    {
+        animator.SetTrigger("Attack");
     }
 }
