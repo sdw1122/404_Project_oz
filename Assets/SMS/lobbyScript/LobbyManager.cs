@@ -22,32 +22,33 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     string roomName;
     string joinName;
-    // ¸ŞÀÎ ½Å °¡¼­ Á÷¾÷ Á¤º¸ ÀúÀåÀ» À§ÇØ static
+    // ë©”ì¸ ì‹  ê°€ì„œ ì§ì—… ì •ë³´ ì €ì¥ì„ ìœ„í•´ static
     public static class TempMemory
     {
         public static PlayerSaveData MySaveData = new PlayerSaveData();
     }
     private Dictionary<int, GameObject> playerList = new Dictionary<int, GameObject>();
     public void Start()
-    {   lobbyView= GetComponent<PhotonView>();
-        // °´Ã¼ À¯Áö¸¦ À§ÇØ PlayerPrefs ¿¡ ·£´ıÇÑ UserId ÀúÀå, ÇÃ·¹ÀÌ¾î UserId¿¡µµ ÀúÀå
+    {
+        lobbyView = GetComponent<PhotonView>();
+        // ê°ì²´ ìœ ì§€ë¥¼ ìœ„í•´ PlayerPrefs ì— ëœë¤í•œ UserId ì €ì¥, í”Œë ˆì´ì–´ UserIdì—ë„ ì €ì¥
         if (string.IsNullOrEmpty(PlayerPrefs.GetString("UserId")))
         {
-            Debug.Log("±âÁ¸ ÇÃ·¹ÀÌ¾î ¾øÀ½!");
+            Debug.Log("ê¸°ì¡´ í”Œë ˆì´ì–´ ì—†ìŒ!");
             PlayerPrefs.SetString("UserId", $"User_{Random.Range(1, 300):000}");
 
         }
         PhotonNetwork.AuthValues = new AuthenticationValues();
         PhotonNetwork.AuthValues.UserId = PlayerPrefs.GetString("UserId");
 
-        Debug.Log("ÇÃ·¹ÀÌ¾î UserId : "+PlayerPrefs.GetString("UserId"));
+        Debug.Log("í”Œë ˆì´ì–´ UserId : " + PlayerPrefs.GetString("UserId"));
         Debug.Log(PhotonNetwork.AuthValues.UserId);
 
         PhotonNetwork.ConnectUsingSettings();
-        // ÇÃ·¹ÀÌ¾îµéÀÇ ¾À µ¿±âÈ­
+        // í”Œë ˆì´ì–´ë“¤ì˜ ì”¬ ë™ê¸°í™”
         PhotonNetwork.AutomaticallySyncScene = true;
         LoadingPanel.SetActive(true);
-        
+
         LobbyPanel.SetActive(false);
     }
     public override void OnConnectedToMaster()
@@ -65,28 +66,28 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         string userId = PhotonNetwork.LocalPlayer.UserId;
         PlayerSaveData savedData = SaveSystem.LoadPlayerData(userId);
 
-        // Á÷¾÷ Á¤º¸¸¦ TempMemory¿¡ ÀúÀå
+        // ì§ì—… ì •ë³´ë¥¼ TempMemoryì— ì €ì¥
         if (savedData != null && !string.IsNullOrEmpty(savedData.userJob))
         {
             TempMemory.MySaveData = savedData;
 
-            Debug.Log($"[LobbyManager] ÀÌÀü¿¡ ¼±ÅÃÇÑ Á÷¾÷: {savedData.userJob}");
+            Debug.Log($"[LobbyManager] ì´ì „ì— ì„ íƒí•œ ì§ì—…: {savedData.userJob}");
 
-            // CustomProperties¿¡ º¹¿ø
+            // CustomPropertiesì— ë³µì›
             ExitGames.Client.Photon.Hashtable jobProp = new ExitGames.Client.Photon.Hashtable();
             jobProp["userJob"] = savedData.userJob;
             PhotonNetwork.LocalPlayer.SetCustomProperties(jobProp);
         }
         else
         {
-            Debug.Log("[LobbyManager] ÀúÀåµÈ Á÷¾÷ ¾øÀ½. ¼±ÅÃ ÇÊ¿ä");
+            Debug.Log("[LobbyManager] ì €ì¥ëœ ì§ì—… ì—†ìŒ. ì„ íƒ í•„ìš”");
         }
 
-        // ¹öÆ° ÃÊ±âÈ­
+        // ë²„íŠ¼ ì´ˆê¸°í™”
         penButton.gameObject.SetActive(true);
         eraserButton.gameObject.SetActive(true);
 
-        // ³ª¿Í »ó´ë¹æÀÇ Á÷¾÷ »óÅÂ¸¦ ¹ÙÅÁÀ¸·Î ¹öÆ° ºñÈ°¼ºÈ­
+        // ë‚˜ì™€ ìƒëŒ€ë°©ì˜ ì§ì—… ìƒíƒœë¥¼ ë°”íƒ•ìœ¼ë¡œ ë²„íŠ¼ ë¹„í™œì„±í™”
         Player[] players = PhotonNetwork.PlayerList;
         foreach (Player p in players)
         {
@@ -114,15 +115,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         RoomOptions rm = new RoomOptions();
         rm.MaxPlayers = 2;
         rm.PublishUserId = true;
-       
+
         PhotonNetwork.CreateRoom(roomName, rm, TypedLobby.Default);
-        Debug.Log($"[LobbyManager] {roomName} »ı¼º ¿Ï·á");
+        Debug.Log($"[LobbyManager] {roomName} ìƒì„± ì™„ë£Œ");
         mainPanel.SetActive(false);
         LobbyPanel.SetActive(true);
     }
     public void Lobby_Join()
-    {   
-        
+    {
+
         PhotonNetwork.JoinRoom(joinName);
         mainPanel.SetActive(false);
         LobbyPanel.SetActive(true);
@@ -131,12 +132,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LeaveRoom();
     }
-    
+
     public void StartGame()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("MainScene"); // ¸ŞÀÎ ¾ÀÀ¸·Î ÀüÈ¯
+            PhotonNetwork.LoadLevel("MainScene"); // ë©”ì¸ ì”¬ìœ¼ë¡œ ì „í™˜
         }
 
     }
@@ -153,8 +154,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void UpdatePlayerList()
     {
         Player[] players = PhotonNetwork.PlayerList;
-        
-        // µÎ °³ ½½·Ô ÃÊ±âÈ­
+
+        // ë‘ ê°œ ìŠ¬ë¡¯ ì´ˆê¸°í™”
         p1Text.text = "";
         p2Text.text = "";
 
@@ -164,7 +165,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (players.Length > 1)
             p2Text.text = !string.IsNullOrEmpty(players[1].UserId) ? players[1].UserId : "Player 2";
     }
-    
+
     public void ChooseJob_Pen()
     {
         Hashtable props = new Hashtable();
@@ -172,10 +173,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         TempMemory.MySaveData.userJob = "pen";
         TempMemory.MySaveData.userId = PhotonNetwork.LocalPlayer.UserId;
         SaveSystem.SavePlayerData(TempMemory.MySaveData);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(props); // ¼­¹ö¿¡ ÀúÀå
-        penButton.gameObject.SetActive(false); // º»ÀÎ ¹öÆ° ºñÈ°¼ºÈ­
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props); // ì„œë²„ì— ì €ì¥
+        penButton.gameObject.SetActive(false); // ë³¸ì¸ ë²„íŠ¼ ë¹„í™œì„±í™”
         eraserButton.interactable = false;
-       
+
     }
 
     public void ChooseJob_Eraser()
@@ -187,7 +188,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         SaveSystem.SavePlayerData(TempMemory.MySaveData);
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         eraserButton.gameObject.SetActive(false);
-        penButton.interactable= false;
+        penButton.interactable = false;
     }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
@@ -196,7 +197,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             string chosenJob = changedProps["userJob"].ToString();
             Debug.Log($"{targetPlayer.UserId} chose {chosenJob}");
 
-            // ±× Á÷¾÷ ¹öÆ°À» ºñÈ°¼ºÈ­
+            // ê·¸ ì§ì—… ë²„íŠ¼ì„ ë¹„í™œì„±í™”
             if (chosenJob == "pen")
             {
                 penButton.interactable = false;

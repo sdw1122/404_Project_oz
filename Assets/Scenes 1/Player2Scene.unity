@@ -636,7 +636,7 @@ MonoBehaviour:
   interactRange: 3
   interactLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   interactionUI: {fileID: 285099818}
   newMaterial: {fileID: 2100000, guid: 4433ee97a1ca1414d964258f7d84b52e, type: 2}
 --- !u!1 &410087039
@@ -959,7 +959,7 @@ GameObject:
   - component: {fileID: 861035969}
   - component: {fileID: 861035968}
   - component: {fileID: 861035967}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
