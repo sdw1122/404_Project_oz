@@ -4,7 +4,9 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Plane
+  - Bullet
+  - Enemy
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -12,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Interact
   - 
   - 
   - 
