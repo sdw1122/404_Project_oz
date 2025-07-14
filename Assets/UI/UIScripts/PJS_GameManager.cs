@@ -1,17 +1,33 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // ¾ÀÀ» ´Ù½Ã ·ÎµåÇÏ±â À§ÇØ Ãß°¡
+using UnityEngine.SceneManagement;
+using System.Collections.Generic; // Listë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ ì¶”ê°€
+using System.Linq; // Linqë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ ì¶”ê°€
+
+// ì—¬ëŸ¬ ëŒ€í™” ë¬¶ìŒì„ ê´€ë¦¬í•˜ê¸° ìœ„í•œ ìƒˆë¡œìš´ í´ë˜ìŠ¤
+[System.Serializable]
+public class GameConversation
+{
+    public string conversationName; // ëŒ€í™”ë¥¼ êµ¬ë¶„í•  ê³ ìœ  ì´ë¦„ (ì˜ˆ: "ì¸íŠ¸ë¡œ", "ìƒí™©2")
+    public DialogueLine[] dialogueLines; // ì‹¤ì œ ëŒ€í™” ë‚´ìš©
+}
+
 
 public class PJS_GameManager : MonoBehaviour
 {
-    // ´Ù¸¥ ½ºÅ©¸³Æ®¿¡¼­ GameManager¸¦ ½±°Ô ÂüÁ¶ÇÒ ¼ö ÀÖµµ·Ï ¸¸µå´Â ½Ì±ÛÅæ ÆĞÅÏ
+    // --- ê¸°ì¡´ ë³€ìˆ˜ë“¤ ---
     public static PJS_GameManager Instance;
+    public static bool IsGamePaused = false;
+    public HealthBar healthBar;
+    public SharedLives sharedLives;
+    public CoolDown_UI coolDown_UI;
 
-    public HealthBar healthBar;       // Inspector¿¡¼­ HealthBar ½ºÅ©¸³Æ® ¿¬°á
-    public SharedLives sharedLives;   // Inspector¿¡¼­ SharedLives ½ºÅ©¸³Æ® ¿¬°á
+    // --- ëŒ€í™” ê´€ë¦¬ìš© ë³€ìˆ˜ ì¶”ê°€ ---
+    [Header("ëŒ€í™” ëª©ë¡")]
+    public List<GameConversation> gameConversations;
+
 
     void Awake()
     {
-        // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º ¼³Á¤
         if (Instance == null)
         {
             Instance = this;
@@ -24,42 +40,78 @@ public class PJS_GameManager : MonoBehaviour
 
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
+        if (DialogueManager.Instance != null && !DialogueManager.Instance.dialoguePanel.activeSelf)
         {
-            // P Å°¸¦ ´­·¶À» ¶§ ÇÃ·¹ÀÌ¾îÀÇ Ã¼·ÂÀ» 10 °¨¼Ò½ÃÅ°´Â Å×½ºÆ®¿ë ÄÚµå
-            healthBar.TakeDamage(10);
+            // --- ê¸°ì¡´ í…ŒìŠ¤íŠ¸ ì½”ë“œ ---
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                healthBar.TakeDamage(10);
+            }
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                healthBar.ResetHealth();
+            }
+            // 'M' í‚¤ë¡œ ìŠ¤í‚¬ 1 ì‚¬ìš© (í…ŒìŠ¤íŠ¸ìš©)
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                coolDown_UI.StartCooldown1();
+            }
+
+            // 'N' í‚¤ë¡œ ìŠ¤í‚¬ 2 ì‚¬ìš© (í…ŒìŠ¤íŠ¸ìš©)
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                coolDown_UI.StartCooldown2();
+            }
+
+            // --- ìƒˆë¡œìš´ ëŒ€í™” í…ŒìŠ¤íŠ¸ ì½”ë“œ ---
+            // ìˆ«ì '1' í‚¤ë¥¼ ëˆ„ë¥´ë©´ "ì¸íŠ¸ë¡œ" ëŒ€í™” ì‹œì‘
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                TriggerDialogue("Dialogue1");
+            }
+
+            // ìˆ«ì '2' í‚¤ë¥¼ ëˆ„ë¥´ë©´ "ìƒí™©2" ëŒ€í™” ì‹œì‘
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                TriggerDialogue("Dialogue2");
+            }
         }
-        if (Input.GetKeyDown(KeyCode.H))
+    }
+
+    // ì´ë¦„ì„ ê¸°ë°˜ìœ¼ë¡œ ì›í•˜ëŠ” ëŒ€í™”ë¥¼ ì‹œì‘ì‹œí‚¤ëŠ” í•¨ìˆ˜
+    public void TriggerDialogue(string conversationName)
+    {
+        // ë¦¬ìŠ¤íŠ¸ì—ì„œ ì´ë¦„ì´ ì¼ì¹˜í•˜ëŠ” ëŒ€í™”ë¥¼ ì°¾ìŒ
+        GameConversation conversationToStart = gameConversations.FirstOrDefault(c => c.conversationName == conversationName);
+
+        if (conversationToStart != null)
         {
-            healthBar.ResetHealth();
+            // ì°¾ì•˜ë‹¤ë©´ DialogueManagerì— ëŒ€í™” ì‹œì‘ì„ ìš”ì²­
+            DialogueManager.Instance.StartDialogue(conversationToStart.dialogueLines);
+        }
+        else
+        {
+            Debug.LogWarning("'" + conversationName + "' ë¼ëŠ” ì´ë¦„ì˜ ëŒ€í™”ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
         }
     }
 
 
-    // ÇÃ·¹ÀÌ¾îÀÇ Ã¼·ÂÀÌ 0ÀÌ µÇ¾úÀ» ¶§ È£ÃâµÉ ÇÔ¼ö
+    // --- ê¸°ì¡´ í•¨ìˆ˜ë“¤ ---
     public void PlayerDied()
     {
-        // ¸ñ¼û(SharedLives)À» 1 °¨¼Ò½ÃÅ´
         sharedLives.LoseLife();
-
-        // ³²Àº ¸ñ¼ûÀÌ ÀÖ´ÂÁö È®ÀÎ
         if (sharedLives.score > 0)
         {
-            // ¸ñ¼ûÀÌ ³²¾ÆÀÖ´Ù¸é, Ã¼·ÂÀ» ´Ù½Ã Ã¤¿ò
             healthBar.ResetHealth();
         }
         else
         {
-            // ¸ñ¼ûÀÌ ¾ø´Ù¸é, °ÔÀÓ¿À¹ö Ã³¸®
             GameOver();
         }
     }
 
-    // °ÔÀÓ¿À¹ö Ã³¸® ÇÔ¼ö
     void GameOver()
     {
-        Debug.Log("°ÔÀÓ ¿À¹ö!");
-        // ¿©±â¿¡ °ÔÀÓ¿À¹ö UI¸¦ ¶ç¿ì°Å³ª, ÇöÀç ¾ÀÀ» ´Ù½Ã ½ÃÀÛÇÏ´Â µîÀÇ ·ÎÁ÷À» Ãß°¡ÇÒ ¼ö ÀÖ½À´Ï´Ù.
-        // ¿¹: SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("ê²Œì„ ì˜¤ë²„!");
     }
 }
