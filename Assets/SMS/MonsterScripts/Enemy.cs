@@ -104,19 +104,19 @@ public class Enemy : LivingEntity
     }
 
     // 데미지를 입었을 때 실행할 처리
-    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    public override void OnDamage(float damage)
     {
         // LivingEntity의 OnDamage()를 실행하여 데미지 적용
         if (!dead)
         {
-            hitEffect.transform.position = hitPoint;
-            hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
-            hitEffect.Play();
+            //hitEffect.transform.position = hitPoint;
+            //hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
+            //hitEffect.Play();
             enemyAudioPlayer.PlayOneShot(hitSound);
 
         }
         currentHealth = health;
-        base.OnDamage(damage, hitPoint, hitNormal);
+        base.OnDamage(damage);
     }
 
     // 사망 처리
@@ -148,7 +148,7 @@ public class Enemy : LivingEntity
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
                 Vector3 hitNormal = transform.position - other.transform.position;
                 Debug.Log("타겟이 공격 범위 이내에 들어옴.");
-                attackTarget.OnDamage(damage, hitPoint, hitNormal);
+                attackTarget.OnDamage(damage);
                 UpdateNearestTarget();
             }
         }

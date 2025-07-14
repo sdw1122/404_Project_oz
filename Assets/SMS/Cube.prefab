@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 559015041393802801}
   - component: {fileID: 8787489966555858223}
   - component: {fileID: 1451095722040620637}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,6 +152,7 @@ MonoBehaviour:
   hitEffect: {fileID: 0}
   deathSound: {fileID: 0}
   hitSound: {fileID: 0}
+  currentHealth: 0
   damage: 19
   timeBetAttack: 0.5
 --- !u!95 &1451095722040620637
