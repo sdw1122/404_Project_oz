@@ -726,7 +726,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   UI: {fileID: 637474382384693524, guid: 4f20c6d3883c56147a880f533198450a, type: 3}
-  newMaterial: {fileID: 2100000, guid: eef34d4006f7527488aeba0eb147325c, type: 2}
+  newMaterial:
+  - {fileID: 2100000, guid: 4433ee97a1ca1414d964258f7d84b52e, type: 2}
+  - {fileID: 2100000, guid: ee17504906ce8294fada8bac10018530, type: 2}
 --- !u!114 &4275858845070364290
 MonoBehaviour:
   m_ObjectHideFlags: 0
