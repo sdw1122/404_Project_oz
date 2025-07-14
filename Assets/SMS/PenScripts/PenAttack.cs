@@ -3,15 +3,17 @@ using UnityEngine;
 
 public class PenAttack : MonoBehaviour
 {
-    [Header("½ºÅ³ Á¤º¸")]
+    public GameObject PenPlayer;
+    Animator animator;
+    [Header("ìŠ¤í‚¬ ì •ë³´")]
     public string Skill_ID = "Pen_Attack";
-    public string Skill_Name="Ææ °ø°İ";
-    public string Skill_Description="ÆòÅ¸";
+    public string Skill_Name="íœ ê³µê²©";
+    public string Skill_Description="í‰íƒ€";
     public string Skill_Type = "Pyeongta";
     public static float Damage = 20.0f;
     public float Cooldown = 1.0f;
     public float Charge_Levels = 1.0f;
-    [Header("¼¼ºÎ Á¤º¸")]
+    [Header("ì„¸ë¶€ ì •ë³´")]
     public Transform firePoint;
     public float fireRate = 1.0f;
     public float MissileSpeed = 10.0f;
@@ -23,6 +25,7 @@ public class PenAttack : MonoBehaviour
     {
         pv = GetComponent<PhotonView>();
         Debug.Log("firePoint: " + firePoint);
+        animator=PenPlayer.GetComponent<Animator>();
     }
     private void Update()
     {
@@ -36,8 +39,9 @@ public class PenAttack : MonoBehaviour
         }
     }
     void Fire()
-    {
-        // Ä«¸Ş¶ó ±âÁØ ¸¶¿ì½º ¹æÇâ °è»ê
+    {   
+        
+        // ì¹´ë©”ë¼ ê¸°ì¤€ ë§ˆìš°ìŠ¤ ë°©í–¥ ê³„ì‚°
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         Vector3 targetPoint;
@@ -50,12 +54,19 @@ public class PenAttack : MonoBehaviour
         Vector3 rayOrigin = Camera.main.transform.position;
         Vector3 rayDir = Camera.main.transform.forward;
         
-        Vector3 spawnPos = rayOrigin + rayDir * 0.5f; // Ä«¸Ş¶ó ¾Õ 0.5m ÁöÁ¡
+        Vector3 spawnPos = rayOrigin + rayDir * 0.5f; // ì¹´ë©”ë¼ ì• 0.5m ì§€ì 
         Quaternion rotation = Quaternion.LookRotation(rayDir);
         rotation *= Quaternion.Euler(90, 0, 0);
         GameObject missile = PhotonNetwork.Instantiate("Pen_Attack_Missile", spawnPos, rotation);
         missile.GetComponent<Rigidbody>().linearVelocity = rayDir * MissileSpeed;
-    }
+        animator.SetTrigger("Attack");
 
+        pv.RPC("RPC_TriggerPenAttack", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_TriggerPenAttack()
+    {
+        animator.SetTrigger("Attack");
+    }
 
 }
