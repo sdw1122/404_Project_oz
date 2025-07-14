@@ -8,6 +8,8 @@ public class InteractiveController : MonoBehaviour
     public Camera playerCamera;         // 플레이어 카메라
     public float interactRange = 3f;    // 상호작용 거리
     public LayerMask interactLayer;     // 상호작용 오브젝트 레이어
+    public GameObject UI; //interact UI
+    private GameObject UIObject; //가져온 UI
     public Material newMaterial; // Inspector에서 할당
     
     private bool canInteract = false;
@@ -16,7 +18,8 @@ public class InteractiveController : MonoBehaviour
 
     void Awake()
     {
-        
+        UIObject = Instantiate(UI);
+        UIObject.SetActive(false);
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -42,13 +45,13 @@ public class InteractiveController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, interactRange, interactLayer))
         {
-            UIManager.Instance.interactionUI.SetActive(true);
+            UIObject.SetActive(true);
             canInteract = true;
             lastHit = hit;            
         }
         else
         {
-            UIManager.Instance.interactionUI.SetActive(false);
+            UIObject.SetActive(false);
         }
     }
 
@@ -69,12 +72,8 @@ public class InteractiveController : MonoBehaviour
         // isTrigger 활성화
         Collider col = lastHit.collider;
         GameObject hitObject = lastHit.collider.gameObject;
-        Rigidbody rb = hitObject.GetComponent<Rigidbody>();
-        if (col != null && rb != null)
-        {
-            col.isTrigger = true;
-            Destroy(rb);
-        }
+        Rigidbody rb = hitObject.GetComponent<Rigidbody>();      
+        col.isTrigger = true;
     }
 
     void Pen()
@@ -93,15 +92,8 @@ public class InteractiveController : MonoBehaviour
 
         // isTrigger 비활성화
         Collider col = lastHit.collider;
-        if (col != null)
-        {
-            col.isTrigger = false;
-        }
         GameObject hitObject = lastHit.collider.gameObject;
         Rigidbody rb = hitObject.GetComponent<Rigidbody>();
-        if (rb == null)
-        {
-            hitObject.GetComponent<Rigidbody>();
-        }
+        col.isTrigger = false;
     }
 }
