@@ -8,7 +8,7 @@ public class PenMissile : MonoBehaviour
     void Start()
     {
         m_Damage = PenAttack.Damage;
-        Debug.Log(m_Damage);
+        
         Destroy(gameObject,lifeTime);
     }
 
@@ -21,8 +21,19 @@ public class PenMissile : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log("¹Ì»çÀÏÀÌ Àû°ú Á¢ÃË");
-            Destroy(gameObject);
+            
+
+            LivingEntity attackTarget = other.GetComponent<LivingEntity>();
+            if (attackTarget != null)
+            {
+                Debug.Log($"ì ì—ê²Œ ë°ë¯¸ì§€ {m_Damage} ì…í˜");
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+                Vector3 hitNormal = transform.position - other.transform.position;
+                
+                attackTarget.OnDamage(m_Damage, hitPoint, hitNormal);
+                Destroy(gameObject);
+
+            }
         }
     }
     private void OnCollisionEnter(Collision collision)

@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 206917176}
   - component: {fileID: 206917175}
   - component: {fileID: 206917177}
-  - component: {fileID: 206917178}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -757,7 +756,7 @@ GameObject:
   - component: {fileID: 1540997607}
   m_Layer: 0
   m_Name: Plane (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1079,3 +1078,4 @@ SceneRoots:
   - {fileID: 1540997606}
   - {fileID: 1473201437}
   - {fileID: 286657217}
+  - {fileID: 846901414}

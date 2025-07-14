@@ -19,8 +19,17 @@ public class ChargedPenMissile : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log($"¹Ì»çÀÏÀÌ Àû°ú Á¢ÃË µ¥¹ÌÁö : {damage}");
-            Destroy(gameObject);
+            LivingEntity attackTarget = other.GetComponent<LivingEntity>();
+            if (attackTarget != null)
+            {
+                Debug.Log($"ì ì—ê²Œ ë°ë¯¸ì§€ {damage} ì…í˜");
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+                Vector3 hitNormal = transform.position - other.transform.position;
+
+                attackTarget.OnDamage(damage, hitPoint, hitNormal);
+                
+
+            }
         }
     }
 }

@@ -22,12 +22,13 @@ public class Pen_Skill_1 : MonoBehaviour
     public float maxChargeTime = 3.0f;
     bool isCharging = false;
     float lastFireTime;
-
+    PlayerController playerController;
     PhotonView pv;
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
         animator = PenPlayer.GetComponent<Animator>();
+        playerController = GetComponent<PlayerController>();
     }
 
     private void Update()
@@ -43,6 +44,7 @@ public class Pen_Skill_1 : MonoBehaviour
         if (!pv.IsMine) return;
         if (context.started && Time.time - lastFireTime > Cooldown)
         {
+            playerController.canMove = false;
             lastFireTime = Time.time;
             isCharging = true;
             chargeTime = 0.0f;
@@ -65,7 +67,7 @@ public class Pen_Skill_1 : MonoBehaviour
             int chargeLevel = GetChargeLevel(chargeRatio);
 
             FireChargePen(chargeLevel);
-
+            playerController.canMove = true;
         }
     }
 

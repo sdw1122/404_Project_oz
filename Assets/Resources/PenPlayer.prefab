@@ -793,6 +793,7 @@ MonoBehaviour:
   Damage: 10
   Cooldown: 1
   Charge_Levels: 1
+  tik: 0.5
 --- !u!114 &4311164335986358036
 MonoBehaviour:
   m_ObjectHideFlags: 0
