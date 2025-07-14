@@ -1,5 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PenAttack : MonoBehaviour
 {
@@ -29,15 +30,19 @@ public class PenAttack : MonoBehaviour
     }
     private void Update()
     {
+
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
         if (!pv.IsMine) return;
-
-        if(Input.GetMouseButton(0)&&Time.time-lastFireTime>fireRate&&isAttack)
-        {   
-
-            lastFireTime=Time.time;
-            Fire();    
+        if (Time.time-lastFireTime>fireRate && isAttack)
+        {
+            lastFireTime = Time.time;
+            Fire();
         }
     }
+
     void Fire()
     {   
         

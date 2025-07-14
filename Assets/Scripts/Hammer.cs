@@ -2,11 +2,14 @@ using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun;
 
 public class Hammer : MonoBehaviour
 {
     Rigidbody rb;
     private PlayerController playerController;
+    Animator animator;
+    PhotonView pv;
 
     public GameObject weapon;
     public float damage = 40f;
@@ -15,6 +18,7 @@ public class Hammer : MonoBehaviour
     private float attackDelay = 1.0f;
     private float attackTimer = 0f;
     private float delayTimer = 0f;
+    private int attackLayerIndex;
 
     public float skill1;
     private float skill1HoldTime = 0;
@@ -33,92 +37,90 @@ public class Hammer : MonoBehaviour
     private bool canAttack = true;         // 공격 가능 여부
 
     private void Awake()
-    {
+    {        
         rb = GetComponent<Rigidbody>();
         playerController = GetComponent<PlayerController>();
         controls = new InputSystem_Actions();
         skill1CoolDown = 10f;
+        animator = GetComponent<Animator>();
+        pv = GetComponent<PhotonView>();
+        attackLayerIndex = animator.GetLayerIndex("Upper Body");
+    }
 
-        //기본 공격
-        controls.Player.Attack.started += ctx => isAttackButtonPressed = true;
-        controls.Player.Attack.canceled += ctx => isAttackButtonPressed = false;
-
-        // Skill1 시작(누름)
-        controls.Player.Skill1.started += ctx =>
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (!pv.IsMine) return;
+        if (context.started)
         {
-            if (skill1CoolDown >= 10f && playerController.IsGrounded())
-            {
-                skill1Pressed = true;
-            }
+            isAttackButtonPressed = true;            
+        }
+        if (context.canceled)
+            isAttackButtonPressed = false;
+    }
 
-        };
-
-        // Skill1 해제(뗌)
-        controls.Player.Skill1.canceled += ctx =>
+    public void OnSkill1(InputAction.CallbackContext context)
+    {
+        if (context.started && skill1CoolDown >= 10f && playerController.IsGrounded())
         {
-            if (skill1Pressed && playerController.IsGrounded())
+            skill1Pressed = true;
+        }
+        if (context.canceled && skill1Pressed && playerController.IsGrounded())
+        {
+            skill1Pressed = false;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            skill1 = 0;
+            if (skill1HoldTime < 1)
             {
-                skill1Pressed = false;
-                rb.constraints = RigidbodyConstraints.FreezeRotation;
                 skill1 = 0;
-                if (skill1HoldTime < 1)
-                {
-                    skill1 = 0;
-                    skill1CoolDown = 5f;
-                    skill1HoldTime = 0f;
-                    Debug.Log("0charging");
-                    return;
-                }
-                else if (skill1HoldTime < 2)
-                {
-                    Debug.Log("1charging");
-                    skill1 = damage * 2;
-                }
-                else if (skill1HoldTime < 3)
-                {
-                    Debug.Log("2charging");
-                    skill1 = damage * 4;
-                }
-                else
-                {
-                    Debug.Log("3charging");
-                    skill1 = damage * 8;
-                }
-
-                Skill1(skill1);
-                skill1HoldTime = 0;
+                skill1CoolDown = 5f;
+                skill1HoldTime = 0f;
+                Debug.Log("0charging");
+                animator.SetTrigger("CancelCharge");
+                return;
             }
-
-        };
-
-        // Skill2 (Q키)
-        controls.Player.Skill2.performed += ctx =>
-        {
-            if (skill2CoolDownTimer >= skill2CoolDown && playerController.IsGrounded())
+            else if (skill1HoldTime < 2)
             {
-                Debug.Log("UsingSkill2");
-                Skill2();
-                skill2CoolDownTimer = 0f; // 쿨타임 시작
+                Debug.Log("1charging");
+                skill1 = damage * 2;
             }
-        };
+            else if (skill1HoldTime < 3)
+            {
+                Debug.Log("2charging");
+                skill1 = damage * 4;
+            }
+            else
+            {
+                Debug.Log("3charging");
+                skill1 = damage * 8;
+            }
+            Skill1(skill1);
+            skill1HoldTime = 0;
+        }
     }
 
-    void OnEnable()
+    public void OnSkill2(InputAction.CallbackContext context)
     {
-        controls.Enable();
+        if (context.performed && skill2CoolDownTimer >= skill2CoolDown && playerController.IsGrounded())
+        {
+            Debug.Log("UsingSkill2");
+            animator.SetTrigger("Big Attack");
+            Skill2();
+            skill2CoolDownTimer = 0f;
+        }
     }
 
-    void OnDisable()
-    {
-        controls.Disable();
-    }
     void Update()
     {
         if (skill1Pressed)
         {
             skill1HoldTime += Time.deltaTime;
-            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY
-                | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+            playerController.canMove = false;
+            playerController.ResetMoveInput();
+            animator.SetTrigger("Charge");
+        }
+        else
+        {
+            playerController.canMove = true;
         }
 
         if (skill1CoolDown != 10f)
@@ -158,7 +160,7 @@ public class Hammer : MonoBehaviour
             timeSinceLastAttack += Time.deltaTime;
     }
 
-    private void Attack()
+    public void Attack()
     {
         if (!canAttack || !playerController.IsGrounded())
             return;
@@ -167,10 +169,9 @@ public class Hammer : MonoBehaviour
         if (timeSinceLastAttack >= 2f)
             attackStep = 1;
 
-        // 애니메이션 필요
-        //isAttacking = true;
-        //attackTimer = 0f;
-        //canAttack = false;
+        // 애니메이션 필요        
+        animator.SetLayerWeight(attackLayerIndex, 1f);
+        animator.SetTrigger("Attack");        
 
         // 데미지 즉시 적용
         DealDamageInSwing();
@@ -180,6 +181,11 @@ public class Hammer : MonoBehaviour
 
         // 타이머 초기화
         timeSinceLastAttack = 0f;
+    }
+
+    public void UpperAniEnd()
+    {
+        animator.SetLayerWeight(attackLayerIndex, 0.01f); // 기본값으로 복귀
     }
 
     void Skill1(float damage)
@@ -206,6 +212,7 @@ public class Hammer : MonoBehaviour
             //}
             Debug.Log("맞음");
         }
+        animator.SetTrigger("Charge Attack");
         skill1CoolDown = 0;
     }
 
