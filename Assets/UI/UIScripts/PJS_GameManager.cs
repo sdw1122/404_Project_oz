@@ -1,27 +1,28 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic; // List를 사용하기 위해 추가
-using System.Linq; // Linq를 사용하기 위해 추가
+using System.Collections.Generic;
+using System.Linq;
+using Photon.Pun; // Photon.Pun 네임스페이스 추가
 
-// 여러 대화 묶음을 관리하기 위한 새로운 클래스
+// 여러 대화 묶음을 관리하기 위한 클래스
 [System.Serializable]
 public class GameConversation
 {
-    public string conversationName; // 대화를 구분할 고유 이름 (예: "인트로", "상황2")
+    public string conversationName; // 대화를 구분할 고유 이름 (예: "Dialogue1")
     public DialogueLine[] dialogueLines; // 실제 대화 내용
 }
 
-
-public class PJS_GameManager : MonoBehaviour
+// MonoBehaviour를 MonoBehaviourPunCallbacks로 변경
+public class PJS_GameManager : MonoBehaviourPunCallbacks
 {
-    // --- 기존 변수들 ---
     public static PJS_GameManager Instance;
-    public static bool IsGamePaused = false;
+    public static bool IsGamePaused = false; // 이 변수는 이제 Time.timeScale로 대체됩니다.
+
+    [Header("UI 및 게임 상태")]
     public HealthBar healthBar;
     public SharedLives sharedLives;
     public CoolDown_UI coolDown_UI;
 
-    // --- 대화 관리용 변수 추가 ---
     [Header("대화 목록")]
     public List<GameConversation> gameConversations;
 
@@ -40,37 +41,16 @@ public class PJS_GameManager : MonoBehaviour
 
     public void Update()
     {
-        if (DialogueManager.Instance != null && !DialogueManager.Instance.dialoguePanel.activeSelf)
+        // 아래 테스트 코드는 마스터 클라이언트에서만 실행되도록 하는 것이 좋습니다.
+        if (PhotonNetwork.IsMasterClient)
         {
-            // --- 기존 테스트 코드 ---
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                healthBar.TakeDamage(10);
-            }
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                healthBar.ResetHealth();
-            }
-            // 'M' 키로 스킬 1 사용 (테스트용)
-            if (Input.GetKeyDown(KeyCode.M))
-            {
-                coolDown_UI.StartCooldown1();
-            }
-
-            // 'N' 키로 스킬 2 사용 (테스트용)
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                coolDown_UI.StartCooldown2();
-            }
-
-            // --- 새로운 대화 테스트 코드 ---
-            // 숫자 '1' 키를 누르면 "인트로" 대화 시작
+            // 숫자 '1' 키를 누르면 "Dialogue1" 대화 시작
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 TriggerDialogue("Dialogue1");
             }
 
-            // 숫자 '2' 키를 누르면 "상황2" 대화 시작
+            // 숫자 '2' 키를 누르면 "Dialogue2" 대화 시작
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 TriggerDialogue("Dialogue2");
@@ -81,31 +61,42 @@ public class PJS_GameManager : MonoBehaviour
     // 이름을 기반으로 원하는 대화를 시작시키는 함수
     public void TriggerDialogue(string conversationName)
     {
-        // 리스트에서 이름이 일치하는 대화를 찾음
-        GameConversation conversationToStart = gameConversations.FirstOrDefault(c => c.conversationName == conversationName);
-
-        if (conversationToStart != null)
+        if (DialogueManager.Instance != null && DialogueManager.Instance.photonView != null)
         {
-            // 찾았다면 DialogueManager에 대화 시작을 요청
-            DialogueManager.Instance.StartDialogue(conversationToStart.dialogueLines);
+            // DialogueManager의 RPC를 호출하여 모든 클라이언트에서 대화 시작
+            DialogueManager.Instance.photonView.RPC("StartDialogue_RPC", RpcTarget.All, conversationName);
         }
         else
         {
-            Debug.LogWarning("'" + conversationName + "' 라는 이름의 대화를 찾을 수 없습니다!");
+            Debug.LogError("DialogueManager 또는 PhotonView를 찾을 수 없습니다!");
         }
     }
 
-
-    // --- 기존 함수들 ---
-    public void PlayerDied()
+    // HealthBar에서 호출했던 PlayerDied 함수를 RPC로 변경
+    [PunRPC]
+    public void PlayerDied_RPC()
     {
-        sharedLives.LoseLife();
+        // 공유 목숨 차감 로직은 마스터 클라이언트만 처리하여 중복 실행을 방지
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 모든 클라이언트의 LoseLife_RPC 함수를 호출하여 목숨 UI를 동기화
+            photonView.RPC("LoseLife_RPC", RpcTarget.All);
+        }
+
+        // 체력 리셋은 각자 로컬에서 처리 (죽은 플레이어 부활)
         if (sharedLives.score > 0)
         {
             healthBar.ResetHealth();
         }
-        else
+    }
+
+    [PunRPC]
+    public void LoseLife_RPC()
+    {
+        sharedLives.LoseLife(); // SharedLives의 UI 업데이트 함수 호출
+        if (sharedLives.score <= 0)
         {
+            // 게임 오버는 모든 클라이언트에서 동일하게 처리
             GameOver();
         }
     }
@@ -113,5 +104,7 @@ public class PJS_GameManager : MonoBehaviour
     void GameOver()
     {
         Debug.Log("게임 오버!");
+        // 여기에 게임 오버 관련 로직 추가 (예: 결과창 표시, 레벨 재시작 등)
+        // Time.timeScale = 0f; // 필요하다면 여기서 게임을 멈출 수 있습니다.
     }
 }
