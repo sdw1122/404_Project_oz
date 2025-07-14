@@ -127,34 +127,28 @@ public class DialogueManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        // 대화창이 활성화된 상태에서 마스터 클라이언트만 입력을 받음
+        // 마스터 클라이언트가 클릭하면, '진행' 신호만 보낸다.
         if (PhotonNetwork.IsMasterClient && dialoguePanel.activeSelf && Input.GetMouseButtonDown(0))
         {
-            if (isTyping)
-            {
-                // 타이핑 중이면 -> 모든 클라이언트에게 타이핑을 스킵하라고 명령
-                photonView.RPC("SkipTyping_RPC", RpcTarget.All);
-            }
-            else
-            {
-                // 타이핑이 끝났으면 -> 모든 클라이언트에게 다음 줄을 표시하라고 명령
-                photonView.RPC("SyncDisplayNextLine", RpcTarget.All);
-            }
+            // 더 이상 isTyping을 확인하지 않고, 새로운 RPC 하나만 호출
+            photonView.RPC("AdvanceDialogue_RPC", RpcTarget.All);
         }
     }
     [PunRPC]
-    void SkipTyping_RPC()
+    void AdvanceDialogue_RPC()
     {
-        // 모든 클라이언트에서 타이핑 코루틴을 멈추고 전체 텍스트를 즉시 표시
-        isTyping = false;
-        StopAllCoroutines();
-        dialogueText.text = currentFullSentence;
-    }
-
-    [PunRPC]
-    void SyncDisplayNextLine()
-    {
-        // isTyping 상태가 동기화 되었으므로, 이 함수는 항상 타이핑이 끝난 상태에서 호출됨
-        DisplayNextLine();
+        // 이 함수를 받은 모든 클라이언트는 각자 자신의 상태를 확인한다.
+        if (isTyping)
+        {
+            // 만약 내가 타이핑 중이었다면, 타이핑을 멈추고 문장을 완성한다.
+            isTyping = false;
+            StopAllCoroutines();
+            dialogueText.text = currentFullSentence;
+        }
+        else
+        {
+            // 만약 내가 타이핑 중이 아니었다면, 다음 대사를 표시한다.
+            DisplayNextLine();
+        }
     }
 }

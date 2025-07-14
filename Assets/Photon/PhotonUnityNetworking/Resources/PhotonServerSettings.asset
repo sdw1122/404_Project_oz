@@ -54,6 +54,7 @@ MonoBehaviour:
   - StartDialogue_RPC
   - SyncDisplayNextLine
   - SkipTyping_RPC
+  - AdvanceDialogue_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
