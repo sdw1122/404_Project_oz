@@ -56,6 +56,11 @@ public class PlayerController : MonoBehaviour
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        if (!pv.IsMine)
+        {
+            var input = GetComponent<PlayerInput>();
+            if (input != null) input.enabled = false;
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)

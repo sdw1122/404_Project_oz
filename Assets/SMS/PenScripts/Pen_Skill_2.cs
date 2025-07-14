@@ -1,5 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Pen_Skill_2 : MonoBehaviour
 {
@@ -26,15 +27,20 @@ public class Pen_Skill_2 : MonoBehaviour
     }
     private void Update()
     {
-        if (pv.IsMine && isThrow) 
+
+        
+    }
+
+    public void OnSkill2(InputAction.CallbackContext context)
+    {
+        if (pv.IsMine && isThrow)
         {
-            if (Input.GetKeyDown(KeyCode.Q) && Time.time - lastFireTime > Cooldown)
+            if (context.started && Time.time - lastFireTime > Cooldown)
             {
                 lastFireTime = Time.time;
                 ThrowProjectile();
             }
         }
-        
     }
 
     void ThrowProjectile()
@@ -43,15 +49,9 @@ public class Pen_Skill_2 : MonoBehaviour
         Quaternion rot = Quaternion.identity;
         GameObject obj = PhotonNetwork.Instantiate("Pen_Skill2_Projectile", spawnPos, rot);
         animator.SetTrigger("Attack");
-        pv.RPC("RPC_TriggerPenAttack", RpcTarget.Others);
 
         Rigidbody rb = obj.GetComponent<Rigidbody>();
         Vector3 throwDir = Camera.main.transform.forward;
         rb.linearVelocity = throwDir * throwForce;
-    }
-    [PunRPC]
-    void RPC_TriggerPenAttack()
-    {
-        animator.SetTrigger("Attack");
     }
 }
