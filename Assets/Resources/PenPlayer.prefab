@@ -1,128 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1351404124814772698
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3629978474899195690}
-  - component: {fileID: 6432177782834837174}
-  - component: {fileID: 8567580972038600545}
-  - component: {fileID: 160659968934241172}
-  - component: {fileID: 4512324266996219150}
-  m_Layer: 0
-  m_Name: Pen
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &3629978474899195690
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1351404124814772698}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6949941865084275974}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6432177782834837174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1351404124814772698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 182f8313949382e468cf5de12bdbbe2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PenPlayer: {fileID: 7726197707958032316}
-  Skill_ID: Pen_Attack
-  Skill_Name: "\uD39C \uACF5\uACA9"
-  Skill_Description: "\uD3C9\uD0C0"
-  Skill_Type: Pyeongta
-  Cooldown: 1
-  Charge_Levels: 1
-  firePoint: {fileID: 0}
-  fireRate: 1
-  MissileSpeed: 10
---- !u!114 &8567580972038600545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1351404124814772698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1f0e1ea66146754e97fa20cd461fe71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PenPlayer: {fileID: 7726197707958032316}
-  Skill_ID: Pen_Skill_1
-  Skill_Name: "\uB300\uAD81"
-  Skill_Description: "\uD798\uC744 \uBAA8\uC544 \uAC15\uB825\uD55C \uB9C8\uBC95 \uD654\uC0B4\uC744
-    \uBC1C\uC0AC\uD569\uB2C8\uB2E4."
-  Skill_Type: Charge
-  Cooldown: 1
-  Charge_Levels: 3
-  charged_Pen_Speed: 10
-  chargeTime: 0
-  maxChargeTime: 3
---- !u!114 &160659968934241172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1351404124814772698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0628f7cf8a4b09742abc5a3b16107df9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PenPlayer: {fileID: 7726197707958032316}
-  Skill_ID: Pen_Skill_2
-  Skill_Name: "\uC789\uD06C \uAC10\uC625"
-  Skill_Description: "\uC9C0\uC815\uD55C \uC704\uCE58\uC5D0 \uC801\uC744 \uC18D\uBC15\uD558\uB294
-    \uB9C8\uBC95\uC9C4\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4."
-  Skill_Type: AreaOfEffect
-  Damage: 10
-  Cooldown: 1
-  Charge_Levels: 1
---- !u!114 &4512324266996219150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1351404124814772698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &2448529962881762671
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,9 +194,6 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3629978474899195690}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 781459084037806077}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
@@ -355,6 +229,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6365422999106650204}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5068663392690813216}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4275858845070364290}
@@ -472,13 +349,13 @@ MonoBehaviour:
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7726197707958032316}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 5068663392690813216}
+        m_TargetAssemblyTypeName: InteractiveController, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -836,6 +713,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08acbb0abbf36543bd484b892578cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5068663392690813216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7726197707958032316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5483d5330fcb04dbc6f96d63dffb0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 8139975940493471537}
+  interactRange: 3
+  interactLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  newMaterial: {fileID: 2100000, guid: eef34d4006f7527488aeba0eb147325c, type: 2}
 --- !u!114 &4275858845070364290
 MonoBehaviour:
   m_ObjectHideFlags: 0

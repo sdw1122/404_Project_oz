@@ -456,11 +456,35 @@ MonoBehaviour:
     m_ActionId: c3849143-f0f9-413a-8ea3-4565cf2e50c8
     m_ActionName: 'Player2/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 772061872629627403}
+        m_TargetAssemblyTypeName: InteractiveController, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 087d7a5e-f724-42a3-b3fd-df354de7af1a
     m_ActionName: 'Player2/Interact[/Keyboard/e]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2980653140969051414}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnSprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: acffbca6-a1b2-4cfc-a9c9-e1d6a18272f5
     m_ActionName: 'Player2/Sprint[/Keyboard/leftShift]'
   - m_PersistentCalls:
@@ -480,11 +504,35 @@ MonoBehaviour:
     m_ActionId: 9e507f21-bb62-4bba-9463-1e1f082a8ca4
     m_ActionName: 'Player2/Skill1[/Keyboard/r]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 838222234075561870}
+        m_TargetAssemblyTypeName: Hammer, Assembly-CSharp
+        m_MethodName: OnSkill2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: ae8bb9fe-2ccc-452a-ab41-d8663970d95b
     m_ActionName: 'Player2/Skill2[/Keyboard/q]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2980653140969051414}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 329fb762-d9a7-4750-bcda-4cdd0fdcd031
     m_ActionName: 'Player2/Jump[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
@@ -546,7 +594,6 @@ MonoBehaviour:
   interactLayer:
     serializedVersion: 2
     m_Bits: 64
-  interactionUI: {fileID: 0}
   newMaterial: {fileID: 2100000, guid: 4433ee97a1ca1414d964258f7d84b52e, type: 2}
 --- !u!114 &4226276362303419168
 MonoBehaviour:
