@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!pv.IsMine) return;
         moveInput = value.Get<Vector2>();
+        
     }
 
     public void OnLook(InputValue value)

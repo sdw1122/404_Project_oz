@@ -10,7 +10,7 @@ public class Skill2Projectile : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Plane"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             Vector3 pos = transform.position;
             Debug.Log("plane");
