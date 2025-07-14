@@ -1,5 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Pen_Skill_1 : MonoBehaviour
 {
@@ -28,12 +29,20 @@ public class Pen_Skill_1 : MonoBehaviour
         pv = GetComponent<PhotonView>();
         animator = PenPlayer.GetComponent<Animator>();
     }
+
     private void Update()
     {
-        if (!pv.IsMine) return;
-        if (Input.GetKeyDown(KeyCode.R)&&Time.time-lastFireTime>Cooldown)
-        {   
+        if (isCharging)
+        {
+            chargeTime += Time.deltaTime;
+        }
+    }
 
+    public void OnSkill1(InputAction.CallbackContext context)
+    {
+        if (!pv.IsMine) return;
+        if (context.started && Time.time - lastFireTime > Cooldown)
+        {
             lastFireTime = Time.time;
             isCharging = true;
             chargeTime = 0.0f;
@@ -41,27 +50,25 @@ public class Pen_Skill_1 : MonoBehaviour
             PlayerController1.isMove = false;
             Pen_Skill_2.isThrow = false;
             // 이펙트,사운드 시작
-            
-            animator.SetBool("Charge",true);
+
+            animator.SetBool("Charge", true);
         }
-        if(isCharging)
-        {
-            chargeTime += Time.deltaTime;
-        }
-        if(Input.GetKeyUp(KeyCode.R) && isCharging)
+
+        if (context.canceled && isCharging)
         {
             animator.SetBool("Charge", false);
             isCharging = false;
-           
 
-            float chargeRatio = Mathf.Clamp01(chargeTime/maxChargeTime);
-            
+
+            float chargeRatio = Mathf.Clamp01(chargeTime / maxChargeTime);
+
             int chargeLevel = GetChargeLevel(chargeRatio);
-            
+
             FireChargePen(chargeLevel);
-            
+
         }
     }
+
     int GetChargeLevel(float ratio)
     {
         if (ratio < 0.33f) return 1;

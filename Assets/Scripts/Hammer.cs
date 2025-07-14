@@ -2,12 +2,14 @@ using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun;
 
 public class Hammer : MonoBehaviour
 {
     Rigidbody rb;
     private PlayerController playerController;
     Animator animator;
+    PhotonView pv;
 
     public GameObject weapon;
     public float damage = 40f;
@@ -35,17 +37,19 @@ public class Hammer : MonoBehaviour
     private bool canAttack = true;         // 공격 가능 여부
 
     private void Awake()
-    {
+    {        
         rb = GetComponent<Rigidbody>();
         playerController = GetComponent<PlayerController>();
         controls = new InputSystem_Actions();
         skill1CoolDown = 10f;
         animator = GetComponent<Animator>();
+        pv = GetComponent<PhotonView>();
         attackLayerIndex = animator.GetLayerIndex("Upper Body");
     }
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        if (!pv.IsMine) return;
         if (context.started)
         {
             isAttackButtonPressed = true;            
@@ -71,6 +75,7 @@ public class Hammer : MonoBehaviour
                 skill1CoolDown = 5f;
                 skill1HoldTime = 0f;
                 Debug.Log("0charging");
+                animator.SetTrigger("CancelCharge");
                 return;
             }
             else if (skill1HoldTime < 2)
