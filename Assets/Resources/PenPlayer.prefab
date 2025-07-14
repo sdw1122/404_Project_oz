@@ -189,6 +189,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PenPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -241,6 +245,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7449891611214493504}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4311164335986358036}
   m_SourcePrefab: {fileID: 100100000, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
 --- !u!4 &6949941865084275974 stripped
 Transform:
@@ -786,3 +793,20 @@ MonoBehaviour:
   Damage: 10
   Cooldown: 1
   Charge_Levels: 1
+--- !u!114 &4311164335986358036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7726197707958032316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cfb8961d9d850e458131481f9c58dc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  deathClip: {fileID: 0}
+  hitClip: {fileID: 0}
+  itemPickupClip: {fileID: 0}
+  current_health: 0
