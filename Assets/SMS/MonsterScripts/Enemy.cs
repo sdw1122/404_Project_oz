@@ -130,10 +130,16 @@ public class Enemy : LivingEntity
         // LivingEntity의 OnDamage()를 실행하여 데미지 적용
         if (!dead)
         {
-            /*hitEffect.transform.position = hitPoint;
+            hitEffect.transform.position = hitPoint;
             hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
             hitEffect.Play();
-            enemyAudioPlayer.PlayOneShot(hitSound);*/
+            if (hitEffect == null)
+            {
+                Debug.LogWarning("hitEffect가 null입니다!");
+                return;
+            }
+            Debug.DrawRay(hitPoint, hitNormal, Color.red, 1f);
+            enemyAudioPlayer.PlayOneShot(hitSound);
             pv.RPC("RPC_FlashColor", RpcTarget.All);
         }
         currentHealth = health;
