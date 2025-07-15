@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class PenMissile : MonoBehaviour
 {
+    int layerMask;
     PhotonView pv;
     float m_Damage;
     public float lifeTime = 10.0f;
     private void Awake()
-    {
+    {   layerMask= LayerMask.NameToLayer("Enemy");
         pv = GetComponent<PhotonView>();
     }
     void Start()
@@ -24,7 +25,7 @@ public class PenMissile : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {   if (!pv.IsMine) return;
-        if (other.CompareTag("Enemy"))
+        if (other.gameObject.layer==layerMask)
         {
             
 

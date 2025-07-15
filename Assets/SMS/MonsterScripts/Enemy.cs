@@ -133,12 +133,6 @@ public class Enemy : LivingEntity
             hitEffect.transform.position = hitPoint;
             hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
             hitEffect.Play();
-            if (hitEffect == null)
-            {
-                Debug.LogWarning("hitEffect가 null입니다!");
-                return;
-            }
-            Debug.DrawRay(hitPoint, hitNormal, Color.red, 1f);
             enemyAudioPlayer.PlayOneShot(hitSound);
             pv.RPC("RPC_FlashColor", RpcTarget.All);
         }

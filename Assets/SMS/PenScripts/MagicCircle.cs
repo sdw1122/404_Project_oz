@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MagicCircle : MonoBehaviour
 {
+    int layerMask;
     public float duration = 5f;
     public float damage;
     public float tik;
@@ -12,6 +13,7 @@ public class MagicCircle : MonoBehaviour
     PhotonView pv;
     private void Awake()
     {
+        layerMask = LayerMask.NameToLayer("Enemy");
       pv=GetComponent<PhotonView>();  
     }
 
@@ -83,7 +85,7 @@ public class MagicCircle : MonoBehaviour
             {
                 foreach (var target in targetsInCircle)
                 {
-                    if (target != null && !target.dead && target.CompareTag("Enemy"))
+                    if (target != null && !target.dead && target.gameObject.layer==layerMask)
                     {
                         Debug.Log($"틱 데미지 {damage} 입힘: {target.name}");
                         Vector3 hitPoint = target.transform.position;

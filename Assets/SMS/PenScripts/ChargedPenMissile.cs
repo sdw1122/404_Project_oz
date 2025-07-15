@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ChargedPenMissile : MonoBehaviour
 {
+    int layerMask;
     float damage;
     int level;
     PhotonView pv;
@@ -10,6 +11,7 @@ public class ChargedPenMissile : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
+        layerMask = LayerMask.NameToLayer("Enemy");
         pv = GetComponent<PhotonView>();
     }
     void Start()
@@ -23,7 +25,7 @@ public class ChargedPenMissile : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {   if (!pv.IsMine) return;
-        if (other.CompareTag("Enemy"))
+        if (other.gameObject.layer == layerMask)
         {
             LivingEntity attackTarget = other.GetComponent<LivingEntity>();
             if (attackTarget != null)
