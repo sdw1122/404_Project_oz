@@ -60,8 +60,8 @@ public class Enemy : LivingEntity
         health = enemyData.Max_HP;
         damage = enemyData.Atk_Damage;
         navMeshAgent.speed = enemyData.speed;
-        originalColor = enemyData.skinColor;
-        enemyRenderer.material.color = enemyData.skinColor;
+        /*originalColor = enemyData.skinColor;
+        enemyRenderer.material.color = enemyData.skinColor;*/
     }
 
     private void Start()
@@ -83,7 +83,13 @@ public class Enemy : LivingEntity
     {
         // 살아 있는 동안 무한 루프
         while (!dead)
-        {
+        {   
+            // 추적 로직은 마스터에서만 실행시켜 둘의 Enemy의 움직임을 동기화함.
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                yield return new WaitForSeconds(0.25f);
+                continue;
+            }
             if (hasTarget)
             {
                 if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
@@ -200,12 +206,13 @@ public class Enemy : LivingEntity
     }
     private IEnumerator FlashColor()
     {
-       
+        Color origin = enemyRenderer.material.color;
+
         enemyRenderer.material.color = Color.red;
 
         yield return new WaitForSeconds(0.15f);
 
-        enemyRenderer.material.color = originalColor;
+        enemyRenderer.material.color = origin;
     }
     [PunRPC]
     private void RPC_FlashColor()

@@ -1,10 +1,15 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class PenMissile : MonoBehaviour
 {
- 
+    PhotonView pv;
     float m_Damage;
     public float lifeTime = 10.0f;
+    private void Awake()
+    {
+        pv = GetComponent<PhotonView>();
+    }
     void Start()
     {
         m_Damage = PenAttack.Damage;
@@ -18,7 +23,7 @@ public class PenMissile : MonoBehaviour
         
     }
     void OnTriggerEnter(Collider other)
-    {
+    {   if (!pv.IsMine) return;
         if (other.CompareTag("Enemy"))
         {
             

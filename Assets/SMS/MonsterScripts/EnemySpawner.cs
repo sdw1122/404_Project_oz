@@ -8,9 +8,13 @@ public class EnemySpawner : MonoBehaviour
     public Enemy enemyPrefab;
     public EnemyData[] enemyDatas;
     public Transform[] spawnPoints;
-
+    
     private List<Enemy> enemyList = new List<Enemy>();
     private int wave;
+    private void Awake()
+    {
+       
+    }
     private void Update()
     {
         if (!PhotonNetwork.IsMasterClient) return;
@@ -40,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
         // Enemy 컴포넌트 가져오기
         Enemy enemy = enemyObj.GetComponent<Enemy>();
 
-        // 적 세팅은 "마스터 클라이언트만" 수행
+        // 무슨적이 나올지는 "마스터 클라이언트만" 수행
         if (PhotonNetwork.IsMasterClient)
         {
             enemy.Setup(enemyData);
@@ -57,5 +61,5 @@ public class EnemySpawner : MonoBehaviour
 
 
     }
-
+    
 }

@@ -19,7 +19,7 @@ public class MagicCircle : MonoBehaviour
     {
         damage = p_damage;
         tik= p_tik;
-       
+        if (!pv.IsMine) return;
         StartCoroutine(DamageTickRoutine());
         Invoke(nameof(DestroySelf), duration);
        
@@ -63,6 +63,7 @@ public class MagicCircle : MonoBehaviour
     }*/
     private void OnDestroy()
     {
+        if (pv==null||!pv.IsMine) return;
         foreach (var target in targetsInCircle)
         {
             Enemy enemy = target as Enemy;
@@ -78,17 +79,21 @@ public class MagicCircle : MonoBehaviour
     {
         while (true)
         {
-            foreach (var target in targetsInCircle)
+            if (PhotonNetwork.IsMasterClient) // isMine을 해도 OnTrigger가 각자 실행되니 마스터만 데미지 관리.
             {
-                if (target != null && !target.dead&&target.CompareTag("Enemy"))
+                foreach (var target in targetsInCircle)
                 {
-                    Debug.Log($"틱 데미지 {damage} 입힘: {target.name}");
-                    Vector3 hitPoint = target.transform.position;
-                    Vector3 hitNormal = (target.transform.position - transform.position).normalized;
+                    if (target != null && !target.dead && target.CompareTag("Enemy"))
+                    {
+                        Debug.Log($"틱 데미지 {damage} 입힘: {target.name}");
+                        Vector3 hitPoint = target.transform.position;
+                        Vector3 hitNormal = (target.transform.position - transform.position).normalized;
 
-                    target.OnDamage(damage, hitPoint, hitNormal);
+                        target.OnDamage(damage, hitPoint, hitNormal);
+                    }
                 }
             }
+           
 
             yield return new WaitForSeconds(tik);
         }

@@ -80,6 +80,10 @@ public class PlayerHealth : LivingEntity
     void RPC_TriggerPenDie()
     {
         playerAnimator.ResetTrigger("Hit");
-        playerAnimator.SetTrigger("Die");
+        if (!dead) // 중복 방지
+        {
+            dead = true;
+            playerAnimator.SetTrigger("Die");
+        }
     }
 }

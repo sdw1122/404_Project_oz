@@ -1,14 +1,20 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class ChargedPenMissile : MonoBehaviour
 {
     float damage;
     int level;
-
+    PhotonView pv;
     public float lifeTime = 7.0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
+        pv = GetComponent<PhotonView>();
+    }
+    void Start()
+    {   
+
         Destroy(gameObject, lifeTime);
     }
     public void Initialize(float p_damage)
@@ -16,7 +22,7 @@ public class ChargedPenMissile : MonoBehaviour
         damage = p_damage;
     }
     private void OnTriggerEnter(Collider other)
-    {
+    {   if (!pv.IsMine) return;
         if (other.CompareTag("Enemy"))
         {
             LivingEntity attackTarget = other.GetComponent<LivingEntity>();

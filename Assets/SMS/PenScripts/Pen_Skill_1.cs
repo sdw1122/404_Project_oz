@@ -21,6 +21,7 @@ public class Pen_Skill_1 : MonoBehaviour
     public float chargeTime = 0.0f;
     public float maxChargeTime = 3.0f;
     bool isCharging = false;
+    bool isSkill1Pressed = false;
     float lastFireTime;
     PlayerController playerController;
     PhotonView pv;
@@ -33,6 +34,13 @@ public class Pen_Skill_1 : MonoBehaviour
 
     private void Update()
     {
+        if (!pv.IsMine) return;
+
+        if (isSkill1Pressed && !isCharging && Time.time - lastFireTime > Cooldown)
+        {
+            StartCharging();
+        }
+
         if (isCharging)
         {
             chargeTime += Time.deltaTime;
@@ -42,35 +50,58 @@ public class Pen_Skill_1 : MonoBehaviour
     public void OnSkill1(InputAction.CallbackContext context)
     {
         if (!pv.IsMine) return;
-        if (context.started && Time.time - lastFireTime > Cooldown)
-        {
-            playerController.canMove = false;
-            lastFireTime = Time.time;
-            isCharging = true;
-            chargeTime = 0.0f;
-            PenAttack.isAttack = false;
-            PlayerController1.isMove = false;
-            Pen_Skill_2.isThrow = false;
-            // 이펙트,사운드 시작
 
-            animator.SetBool("Charge", true);
+        if (context.started)
+        {
+            isSkill1Pressed = true;
         }
-
-        if (context.canceled && isCharging)
+        else if (context.canceled)
         {
-            animator.SetBool("Charge", false);
-            isCharging = false;
+            isSkill1Pressed = false;
 
-
-            float chargeRatio = Mathf.Clamp01(chargeTime / maxChargeTime);
-
-            int chargeLevel = GetChargeLevel(chargeRatio);
-
-            FireChargePen(chargeLevel);
-            playerController.canMove = true;
+            if (isCharging)
+            {
+                FinishChargingAndFire();
+            }
         }
     }
+    private void StartCharging()
+    {
+        isCharging = true;
+        chargeTime = 0f;
+        lastFireTime = Time.time;
 
+        playerController.canMove = false;
+        PenAttack.isAttack = false;
+        PlayerController1.isMove = false;
+        Pen_Skill_2.isThrow = false;
+
+        animator.SetBool("Charge", true);
+        pv.RPC("RPC_TriggerChargeStart", RpcTarget.Others);
+    }
+    private void FinishChargingAndFire()
+    {
+        isCharging = false;
+
+        animator.SetBool("Charge", false);
+        pv.RPC("RPC_TriggerChargeFinish", RpcTarget.Others);
+/*
+        if (chargeTime < 0.1f)
+        {
+            // 너무 짧은 클릭이면 무효
+            playerController.canMove = true;
+            return;
+        }*/
+
+        int chargeLevel = GetChargeLevel(chargeTime / maxChargeTime);
+        FireChargePen(chargeLevel);
+
+        // 상태 초기화
+        playerController.canMove = true;
+        PenAttack.isAttack = true;
+        PlayerController1.isMove = true;
+        Pen_Skill_2.isThrow = true;
+    }
     int GetChargeLevel(float ratio)
     {
         if (ratio < 0.33f) return 1;
@@ -119,10 +150,12 @@ public class Pen_Skill_1 : MonoBehaviour
     {
         animator.SetTrigger("ChargeAttack");
     }
+    [PunRPC]
     void RPC_TriggerChargeStart()
     {
         animator.SetBool("Charge", true);
     }
+    [PunRPC]
     void RPC_TriggerChargeFinish()
     {
         animator.SetBool("Charge", false);
