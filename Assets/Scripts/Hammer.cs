@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class Hammer : MonoBehaviour
 {
@@ -205,11 +206,11 @@ public class Hammer : MonoBehaviour
         foreach (var hit in hitColliders)
         {
             // 적에게 데미지 주기 (Enemy 스크립트에 TakeDamage 함수가 있다고 가정)
-            //Enemy enemy = hit.GetComponent<Enemy>();
-            //if (enemy != null)
-            //{
-            //    enemy.TakeDamage(attackDamage);
-            //}
+            Enemy enemy = hit.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.OnDamage(damage);
+            }
             Debug.Log("맞음");
         }
         animator.SetTrigger("Charge Attack");
@@ -235,12 +236,12 @@ public class Hammer : MonoBehaviour
 
             if (theta <= angle / 2f)
             {
-                // 4. 부채꼴 안에 들어온 적에게만 데미지
-                //Enemy enemy = hit.GetComponent<Enemy>();
-                //if (enemy != null)
-                //{
-                //    enemy.TakeDamage(attackDamage);
-                //}
+                //4.부채꼴 안에 들어온 적에게만 데미지
+                Enemy enemy = hit.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.OnDamage(attackDamage);
+                }
                 Debug.Log("Skill2 맞음");
             }
         }
@@ -248,19 +249,41 @@ public class Hammer : MonoBehaviour
 
     void DealDamageInSwing()
     {
-        // 해머 위치 기준 범위 감지(예시)
-        Vector3 swingCenter = weapon.transform.position + weapon.transform.forward * (weapon.transform.localScale.z / 2f);
-        Vector3 halfExtents = (weapon.transform.localScale / 2f) * 2f;
-        Quaternion orientation = weapon.transform.rotation;
+        // 플레이어 위치와 방향
+        Vector3 playerPos = transform.position;
+        Vector3 playerForward = transform.forward;
+        Vector3 playerRight = transform.right;
+        Vector3 playerUp = transform.up;
+
+        // 오프셋 (x: 오른쪽, y: 위, z: 전방)
+        Vector3 offset = new Vector3(0f, 1.1f, 1f); // 필요에 따라 값 조정
+
+        // 오프셋을 월드 좌표로 변환
+        Vector3 worldOffset = playerRight * offset.x + playerUp * offset.y + playerForward * offset.z;
+
+        // 박스 중심 좌표
+        Vector3 swingCenter = playerPos + worldOffset;
+
+        Vector3 halfExtents = new Vector3(0.4f, 1.1f, 0.13f); // 필요에 따라 값 조정
+        Quaternion orientation = transform.rotation;
         int layerMask = LayerMask.GetMask("Enemy");
 
         Collider[] hits = Physics.OverlapBox(swingCenter, halfExtents, orientation, layerMask);
         foreach (var hit in hits)
         {
-            //Enemy enemy = hit.GetComponent<Enemy>();
-            //if (enemy != null) enemy.TakeDamage(damage);
-            Debug.Log("기본 공격 적중");
+            if (hit.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                Debug.Log("기본 공격 적중: " + hit.gameObject.name);
+
+                // Enemy 스크립트 가져와서 데미지 주기
+                Enemy enemy = hit.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.OnDamage(damage); // damage는 원하는 값으로
+                }
+            }
         }
+
     }
 
 
@@ -317,16 +340,45 @@ public class Hammer : MonoBehaviour
 
         if (weapon != null)
         {
-            // 공격 범위 중심 계산 (해머 위치 + 오른쪽 방향 * 1.5)
-            Vector3 swingCenter = weapon.transform.position + weapon.transform.forward * (weapon.transform.localScale.z / 2f);
-            Vector3 halfExtents = weapon.transform.localScale / 2f;
-            Quaternion orientation = weapon.transform.rotation;
+            //Vector3 gizmo = transform.position; //플레이어 위치 가져오기
+            //Vector3 offset = new Vector3(0f, 1f, 1f); //x, y, z만큼 움직이기
+            //Vector3 gizmocentor = gizmo + offset;
 
-            Gizmos.color = new Color(1f, 0.8f, 0.2f, 0.4f); // 노란색 반투명
-            Matrix4x4 rotationMatrix = Matrix4x4.TRS(swingCenter, orientation, Vector3.one);
+            //Vector3 boxHalfExtents = new Vector3(1f, 0.6f, 0.1f); //x, y, z 크기
+
+            //Quaternion orientation = weapon.transform.rotation;
+
+            //Gizmos.color = new Color(1f, 0.8f, 0.2f, 0.4f);
+            //Matrix4x4 rotationMatrix = Matrix4x4.TRS(gizmo, orientation, Vector3.one);
+            //Gizmos.matrix = rotationMatrix;
+            //Gizmos.DrawCube(Vector3.zero, boxHalfExtents * 2);
+            //Gizmos.matrix = Matrix4x4.identity;
+
+            // 플레이어 위치와 방향
+            Vector3 playerPos = transform.position;
+            Vector3 playerForward = transform.forward;
+            Vector3 playerRight = transform.right;
+            Vector3 playerUp = transform.up;
+
+            // 오프셋 (x: 오른쪽, y: 위, z: 전방)
+            Vector3 offset = new Vector3(0f, 1f, 1f);
+
+            // 오프셋을 월드 좌표로 변환
+            Vector3 worldOffset = playerRight * offset.x + playerUp * offset.y + playerForward * offset.z;
+
+            // 박스 중심 좌표
+            Vector3 gizmoCenter = playerPos + worldOffset;
+
+            // 박스 크기와 회전
+            Vector3 boxHalfExtents = new Vector3(1f, 1f, 0.5f);
+            Quaternion orientation = transform.rotation;
+
+            // 기즈모 그리기
+            Gizmos.color = new Color(1f, 0.8f, 0.2f, 0.4f);
+            Matrix4x4 rotationMatrix = Matrix4x4.TRS(gizmoCenter, orientation, Vector3.one);
             Gizmos.matrix = rotationMatrix;
-            Gizmos.DrawCube(Vector3.zero, halfExtents * 4);
-            Gizmos.matrix = Matrix4x4.identity; // 매트릭스 원복
+            Gizmos.DrawCube(Vector3.zero, boxHalfExtents * 2);
+            Gizmos.matrix = Matrix4x4.identity;
         }
     }
 }
