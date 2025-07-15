@@ -61,6 +61,13 @@ MonoBehaviour:
   - RPC_TriggerPenDie
   - RPC_TriggerPenHit
   - StartDialogue_RPC
+  - RPC_TriggerEraserAttack
+  - RPC_TriggerEraserBigAttack
+  - RPC_TriggerEraserCancelCharge
+  - RPC_TriggerEraserCharge
+  - RPC_TriggerEraserChargeAttack
+  - RPC_TriggerJump
+  - RPC_EraserAttackweight
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -96,7 +96,14 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
             animator.SetTrigger("Jump");
+            pv.RPC("RPC_TriggerJump", RpcTarget.Others);
         }
+    }
+
+    [PunRPC]
+    void RPC_TriggerJump()
+    {
+        animator.SetTrigger("Jump");
     }
 
     public void OnSprint(InputAction.CallbackContext context)
