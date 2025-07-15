@@ -158,6 +158,7 @@ MonoBehaviour:
   currentHealth: 0
   damage: 19
   timeBetAttack: 0.5
+  isBinded: 0
 --- !u!95 &1451095722040620637
 Animator:
   serializedVersion: 7
