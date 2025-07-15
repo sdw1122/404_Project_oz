@@ -277,7 +277,7 @@ public class Hammer : MonoBehaviour
         // 박스 중심 좌표
         Vector3 swingCenter = playerPos + worldOffset;
 
-        Vector3 halfExtents = new Vector3(0.4f, 1.1f, 0.13f); // 필요에 따라 값 조정
+        Vector3 halfExtents = new Vector3(1f, 1f, 1f); // 필요에 따라 값 조정
         Quaternion orientation = transform.rotation;
         int layerMask = LayerMask.GetMask("Enemy");
 
@@ -386,7 +386,7 @@ public class Hammer : MonoBehaviour
             Vector3 gizmoCenter = playerPos + worldOffset;
 
             // 박스 크기와 회전
-            Vector3 boxHalfExtents = new Vector3(1f, 1f, 0.5f);
+            Vector3 boxHalfExtents = new Vector3(1f, 1f, 1f);
             Quaternion orientation = transform.rotation;
 
             // 기즈모 그리기
