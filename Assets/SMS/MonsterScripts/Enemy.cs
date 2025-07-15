@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,6 +23,10 @@ public class Enemy : LivingEntity
     public float timeBetAttack = 0.5f; // 공격 간격
     private float lastAttackTime; // 마지막 공격 시점
 
+    public bool isBinded=false;
+    private Color originalColor;
+
+    PhotonView pv;
     // 추적할 대상이 존재하는지 알려주는 프로퍼티
     private bool hasTarget
     {
@@ -44,7 +49,7 @@ public class Enemy : LivingEntity
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
         enemyAudioPlayer = GetComponent<AudioSource>();
-
+        pv=GetComponent<PhotonView>();
         enemyRenderer = GetComponentInChildren<Renderer>();
     }
 
@@ -55,7 +60,8 @@ public class Enemy : LivingEntity
         health = enemyData.Max_HP;
         damage = enemyData.Atk_Damage;
         navMeshAgent.speed = enemyData.speed;
-        enemyRenderer.material.color = enemyData.skinColor;
+        /*originalColor = enemyData.skinColor;
+        enemyRenderer.material.color = enemyData.skinColor;*/
     }
 
     private void Start()
@@ -66,6 +72,8 @@ public class Enemy : LivingEntity
 
     private void Update()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (isBinded) navMeshAgent.isStopped = true;
         // 추적 대상의 존재 여부에 따라 다른 애니메이션 재생
         /*enemyAnimator.SetBool("HasTarget", hasTarget);*/
     }
@@ -75,16 +83,29 @@ public class Enemy : LivingEntity
     {
         // 살아 있는 동안 무한 루프
         while (!dead)
-        {
+        {   
+            // 추적 로직은 마스터에서만 실행시켜 둘의 Enemy의 움직임을 동기화함.
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                yield return new WaitForSeconds(0.25f);
+                continue;
+            }
             if (hasTarget)
             {
-                navMeshAgent.isStopped = false;
+                if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+                {
+                    navMeshAgent.isStopped = false;
+                }
+                
                 navMeshAgent.SetDestination(targetEntity.transform.position);
 
             }
             else
             {
-                navMeshAgent.isStopped = true;
+                if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+                {
+                    navMeshAgent.isStopped = true;
+                }
 
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
                 for (int i = 0; i < colliders.Length; i++)
@@ -105,17 +126,18 @@ public class Enemy : LivingEntity
 
     // 데미지를 입었을 때 실행할 처리
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
-    {
+    {   
         // LivingEntity의 OnDamage()를 실행하여 데미지 적용
         if (!dead)
         {
-            hitEffect.transform.position = hitPoint;
+            /*hitEffect.transform.position = hitPoint;
             hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
             hitEffect.Play();
-            enemyAudioPlayer.PlayOneShot(hitSound);
-
+            enemyAudioPlayer.PlayOneShot(hitSound);*/
+            pv.RPC("RPC_FlashColor", RpcTarget.All);
         }
         currentHealth = health;
+     
         base.OnDamage(damage, hitPoint, hitNormal);
     }
 
@@ -130,7 +152,10 @@ public class Enemy : LivingEntity
         {
             enemyColliders[i].enabled = false;
         }
-        navMeshAgent.isStopped = true;
+        if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+        {
+            navMeshAgent.isStopped = true;
+        }
         navMeshAgent.enabled = false;
         enemyAnimator.SetTrigger("Die");
         enemyAudioPlayer.PlayOneShot(deathSound);
@@ -179,5 +204,21 @@ public class Enemy : LivingEntity
             targetEntity = closestEntity;
         }
     }
+    private IEnumerator FlashColor()
+    {
+        Color origin = enemyRenderer.material.color;
 
+        enemyRenderer.material.color = Color.red;
+
+        yield return new WaitForSeconds(0.15f);
+
+        enemyRenderer.material.color = origin;
+    }
+    [PunRPC]
+    private void RPC_FlashColor()
+    {
+        if (dead) return;
+        StopCoroutine("FlashColor"); // 중복 방지
+        StartCoroutine(FlashColor());
+    }
 }

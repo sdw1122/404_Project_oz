@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using UnityEngine;
 
@@ -54,7 +55,7 @@ public class LivingEntity : MonoBehaviour, IDamageable
             onDeath();
         }
 
-        // 사망 상태를 참으로 변경
         dead = true;
     }
+    
 }

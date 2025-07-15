@@ -48,13 +48,14 @@ MonoBehaviour:
   - RPC_TriggerPenAttack
   - RPC_TriggerChargeAttack
   - RPC_TriggerPenMove
-  - EndDialogue_RPC
-  - LoseLife_RPC
-  - PlayerDied_RPC
-  - StartDialogue_RPC
-  - SyncDisplayNextLine
-  - SkipTyping_RPC
-  - AdvanceDialogue_RPC
+  - RPC_TriggerPenDie
+  - RPC_TriggerPenHit
+  - RPC_FlashColor
+  - RPC_SetupEnemy
+  - RPC_NotifyDeath
+  - RPC_TriggerChargeFinish
+  - RPC_TriggerChargeStart
+  - RPC_TriggerPlayerJump
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
