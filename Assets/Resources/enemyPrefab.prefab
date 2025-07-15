@@ -15,8 +15,10 @@ GameObject:
   - component: {fileID: 559015041393802801}
   - component: {fileID: 8787489966555858223}
   - component: {fileID: 1451095722040620637}
+  - component: {fileID: -6560972140168879621}
+  - component: {fileID: -4550226053062016565}
   m_Layer: 8
-  m_Name: Cube
+  m_Name: enemyPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,7 +157,6 @@ MonoBehaviour:
   currentHealth: 0
   damage: 19
   timeBetAttack: 0.5
-  isBinded: 0
 --- !u!95 &1451095722040620637
 Animator:
   serializedVersion: 7

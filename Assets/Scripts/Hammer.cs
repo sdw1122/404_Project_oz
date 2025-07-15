@@ -203,15 +203,24 @@ public class Hammer : MonoBehaviour
         // 박스 범위 내의 "Enemy"레이어만 감지
         Collider[] hitColliders = Physics.OverlapBox(boxCenter, boxHalfExtents, boxOrientation, layerMask);
 
+        Vector3 center = transform.position + transform.forward * 1.5f;
+
         foreach (var hit in hitColliders)
         {
-            // 적에게 데미지 주기 (Enemy 스크립트에 TakeDamage 함수가 있다고 가정)
-            Enemy enemy = hit.GetComponent<Enemy>();
-            if (enemy != null)
+            if (hit.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                enemy.OnDamage(damage);
+                // 적의 Collider에서 가장 가까운 점(=공격 중심에서 적까지의 ClosestPoint)
+                Vector3 hitPoint = hit.ClosestPoint(center);
+                // 공격 방향(=적 표면의 법선 벡터)
+                Vector3 hitNormal = (hitPoint - center).normalized;
+
+                Enemy enemy = hit.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.OnDamage(damage, hitPoint, hitNormal);
+                    Debug.Log("Attack맞음");
+                }
             }
-            Debug.Log("맞음");
         }
         animator.SetTrigger("Charge Attack");
         skill1CoolDown = 0;
@@ -240,7 +249,11 @@ public class Hammer : MonoBehaviour
                 Enemy enemy = hit.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.OnDamage(attackDamage);
+                    // 피격 위치와 방향 계산
+                    Vector3 hitPoint = hit.ClosestPoint(transform.position);
+                    Vector3 hitNormal = (hitPoint - transform.position).normalized;
+
+                    enemy.OnDamage(attackDamage, hitPoint, hitNormal);
                 }
                 Debug.Log("Skill2 맞음");
             }
@@ -279,11 +292,14 @@ public class Hammer : MonoBehaviour
                 Enemy enemy = hit.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.OnDamage(damage); // damage는 원하는 값으로
+                    // 피격 위치와 방향 계산
+                    Vector3 hitPoint = hit.ClosestPoint(transform.position);
+                    Vector3 hitNormal = (hitPoint - transform.position).normalized;
+
+                    enemy.OnDamage(damage, hitPoint, hitNormal); // damage는 원하는 값으로
                 }
             }
         }
-
     }
 
 

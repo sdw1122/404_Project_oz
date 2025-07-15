@@ -40,7 +40,7 @@ public class PlayerHealth : LivingEntity
         /*healthSlider.value = health;*/
     }
     //데미지 처리
-    public override void OnDamage(float damage)
+    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         // LivingEntity의 OnDamage() 실행(데미지 적용)
         if (!dead)
@@ -50,7 +50,7 @@ public class PlayerHealth : LivingEntity
             pv.RPC("RPC_TriggerPenHit", RpcTarget.Others);
 
         }
-        base.OnDamage(damage);
+        base.OnDamage(damage, hitPoint, hitNormal);
         current_health = health;
         /*healthSlider.value = health;*/
     }

@@ -173,7 +173,7 @@ public class Enemy : LivingEntity
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
                 Vector3 hitNormal = transform.position - other.transform.position;
                 Debug.Log("타겟이 공격 범위 이내에 들어옴.");
-                attackTarget.OnDamage(damage);
+                attackTarget.OnDamage(damage, hitPoint, hitNormal);
                 UpdateNearestTarget();
             }
         }
