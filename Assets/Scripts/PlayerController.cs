@@ -155,7 +155,10 @@ public class PlayerController : MonoBehaviour
         right.Normalize();
 
         Vector3 move = forward * moveInput.y + right * moveInput.x;
-        rb.AddForce(move * currentSpeed, ForceMode.Acceleration);
+        Vector3 desiredVelocity = move * currentSpeed;
+        desiredVelocity.y = rb.linearVelocity.y; // 점프 등 Y속도 유지
+
+        rb.linearVelocity = desiredVelocity;
     }
     public void ResetMoveInput()
     {
@@ -175,7 +178,7 @@ public class PlayerController : MonoBehaviour
     void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
-        {
+        {   
             groundContactCount--;
             if (groundContactCount <= 0)
             {

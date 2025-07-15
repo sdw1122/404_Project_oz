@@ -38,6 +38,16 @@ public class InteractiveController : MonoBehaviour
                 Pen();
             }
         }
+        //Rigidbody rb = GetComponent<Rigidbody>();
+        //if (rb != null)
+        //{
+        //    rb.MovePosition(new Vector3(14f, 52f, -12.5f));
+        //    Debug.Log("상호");
+        //}
+        //else
+        //{
+        //    transform.position = new Vector3(11f, 1f, -12.5f);
+        //}
     }
 
     // Update is called once per frame
