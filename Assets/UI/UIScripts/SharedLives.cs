@@ -4,15 +4,14 @@ using UnityEngine;
 public class SharedLives : MonoBehaviour
 {
     public TextMeshProUGUI shared_lives;
-    public int score;
+    public int score = 10; // ì´ˆê¸°ê°’ ì„¤ì •
 
     void Start()
     {
-        score = 10;
         UpdateScoreText();
     }
 
-    // GameManager°¡ È£ÃâÇÒ ¸ñ¼û °¨¼Ò ÇÔ¼ö
+    // GameManagerì˜ RPCê°€ í˜¸ì¶œí•  ëª©ìˆ¨ ê°ì†Œ í•¨ìˆ˜
     public void LoseLife()
     {
         if (score > 0)

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerHealth : LivingEntity
@@ -10,7 +11,7 @@ public class PlayerHealth : LivingEntity
     public float current_health;
     private AudioSource playerAudioPlayer; // 플레이어 소리 재생기
     private Animator playerAnimator; // 플레이어의 애니메이터
-
+    PhotonView pv;
     private PlayerController playerController; // 플레이어 움직임 컴포넌트
 
     private void Awake()
@@ -20,6 +21,7 @@ public class PlayerHealth : LivingEntity
         playerAudioPlayer = GetComponent<AudioSource>();
         playerController = GetComponent<PlayerController>();
         current_health = startingHealth;
+        pv= GetComponent<PhotonView>();
     }
     protected override void OnEnable()
     {
@@ -38,15 +40,17 @@ public class PlayerHealth : LivingEntity
         /*healthSlider.value = health;*/
     }
     //데미지 처리
-    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitDirection)
+    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         // LivingEntity의 OnDamage() 실행(데미지 적용)
         if (!dead)
         {
             playerAudioPlayer.PlayOneShot(hitClip);
+            playerAnimator.SetTrigger("Hit");
+            pv.RPC("RPC_TriggerPenHit", RpcTarget.Others);
 
         }
-        base.OnDamage(damage, hitPoint, hitDirection);
+        base.OnDamage(damage, hitPoint, hitNormal);
         current_health = health;
         /*healthSlider.value = health;*/
     }
@@ -58,10 +62,28 @@ public class PlayerHealth : LivingEntity
         Debug.Log(dead);
         
         playerAudioPlayer.PlayOneShot(deathClip);
+        playerController.canMove = false;
+        playerAnimator.ResetTrigger("Hit");
         playerAnimator.SetTrigger("Die");
+        pv.RPC("RPC_TriggerPenDie", RpcTarget.Others);
         /*healthSlider.gameObject.SetActive(false);
         
         playerMovement.enabled = false;
         playerShooter.enabled = false;*/
+    }
+    [PunRPC]
+    void RPC_TriggerPenHit()
+    {
+        playerAnimator.SetTrigger("Hit");
+    }
+    [PunRPC]
+    void RPC_TriggerPenDie()
+    {
+        playerAnimator.ResetTrigger("Hit");
+        if (!dead) // 중복 방지
+        {
+            dead = true;
+            playerAnimator.SetTrigger("Die");
+        }
     }
 }

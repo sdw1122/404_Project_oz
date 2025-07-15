@@ -15,6 +15,7 @@ public class Pen_Skill_2 : MonoBehaviour
     public float Cooldown = 1.0f;
     public float Charge_Levels = 1.0f;
     [Header("세부 정보")]
+    public float tik = 0.5f;
     float lastFireTime;
     float throwForce=15.0f;
 
@@ -48,10 +49,16 @@ public class Pen_Skill_2 : MonoBehaviour
         Vector3 spawnPos = Camera.main.transform.position + Camera.main.transform.forward * 0.5f;
         Quaternion rot = Quaternion.identity;
         GameObject obj = PhotonNetwork.Instantiate("Pen_Skill2_Projectile", spawnPos, rot);
+        obj.GetComponent<Skill2Projectile>().Initialize(Damage,tik);
         animator.SetTrigger("Attack");
-
+        pv.RPC("RPC_TriggerPenAttack", RpcTarget.Others);
         Rigidbody rb = obj.GetComponent<Rigidbody>();
         Vector3 throwDir = Camera.main.transform.forward;
         rb.linearVelocity = throwDir * throwForce;
+    }
+    [PunRPC]
+    void RPC_TriggerPenAttack()
+    {
+        animator.SetTrigger("Attack");
     }
 }

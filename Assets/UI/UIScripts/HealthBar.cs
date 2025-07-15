@@ -1,6 +1,7 @@
+using Photon.Pun;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
@@ -23,14 +24,15 @@ public class HealthBar : MonoBehaviour
         }
         UpdateHealthBar();
 
-        // Ã¼·ÂÀÌ 0 ÀÌÇÏ°¡ µÇ¸é GameManager¿¡ ¾Ë¸²
+        // ì²´ë ¥ì´ 0 ì´í•˜ê°€ ë˜ë©´ GameManagerì˜ RPCë¥¼ í˜¸ì¶œ
         if (currentHealth <= 0)
         {
-            PJS_GameManager.Instance.PlayerDied();
+            // PJS_GameManagerì˜ PhotonViewë¥¼ í†µí•´ RPC í˜¸ì¶œ
+            PJS_GameManager.Instance.photonView.RPC("PlayerDied_RPC", RpcTarget.MasterClient);
         }
     }
 
-    // Ã¼·ÂÀ» ÃÖ´ë·Î ´Ù½Ã Ã¤¿ì´Â ÇÔ¼ö (GameManager°¡ È£Ãâ)
+    // ì²´ë ¥ì„ ìµœëŒ€ë¡œ ë‹¤ì‹œ ì±„ìš°ëŠ” í•¨ìˆ˜ (GameManagerê°€ í˜¸ì¶œ)
     public void ResetHealth()
     {
         currentHealth = maxHealth;

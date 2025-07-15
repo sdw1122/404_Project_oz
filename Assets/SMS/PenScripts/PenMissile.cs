@@ -1,14 +1,20 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class PenMissile : MonoBehaviour
 {
- 
+    int layerMask;
+    PhotonView pv;
     float m_Damage;
     public float lifeTime = 10.0f;
+    private void Awake()
+    {   layerMask= LayerMask.NameToLayer("Enemy");
+        pv = GetComponent<PhotonView>();
+    }
     void Start()
     {
         m_Damage = PenAttack.Damage;
-        Debug.Log(m_Damage);
+        
         Destroy(gameObject,lifeTime);
     }
 
@@ -18,11 +24,22 @@ public class PenMissile : MonoBehaviour
         
     }
     void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
+    {   if (!pv.IsMine) return;
+        if (other.gameObject.layer==layerMask)
         {
-            Debug.Log("πÃªÁ¿œ¿Ã ¿˚∞˙ ¡¢√À");
-            Destroy(gameObject);
+            
+
+            LivingEntity attackTarget = other.GetComponent<LivingEntity>();
+            if (attackTarget != null)
+            {
+                Debug.Log($"Ï†ÅÏóêÍ≤å Îç∞ÎØ∏ÏßÄ {m_Damage} ÏûÖÌûò");
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+                Vector3 hitNormal = transform.position - other.transform.position;
+                
+                attackTarget.OnDamage(m_Damage, hitPoint, hitNormal);
+                Destroy(gameObject);
+
+            }
         }
     }
     private void OnCollisionEnter(Collision collision)
