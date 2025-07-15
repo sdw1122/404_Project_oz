@@ -51,6 +51,16 @@ MonoBehaviour:
   - EraserInteract
   - PenInteract
   - ObjectInteract
+  - AdvanceDialogue_RPC
+  - EndDialogue_RPC
+  - LoseLife_RPC
+  - PlayerDied_RPC
+  - RPC_FlashColor
+  - RPC_TriggerChargeFinish
+  - RPC_TriggerChargeStart
+  - RPC_TriggerPenDie
+  - RPC_TriggerPenHit
+  - StartDialogue_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

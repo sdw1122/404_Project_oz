@@ -93,8 +93,7 @@ public class Hammer : MonoBehaviour
             {
                 Debug.Log("3charging");
                 skill1 = damage * 8;
-            }
-            Skill1(skill1);
+            }            
             skill1HoldTime = 0;
         }
     }
@@ -104,8 +103,7 @@ public class Hammer : MonoBehaviour
         if (context.performed && skill2CoolDownTimer >= skill2CoolDown && playerController.IsGrounded())
         {
             Debug.Log("UsingSkill2");
-            animator.SetTrigger("Big Attack");
-            Skill2();
+            animator.SetTrigger("Big Attack");            
             skill2CoolDownTimer = 0f;
         }
     }
@@ -174,9 +172,6 @@ public class Hammer : MonoBehaviour
         animator.SetLayerWeight(attackLayerIndex, 1f);
         animator.SetTrigger("Attack");        
 
-        // 데미지 즉시 적용
-        DealDamageInSwing();
-
         // 다음 공격 스텝으로 전환
         attackStep = (attackStep == 1) ? 2 : 1;
 
@@ -187,6 +182,11 @@ public class Hammer : MonoBehaviour
     public void UpperAniEnd()
     {
         animator.SetLayerWeight(attackLayerIndex, 0.01f); // 기본값으로 복귀
+    }
+
+    public void ApplySkiil1()
+    {
+        Skill1(skill1);
     }
 
     void Skill1(float damage)
@@ -226,6 +226,11 @@ public class Hammer : MonoBehaviour
         skill1CoolDown = 0;
     }
 
+    public void ApplySkill2()
+    {
+        Skill2();
+    }
+
     void Skill2()
     {
         float range = 5f;         // 공격 거리(반경)
@@ -258,6 +263,12 @@ public class Hammer : MonoBehaviour
                 Debug.Log("Skill2 맞음");
             }
         }
+    }
+    
+    // 정해진 애니메이션 타이밍에 호출
+    public void ApplyAttack()
+    {
+        DealDamageInSwing();
     }
 
     void DealDamageInSwing()
