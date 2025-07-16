@@ -68,6 +68,7 @@ MonoBehaviour:
   - RPC_TriggerEraserChargeAttack
   - RPC_TriggerJump
   - RPC_EraserAttackweight
+  - RPC_TriggerPenSkill2
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

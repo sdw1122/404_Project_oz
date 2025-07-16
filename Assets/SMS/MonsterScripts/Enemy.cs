@@ -11,11 +11,11 @@ public class Enemy : LivingEntity
     private NavMeshAgent navMeshAgent; // 경로 계산 AI 에이전트
 
     public ParticleSystem hitEffect; // 피격 시 재생할 파티클 효과
-    public AudioClip deathSound; // 사망 시 재생할 소리
-    public AudioClip hitSound; // 피격 시 재생할 소리
+    //public AudioClip deathSound; // 사망 시 재생할 소리
+    //public AudioClip hitSound; // 피격 시 재생할 소리
 
     private Animator enemyAnimator; // 애니메이터 컴포넌트
-    private AudioSource enemyAudioPlayer; // 오디오 소스 컴포넌트
+    //private AudioSource enemyAudioPlayer; // 오디오 소스 컴포넌트
     private Renderer enemyRenderer; // 렌더러 컴포넌트
 
     public float currentHealth;
@@ -48,7 +48,7 @@ public class Enemy : LivingEntity
         // 초기화
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
-        enemyAudioPlayer = GetComponent<AudioSource>();
+        //enemyAudioPlayer = GetComponent<AudioSource>();
         pv=GetComponent<PhotonView>();
         enemyRenderer = GetComponentInChildren<Renderer>();
     }
@@ -133,7 +133,7 @@ public class Enemy : LivingEntity
             hitEffect.transform.position = hitPoint;
             hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
             hitEffect.Play();
-            enemyAudioPlayer.PlayOneShot(hitSound);
+            //enemyAudioPlayer.PlayOneShot(hitSound);
             pv.RPC("RPC_FlashColor", RpcTarget.All);
         }
         currentHealth = health;
@@ -158,7 +158,7 @@ public class Enemy : LivingEntity
         }
         navMeshAgent.enabled = false;
         enemyAnimator.SetTrigger("Die");
-        enemyAudioPlayer.PlayOneShot(deathSound);
+        //enemyAudioPlayer.PlayOneShot(deathSound);
     }
 
     private void OnTriggerStay(Collider other)

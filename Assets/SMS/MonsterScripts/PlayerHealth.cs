@@ -45,7 +45,7 @@ public class PlayerHealth : LivingEntity
         // LivingEntity의 OnDamage() 실행(데미지 적용)
         if (!dead)
         {
-            playerAudioPlayer.PlayOneShot(hitClip);
+            //playerAudioPlayer.PlayOneShot(hitClip);
             playerAnimator.SetTrigger("Hit");
             pv.RPC("RPC_TriggerPenHit", RpcTarget.Others);
 
@@ -61,7 +61,7 @@ public class PlayerHealth : LivingEntity
         base.Die();
         Debug.Log(dead);
         
-        playerAudioPlayer.PlayOneShot(deathClip);
+        //playerAudioPlayer.PlayOneShot(deathClip);
         playerController.canMove = false;
         playerAnimator.ResetTrigger("Hit");
         playerAnimator.SetTrigger("Die");
