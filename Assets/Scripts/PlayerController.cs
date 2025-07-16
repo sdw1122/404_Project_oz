@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false; // 땅에 닿아있는지 여부
     private int groundContactCount = 0; // 여러 지면 접촉을 처리
 
-    public bool canMove = true;
+    public bool canMove = true;    
 
     public string job;
     [PunRPC]
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!pv.IsMine || !canMove) return;
         moveInput = context.ReadValue<Vector2>();
-
+        
         float moveValue = 0f;
         // 앞으로(앞, 좌, 우, 앞+좌, 앞+우, 좌, 우) → 1
         if (moveInput.y > 0.1f || Mathf.Abs(moveInput.x) > 0.1f && moveInput.y >= -0.1f)
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
             moveValue = 0f;
 
         animator.SetFloat("Move", moveValue);
-    }
+    }   
 
     public void OnLook(InputAction.CallbackContext context)
     {
@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (!pv.IsMine) return;
+        if (!pv.IsMine || !canMove) return;
         if (context.started && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -108,6 +108,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnSprint(InputAction.CallbackContext context)
     {
+        if (!pv.IsMine || !canMove) return;
         if (context.started || context.performed)
         {
             currentSpeed = runSpeed;

@@ -9,6 +9,7 @@ public class Hammer : MonoBehaviour
 {
     Rigidbody rb;
     private PlayerController playerController;
+    private PlayerHealth playerHealth;
     Animator animator;
     PhotonView pv;
 
@@ -23,7 +24,8 @@ public class Hammer : MonoBehaviour
 
     public float skill1;
     private float skill1HoldTime = 0;
-    public float skill1CoolDown; //10초
+    private float skill1CoolDown = 10f; //10초
+    public float skill1CoolDownTimer = 10f;
 
     public float skill2 = 60f;
     private float skill2CoolDown = 18f;         // Skill2 쿨타임(초)
@@ -35,14 +37,14 @@ public class Hammer : MonoBehaviour
     private bool isAttacking = false;      // 공격 중 여부
     private int attackStep = 1;            // 1: 왼쪽, 2: 오른쪽
     private float timeSinceLastAttack = 0f;// 마지막 공격 이후 경과 시간
-    private bool canAttack = true;         // 공격 가능 여부
+    public bool canAttack = true;         // 공격 가능 여부
 
     private void Awake()
     {        
         rb = GetComponent<Rigidbody>();
         playerController = GetComponent<PlayerController>();
-        controls = new InputSystem_Actions();
-        skill1CoolDown = 10f;
+        playerHealth = GetComponent<PlayerHealth>();
+        controls = new InputSystem_Actions();        
         animator = GetComponent<Animator>();
         pv = GetComponent<PhotonView>();
         attackLayerIndex = animator.GetLayerIndex("Upper Body");
@@ -50,7 +52,7 @@ public class Hammer : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (!pv.IsMine) return;
+        if (!pv.IsMine || !canAttack || skill1Pressed) return;
         if (context.started)
         {
             isAttackButtonPressed = true;            
@@ -61,7 +63,8 @@ public class Hammer : MonoBehaviour
 
     public void OnSkill1(InputAction.CallbackContext context)
     {
-        if (context.started && skill1CoolDown >= 10f && playerController.IsGrounded())
+        if (!pv.IsMine || !canAttack) return;
+        if (context.started && skill1CoolDownTimer >= 10f && playerController.IsGrounded())
         {
             skill1Pressed = true;
             animator.SetTrigger("Charge");
@@ -75,7 +78,7 @@ public class Hammer : MonoBehaviour
             if (skill1HoldTime < 1)
             {
                 skill1 = 0;
-                skill1CoolDown = 5f;
+                skill1CoolDownTimer = 5f;
                 skill1HoldTime = 0f;
                 Debug.Log("0charging");
                 animator.SetTrigger("CancelCharge");
@@ -97,16 +100,13 @@ public class Hammer : MonoBehaviour
                 Debug.Log("3charging");
                 skill1 = damage * 8;
             }
+            Skill1(skill1);
             animator.SetTrigger("Charge Attack");
             pv.RPC("RPC_TriggerEraserChargeAttack", RpcTarget.Others);
+            playerController.canMove = true;
+            skill1CoolDownTimer = 0;
             skill1HoldTime = 0;
         }
-    }
-
-    [PunRPC]
-    void RPC_TriggerEraserChargeAttack()
-    {
-        animator.SetTrigger("Charge Attack");
     }
 
     [PunRPC]
@@ -117,6 +117,7 @@ public class Hammer : MonoBehaviour
 
     public void OnSkill2(InputAction.CallbackContext context)
     {
+        if (!pv.IsMine || !canAttack || skill1Pressed) return;
         if (context.performed && skill2CoolDownTimer >= skill2CoolDown && playerController.IsGrounded())
         {
             Debug.Log("UsingSkill2");
@@ -140,18 +141,14 @@ public class Hammer : MonoBehaviour
             playerController.canMove = false;
             playerController.ResetMoveInput();
         }
-        else
-        {
-            playerController.canMove = true;
-        }
 
-        if (skill1CoolDown != 10f)
+        if (skill1CoolDownTimer != 10f)
         {
-            skill1CoolDown += Time.deltaTime;
+            skill1CoolDownTimer += Time.deltaTime;
         }
-        else if (skill1CoolDown >= 10f)
+        else if (skill1CoolDownTimer >= skill1CoolDown)
         {
-            skill1CoolDown = 10f;
+            skill1CoolDownTimer = skill1CoolDown;
         }
 
         if (skill2CoolDownTimer < skill2CoolDown)
@@ -180,6 +177,15 @@ public class Hammer : MonoBehaviour
         // 마지막 공격 이후 시간 업데이트
         if (!isAttacking)
             timeSinceLastAttack += Time.deltaTime;
+
+        if (!playerHealth.dead)
+        {
+            canAttack = true;
+        }
+        else
+        {
+            canAttack = false;
+        }
     }
 
     [PunRPC]
@@ -228,11 +234,6 @@ public class Hammer : MonoBehaviour
         animator.SetLayerWeight(attackLayerIndex, 0.01f);
     }
 
-    public void ApplySkiil1()
-    {
-        Skill1(skill1);
-    }
-
     void Skill1(float damage)
     {
         // 박스 중심: 플레이어 앞쪽 2.5만큼 (원하는 거리로 조정)
@@ -259,14 +260,22 @@ public class Hammer : MonoBehaviour
                 Vector3 hitNormal = (hitPoint - center).normalized;
 
                 Enemy enemy = hit.GetComponent<Enemy>();
+                PhotonView enemyPv = hit.GetComponent<PhotonView>();
                 if (enemy != null)
                 {
                     enemy.OnDamage(damage, hitPoint, hitNormal);
+                    enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
                     Debug.Log("Attack맞음");
                 }
             }
         }
-        skill1CoolDown = 0;
+    }
+
+    [PunRPC]
+    void RPC_TriggerEraserChargeAttack()
+    {
+        animator.SetTrigger("Charge Attack");
     }
 
     public void ApplySkill2()

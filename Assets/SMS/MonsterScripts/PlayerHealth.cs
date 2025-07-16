@@ -10,7 +10,7 @@ public class PlayerHealth : LivingEntity
     public AudioClip itemPickupClip; // 아이템 습득 소리
     public float current_health;
     private AudioSource playerAudioPlayer; // 플레이어 소리 재생기
-    private Animator playerAnimator; // 플레이어의 애니메이터
+    private Animator playerAnimator; // 플레이어의 애니메이터    
     PhotonView pv;
     private PlayerController playerController; // 플레이어 움직임 컴포넌트
 
@@ -19,7 +19,7 @@ public class PlayerHealth : LivingEntity
         // 사용할 컴포넌트를 가져오기
         playerAnimator = GetComponent<Animator>();
         playerAudioPlayer = GetComponent<AudioSource>();
-        playerController = GetComponent<PlayerController>();
+        playerController = GetComponent<PlayerController>();        
         current_health = startingHealth;
         pv= GetComponent<PhotonView>();
     }
@@ -62,7 +62,7 @@ public class PlayerHealth : LivingEntity
         Debug.Log(dead);
         
         //playerAudioPlayer.PlayOneShot(deathClip);
-        playerController.canMove = false;
+        playerController.canMove = false;        
         playerAnimator.ResetTrigger("Hit");
         playerAnimator.SetTrigger("Die");
         pv.RPC("RPC_TriggerPenDie", RpcTarget.Others);
