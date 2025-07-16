@@ -1,47 +1,46 @@
-using Photon.Pun;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class HealthBar : MonoBehaviour
 {
-    public Image fillImage;
-    private float maxHealth = 100f;
-    private float currentHealth;
+    public Image fillImage;        // 채워질 UI 이미지 (에디터에서 할당)
+    private PlayerHealth playerHealth; // 연동할 플레이어 체력 스크립트
+    private PhotonView photonView;     // 플레이어의 PhotonView
 
-    void Start()
+    void Awake()
     {
-        currentHealth = maxHealth;
-        UpdateHealthBar();
+        // 프리팹의 부모 오브젝트에서 PlayerHealth와 PhotonView 컴포넌트를 찾아옴
+        playerHealth = GetComponentInParent<PlayerHealth>();
+        photonView = GetComponentInParent<PhotonView>();
     }
 
-    public void TakeDamage(float amount)
+    void Update()
     {
-        currentHealth -= amount;
-        if (currentHealth < 0)
+        // photonView를 찾았고, 이 HealthBar가 내 소유의 플레이어 것인지 확인
+        if (photonView != null && photonView.IsMine)
         {
-            currentHealth = 0;
-        }
-        UpdateHealthBar();
+            // PlayerHealth 컴포넌트를 성공적으로 찾았는지 확인
+            if (playerHealth != null)
+            {
+                // PlayerHealth 스크립트로부터 최대 체력과 현재 체력 정보를 가져옴
+                float maxHealth = playerHealth.startingHealth;
+                float currentHealth = playerHealth.health; // LivingEntity로부터 상속받은 health 변수
 
-        // 체력이 0 이하가 되면 GameManager의 RPC를 호출
-        if (currentHealth <= 0)
+                // 체력 비율을 계산하여 UI 이미지의 fillAmount에 적용
+                if (maxHealth > 0)
+                {
+                    fillImage.fillAmount = currentHealth / maxHealth;
+                }
+            }
+        }
+        else
         {
-            // PJS_GameManager의 PhotonView를 통해 RPC 호출
-            PJS_GameManager.Instance.photonView.RPC("PlayerDied_RPC", RpcTarget.MasterClient);
+            // 내 플레이어의 HealthBar가 아니라면 UI를 비활성화
+            if (gameObject.activeSelf)
+            {
+                gameObject.SetActive(false);
+            }
         }
-    }
-
-    // 체력을 최대로 다시 채우는 함수 (GameManager가 호출)
-    public void ResetHealth()
-    {
-        currentHealth = maxHealth;
-        UpdateHealthBar();
-    }
-
-    private void UpdateHealthBar()
-    {
-        float fillAmount = currentHealth / maxHealth;
-        fillImage.fillAmount = fillAmount;
     }
 }

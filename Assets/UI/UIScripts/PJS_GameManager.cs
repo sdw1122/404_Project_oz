@@ -19,9 +19,8 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
     public static bool IsGamePaused = false; // 이 변수는 이제 Time.timeScale로 대체됩니다.
 
     [Header("UI 및 게임 상태")]
-    public HealthBar healthBar;
     public SharedLives sharedLives;
-    public CoolDown_UI coolDown_UI;
+    //public CoolDown_UI coolDown_UI;
 
     [Header("대화 목록")]
     public List<GameConversation> gameConversations;
@@ -45,14 +44,16 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             // 숫자 '1' 키를 누르면 "Dialogue1" 대화 시작
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (Input.GetKeyDown(KeyCode.K))
             {
+                Debug.Log("pressed K");
                 TriggerDialogue("Dialogue1");
             }
 
             // 숫자 '2' 키를 누르면 "Dialogue2" 대화 시작
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
+                Debug.Log("pressed 2");
                 TriggerDialogue("Dialogue2");
             }
         }
@@ -61,6 +62,7 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
     // 이름을 기반으로 원하는 대화를 시작시키는 함수
     public void TriggerDialogue(string conversationName)
     {
+        Debug.Log("TriggerDialogue");
         if (DialogueManager.Instance != null && DialogueManager.Instance.photonView != null)
         {
             // DialogueManager의 RPC를 호출하여 모든 클라이언트에서 대화 시작
@@ -84,10 +86,7 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
         }
 
         // 체력 리셋은 각자 로컬에서 처리 (죽은 플레이어 부활)
-        if (sharedLives.score > 0)
-        {
-            healthBar.ResetHealth();
-        }
+        
     }
 
     [PunRPC]
