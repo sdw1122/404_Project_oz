@@ -809,7 +809,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
-  deathClip: {fileID: 0}
-  hitClip: {fileID: 0}
-  itemPickupClip: {fileID: 0}
   current_health: 0

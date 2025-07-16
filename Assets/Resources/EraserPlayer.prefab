@@ -976,9 +976,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
-  deathClip: {fileID: 0}
-  hitClip: {fileID: 0}
-  itemPickupClip: {fileID: 0}
   current_health: 0
 --- !u!4 &1887803493213852323 stripped
 Transform:

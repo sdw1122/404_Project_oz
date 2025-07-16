@@ -11,18 +11,18 @@ public class Enemy : LivingEntity
     private NavMeshAgent navMeshAgent; // 경로 계산 AI 에이전트
 
     public ParticleSystem hitEffect; // 피격 시 재생할 파티클 효과
-    public AudioClip deathSound; // 사망 시 재생할 소리
-    public AudioClip hitSound; // 피격 시 재생할 소리
+    /*public AudioClip deathSound; // 사망 시 재생할 소리
+    public AudioClip hitSound; // 피격 시 재생할 소리*/
 
     private Animator enemyAnimator; // 애니메이터 컴포넌트
-    private AudioSource enemyAudioPlayer; // 오디오 소스 컴포넌트
+    /*private AudioSource enemyAudioPlayer; // 오디오 소스 컴포넌트*/
     private Renderer enemyRenderer; // 렌더러 컴포넌트
 
     public float currentHealth;
     public float damage = 20f; // 공격력
     public float timeBetAttack = 0.5f; // 공격 간격
     private float lastAttackTime; // 마지막 공격 시점
-
+    
     public bool isBinded=false;
     private Color originalColor;
 
@@ -48,9 +48,10 @@ public class Enemy : LivingEntity
         // 초기화
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemyAnimator = GetComponent<Animator>();
-        enemyAudioPlayer = GetComponent<AudioSource>();
+        /*enemyAudioPlayer = GetComponent<AudioSource>();*/
         pv=GetComponent<PhotonView>();
         enemyRenderer = GetComponentInChildren<Renderer>();
+        originalColor = enemyRenderer.material.color;
     }
 
     // 좀비 AI의 초기 스펙을 결정하는 셋업 메서드
@@ -126,19 +127,17 @@ public class Enemy : LivingEntity
 
     // 데미지를 입었을 때 실행할 처리
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
-    {   
-        // LivingEntity의 OnDamage()를 실행하여 데미지 적용
-        if (!dead)
-        {
-            hitEffect.transform.position = hitPoint;
-            hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
-            hitEffect.Play();
-            enemyAudioPlayer.PlayOneShot(hitSound);
-            pv.RPC("RPC_FlashColor", RpcTarget.All);
-        }
-        currentHealth = health;
-     
+    {
+        if (dead) return;
+
+        // 마스터만 데미지 처리
+        if (!PhotonNetwork.IsMasterClient) return;
+        // 모든 클라에게 연출 동기화
+        /*pv.RPC("RPC_PlayHitEffect", RpcTarget.AllViaServer, hitPoint, hitNormal);*/
+        // 데미지 적용
         base.OnDamage(damage, hitPoint, hitNormal);
+
+        
     }
 
     // 사망 처리
@@ -158,26 +157,32 @@ public class Enemy : LivingEntity
         }
         navMeshAgent.enabled = false;
         enemyAnimator.SetTrigger("Die");
-        enemyAudioPlayer.PlayOneShot(deathSound);
+        /*enemyAudioPlayer.PlayOneShot(deathSound);*/
     }
 
     private void OnTriggerStay(Collider other)
     {
-        // 트리거 충돌한 상대방 게임 오브젝트가 추적 대상이라면 공격 실행
-        if (!dead && Time.time >= lastAttackTime + timeBetAttack)
+        if (!PhotonNetwork.IsMasterClient || dead) return;
+
+        if (Time.time >= lastAttackTime + timeBetAttack)
         {
+            
             LivingEntity attackTarget = other.GetComponent<LivingEntity>();
-            if (attackTarget != null && attackTarget == targetEntity)
+            
+            if (attackTarget != null && !attackTarget.dead)
             {
+                
                 lastAttackTime = Time.time;
+
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
                 Vector3 hitNormal = transform.position - other.transform.position;
-                Debug.Log("타겟이 공격 범위 이내에 들어옴.");
+
                 attackTarget.OnDamage(damage, hitPoint, hitNormal);
                 UpdateNearestTarget();
             }
         }
     }
+
     private void UpdateNearestTarget()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
@@ -206,13 +211,13 @@ public class Enemy : LivingEntity
     }
     private IEnumerator FlashColor()
     {
-        Color origin = enemyRenderer.material.color;
+        
 
         enemyRenderer.material.color = Color.red;
 
         yield return new WaitForSeconds(0.15f);
 
-        enemyRenderer.material.color = origin;
+        enemyRenderer.material.color = originalColor;
     }
     [PunRPC]
     private void RPC_FlashColor()
@@ -220,5 +225,27 @@ public class Enemy : LivingEntity
         if (dead) return;
         StopCoroutine("FlashColor"); // 중복 방지
         StartCoroutine(FlashColor());
+    }
+    [PunRPC]
+    void RPC_PlayHitEffect(Vector3 hitPoint, Vector3 hitNormal)
+    {
+        if (hitEffect != null)
+        {
+            hitEffect.transform.position = hitPoint;
+            hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
+            hitEffect.Play();
+        }
+
+        /*if (enemyAudioPlayer != null && hitSound != null)
+            enemyAudioPlayer.PlayOneShot(hitSound);*/
+
+        StopCoroutine("FlashColor");
+        StartCoroutine("FlashColor");
+    }
+    [PunRPC]
+    public void RPC_ApplyDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    {
+        if (!PhotonNetwork.IsMasterClient) return; // 마스터만 데미지 처리
+        OnDamage(damage, hitPoint, hitNormal);
     }
 }

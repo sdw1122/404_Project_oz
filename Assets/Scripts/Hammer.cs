@@ -119,7 +119,11 @@ public class Hammer : MonoBehaviour
         }
         else
         {
-            playerController.canMove = true;
+            if (playerController.canMove == false) 
+            {
+                playerController.canMove = true;
+            }
+            
         }
 
         if (skill1CoolDown != 10f)

@@ -153,8 +153,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   hitEffect: {fileID: 1872185741079130679}
-  deathSound: {fileID: 0}
-  hitSound: {fileID: 0}
   currentHealth: 0
   damage: 19
   timeBetAttack: 0.5
