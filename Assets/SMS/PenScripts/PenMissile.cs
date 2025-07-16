@@ -25,19 +25,20 @@ public class PenMissile : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {   if (!pv.IsMine) return;
-        if (other.gameObject.layer==layerMask)
+        if (pv != null && (pv.IsMine || PhotonNetwork.IsMasterClient))
         {
-            
-
-            LivingEntity attackTarget = other.GetComponent<LivingEntity>();
-            if (attackTarget != null)
+            if (other.gameObject.layer == layerMask)
             {
                 Debug.Log($"적에게 데미지 {m_Damage} 입힘");
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
                 Vector3 hitNormal = transform.position - other.transform.position;
-                
-                attackTarget.OnDamage(m_Damage, hitPoint, hitNormal);
-                Destroy(gameObject);
+
+                PhotonView enemyPv=other.GetComponent<PhotonView>();
+
+                enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+
+                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage, hitPoint, hitNormal);
+                PhotonNetwork.Destroy(gameObject);
 
             }
         }

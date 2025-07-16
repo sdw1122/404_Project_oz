@@ -61,6 +61,15 @@ MonoBehaviour:
   - RPC_TriggerPenDie
   - RPC_TriggerPenHit
   - StartDialogue_RPC
+  - RPC_ApplyDamage
+  - RPC_PlayHitEffect
+  - RPC_TriggerPenAttack1
+  - RPC_Initialize
+  - RPC_TriggerPlayerDie
+  - RPC_TriggerPlayerHit
+  - RPC_TriggerPlayerResurrection
+  - RPC_TriggerPlayerStop
+  - SetDeadState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

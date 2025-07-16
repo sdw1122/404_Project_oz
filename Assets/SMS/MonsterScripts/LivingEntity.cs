@@ -45,7 +45,11 @@ public class LivingEntity : MonoBehaviour, IDamageable
         // 체력 추가
         health += newHealth;
     }
-
+    public virtual void Resurrection()
+    {
+        health = startingHealth;
+        dead = false; 
+    }
     // 사망 처리
     public virtual void Die()
     {

@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false; // 땅에 닿아있는지 여부
     private int groundContactCount = 0; // 여러 지면 접촉을 처리
 
-    public bool canMove = true;
+    public bool canMove = true;    
 
     public string job;
     [PunRPC]
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!pv.IsMine || !canMove) return;
         moveInput = context.ReadValue<Vector2>();
-
+        
         float moveValue = 0f;
         // 앞으로(앞, 좌, 우, 앞+좌, 앞+우, 좌, 우) → 1
         if (moveInput.y > 0.1f || Mathf.Abs(moveInput.x) > 0.1f && moveInput.y >= -0.1f)
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
             moveValue = 0f;
 
         animator.SetFloat("Move", moveValue);
-    }
+    }   
 
     public void OnLook(InputAction.CallbackContext context)
     {
@@ -90,17 +90,25 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (!pv.IsMine) return;
+        if (!pv.IsMine || !canMove) return;
         if (context.started && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
             animator.SetTrigger("Jump");
+            pv.RPC("RPC_TriggerJump", RpcTarget.Others);
         }
+    }
+
+    [PunRPC]
+    void RPC_TriggerJump()
+    {
+        animator.SetTrigger("Jump");
     }
 
     public void OnSprint(InputAction.CallbackContext context)
     {
+        if (!pv.IsMine || !canMove) return;
         if (context.started || context.performed)
         {
             currentSpeed = runSpeed;
@@ -110,7 +118,25 @@ public class PlayerController : MonoBehaviour
             currentSpeed = walkSpeed;
         }
     }
+    public void OnResurrection(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (!pv.IsMine) return;
+            PlayerHealth deadPlayer = FindClosestDeadPlayer();
+            if (deadPlayer != null && deadPlayer.dead)
+            {
+                Debug.Log($"[Resurrection] {deadPlayer.name}에게 RPC 전송"); // 확인용 로그
+                deadPlayer.Resurrection();
+            }
+            else
+            {
+                Debug.Log("[Resurrection] 죽은 플레이어가 없음");
+            }
+        }
+       
 
+    }
     void Start()
     {
         currentSpeed = walkSpeed;
@@ -187,7 +213,34 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    PlayerHealth FindClosestDeadPlayer()
+    {
+        PlayerHealth closestDeadPlayer = null;
+        float minDistance = float.MaxValue;
 
+        // 모든 PlayerHealth 컴포넌트를 찾습니다.
+        PlayerHealth[] allPlayers = FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None);
+
+        foreach (PlayerHealth player in allPlayers)
+        {
+            // 자기 자신은 제외하고, 죽어있으며, 펜 플레이어인지 확인 (직업 구분 로직 필요)
+            if (player.pv.IsMine) continue; // 자기 자신은 제외
+            if (!player.dead) continue; // 죽어있지 않으면 제외
+
+            
+            // 현재는 모든 죽은 플레이어를 대상으로 합니다.
+
+            float distance = Vector3.Distance(transform.position, player.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestDeadPlayer = player;
+            }
+        }
+        // 일정 거리 이상이면 부활 불가? --추가기능
+        /*if (minDistance > 5f) return null; // 예시: 5유닛 이상 떨어져 있으면 부활 불가*/
+        return closestDeadPlayer;
+    }
     public bool IsGrounded()
     {
         return isGrounded;
