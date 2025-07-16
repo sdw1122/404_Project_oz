@@ -99,7 +99,7 @@ public class PlayerHealth : LivingEntity
     void RPC_TriggerPlayerResurrection()
     {
         
-        dead = false;
+       
         playerAnimator.ResetTrigger("Die");
         playerAnimator.SetTrigger("Resurrection");
         // 조작활성화 (그 클라이언트만)
