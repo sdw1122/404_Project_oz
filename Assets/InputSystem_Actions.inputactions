@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Resurrection",
+                    "type": "Button",
+                    "id": "be8b860e-2f79-42c7-af99-6d281c9ba50c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -419,6 +428,17 @@
                     "action": "Skill2",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e20a63bd-baac-4192-87f9-bb788573e971",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Resurrection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -493,6 +513,15 @@
                     "name": "Skill2",
                     "type": "Button",
                     "id": "ae8bb9fe-2ccc-452a-ab41-d8663970d95b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Resurrection",
+                    "type": "Button",
+                    "id": "3527f973-5c7d-4d0a-9513-6dbb299dfee4",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -838,6 +867,17 @@
                     "processors": "",
                     "groups": "Joystick",
                     "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "84ea929f-aeb5-4e86-b838-3f0ebb7c226d",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Resurrection",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

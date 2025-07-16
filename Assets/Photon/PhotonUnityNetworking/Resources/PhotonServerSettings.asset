@@ -69,6 +69,7 @@ MonoBehaviour:
   - RPC_TriggerPlayerHit
   - RPC_TriggerPlayerResurrection
   - RPC_TriggerPlayerStop
+  - SetDeadState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
