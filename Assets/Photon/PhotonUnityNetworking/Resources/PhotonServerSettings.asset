@@ -61,14 +61,15 @@ MonoBehaviour:
   - RPC_TriggerPenDie
   - RPC_TriggerPenHit
   - StartDialogue_RPC
-  - RPC_TriggerEraserAttack
-  - RPC_TriggerEraserBigAttack
-  - RPC_TriggerEraserCancelCharge
-  - RPC_TriggerEraserCharge
-  - RPC_TriggerEraserChargeAttack
-  - RPC_TriggerJump
-  - RPC_EraserAttackweight
-  - RPC_TriggerPenSkill2
+  - RPC_ApplyDamage
+  - RPC_PlayHitEffect
+  - RPC_TriggerPenAttack1
+  - RPC_Initialize
+  - RPC_TriggerPlayerDie
+  - RPC_TriggerPlayerHit
+  - RPC_TriggerPlayerResurrection
+  - RPC_TriggerPlayerStop
+  - SetDeadState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
