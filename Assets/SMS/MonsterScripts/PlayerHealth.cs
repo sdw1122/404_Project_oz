@@ -38,16 +38,38 @@ public class PlayerHealth : LivingEntity
     }
 
     // 데미지 처리
+    [PunRPC]
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        if (!dead)
+        // 이 코드가 주인이 아닌 마스터 클라이언트에서 실행된 경우
+        if (!pv.IsMine && PhotonNetwork.IsMasterClient)
         {
-            playerAnimator.SetTrigger("Hit");
-            // Hit 애니메이션은 모든 클라이언트에서 동기화되어야 하므로 RPC 호출
-            pv.RPC("RPC_TriggerPlayerHit", RpcTarget.All);
+            // 이 PhotonView의 주인(Player 객체) 정보를 가져옵니다.
+            Photon.Realtime.Player owner = pv.Owner;
+
+            // 주인이 정상적으로 있다면, 그 주인 플레이어에게만 RPC를 보냅니다.
+            if (owner != null)
+            {
+                pv.RPC("OnDamage", owner, damage, hitPoint, hitNormal);
+            }
+
+            return; // 중계 역할 후 종료
         }
-        base.OnDamage(damage, hitPoint, hitNormal);
+
+        // --- 이 아래 코드는 실제 주인 클라이언트만 실행합니다. ---
+        if (dead) return;
+
+        // 전달받은 만큼 자신의 체력을 직접 깎습니다.
+        health -= damage;
         current_health = health;
+
+        // 피격 애니메이션을 로컬에서 실행합니다.
+        playerAnimator.SetTrigger("Hit");
+
+        if (health <= 0)
+        {
+            Die();
+        }
     }
 
     public override void Die()

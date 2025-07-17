@@ -77,6 +77,7 @@ MonoBehaviour:
   - RPC_TriggerEraserCharge
   - RPC_TriggerEraserChargeAttack
   - RPC_TriggerJump
+  - OnDamage
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

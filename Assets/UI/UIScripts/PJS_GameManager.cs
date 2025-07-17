@@ -57,6 +57,21 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
                 TriggerDialogue("Dialogue2");
             }
         }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            // 로컬 플레이어의 게임 오브젝트를 찾습니다.
+            // GameManager.cs에서 플레이어 오브젝트의 이름이 userId로 설정됩니다.
+            GameObject playerObject = GameObject.Find(PhotonNetwork.LocalPlayer.UserId);
+            if (playerObject != null)
+            {
+                PlayerHealth playerHealth = playerObject.GetComponent<PlayerHealth>();
+                // 플레이어가 죽어있으면 부활시킵니다.
+                if (playerHealth != null && playerHealth.dead)
+                {
+                    playerHealth.Resurrection();
+                }
+            }
+        }
     }
 
     // 이름을 기반으로 원하는 대화를 시작시키는 함수

@@ -580,38 +580,6 @@ MonoBehaviour:
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 840b7517-dd8c-4660-9f32-050eb8b6affc
-    m_ActionName: 'Player2/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 50ce9cc8-b093-4a98-8802-83f52db9b7ff
-    m_ActionName: 'Player2/Look[/Mouse/delta]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c3849143-f0f9-413a-8ea3-4565cf2e50c8
-    m_ActionName: 'Player2/Attack[/Mouse/leftButton,/Keyboard/enter]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 087d7a5e-f724-42a3-b3fd-df354de7af1a
-    m_ActionName: 'Player2/Interact[/Keyboard/e]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: acffbca6-a1b2-4cfc-a9c9-e1d6a18272f5
-    m_ActionName: 'Player2/Sprint[/Keyboard/leftShift]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9e507f21-bb62-4bba-9463-1e1f082a8ca4
-    m_ActionName: 'Player2/Skill1[/Keyboard/r]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ae8bb9fe-2ccc-452a-ab41-d8663970d95b
-    m_ActionName: 'Player2/Skill2[/Keyboard/q]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 329fb762-d9a7-4750-bcda-4cdd0fdcd031
-    m_ActionName: 'Player2/Jump[/Keyboard/space]'
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6087537843303922652}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
@@ -627,10 +595,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: be8b860e-2f79-42c7-af99-6d281c9ba50c
     m_ActionName: 'Player/Resurrection[/Keyboard/v]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 3527f973-5c7d-4d0a-9513-6dbb299dfee4
-    m_ActionName: 'Player2/Resurrection[/Keyboard/v]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -755,6 +719,7 @@ MonoBehaviour:
   - {fileID: 8742998796796384359}
   - {fileID: 6408126133112561618}
   - {fileID: 2608995910681098848}
+  - {fileID: 4311164335986358036}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
