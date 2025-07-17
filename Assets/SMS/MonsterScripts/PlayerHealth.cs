@@ -32,6 +32,7 @@ public class PlayerHealth : LivingEntity
     public override void Resurrection()
     {
         base.Resurrection();
+       
         pv.RPC("SetDeadState", RpcTarget.All, false);
         pv.RPC("RPC_TriggerPlayerResurrection", RpcTarget.All);
     }
@@ -99,14 +100,16 @@ public class PlayerHealth : LivingEntity
     void RPC_TriggerPlayerResurrection()
     {
         
-       
+        
         playerAnimator.ResetTrigger("Die");
         playerAnimator.SetTrigger("Resurrection");
         // 조작활성화 (그 클라이언트만)
         if (pv.IsMine)
         {
+            health = startingHealth;
+            Debug.Log(health);
             Debug.Log($"[RPC] {name} 부활 RPC 실행됨. IsMine: {pv.IsMine}");
-            Debug.Log($"죽어있는가? : {dead}");
+           
             playerInput.actions.FindAction("Attack")?.Enable();
             playerInput.actions.FindAction("Skill1")?.Enable();
             playerInput.actions.FindAction("Skill2")?.Enable();
@@ -114,9 +117,7 @@ public class PlayerHealth : LivingEntity
             playerInput.actions.FindAction("Sprint")?.Enable();
             playerInput.actions.FindAction("Look")?.Enable();
             playerInput.actions.FindAction("Move")?.Enable();
-            playerInput.actions.FindAction("Resurrection")?.Enable();
-
-            Debug.Log(playerInput.actions.FindAction("Move"));
+            playerInput.actions.FindAction("Resurrection")?.Enable(); 
         }
         
     }
