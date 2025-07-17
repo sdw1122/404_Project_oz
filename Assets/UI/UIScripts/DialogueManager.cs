@@ -4,7 +4,7 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Photon.Pun; // Photon.Pun 네임스페이스 추가
+using Photon.Pun;
 
 // 한 줄의 대화에 필요한 데이터 구조체
 [System.Serializable]
@@ -16,7 +16,6 @@ public struct DialogueLine
     public Sprite characterSprite;
 }
 
-// MonoBehaviour를 MonoBehaviourPunCallbacks로 변경
 public class DialogueManager : MonoBehaviourPunCallbacks
 {
     public static DialogueManager Instance;
@@ -52,10 +51,20 @@ public class DialogueManager : MonoBehaviourPunCallbacks
         dialoguePanel.SetActive(false);
     }
 
+    void Update()
+    {
+        // 이제 마스터 클라이언트가 아니어도, 모든 클라이언트가 각자 자신의 클릭 입력을 처리합니다.
+        if (dialoguePanel.activeSelf && Input.GetMouseButtonDown(0))
+        {
+            // RPC 호출 대신, 로컬 함수를 직접 호출하여 대화를 진행시킵니다.
+            AdvanceDialogue();
+        }
+    }
+
+    // [PunRPC] 속성을 유지하여 마스터 클라이언트가 모두의 대화를 시작시킬 수 있도록 합니다.
     [PunRPC]
     public void StartDialogue_RPC(string conversationName)
     {
-        // PJS_GameManager에서 해당 이름의 대화 데이터를 찾음
         GameConversation conversationToStart = PJS_GameManager.Instance.gameConversations.FirstOrDefault(c => c.conversationName == conversationName);
 
         if (conversationToStart == null)
@@ -64,8 +73,7 @@ public class DialogueManager : MonoBehaviourPunCallbacks
             return;
         }
 
-        // 모든 플레이어의 게임 시간을 멈춤
-        Time.timeScale = 0f;
+        // Time.timeScale = 0f; // 게임 시간을 멈추는 코드를 제거합니다.
 
         dialoguePanel.SetActive(true);
         dialogueQueue.Clear();
@@ -78,11 +86,10 @@ public class DialogueManager : MonoBehaviourPunCallbacks
         DisplayNextLine();
     }
 
-    [PunRPC]
-    public void EndDialogue_RPC()
+    // RPC가 아닌 일반 로컬 함수로 변경합니다.
+    private void EndDialogue()
     {
-        // 모든 플레이어의 게임 시간을 재개
-        Time.timeScale = 1f;
+        // Time.timeScale = 1f; // 게임 시간을 되돌리는 코드를 제거합니다.
         dialoguePanel.SetActive(false);
         Debug.Log("대화가 종료되었습니다.");
     }
@@ -91,8 +98,8 @@ public class DialogueManager : MonoBehaviourPunCallbacks
     {
         if (dialogueQueue.Count == 0)
         {
-            // 대화가 끝났음을 모든 클라이언트에게 알림
-            photonView.RPC("EndDialogue_RPC", RpcTarget.All);
+            // 모든 클라이언트에게 종료 신호를 보내는 대신, 로컬에서 대화를 종료 처리합니다.
+            EndDialogue();
             return;
         }
 
@@ -110,6 +117,7 @@ public class DialogueManager : MonoBehaviourPunCallbacks
             characterImage.enabled = false;
         }
 
+        // 게임 시간이 멈추지 않으므로 WaitForSeconds를 사용해도 괜찮습니다.
         StartCoroutine(TypeSentence(currentFullSentence));
     }
 
@@ -120,34 +128,23 @@ public class DialogueManager : MonoBehaviourPunCallbacks
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
-            yield return new WaitForSecondsRealtime(typingSpeed); // Time.timeScale 영향 안 받음
+            yield return new WaitForSeconds(typingSpeed);
         }
         isTyping = false;
     }
 
-    void Update()
+    // RPC가 아닌, 각 클라이언트가 로컬에서 호출하는 일반 함수로 변경합니다.
+    private void AdvanceDialogue()
     {
-        // 마스터 클라이언트가 클릭하면, '진행' 신호만 보낸다.
-        if (PhotonNetwork.IsMasterClient && dialoguePanel.activeSelf && Input.GetMouseButtonDown(0))
-        {
-            // 더 이상 isTyping을 확인하지 않고, 새로운 RPC 하나만 호출
-            photonView.RPC("AdvanceDialogue_RPC", RpcTarget.All);
-        }
-    }
-    [PunRPC]
-    void AdvanceDialogue_RPC()
-    {
-        // 이 함수를 받은 모든 클라이언트는 각자 자신의 상태를 확인한다.
+        // 기존 AdvanceDialogue_RPC의 로직을 그대로 가져옵니다.
         if (isTyping)
         {
-            // 만약 내가 타이핑 중이었다면, 타이핑을 멈추고 문장을 완성한다.
             isTyping = false;
             StopAllCoroutines();
             dialogueText.text = currentFullSentence;
         }
         else
         {
-            // 만약 내가 타이핑 중이 아니었다면, 다음 대사를 표시한다.
             DisplayNextLine();
         }
     }

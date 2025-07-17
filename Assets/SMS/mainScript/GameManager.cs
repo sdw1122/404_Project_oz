@@ -24,6 +24,15 @@ public class GameManager : MonoBehaviourPun
         }
 
         InstantiatePlayer();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("나는 마스터 클라이언트입니다.");
+        }
+        else
+        {
+            Debug.Log("나는 마스터가 아닙니다.");
+        }
     }
 
     // 플레이어 프리팹 생성

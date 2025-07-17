@@ -76612,7 +76612,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1.4333333
-    functionName: ApplySkiil1
+    functionName: ApplySkill2
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

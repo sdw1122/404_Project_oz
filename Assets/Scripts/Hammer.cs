@@ -9,6 +9,7 @@ public class Hammer : MonoBehaviour
 {
     Rigidbody rb;
     private PlayerController playerController;
+    private PlayerHealth playerHealth;
     Animator animator;
     PhotonView pv;
 
@@ -23,7 +24,8 @@ public class Hammer : MonoBehaviour
 
     public float skill1;
     private float skill1HoldTime = 0;
-    public float skill1CoolDown; //10초
+    private float skill1CoolDown = 10f; //10초
+    public float skill1CoolDownTimer = 10f;
 
     public float skill2 = 60f;
     private float skill2CoolDown = 18f;         // Skill2 쿨타임(초)
@@ -35,14 +37,14 @@ public class Hammer : MonoBehaviour
     private bool isAttacking = false;      // 공격 중 여부
     private int attackStep = 1;            // 1: 왼쪽, 2: 오른쪽
     private float timeSinceLastAttack = 0f;// 마지막 공격 이후 경과 시간
-    private bool canAttack = true;         // 공격 가능 여부
+    public bool canAttack = true;         // 공격 가능 여부
 
     private void Awake()
     {        
         rb = GetComponent<Rigidbody>();
         playerController = GetComponent<PlayerController>();
-        controls = new InputSystem_Actions();
-        skill1CoolDown = 10f;
+        playerHealth = GetComponent<PlayerHealth>();
+        controls = new InputSystem_Actions();        
         animator = GetComponent<Animator>();
         pv = GetComponent<PhotonView>();
         attackLayerIndex = animator.GetLayerIndex("Upper Body");
@@ -50,7 +52,7 @@ public class Hammer : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (!pv.IsMine) return;
+        if (!pv.IsMine || !canAttack || skill1Pressed) return;
         if (context.started)
         {
             isAttackButtonPressed = true;            
@@ -61,9 +63,12 @@ public class Hammer : MonoBehaviour
 
     public void OnSkill1(InputAction.CallbackContext context)
     {
-        if (context.started && skill1CoolDown >= 10f && playerController.IsGrounded())
+        if (!pv.IsMine || !canAttack) return;
+        if (context.started && skill1CoolDownTimer >= 10f && playerController.IsGrounded())
         {
             skill1Pressed = true;
+            animator.SetTrigger("Charge");
+            pv.RPC("RPC_TriggerEraserCharge", RpcTarget.Others);
         }
         if (context.canceled && skill1Pressed && playerController.IsGrounded())
         {
@@ -73,10 +78,11 @@ public class Hammer : MonoBehaviour
             if (skill1HoldTime < 1)
             {
                 skill1 = 0;
-                skill1CoolDown = 5f;
+                skill1CoolDownTimer = 5f;
                 skill1HoldTime = 0f;
                 Debug.Log("0charging");
                 animator.SetTrigger("CancelCharge");
+                pv.RPC("RPC_TriggerEraserCancelCharge", RpcTarget.Others);
                 return;
             }
             else if (skill1HoldTime < 2)
@@ -93,19 +99,38 @@ public class Hammer : MonoBehaviour
             {
                 Debug.Log("3charging");
                 skill1 = damage * 8;
-            }            
+            }
+            Skill1(skill1);
+            animator.SetTrigger("Charge Attack");
+            pv.RPC("RPC_TriggerEraserChargeAttack", RpcTarget.Others);
+            playerController.canMove = true;
+            skill1CoolDownTimer = 0;
             skill1HoldTime = 0;
         }
     }
 
+    [PunRPC]
+    void RPC_TriggerEraserCancelCharge()
+    {
+        animator.SetTrigger("CancelCharge");
+    }
+
     public void OnSkill2(InputAction.CallbackContext context)
     {
+        if (!pv.IsMine || !canAttack || skill1Pressed) return;
         if (context.performed && skill2CoolDownTimer >= skill2CoolDown && playerController.IsGrounded())
         {
             Debug.Log("UsingSkill2");
-            animator.SetTrigger("Big Attack");            
+            animator.SetTrigger("Big Attack");
+            pv.RPC("RPC_TriggerEraserBigAttack", RpcTarget.Others);
             skill2CoolDownTimer = 0f;
         }
+    }
+
+    [PunRPC]
+    void RPC_TriggerEraserBigAttack()
+    {
+        animator.SetTrigger("Big Attack");
     }
 
     void Update()
@@ -115,20 +140,15 @@ public class Hammer : MonoBehaviour
             skill1HoldTime += Time.deltaTime;
             playerController.canMove = false;
             playerController.ResetMoveInput();
-            animator.SetTrigger("Charge");
-        }
-        else
-        {
-            playerController.canMove = true;
         }
 
-        if (skill1CoolDown != 10f)
+        if (skill1CoolDownTimer != 10f)
         {
-            skill1CoolDown += Time.deltaTime;
+            skill1CoolDownTimer += Time.deltaTime;
         }
-        else if (skill1CoolDown >= 10f)
+        else if (skill1CoolDownTimer >= skill1CoolDown)
         {
-            skill1CoolDown = 10f;
+            skill1CoolDownTimer = skill1CoolDown;
         }
 
         if (skill2CoolDownTimer < skill2CoolDown)
@@ -157,6 +177,21 @@ public class Hammer : MonoBehaviour
         // 마지막 공격 이후 시간 업데이트
         if (!isAttacking)
             timeSinceLastAttack += Time.deltaTime;
+
+        if (!playerHealth.dead)
+        {
+            canAttack = true;
+        }
+        else
+        {
+            canAttack = false;
+        }
+    }
+
+    [PunRPC]
+    void RPC_TriggerEraserCharge()
+    {
+        animator.SetTrigger("Charge");
     }
 
     public void Attack()
@@ -170,7 +205,8 @@ public class Hammer : MonoBehaviour
 
         // 애니메이션 필요        
         animator.SetLayerWeight(attackLayerIndex, 1f);
-        animator.SetTrigger("Attack");        
+        animator.SetTrigger("Attack");
+        pv.RPC("RPC_TriggerEraserAttack", RpcTarget.Others);
 
         // 다음 공격 스텝으로 전환
         attackStep = (attackStep == 1) ? 2 : 1;
@@ -179,14 +215,23 @@ public class Hammer : MonoBehaviour
         timeSinceLastAttack = 0f;
     }
 
+    [PunRPC]
+    void RPC_TriggerEraserAttack()
+    {
+        animator.SetLayerWeight(attackLayerIndex, 1f);
+        animator.SetTrigger("Attack");
+    }
+
     public void UpperAniEnd()
     {
         animator.SetLayerWeight(attackLayerIndex, 0.01f); // 기본값으로 복귀
+        pv.RPC("RPC_EraserAttackweight", RpcTarget.Others);
     }
 
-    public void ApplySkiil1()
+    [PunRPC]
+    void RPC_EraserAttackweight()
     {
-        Skill1(skill1);
+        animator.SetLayerWeight(attackLayerIndex, 0.01f);
     }
 
     void Skill1(float damage)
@@ -215,15 +260,22 @@ public class Hammer : MonoBehaviour
                 Vector3 hitNormal = (hitPoint - center).normalized;
 
                 Enemy enemy = hit.GetComponent<Enemy>();
+                PhotonView enemyPv = hit.GetComponent<PhotonView>();
                 if (enemy != null)
                 {
                     enemy.OnDamage(damage, hitPoint, hitNormal);
+                    enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
                     Debug.Log("Attack맞음");
                 }
             }
         }
+    }
+
+    [PunRPC]
+    void RPC_TriggerEraserChargeAttack()
+    {
         animator.SetTrigger("Charge Attack");
-        skill1CoolDown = 0;
     }
 
     public void ApplySkill2()

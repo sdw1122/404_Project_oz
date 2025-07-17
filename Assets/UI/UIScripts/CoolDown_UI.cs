@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun; // Photon.Pun 네임스페이스 추가
 
 public class CoolDown_UI : MonoBehaviour
 {
+    // ... (기존 변수들은 그대로 유지) ...
     [Header("--- 스킬 1 ---")]
     public Image skillIcon1;
     public Image cooldownOverlay1;
@@ -22,18 +24,48 @@ public class CoolDown_UI : MonoBehaviour
     private float remainingCooldown2;
     private bool isCooldown2 = false;
 
+    private PhotonView photonView;
+
+
+    void Awake()
+    {
+        // 프리팹의 최상위 부모에 있는 PhotonView를 찾아옴
+        photonView = GetComponentInParent<PhotonView>();
+    }
 
     void Start()
     {
-        // 스킬 1 UI 초기화
-        EndCooldown1();
+        // 이 UI가 내 소유가 아니라면 즉시 비활성화하고 종료
+        if (photonView == null || !photonView.IsMine)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
 
-        // 스킬 2 UI 초기화
+        // 아래 코드는 내 플레이어일 경우에만 실행됨
+        EndCooldown1();
         EndCooldown2();
     }
 
     void Update()
     {
+        // photonView가 없거나 내 것이 아니면 아무것도 안 함
+        if (photonView == null || !photonView.IsMine)
+        {
+            return;
+        }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            // 테스트용: 스킬 1 쿨타임 시작
+            StartCooldown1();
+        }
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            // 테스트용: 스킬 2 쿨타임 시작
+            StartCooldown2();
+        }
+
+        // ... (기존 Update 로직은 그대로 유지) ...
         // 스킬 1 쿨타임 처리
         if (isCooldown1)
         {
@@ -71,7 +103,7 @@ public class CoolDown_UI : MonoBehaviour
         }
     }
 
-    // --- 스킬 1 쿨타임 함수 ---
+    // ... (StartCooldown, EndCooldown 함수들은 그대로 유지) ...
     public void StartCooldown1()
     {
         if (isCooldown1) return;
