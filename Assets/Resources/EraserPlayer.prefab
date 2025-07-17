@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5982527091682410858
+--- !u!1 &2644813597406364153
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,11 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7572119000206272204}
-  - component: {fileID: 5045981330916957746}
-  - component: {fileID: 7011592032559093422}
-  - component: {fileID: 9082875072011152789}
-  - component: {fileID: 1013045185364141205}
+  - component: {fileID: 7075541490769423653}
+  - component: {fileID: 8679609564195906647}
+  - component: {fileID: 1610184547681268219}
+  - component: {fileID: 6749240903976159083}
+  - component: {fileID: 2549586922089176199}
   m_Layer: 0
   m_Name: Dead Camera
   m_TagString: Untagged
@@ -20,28 +20,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!4 &7572119000206272204
+--- !u!4 &7075541490769423653
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5982527091682410858}
+  m_GameObject: {fileID: 2644813597406364153}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.012487228, y: 0.96931225, z: -0.24030104, w: -0.050332446}
-  m_LocalPosition: {x: 0.26364756, y: 2.0460172, z: 1.4554272}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.04062891, y: 0.9602489, z: -26.29918}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 292108290800110208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &5045981330916957746
+--- !u!20 &8679609564195906647
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5982527091682410858}
+  m_GameObject: {fileID: 2644813597406364153}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
@@ -69,8 +69,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 2.9562407
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -86,21 +86,21 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7011592032559093422
+--- !u!81 &1610184547681268219
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5982527091682410858}
+  m_GameObject: {fileID: 2644813597406364153}
   m_Enabled: 1
---- !u!114 &9082875072011152789
+--- !u!114 &6749240903976159083
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5982527091682410858}
+  m_GameObject: {fileID: 2644813597406364153}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
@@ -138,13 +138,13 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!114 &1013045185364141205
+--- !u!114 &2549586922089176199
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5982527091682410858}
+  m_GameObject: {fileID: 2644813597406364153}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f334de9f1d84ced4fbad60a440ce827c, type: 3}
@@ -656,7 +656,7 @@ PrefabInstance:
       addedObject: {fileID: 4369747576048057602}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d4523ff8667a434d997ed083cd395b7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7572119000206272204}
+      addedObject: {fileID: 7075541490769423653}
     - targetCorrespondingSourceObject: {fileID: 1852576806548013000, guid: 1d4523ff8667a434d997ed083cd395b7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6952264327720988895}
@@ -968,6 +968,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: be8b860e-2f79-42c7-af99-6d281c9ba50c
     m_ActionName: 'Player/Resurrection[/Keyboard/v]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2980653140969051414}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnHealRay
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cb19cff3-be13-44b2-be7d-1c3271821ab1
+    m_ActionName: 'Player/HealRay[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1015,10 +1031,10 @@ MonoBehaviour:
   playerCamera: {fileID: 9208752162825375673}
   playerObj: {fileID: 1100591750975983674}
   mainCamera: {fileID: 8832284404065940529}
-  deadCamera: {fileID: 5982527091682410858}
+  deadCamera: {fileID: 2644813597406364153}
   walkSpeed: 10
   runSpeed: 15
-  mouseSensitivity: 0.4
+  mouseSensitivity: 0.5
   jumpForce: 5
   canMove: 1
   job: 

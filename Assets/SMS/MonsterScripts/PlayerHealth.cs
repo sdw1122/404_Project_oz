@@ -38,6 +38,7 @@ public class PlayerHealth : LivingEntity
         pv.RPC("RPC_TriggerPlayerResurrection", RpcTarget.All);
         pv.RPC("DeActivateCamera", RpcTarget.All);
     }
+
     [PunRPC]
 
     public void DeActivateCamera()
@@ -45,7 +46,7 @@ public class PlayerHealth : LivingEntity
         if (pv.IsMine)
         {
             playerController.Deactivate();
-        }        
+        }
     }
 
     // 데미지 처리
@@ -89,10 +90,6 @@ public class PlayerHealth : LivingEntity
         base.Die();
         dead = true;
         Debug.Log(dead);
-        if (pv.IsMine)
-        {
-            playerController.ActivateCamera();
-        }
 
         // 사망 시 애니메이션 및 컴포넌트 비활성화는 모든 클라이언트에서 동기화
         pv.RPC("SetDeadState", RpcTarget.All, true);
