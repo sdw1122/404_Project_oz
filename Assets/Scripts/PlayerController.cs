@@ -5,10 +5,14 @@ using Photon.Pun;
 
 public class PlayerController : MonoBehaviour
 {
+
     PhotonView pv;
     Animator animator;
     HealingRay healingRay;
     [SerializeField] private Camera playerCamera;
+    public GameObject playerObj;
+    public GameObject mainCamera;
+    public GameObject deadCamera;
     public float walkSpeed = 10f;
     public float runSpeed = 15f;
     public float mouseSensitivity = 0.5f;
@@ -57,6 +61,9 @@ public class PlayerController : MonoBehaviour
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        playerObj = this.gameObject;
+        mainCamera = transform.Find("Main Camera")?.gameObject;
+        deadCamera = transform.Find("Dead Camera")?.gameObject;
         if (!pv.IsMine)
         {
             var input = GetComponent<PlayerInput>();
@@ -119,6 +126,7 @@ public class PlayerController : MonoBehaviour
             currentSpeed = walkSpeed;
         }
     }
+    
     public void OnResurrection(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -252,5 +260,29 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded()
     {
         return isGrounded;
+    }
+
+    public void ActivateCamera()
+    {
+        Debug.Log("ActivateCamera 실행됨! mainCamera:" + mainCamera + " (active=" + mainCamera?.activeSelf + ")" +
+           ", deadCamera:" + deadCamera + " (active=" + deadCamera?.activeSelf + ")", this);
+
+        mainCamera.SetActive(false);
+
+        deadCamera.SetActive(true);
+        deadCamera.GetComponent<Camera>().enabled = true;
+
+        deadCamera.transform.parent = null;
+
+        Vector3 parentPos = playerObj.transform.position;
+        deadCamera.transform.position = new Vector3(parentPos.x, parentPos.y + 3f, parentPos.z);
+    }
+
+    public void Deactivate()
+    {
+        deadCamera.SetActive(false);
+        deadCamera.transform.parent = playerObj.transform;
+
+        mainCamera.SetActive(true);
     }
 }

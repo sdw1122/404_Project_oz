@@ -78,6 +78,9 @@ MonoBehaviour:
   - RPC_TriggerEraserChargeAttack
   - RPC_TriggerJump
   - OnDamage
+  - DeActivateCamera
+  - DeadCamera
+  - RPC_TriggerPlayerHeal
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

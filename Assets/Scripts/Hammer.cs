@@ -18,8 +18,7 @@ public class Hammer : MonoBehaviour
 
     private bool isAttackButtonPressed = false;
     private float attackDelay = 1.0f;
-    private float attackTimer = 0f;
-    private float delayTimer = 0f;
+    private float attackTimer = 0f;  
     private int attackLayerIndex;
 
     public float skill1;
