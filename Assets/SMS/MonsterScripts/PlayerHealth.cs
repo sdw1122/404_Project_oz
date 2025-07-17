@@ -27,12 +27,13 @@ public class PlayerHealth : LivingEntity
     public override void RestoreHealth(float newHealth)
     {
         base.RestoreHealth(newHealth);
+        pv.RPC("RPC_TriggerPlayerHeal", RpcTarget.All, newHealth);
     }
 
     public override void Resurrection()
     {
         base.Resurrection();
-       
+
         pv.RPC("SetDeadState", RpcTarget.All, false);
         pv.RPC("RPC_TriggerPlayerResurrection", RpcTarget.All);
     }
@@ -71,21 +72,35 @@ public class PlayerHealth : LivingEntity
     {
         playerAnimator.SetTrigger("Hit");
     }
+    [PunRPC]
+    void RPC_TriggerPlayerHeal(float healAmount)
+    {
+        if (!pv.IsMine || dead) { return; }
+        if (health < startingHealth)
+        {
+            health += healAmount;
+            if (health > startingHealth)
+            {
+                health = startingHealth;
+            }
+        }
 
+
+    }
     [PunRPC]
     void RPC_TriggerPlayerDie()
     {
         playerAnimator.ResetTrigger("Hit");
         playerAnimator.SetTrigger("Die");
-        
+
 
         // 움직임 중지
-        
+
 
         // 조작비활성화 (그 클라이언트만)
         if (pv.IsMine)
         {
-            
+
             playerInput.actions.FindAction("Move")?.Disable();
             playerInput.actions.FindAction("Attack")?.Disable();
             playerInput.actions.FindAction("Skill1")?.Disable();
@@ -94,22 +109,23 @@ public class PlayerHealth : LivingEntity
             playerInput.actions.FindAction("Sprint")?.Disable();
             playerInput.actions.FindAction("Look")?.Disable();
             playerInput.actions.FindAction("Resurrection")?.Disable();
+            playerInput.actions.FindAction("HealRay")?.Disable();
         }
     }
     [PunRPC]
     void RPC_TriggerPlayerResurrection()
     {
-        
-        
+
+
         playerAnimator.ResetTrigger("Die");
         playerAnimator.SetTrigger("Resurrection");
-        // 조작활성화 (그 클라이언트만)
+        // 조작활성화,체력 동기화
         if (pv.IsMine)
         {
             health = startingHealth;
             Debug.Log(health);
             Debug.Log($"[RPC] {name} 부활 RPC 실행됨. IsMine: {pv.IsMine}");
-           
+
             playerInput.actions.FindAction("Attack")?.Enable();
             playerInput.actions.FindAction("Skill1")?.Enable();
             playerInput.actions.FindAction("Skill2")?.Enable();
@@ -117,8 +133,9 @@ public class PlayerHealth : LivingEntity
             playerInput.actions.FindAction("Sprint")?.Enable();
             playerInput.actions.FindAction("Look")?.Enable();
             playerInput.actions.FindAction("Move")?.Enable();
-            playerInput.actions.FindAction("Resurrection")?.Enable(); 
+            playerInput.actions.FindAction("Resurrection")?.Enable();
+            playerInput.actions.FindAction("HealRay")?.Enable();
         }
-        
+
     }
 }

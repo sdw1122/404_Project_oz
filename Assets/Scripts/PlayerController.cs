@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     PhotonView pv;
     Animator animator;
-
+    HealingRay healingRay;
     [SerializeField] private Camera playerCamera;
     public float walkSpeed = 10f;
     public float runSpeed = 15f;
@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        healingRay=GetComponent<HealingRay>();
         pv = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
@@ -136,6 +137,13 @@ public class PlayerController : MonoBehaviour
         }
        
 
+    }
+    public void OnHealRay(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            healingRay.FireHealingRay();
+        }
     }
     void Start()
     {

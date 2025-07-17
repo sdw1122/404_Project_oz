@@ -171,6 +171,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HealRay"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb19cff3-be13-44b2-be7d-1c3271821ab1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -523,6 +532,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Resurrection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9608809-77dc-4822-930a-c63fe603d092"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HealRay"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1119,6 +1139,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Skill1 = m_Player.FindAction("Skill1", throwIfNotFound: true);
         m_Player_Skill2 = m_Player.FindAction("Skill2", throwIfNotFound: true);
         m_Player_Resurrection = m_Player.FindAction("Resurrection", throwIfNotFound: true);
+        m_Player_HealRay = m_Player.FindAction("HealRay", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1221,6 +1242,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Skill1;
     private readonly InputAction m_Player_Skill2;
     private readonly InputAction m_Player_Resurrection;
+    private readonly InputAction m_Player_HealRay;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1268,6 +1290,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Resurrection".
         /// </summary>
         public InputAction @Resurrection => m_Wrapper.m_Player_Resurrection;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/HealRay".
+        /// </summary>
+        public InputAction @HealRay => m_Wrapper.m_Player_HealRay;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1321,6 +1347,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Resurrection.started += instance.OnResurrection;
             @Resurrection.performed += instance.OnResurrection;
             @Resurrection.canceled += instance.OnResurrection;
+            @HealRay.started += instance.OnHealRay;
+            @HealRay.performed += instance.OnHealRay;
+            @HealRay.canceled += instance.OnHealRay;
         }
 
         /// <summary>
@@ -1359,6 +1388,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Resurrection.started -= instance.OnResurrection;
             @Resurrection.performed -= instance.OnResurrection;
             @Resurrection.canceled -= instance.OnResurrection;
+            @HealRay.started -= instance.OnHealRay;
+            @HealRay.performed -= instance.OnHealRay;
+            @HealRay.canceled -= instance.OnHealRay;
         }
 
         /// <summary>
@@ -1722,6 +1754,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnResurrection(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "HealRay" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHealRay(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
