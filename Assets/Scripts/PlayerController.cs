@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     HealingRay healingRay;
     [SerializeField] private Camera playerCamera;
+    public GameObject playerObj;
+    public GameObject mainCamera;
+    public GameObject deadCamera;
     public float walkSpeed = 10f;
     public float runSpeed = 15f;
     public float mouseSensitivity = 0.5f;
@@ -252,5 +255,29 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded()
     {
         return isGrounded;
+    }
+
+    public void ActivateCamera()
+    {
+        Debug.Log("ActivateCamera 실행됨! mainCamera:" + mainCamera + " (active=" + mainCamera?.activeSelf + ")" +
+           ", deadCamera:" + deadCamera + " (active=" + deadCamera?.activeSelf + ")", this);
+
+        mainCamera.SetActive(false);
+
+        deadCamera.SetActive(true);
+        deadCamera.GetComponent<Camera>().enabled = true;
+
+        deadCamera.transform.parent = null;
+
+        Vector3 parentPos = playerObj.transform.position;
+        deadCamera.transform.position = new Vector3(parentPos.x, parentPos.y + 3f, parentPos.z);
+    }
+
+    public void Deactivate()
+    {
+        deadCamera.SetActive(false);
+        deadCamera.transform.parent = playerObj.transform;
+
+        mainCamera.SetActive(true);
     }
 }
