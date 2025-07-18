@@ -1069,15 +1069,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5483d5330fcb04dbc6f96d63dffb0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 2980653140969051414}
   playerCamera: {fileID: 9208752162825375673}
-  interactRange: 3
+  defaultInteractRange: 3
   interactLayer:
     serializedVersion: 2
     m_Bits: 64
-  UI: {fileID: 637474382384693524, guid: 4f20c6d3883c56147a880f533198450a, type: 3}
-  newMaterial:
-  - {fileID: 2100000, guid: 4433ee97a1ca1414d964258f7d84b52e, type: 2}
-  - {fileID: 2100000, guid: ee17504906ce8294fada8bac10018530, type: 2}
+  interactUIObject: {fileID: 8306130326150320638}
 --- !u!114 &4226276362303419168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1343,9 +1341,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 292108290800110208}
     m_Modifications:
+    - target: {fileID: 170885524201172375, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 892242200119504156, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_Name
       value: UI_for_player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3801785641438653269, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4176278733289675556, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534286170095355024, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803426422466859697, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470634253397566033, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7426671031678332176, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8804285395108637715, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8873107383478142889, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_Pivot.x
@@ -1435,6 +1465,11 @@ PrefabInstance:
 --- !u!224 &4369747576048057602 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8873107383478142889, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+  m_PrefabInstance: {fileID: 5154346013538630315}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8306130326150320638 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3801785641438653269, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
   m_PrefabInstance: {fileID: 5154346013538630315}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6007788604283795875

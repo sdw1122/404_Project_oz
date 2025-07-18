@@ -386,6 +386,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+--- !u!1 &665410851471097132 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3801785641438653269, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+  m_PrefabInstance: {fileID: 4467188480446715513}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5106299565252940240 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8873107383478142889, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
@@ -990,15 +995,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5483d5330fcb04dbc6f96d63dffb0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 6087537843303922652}
   playerCamera: {fileID: 8139975940493471537}
-  interactRange: 3
+  defaultInteractRange: 3
   interactLayer:
     serializedVersion: 2
     m_Bits: 64
-  UI: {fileID: 637474382384693524, guid: 4f20c6d3883c56147a880f533198450a, type: 3}
-  newMaterial:
-  - {fileID: 2100000, guid: 4433ee97a1ca1414d964258f7d84b52e, type: 2}
-  - {fileID: 2100000, guid: ee17504906ce8294fada8bac10018530, type: 2}
+  interactUIObject: {fileID: 665410851471097132}
 --- !u!114 &4275858845070364290
 MonoBehaviour:
   m_ObjectHideFlags: 0
