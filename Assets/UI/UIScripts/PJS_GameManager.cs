@@ -57,6 +57,21 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
                 TriggerDialogue("Dialogue2");
             }
         }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            // 로컬 플레이어의 게임 오브젝트를 찾습니다.
+            // GameManager.cs에서 플레이어 오브젝트의 이름이 userId로 설정됩니다.
+            GameObject playerObject = GameObject.Find(PhotonNetwork.LocalPlayer.UserId);
+            if (playerObject != null)
+            {
+                PlayerHealth playerHealth = playerObject.GetComponent<PlayerHealth>();
+                // 플레이어가 죽어있으면 부활시킵니다.
+                if (playerHealth != null && playerHealth.dead)
+                {
+                    playerHealth.Resurrection();
+                }
+            }
+        }
     }
 
     // 이름을 기반으로 원하는 대화를 시작시키는 함수
@@ -74,19 +89,10 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // HealthBar에서 호출했던 PlayerDied 함수를 RPC로 변경
     [PunRPC]
-    public void PlayerDied_RPC()
+    public void ProcessPlayerDeath()
     {
-        // 공유 목숨 차감 로직은 마스터 클라이언트만 처리하여 중복 실행을 방지
-        if (PhotonNetwork.IsMasterClient)
-        {
-            // 모든 클라이언트의 LoseLife_RPC 함수를 호출하여 목숨 UI를 동기화
-            photonView.RPC("LoseLife_RPC", RpcTarget.All);
-        }
-
-        // 체력 리셋은 각자 로컬에서 처리 (죽은 플레이어 부활)
-        
+        photonView.RPC("LoseLife_RPC", RpcTarget.All);
     }
 
     [PunRPC]

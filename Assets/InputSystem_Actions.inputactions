@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "HealRay",
+                    "type": "Button",
+                    "id": "cb19cff3-be13-44b2-be7d-1c3271821ab1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -437,6 +446,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Resurrection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f9608809-77dc-4822-930a-c63fe603d092",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HealRay",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
