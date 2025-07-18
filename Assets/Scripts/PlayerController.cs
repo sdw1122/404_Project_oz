@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Photon.Pun;
+using Unity.Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,8 +11,10 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     HealingRay healingRay;
     [SerializeField] private Camera playerCamera;
+    public CinemachineCamera cineCam;
+    public Transform cameraTarget;
     public GameObject playerObj;
-    public GameObject mainCamera;
+    public Camera mainCamera;
     public GameObject deadCamera;
     public float walkSpeed = 10f;
     public float runSpeed = 15f;
@@ -57,18 +60,27 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        healingRay=GetComponent<HealingRay>();
         pv = GetComponent<PhotonView>();
-        rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
-        playerObj = this.gameObject;
-        mainCamera = transform.Find("Main Camera")?.gameObject;
-        deadCamera = transform.Find("Dead Camera")?.gameObject;
+        cineCam = GetComponentInChildren<CinemachineCamera>();
         if (!pv.IsMine)
         {
             var input = GetComponent<PlayerInput>();
             if (input != null) input.enabled = false;
+            if (playerCamera != null) playerCamera.gameObject.SetActive(false); // <-- 이걸 꼭 추가
+            enabled = false;
+            cineCam.gameObject.SetActive(false);
+            return;
         }
+        healingRay =GetComponent<HealingRay>();
+       
+        rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
+        playerObj = this.gameObject;
+        /*mainCamera = transform.Find("Main Camera").GetComponent<Camera>();*/
+        deadCamera = transform.Find("Dead Camera")?.gameObject;
+        Debug.Log($"[{pv.ViewID}] 내 카메라 이름: {playerCamera.name}, 활성 상태: {playerCamera.enabled}");
+
+
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -147,7 +159,7 @@ public class PlayerController : MonoBehaviour
 
     }
     public void OnHealRay(InputAction.CallbackContext context)
-    {
+    {   if (!pv.IsMine) return;
         if (context.performed)
         {
             healingRay.FireHealingRay();
@@ -173,16 +185,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!pv.IsMine) return;
 
-        float mouseX = lookInput.x * mouseSensitivity;
-        float mouseY = lookInput.y * mouseSensitivity;
-
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        if (playerCamera != null)
-            playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-
-        transform.Rotate(Vector3.up * mouseX);
+        
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -201,6 +204,16 @@ public class PlayerController : MonoBehaviour
         desiredVelocity.y = rb.linearVelocity.y; // 점프 등 Y속도 유지
 
         rb.linearVelocity = desiredVelocity;
+        float mouseX = lookInput.x * mouseSensitivity;
+        float mouseY = lookInput.y * mouseSensitivity;
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -40f, 60f);
+
+        if (playerCamera != null)
+            playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        cameraTarget.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        transform.Rotate(Vector3.up * mouseX);
     }
     public void ResetMoveInput()
     {
@@ -264,11 +277,11 @@ public class PlayerController : MonoBehaviour
 
     public void ActivateCamera()
     {
-        Debug.Log("ActivateCamera 실행됨! mainCamera:" + mainCamera + " (active=" + mainCamera?.activeSelf + ")" +
+        Debug.Log("ActivateCamera 실행됨! mainCamera:" + mainCamera + " (active=" + mainCamera.GetComponent<Camera>() + ")" +
            ", deadCamera:" + deadCamera + " (active=" + deadCamera?.activeSelf + ")", this);
 
-        mainCamera.SetActive(false);
-
+        mainCamera.gameObject.SetActive(false);
+        
         deadCamera.SetActive(true);
         deadCamera.GetComponent<Camera>().enabled = true;
 
@@ -283,6 +296,6 @@ public class PlayerController : MonoBehaviour
         deadCamera.SetActive(false);
         deadCamera.transform.parent = playerObj.transform;
 
-        mainCamera.SetActive(true);
+        mainCamera.gameObject.SetActive(true);
     }
 }
