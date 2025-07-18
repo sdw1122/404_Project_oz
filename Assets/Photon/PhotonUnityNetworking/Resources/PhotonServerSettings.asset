@@ -83,12 +83,7 @@ MonoBehaviour:
   - DeadCamera
   - RPC_LoseLife
   - ProcessPlayerDeath
-  - ChangeState
-  - ToggleMoveState
-  - Disappear
-  - SpawnObject
-  - RequestDestroy
-  - DestroyGenerator
+  - RPC_ShowHealingRay
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

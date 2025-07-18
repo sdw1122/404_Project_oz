@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class HealingRay : MonoBehaviour
 {
-    public Camera playerCamera;
-
+    public Transform firePoint;
     public float rayLength = 50f;
     public float minDistance = 1.0f;
     public float healAmount = 20f;
@@ -34,8 +33,8 @@ public class HealingRay : MonoBehaviour
         else
             targetPoint = ray.GetPoint(100f);
 
-        Vector3 rayStartPoint = Camera.main.transform.position;
-        Vector3 rayDirection = Camera.main.transform.forward;
+        Vector3 rayStartPoint = new Vector3(firePoint.position.x, firePoint.position.y, firePoint.position.z);
+        Vector3 rayDirection = ray.direction;
 
         Vector3 spawnPos = rayStartPoint + rayDirection * minDistance;
 
@@ -62,10 +61,15 @@ public class HealingRay : MonoBehaviour
         {
             // 아무것도 맞지 않았다면, 광선은 최대 길이까지 쭉 뻗어나감
             rayEndPoint = spawnPos + rayDirection * rayLength;
-            Debug.Log("힐 광선이 허공에 발사되었습니다.");
+            
         }
-
-        StartCoroutine(ShowHealingRay(spawnPos, rayEndPoint));
+        pv.RPC("RPC_ShowHealingRay", RpcTarget.All, spawnPos, rayEndPoint);
+        
+    }
+    [PunRPC]
+    void RPC_ShowHealingRay(Vector3 startPoint, Vector3 endPoint)
+    {
+        StartCoroutine(ShowHealingRay(startPoint, endPoint));
     }
     private IEnumerator ShowHealingRay(Vector3 startPoint, Vector3 endPoint)
     {

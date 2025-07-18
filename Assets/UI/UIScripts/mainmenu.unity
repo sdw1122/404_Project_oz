@@ -2028,6 +2028,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowDebugText: 0
+  ShowCameraFrustum: 1
+  IgnoreTimeScale: 0
+  WorldUpOverride: {fileID: 0}
+  ChannelMask: -1
+  UpdateMethod: 2
+  BlendUpdateMethod: 1
+  LensModeOverride:
+    Enabled: 0
+    DefaultMode: 2
+  DefaultBlend:
+    Style: 1
+    Time: 2
+    CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  CustomBlends: {fileID: 0}
 --- !u!1 &1757240189
 GameObject:
   m_ObjectHideFlags: 0
@@ -2471,31 +2491,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 356149429523558998, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.08873874
+      value: -5.64754
       objectReference: {fileID: 0}
     - target: {fileID: 356149429523558998, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.155357
+      value: 1.412
       objectReference: {fileID: 0}
     - target: {fileID: 356149429523558998, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.4024849
+      value: 14.299179
       objectReference: {fileID: 0}
     - target: {fileID: 356149429523558998, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.45351693
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 356149429523558998, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.15080409
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 356149429523558998, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.83352697
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 356149429523558998, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.27715218
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 392939402005956466, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

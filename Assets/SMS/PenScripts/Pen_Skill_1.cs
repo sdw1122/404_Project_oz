@@ -20,9 +20,11 @@ public class Pen_Skill_1 : MonoBehaviour
     public float charged_Pen_Speed = 10.0f;
     public float chargeTime = 0.0f;
     public float maxChargeTime = 3.0f;
+    public float minDistance = 5f;
     bool isCharging = false;
     bool isSkill1Pressed = false;
     float lastFireTime;
+    public Transform firePoint;
     PlayerController playerController;
     PhotonView pv;
     private void Awake()
@@ -128,10 +130,10 @@ public class Pen_Skill_1 : MonoBehaviour
         else
             targetPoint = ray.GetPoint(100f);
 
-        Vector3 rayOrigin = Camera.main.transform.position;
+        Vector3 rayOrigin = new Vector3(firePoint.position.x, firePoint.position.y, firePoint.position.z);
         Vector3 rayDir = Camera.main.transform.forward;
 
-        Vector3 spawnPos = rayOrigin + rayDir * 0.5f; // 카메라 앞 0.5m 지점
+        Vector3 spawnPos = rayOrigin + rayDir * minDistance; // 카메라 앞 0.5m 지점
         Quaternion rotation = Quaternion.LookRotation(rayDir);
         rotation *= Quaternion.Euler(90, 0, 0);
         GameObject missile = PhotonNetwork.Instantiate("Pen_Charged_Missile", spawnPos, rotation);
