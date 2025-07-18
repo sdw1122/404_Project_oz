@@ -91,6 +91,4 @@ public class MovingObject : InteractableBase
         transform.position = destination;
         transform.rotation = rotation;
     }
-
-    
 }
