@@ -133,7 +133,7 @@ public class Enemy : LivingEntity
         // 마스터만 데미지 처리
         if (!PhotonNetwork.IsMasterClient) return;
         // 모든 클라에게 연출 동기화
-        pv.RPC("RPC_PlayHitEffect", RpcTarget.AllViaServer, hitPoint, hitNormal);
+        //pv.RPC("RPC_PlayHitEffect", RpcTarget.AllViaServer, hitPoint, hitNormal);
         // 데미지 적용
         base.OnDamage(damage, hitPoint, hitNormal);
 

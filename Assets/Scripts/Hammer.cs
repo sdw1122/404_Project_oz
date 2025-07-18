@@ -18,7 +18,7 @@ public class Hammer : MonoBehaviour
 
     private bool isAttackButtonPressed = false;
     private float attackDelay = 1.0f;
-    private float attackTimer = 0f;  
+    private float attackTimer = 0f;    
     private int attackLayerIndex;
 
     public float skill1;
@@ -82,6 +82,7 @@ public class Hammer : MonoBehaviour
                 Debug.Log("0charging");
                 animator.SetTrigger("CancelCharge");
                 pv.RPC("RPC_TriggerEraserCancelCharge", RpcTarget.Others);
+                playerController.canMove = true;
                 return;
             }
             else if (skill1HoldTime < 2)
@@ -309,6 +310,9 @@ public class Hammer : MonoBehaviour
                     Vector3 hitPoint = hit.ClosestPoint(transform.position);
                     Vector3 hitNormal = (hitPoint - transform.position).normalized;
 
+                    PhotonView enemyPv = hit.GetComponent<PhotonView>();
+
+                    enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
                     enemy.OnDamage(attackDamage, hitPoint, hitNormal);
                 }
                 Debug.Log("Skill2 맞음");
@@ -357,7 +361,9 @@ public class Hammer : MonoBehaviour
                     // 피격 위치와 방향 계산
                     Vector3 hitPoint = hit.ClosestPoint(transform.position);
                     Vector3 hitNormal = (hitPoint - transform.position).normalized;
+                    PhotonView enemyPv = hit.GetComponent<PhotonView>();
 
+                    enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
                     enemy.OnDamage(damage, hitPoint, hitNormal); // damage는 원하는 값으로
                 }
             }
