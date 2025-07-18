@@ -89,19 +89,10 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // HealthBar에서 호출했던 PlayerDied 함수를 RPC로 변경
     [PunRPC]
-    public void PlayerDied_RPC()
+    public void ProcessPlayerDeath()
     {
-        // 공유 목숨 차감 로직은 마스터 클라이언트만 처리하여 중복 실행을 방지
-        if (PhotonNetwork.IsMasterClient)
-        {
-            // 모든 클라이언트의 LoseLife_RPC 함수를 호출하여 목숨 UI를 동기화
-            photonView.RPC("LoseLife_RPC", RpcTarget.All);
-        }
-
-        // 체력 리셋은 각자 로컬에서 처리 (죽은 플레이어 부활)
-        
+        photonView.RPC("LoseLife_RPC", RpcTarget.All);
     }
 
     [PunRPC]
