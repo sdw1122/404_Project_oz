@@ -958,7 +958,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 174cf1f8a6870b042ac1a295fd550e7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 8787489966555858223, guid: e0ed675d85957324fa441d69b6cd049f, type: 3}
+  enemyPrefab: {fileID: 5118556496622676006, guid: 6d225ba0cce192542a57c7e14aec742b, type: 3}
+  enemyPrefabName: TinyRobot
   enemyDatas:
   - {fileID: 11400000, guid: 9a3b64e710f41e64589b1ed23060fb75, type: 2}
   spawnPoints:

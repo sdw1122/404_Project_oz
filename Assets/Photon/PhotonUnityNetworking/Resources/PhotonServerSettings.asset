@@ -81,6 +81,9 @@ MonoBehaviour:
   - RPC_TriggerPlayerHeal
   - DeActivateCamera
   - DeadCamera
+  - RPC_JumpAttack
+  - RPC_BlendIdle
+  - RPC_BlendRun
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
