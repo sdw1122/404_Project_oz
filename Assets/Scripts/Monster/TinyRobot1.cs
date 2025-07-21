@@ -4,7 +4,11 @@ using UnityEngine.AI;
 using System.Collections;
 
 public class TinyRobot1 : Enemy
-{    
+{
+    [SerializeField] private PhotonTransformView transformView;
+    [SerializeField] private PhotonRigidbodyView rigidbodyView;
+    [SerializeField] private PhotonView photonView;
+
     public float jumpAttackRange = 1f;
     public float jumpPower = 0.1f;
     public float jumpAttackCooldown = 2f;
@@ -48,6 +52,7 @@ public class TinyRobot1 : Enemy
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
+        Debug.Log("View : " + transformView);
         Rigidbody rb = GetComponent<Rigidbody>();        
         if (rb != null)
         {
@@ -83,6 +88,7 @@ public class TinyRobot1 : Enemy
         isJumpAttacking = false;
         // 공격 종료 후 NavMeshAgent 다시 켜주기!
         Rigidbody rb = GetComponent<Rigidbody>();
+
         pv.RPC("RPC_SetNavMesh", RpcTarget.All, true);
 
         Debug.Log("공격 끝");
@@ -106,18 +112,7 @@ public class TinyRobot1 : Enemy
     public void RPC_SetNavMesh(bool active)
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        navMeshAgent.enabled = active;
-        //navMeshAgent.isStopped = !active;
-        //rb.isKinematic = active;
-    }
-
-    [PunRPC]
-
-    public void RPC_SetNavMesh2(bool active)
-    {
-        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        //navMeshAgent.isStopped = !active;
-        navMeshAgent.enabled = active;
-        //rb.isKinematic = active;
+        navMeshAgent.enabled = active;        
+        rb.isKinematic = active;
     }
 }

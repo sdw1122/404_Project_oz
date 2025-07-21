@@ -369,6 +369,9 @@ MonoBehaviour:
   attackRange: 6
   isBinded: 0
   pv: {fileID: 0}
+  transformView: {fileID: 0}
+  rigidbodyView: {fileID: 0}
+  photonView: {fileID: 0}
   jumpAttackRange: 1
   jumpPower: 7
   jumpAttackCooldown: 2

@@ -42,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
         // 포톤 인스턴스 생성
-        GameObject enemyObj = PhotonNetwork.Instantiate("Model/Prefab/TinyRobot", spawnPoint.position, spawnPoint.rotation);
+        GameObject enemyObj = PhotonNetwork.Instantiate("Model/Prefab/TinyRobot Red", spawnPoint.position, spawnPoint.rotation);
         Debug.Log($"{ enemyObj.name}" );
         if (enemyObj == null)
         {

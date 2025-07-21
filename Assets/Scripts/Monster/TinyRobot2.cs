@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.Rendering;
 
 public class TinyRobot2 : Enemy
 {
@@ -8,6 +9,11 @@ public class TinyRobot2 : Enemy
     public float throwPower = 15f;
 
     private bool isThrowing = false;
+
+    public override bool CanAct()
+    {        
+        return !isThrowing;
+    }
 
     public override void Attack()
     {
@@ -19,9 +25,9 @@ public class TinyRobot2 : Enemy
         if (targetEntity == null || dead) return;
 
         if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
-        {            
-            navMeshAgent.isStopped = true;
+        {                        
             navMeshAgent.enabled = false;
+            rb.isKinematic = false;
         }
 
         if (targetEntity != null)
@@ -33,8 +39,7 @@ public class TinyRobot2 : Enemy
             {
                 transform.rotation = Quaternion.LookRotation(lookPos);
                 rb.Sleep();
-                rb.linearVelocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
+                rb.linearVelocity = Vector3.zero;                
                 rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation; ;                
             }
             enemyAnimator.SetTrigger("Throw");
@@ -52,6 +57,12 @@ public class TinyRobot2 : Enemy
     public void Throw()
     {
         if (!PhotonNetwork.IsMasterClient) return; // Throw 등은 반드시 마스터에서만
+
+        if (targetEntity == null)
+        {
+            Debug.LogWarning("Throw: targetEntity가 null, Throw 실행 중단!");
+            return;
+        }
 
         // 2. 방향 계산 (플레이어를 정확히 조준)
         Vector3 targetPos = targetEntity.transform.position;
@@ -86,8 +97,9 @@ public class TinyRobot2 : Enemy
         isThrowing = false;
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rb.WakeUp();
 
-        navMeshAgent.enabled = true;
-        navMeshAgent.isStopped = false;
+        navMeshAgent.enabled = true;        
+        rb.isKinematic = true;
     }
 }
