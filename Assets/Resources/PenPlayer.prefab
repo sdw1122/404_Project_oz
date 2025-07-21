@@ -1228,7 +1228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 6087537843303922652}
   playerCamera: {fileID: 8139975940493471537}
-  defaultInteractRange: 3
+  defaultInteractRange: 10
   interactLayer:
     serializedVersion: 2
     m_Bits: 64
