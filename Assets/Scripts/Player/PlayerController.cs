@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
         pv = GetComponent<PhotonView>();
         cineCam = GetComponentInChildren<CinemachineCamera>();
         if (!pv.IsMine)
@@ -72,15 +74,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
         healingRay =GetComponent<HealingRay>();
-       
-        rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
+        
         playerObj = this.gameObject;
         /*mainCamera = transform.Find("Main Camera").GetComponent<Camera>();*/
         deadCamera = transform.Find("Dead Camera")?.gameObject;
         Debug.Log($"[{pv.ViewID}] 내 카메라 이름: {playerCamera.name}, 활성 상태: {playerCamera.enabled}");
-
-
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -100,7 +98,14 @@ public class PlayerController : MonoBehaviour
             moveValue = 0f;
 
         animator.SetFloat("Move", moveValue);
-    }   
+        pv.RPC("RPC_Move", RpcTarget.Others, moveValue);
+    }
+
+    [PunRPC]
+    void RPC_Move(float moveValue)
+    {
+        animator.SetFloat("Move", moveValue);
+    }
 
     public void OnLook(InputAction.CallbackContext context)
     {
@@ -307,14 +312,12 @@ public class PlayerController : MonoBehaviour
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            Rigidbody playerRb = col.gameObject.GetComponent<Rigidbody>();
-            if (playerRb != null && !rb.isKinematic)
+            Rigidbody EnemyRb = col.gameObject.GetComponent<Rigidbody>();
+            if (EnemyRb != null && !rb.isKinematic)
             {
                 // 플레이어가 몬스터를 뚫으려 움직일 때, 그 움직임을 상쇄
-                playerRb.linearVelocity = Vector3.ProjectOnPlane(playerRb.linearVelocity, col.GetContact(0).normal);
+                EnemyRb.linearVelocity = Vector3.ProjectOnPlane(EnemyRb.linearVelocity, col.GetContact(0).normal);
             }
         }
-
-        // 반대로 플레이어 스크립트에도 몬스터 만나면 같은 로직 적용
     }
 }

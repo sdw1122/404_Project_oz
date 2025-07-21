@@ -72,7 +72,7 @@ public abstract class Enemy : LivingEntity
     private void Start()
     {
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
-        StartCoroutine(UpdatePath());
+        StartCoroutine(UpdatePath());        
     }
 
     private void Update()
@@ -107,7 +107,7 @@ public abstract class Enemy : LivingEntity
             }
             if (hasTarget)
             {
-                float dist = Vector3.Distance(transform.position, targetEntity.transform.position);
+                float dist = Vector3.Distance(transform.position, targetEntity.transform.position);               
                 if (dist <= attackRange)
                 {
                     enemyAnimator.SetFloat("Blend", 0f); // 공격 전 Idle자세
@@ -120,9 +120,9 @@ public abstract class Enemy : LivingEntity
                 else 
                 {
                     if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
-                    {
+                    {                        
                         navMeshAgent.isStopped = false;
-                        navMeshAgent.SetDestination(targetEntity.transform.position);
+                        navMeshAgent.SetDestination(targetEntity.transform.position);                        
                         enemyAnimator.SetFloat("Blend", 1f); // 걷기/달리기 애니메이션
                         pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
                         currentState = EnemyState.Chase;

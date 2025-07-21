@@ -38,8 +38,6 @@ public class TinyRobot1 : Enemy
         lastJumpAttackTime = Time.time;
         enemyAnimator.SetTrigger("JumpAttack");
         pv.RPC("RPC_JumpAttack", RpcTarget.Others);
-        Debug.Log("공격");
-        Rigidbody rb = GetComponent<Rigidbody>();
         pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
         pv.RPC("RPC_RobotAttack", RpcTarget.All, targetEntity.transform.position);
 
@@ -50,8 +48,7 @@ public class TinyRobot1 : Enemy
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.isKinematic = false;
+        Rigidbody rb = GetComponent<Rigidbody>();        
         if (rb != null)
         {
             Vector3 dir = (targetPos - transform.position).normalized;
@@ -102,8 +99,6 @@ public class TinyRobot1 : Enemy
                 playerRb.linearVelocity = Vector3.ProjectOnPlane(playerRb.linearVelocity, col.GetContact(0).normal);
             }
         }
-
-        // 반대로 플레이어 스크립트에도 몬스터 만나면 같은 로직 적용
     }
 
     [PunRPC]
@@ -112,6 +107,17 @@ public class TinyRobot1 : Enemy
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         navMeshAgent.enabled = active;
-        rb.isKinematic = active;
+        //navMeshAgent.isStopped = !active;
+        //rb.isKinematic = active;
+    }
+
+    [PunRPC]
+
+    public void RPC_SetNavMesh2(bool active)
+    {
+        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        //navMeshAgent.isStopped = !active;
+        navMeshAgent.enabled = active;
+        //rb.isKinematic = active;
     }
 }
