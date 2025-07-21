@@ -25,7 +25,7 @@ public abstract class Enemy : LivingEntity
     public float damage; // 공격력
     public float timeBetAttack = 0.5f; // 공격 간격
     private float lastAttackTime; // 마지막 공격 시점
-    public float attackRange = 4f;
+    public float attackRange;
     
     public bool isBinded=false;
     private Color originalColor;    
@@ -113,7 +113,7 @@ public abstract class Enemy : LivingEntity
                     enemyAnimator.SetFloat("Blend", 0f); // 공격 전 Idle자세
                     pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
                     if (CanAct())    // (공격 가능한지 자식에게 '질문')
-                    {
+                    {                        
                         Attack();    // -> Attack도 override 해서 자식 전용
                     }
                 }
@@ -156,15 +156,15 @@ public abstract class Enemy : LivingEntity
     }
 
     [PunRPC]
-    public void RPC_BlendIdle()
+    public void RPC_BlendIdle(float blendValue)
     {
-        enemyAnimator.SetFloat("Blend", 0f);
+        enemyAnimator.SetFloat("Blend", blendValue);
     }
 
     [PunRPC]
-    public void RPC_BlendRun()
+    public void RPC_BlendRun(float blendValue)
     {
-        enemyAnimator.SetFloat("Blend", 1f);
+        enemyAnimator.SetFloat("Blend", blendValue);
     }
 
     // 사망 처리

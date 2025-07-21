@@ -5,7 +5,7 @@ using System.Collections;
 
 public class TinyRobot1 : Enemy
 {    
-    public float jumpAttackRange = 3f;
+    public float jumpAttackRange = 1f;
     public float jumpPower = 0.1f;
     public float jumpAttackCooldown = 2f;
 
@@ -27,7 +27,7 @@ public class TinyRobot1 : Enemy
         if (isJumpAttacking) return;
 
         if (targetEntity != null)
-        {
+        {            
             Vector3 lookPos = targetEntity.transform.position - transform.position;
             lookPos.y = 0; // 수평 방향만 고려
             if (lookPos != Vector3.zero)
@@ -39,19 +39,29 @@ public class TinyRobot1 : Enemy
         enemyAnimator.SetTrigger("JumpAttack");
         pv.RPC("RPC_JumpAttack", RpcTarget.Others);
         Debug.Log("공격");
+        Rigidbody rb = GetComponent<Rigidbody>();
+        pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
+        pv.RPC("RPC_RobotAttack", RpcTarget.All, targetEntity.transform.position);
 
-        if (navMeshAgent != null && navMeshAgent.enabled)
-            navMeshAgent.enabled = false;
+    }
+
+    [PunRPC]
+    public void RPC_RobotAttack(Vector3 targetPos)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
 
         Rigidbody rb = GetComponent<Rigidbody>();
+        rb.isKinematic = false;
         if (rb != null)
         {
-            Vector3 dir = (targetEntity.transform.position - transform.position).normalized;
+            Vector3 dir = (targetPos - transform.position).normalized;
             dir.y = 0.5f; // 위쪽 성분 추가
             rb.linearVelocity = Vector3.zero;
-            rb.AddForce((dir + Vector3.up) * jumpPower, ForceMode.VelocityChange);
+
+            rb.AddForce(dir * jumpPower, ForceMode.VelocityChange);
         }
     }
+
     [PunRPC]
     public void RPC_JumpAttack()
     {
@@ -75,36 +85,33 @@ public class TinyRobot1 : Enemy
         }
         isJumpAttacking = false;
         // 공격 종료 후 NavMeshAgent 다시 켜주기!
-        if (navMeshAgent != null && !navMeshAgent.enabled)
-            navMeshAgent.enabled = true;
+        Rigidbody rb = GetComponent<Rigidbody>();
+        pv.RPC("RPC_SetNavMesh", RpcTarget.All, true);
 
         Debug.Log("공격 끝");
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionStay(Collision col)
     {
-        if (isJumpAttacking)
+        if (col.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            // 플레이어와 충돌했을 때만 작동 (tag 또는 레이어로 식별)
-            if (collision.gameObject.CompareTag("Player"))
+            Rigidbody playerRb = col.gameObject.GetComponent<Rigidbody>();
+            if (playerRb != null)
             {
-                Rigidbody rb = GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    rb.constraints |= RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-                    rb.linearVelocity = Vector3.zero;    // 모든 이동 즉시 멈춤
-                    rb.angularVelocity = Vector3.zero;
-                }
-                isJumpAttacking = false;
-
-                // NavMeshAgent 복구 (돌진 멈춘 후 바로 AI 이동 재개)
-                if (navMeshAgent != null && !navMeshAgent.enabled)
-                {
-                    navMeshAgent.enabled = true;
-                    navMeshAgent.Warp(transform.position); // 현재 위치로 Pathfinder 동기화
-                }
+                // 플레이어가 몬스터를 뚫으려 움직일 때, 그 움직임을 상쇄
+                playerRb.linearVelocity = Vector3.ProjectOnPlane(playerRb.linearVelocity, col.GetContact(0).normal);
             }
         }
+
+        // 반대로 플레이어 스크립트에도 몬스터 만나면 같은 로직 적용
     }
 
+    [PunRPC]
+
+    public void RPC_SetNavMesh(bool active)
+    {
+        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        navMeshAgent.enabled = active;
+        rb.isKinematic = active;
+    }
 }
