@@ -86,6 +86,13 @@ MonoBehaviour:
   - RPC_BlendRun
   - RPC_RobotAttack
   - RPC_SetNavMesh
+  - DestroyGenerator
+  - MakeFall
+  - ProcessPlayerDeath
+  - PushAway
+  - RequestDestroy
+  - RPC_ShowHealingRay
+  - ToggleMoveState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
