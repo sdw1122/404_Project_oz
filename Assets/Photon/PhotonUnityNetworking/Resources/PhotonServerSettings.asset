@@ -93,6 +93,14 @@ MonoBehaviour:
   - RequestDestroy
   - RPC_ShowHealingRay
   - ToggleMoveState
+  - ActivateLever
+  - ResetLever
+  - TipOver
+  - PushOver
+  - MarkAsUsed_RPC
+  - RequestDialogueStart_RPC
+  - FireCannon_RPC
+  - RequestFire_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
