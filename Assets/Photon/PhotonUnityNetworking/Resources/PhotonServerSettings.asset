@@ -81,15 +81,11 @@ MonoBehaviour:
   - RPC_TriggerPlayerHeal
   - DeActivateCamera
   - DeadCamera
-  - RPC_LoseLife
-  - ProcessPlayerDeath
-  - RPC_ShowHealingRay
-  - ChangeState
-  - DestroyGenerator
-  - RequestDestroy
-  - ToggleMoveState
-  - MakeFall
-  - PushAway
+  - RPC_JumpAttack
+  - RPC_BlendIdle
+  - RPC_BlendRun
+  - RPC_RobotAttack
+  - RPC_SetNavMesh
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

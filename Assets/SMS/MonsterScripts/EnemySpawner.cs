@@ -6,6 +6,7 @@ using Photon.Pun;
 public class EnemySpawner : MonoBehaviour
 {
     public Enemy enemyPrefab;
+    public string enemyPrefabName = "TinyRobot";
     public EnemyData[] enemyDatas;
     public Transform[] spawnPoints;
     
@@ -35,14 +36,28 @@ public class EnemySpawner : MonoBehaviour
     }
     private void CreateEnemy()
     {
+        Debug.Log("CreateEnemy 메서드 실행");
+        Debug.Log($"enemyPrefab.name = {enemyPrefab.name}");
         EnemyData enemyData = enemyDatas[Random.Range(0, enemyDatas.Length)];
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
         // 포톤 인스턴스 생성
-        GameObject enemyObj = PhotonNetwork.Instantiate("enemyPrefab", spawnPoint.position, spawnPoint.rotation);
-
+        GameObject enemyObj = PhotonNetwork.Instantiate("Model/Prefab/TinyRobot", spawnPoint.position, spawnPoint.rotation);
+        Debug.Log($"{ enemyObj.name}" );
+        if (enemyObj == null)
+        {
+            Debug.LogError("Enemy instantiation failed!");
+            return;
+        }
         // Enemy 컴포넌트 가져오기
         Enemy enemy = enemyObj.GetComponent<Enemy>();
+        if (enemy == null)
+        {
+            Debug.LogError("Spawned object missing Enemy component!");
+            return;
+        }
+
+        Debug.Log("Enemy spawned successfully.");
 
         // 무슨적이 나올지는 "마스터 클라이언트만" 수행
         if (PhotonNetwork.IsMasterClient)
