@@ -158,6 +158,10 @@ public class PlayerController : MonoBehaviour
        
 
     }
+    public void ResetSpeed()
+    {
+        moveInput = Vector2.zero;
+    }
     public void OnHealRay(InputAction.CallbackContext context)
     {   if (!pv.IsMine) return;
         if (context.performed)

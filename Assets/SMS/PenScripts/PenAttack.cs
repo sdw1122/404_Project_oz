@@ -65,7 +65,7 @@ public class PenAttack : MonoBehaviour
         
         Vector3 spawnPos = rayOrigin + rayDir * 0.5f; // 카메라 앞 0.5m 지점
         Quaternion rotation = Quaternion.LookRotation(rayDir);
-        rotation *= Quaternion.Euler(90, 0, 0);
+        /*rotation *= Quaternion.Euler(90, 0, 0);*/
         GameObject missile = PhotonNetwork.Instantiate("Pen_Attack_Missile", spawnPos, rotation);
         missile.GetComponent<Rigidbody>().linearVelocity = rayDir * MissileSpeed;
         animator.SetTrigger("Attack");
