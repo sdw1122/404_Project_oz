@@ -1243,6 +1243,7 @@ MonoBehaviour:
   throwObj: {fileID: 4799392649775753017, guid: 924d3887ceeb23243910933950a84af7, type: 3}
   throwPoint: {fileID: 5009277148290514229}
   throwPower: 15
+  fleeDistance: 8
 --- !u!114 &-4803087579523428329
 MonoBehaviour:
   m_ObjectHideFlags: 0

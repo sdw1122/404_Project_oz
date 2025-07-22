@@ -18,9 +18,7 @@ public abstract class Enemy : LivingEntity
     public Animator enemyAnimator; // 애니메이터 컴포넌트
     /*private AudioSource enemyAudioPlayer; // 오디오 소스 컴포넌트*/
     private Renderer enemyRenderer; // 렌더러 컴포넌트
-    private Rigidbody rb;
-    enum EnemyState { Idle, Chase, Attack };
-    private EnemyState currentState = EnemyState.Idle;
+    private Rigidbody rb;        
     public abstract void Attack();
 
     public float currentHealth;
@@ -98,11 +96,6 @@ public abstract class Enemy : LivingEntity
         if (isBinded) navMeshAgent.isStopped = true;
         // 추적 대상의 존재 여부에 따라 다른 애니메이션 재생
         /*enemyAnimator.SetBool("HasTarget", hasTarget);*/
-        switch (currentState)
-        {
-            case EnemyState.Idle:
-                break;
-        }
     }
 
     public virtual bool CanAct()
@@ -146,8 +139,7 @@ public abstract class Enemy : LivingEntity
                             pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
                         }
                         enemyAnimator.SetFloat("Blend", 1f); // 걷기/달리기 애니메이션
-                        pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
-                        currentState = EnemyState.Chase;
+                        pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);                        
                     }
                 }
             }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using System.Collections;
 using UnityEngine.Rendering;
 
 public class TinyRobot2 : Enemy
@@ -7,12 +8,91 @@ public class TinyRobot2 : Enemy
     public GameObject throwObj;
     public Transform throwPoint;
     public float throwPower = 15f;
+    public float fleeDistance = 8f;
 
     private bool isThrowing = false;
 
     public override bool CanAct()
     {        
         return !isThrowing;
+    }
+
+    public override IEnumerator UpdatePath()
+    {
+        while (!dead)
+        {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                yield return new WaitForSeconds(0.25f);
+                continue;
+            }
+
+            if (hasTarget)
+            {
+                float dist = Vector3.Distance(transform.position, targetEntity.transform.position);
+
+                if (dist <= fleeDistance)
+                {
+                    // 너무 가까워졌을 때 도망감
+                    if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+                    {
+                        Vector3 fleeDir = (transform.position - targetEntity.transform.position).normalized;
+                        Vector3 fleePos = transform.position + fleeDir * fleeDistance * 4f;
+                        navMeshAgent.isStopped = false;
+                        navMeshAgent.SetDestination(fleePos);
+                        enemyAnimator.SetFloat("Blend", 1f);
+                        pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);                        
+                    }
+                }
+                else if (dist <= attackRange)
+                {
+                    // 원래대로 공격 패턴
+                    enemyAnimator.SetFloat("Blend", 0f);
+                    pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
+                    if (CanAct()) { Attack(); }
+                }
+                else
+                {
+                    if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+                    {
+                        navMeshAgent.isStopped = false;
+                        navMeshAgent.SetDestination(targetEntity.transform.position);
+                        //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
+                        if (PhotonNetwork.IsMasterClient)
+                        {
+                            pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
+                        }
+                        enemyAnimator.SetFloat("Blend", 1f); // 걷기/달리기 애니메이션
+                        pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
+                    }
+                }
+            }
+            else
+            {
+                if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+                {
+                    navMeshAgent.isStopped = true;
+                    enemyAnimator.SetFloat("Blend", 0f);
+                    pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
+                }
+
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    LivingEntity livingEntity = colliders[i].GetComponent<LivingEntity>();
+                    if (livingEntity != null && !livingEntity.dead)
+                    {
+                        targetEntity = livingEntity;
+                        PhotonView targetPV = targetEntity.GetComponent<PhotonView>();
+
+                        if (targetPV != null && pv != null)
+                            pv.RPC("SetTarget", RpcTarget.Others, targetPV.ViewID);
+                        break;
+                    }
+                }
+            }
+            yield return new WaitForSeconds(0.25f);
+        }
     }
 
     public override void Attack()
