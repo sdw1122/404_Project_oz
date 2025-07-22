@@ -1,10 +1,12 @@
 using Photon.Pun;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Pen_Skill_1 : MonoBehaviour
 {
     public GameObject PenPlayer;
+    Rigidbody rb;
     Animator animator;
     [Header("스킬 정보")]
     public string Skill_ID = "Pen_Skill_1";
@@ -20,9 +22,11 @@ public class Pen_Skill_1 : MonoBehaviour
     public float charged_Pen_Speed = 10.0f;
     public float chargeTime = 0.0f;
     public float maxChargeTime = 3.0f;
+    public float minDistance = 5f;
     bool isCharging = false;
     bool isSkill1Pressed = false;
     float lastFireTime;
+    public Transform firePoint;
     PlayerController playerController;
     PhotonView pv;
     private void Awake()
@@ -30,6 +34,7 @@ public class Pen_Skill_1 : MonoBehaviour
         pv = GetComponent<PhotonView>();
         animator = PenPlayer.GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
+        rb = PenPlayer.GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -53,6 +58,7 @@ public class Pen_Skill_1 : MonoBehaviour
 
         if (context.started)
         {
+            
             isSkill1Pressed = true;
         }
         else if (context.canceled)
@@ -70,12 +76,13 @@ public class Pen_Skill_1 : MonoBehaviour
         isCharging = true;
         chargeTime = 0f;
         lastFireTime = Time.time;
-
+        playerController.ResetSpeed();
         playerController.canMove = false;
         PenAttack.isAttack = false;
-        PlayerController1.isMove = false;
         Pen_Skill_2.isThrow = false;
 
+
+        animator.ResetTrigger("ChargeAttack");
         animator.SetBool("Charge", true);
         pv.RPC("RPC_TriggerChargeStart", RpcTarget.Others);
     }
@@ -84,20 +91,25 @@ public class Pen_Skill_1 : MonoBehaviour
         isCharging = false;
 
         animator.SetBool("Charge", false);
+        animator.ResetTrigger("ChargeAttack");
+        animator.SetTrigger("ChargeAttack");   // 발사 애니메이션
         pv.RPC("RPC_TriggerChargeFinish", RpcTarget.Others);
-/*
-        if (chargeTime < 0.1f)
-        {
-            // 너무 짧은 클릭이면 무효
-            playerController.canMove = true;
-            return;
-        }*/
+        pv.RPC("RPC_TriggerChargeAttack", RpcTarget.Others);
+        /*
+                if (chargeTime < 0.1f)
+                {
+                    // 너무 짧은 클릭이면 무효
+                    playerController.canMove = true;
+                    return;
+                }*/
 
         int chargeLevel = GetChargeLevel(chargeTime / maxChargeTime);
         FireChargePen(chargeLevel);
 
         // 상태 초기화
+
         playerController.canMove = true;
+        
         PenAttack.isAttack = true;
         PlayerController1.isMove = true;
         Pen_Skill_2.isThrow = true;
@@ -128,10 +140,10 @@ public class Pen_Skill_1 : MonoBehaviour
         else
             targetPoint = ray.GetPoint(100f);
 
-        Vector3 rayOrigin = Camera.main.transform.position;
+        Vector3 rayOrigin = new Vector3(firePoint.position.x, firePoint.position.y, firePoint.position.z);
         Vector3 rayDir = Camera.main.transform.forward;
 
-        Vector3 spawnPos = rayOrigin + rayDir * 0.5f; // 카메라 앞 0.5m 지점
+        Vector3 spawnPos = rayOrigin + rayDir * minDistance; // 카메라 앞 0.5m 지점
         Quaternion rotation = Quaternion.LookRotation(rayDir);
         rotation *= Quaternion.Euler(90, 0, 0);
         GameObject missile = PhotonNetwork.Instantiate("Pen_Charged_Missile", spawnPos, rotation);

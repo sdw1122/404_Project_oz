@@ -81,8 +81,37 @@ MonoBehaviour:
   - RPC_TriggerPlayerHeal
   - DeActivateCamera
   - DeadCamera
-  - RPC_LoseLife
+  - RPC_JumpAttack
+  - RPC_BlendIdle
+  - RPC_BlendRun
+  - RPC_RobotAttack
+  - RPC_SetNavMesh
+  - DestroyGenerator
+  - MakeFall
   - ProcessPlayerDeath
+  - PushAway
+  - RequestDestroy
+  - RPC_ShowHealingRay
+  - ToggleMoveState
+  - RPC_ThrowAttack
+  - RPC_Move
+  - RPC_Throw
+  - RPC_ThrowAttackAni
+  - RPC_SetNavMesh2
+  - RPC_ForceSyncPosition
+  - SetTarget
+  - SyncRigidState
+  - RPC_SyncRigidState
+  - SyncLookRotation
+  - ActivateLever
+  - FireCannon_RPC
+  - MarkAsUsed_RPC
+  - PushOver
+  - Reinforce_RPC
+  - RequestDialogueStart_RPC
+  - RequestFire_RPC
+  - ResetLever
+  - StartFalling_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

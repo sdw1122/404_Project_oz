@@ -2,33 +2,38 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
-public class Enemy : LivingEntity
+public abstract class Enemy : LivingEntity
 {
     public LayerMask whatIsTarget; // 추적 대상 레이어
 
-    private LivingEntity targetEntity; // 추적 대상
-    private NavMeshAgent navMeshAgent; // 경로 계산 AI 에이전트
+    public LivingEntity targetEntity; // 추적 대상
+    public NavMeshAgent navMeshAgent; // 경로 계산 AI 에이전트
 
     public ParticleSystem hitEffect; // 피격 시 재생할 파티클 효과
     /*public AudioClip deathSound; // 사망 시 재생할 소리
     public AudioClip hitSound; // 피격 시 재생할 소리*/
 
-    private Animator enemyAnimator; // 애니메이터 컴포넌트
+    public Animator enemyAnimator; // 애니메이터 컴포넌트
     /*private AudioSource enemyAudioPlayer; // 오디오 소스 컴포넌트*/
     private Renderer enemyRenderer; // 렌더러 컴포넌트
+    private Rigidbody rb;        
+    public abstract void Attack();
 
     public float currentHealth;
-    public float damage = 20f; // 공격력
+    public float damage; // 공격력
     public float timeBetAttack = 0.5f; // 공격 간격
     private float lastAttackTime; // 마지막 공격 시점
+    public float attackRange;
     
     public bool isBinded=false;
-    private Color originalColor;
+    public bool isFirstChase = true;
+    private Color originalColor;    
 
-    PhotonView pv;
+    public PhotonView pv;
     // 추적할 대상이 존재하는지 알려주는 프로퍼티
-    private bool hasTarget
+    public bool hasTarget
     {
         get
         {
@@ -50,25 +55,45 @@ public class Enemy : LivingEntity
         enemyAnimator = GetComponent<Animator>();
         /*enemyAudioPlayer = GetComponent<AudioSource>();*/
         pv=GetComponent<PhotonView>();
+        Debug.Log("Awake: navMeshAgent=" + (navMeshAgent == null ? "NULL" : "OK") + ", pv=" + (pv == null ? "NULL" : "OK"));
         enemyRenderer = GetComponentInChildren<Renderer>();
         originalColor = enemyRenderer.material.color;
+        rb = GetComponent<Rigidbody>();
+        PhotonNetwork.SerializationRate = 20;
+        if (enemyRenderer != null)
+            enemyRenderer.enabled = true;
+        if (enemyAnimator != null)
+            enemyAnimator.enabled = true;
+        Debug.Log("Enemy Awake - Renderer enabled:" + enemyRenderer.enabled + ", color:" + enemyRenderer.material.color);
+        navMeshAgent.enabled = false;
     }
 
-    // 좀비 AI의 초기 스펙을 결정하는 셋업 메서드
+    // 초기 스펙을 결정하는 셋업 메서드
     public void Setup(EnemyData enemyData)
     {
-        startingHealth = enemyData.Max_HP;
-        health = enemyData.Max_HP;
-        damage = enemyData.Atk_Damage;
-        navMeshAgent.speed = enemyData.speed;
+        if (startingHealth <= 0f) // 인스펙터에서 0이면만 덮어씀
+            startingHealth = enemyData.Max_HP;
+        if (health <= 0f)
+            health = enemyData.Max_HP;
+        if (damage <= 0f)
+            damage = enemyData.Atk_Damage;
+        if (navMeshAgent.speed <= 0f)
+            navMeshAgent.speed = enemyData.speed;
         /*originalColor = enemyData.skinColor;
         enemyRenderer.material.color = enemyData.skinColor;*/
     }
 
     private void Start()
     {
+        if (!pv.IsMine)
+        {
+            // 네트워크 위치 동기화 완료 후 워프
+            navMeshAgent.Warp(transform.position);
+        }
+        navMeshAgent.enabled = true; // 위치 맞춘 뒤 에이전트 켜기
+        Debug.Log("Enemy Awake pv = " + (pv != null ? pv.ViewID.ToString() : "NULL"));
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
-        StartCoroutine(UpdatePath());
+        StartCoroutine(UpdatePath());        
     }
 
     private void Update()
@@ -79,8 +104,13 @@ public class Enemy : LivingEntity
         /*enemyAnimator.SetBool("HasTarget", hasTarget);*/
     }
 
+    public virtual bool CanAct()
+    {
+        return true;
+    }
+
     // 주기적으로 추적할 대상의 위치를 찾아 경로 갱신
-    private IEnumerator UpdatePath()
+    public virtual IEnumerator UpdatePath()
     {
         // 살아 있는 동안 무한 루프
         while (!dead)
@@ -93,19 +123,39 @@ public class Enemy : LivingEntity
             }
             if (hasTarget)
             {
-                if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+                float dist = Vector3.Distance(transform.position, targetEntity.transform.position);               
+                if (dist <= attackRange)
                 {
-                    navMeshAgent.isStopped = false;
+                    enemyAnimator.SetFloat("Blend", 0f); // 공격 전 Idle자세
+                    pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
+                    if (CanAct())    // (공격 가능한지 자식에게 '질문')
+                    {                        
+                        Attack();    // -> Attack도 override 해서 자식 전용
+                    }
                 }
-                
-                navMeshAgent.SetDestination(targetEntity.transform.position);
-
+                else 
+                {
+                    if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+                    {                        
+                        navMeshAgent.isStopped = false;
+                        navMeshAgent.SetDestination(targetEntity.transform.position);
+                        //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
+                        if (PhotonNetwork.IsMasterClient)
+                        {
+                            pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
+                        }
+                        enemyAnimator.SetFloat("Blend", 1f); // 걷기/달리기 애니메이션
+                        pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);                        
+                    }
+                }
             }
             else
             {
                 if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
                 {
                     navMeshAgent.isStopped = true;
+                    enemyAnimator.SetFloat("Blend", 0f);
+                    pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
                 }
 
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
@@ -115,6 +165,10 @@ public class Enemy : LivingEntity
                     if (livingEntity != null && !livingEntity.dead)
                     {
                         targetEntity = livingEntity;
+                        PhotonView targetPV = targetEntity.GetComponent<PhotonView>();
+
+                        if (targetPV != null && pv != null)
+                            pv.RPC("SetTarget", RpcTarget.Others, targetPV.ViewID);
                         break;
                     }
                 }
@@ -125,19 +179,38 @@ public class Enemy : LivingEntity
         }
     }
 
-    // 데미지를 입었을 때 실행할 처리
-    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    [PunRPC]
+    public void SyncLookRotation(Quaternion rot)
     {
-        if (dead) return;
+        transform.rotation = rot;
+    }
 
-        // 마스터만 데미지 처리
-        if (!PhotonNetwork.IsMasterClient) return;
-        // 모든 클라에게 연출 동기화
-        //pv.RPC("RPC_PlayHitEffect", RpcTarget.AllViaServer, hitPoint, hitNormal);
-        // 데미지 적용
-        base.OnDamage(damage, hitPoint, hitNormal);
+    [PunRPC]
+    public void SetTarget(int targetViewId)
+    {
+        PhotonView targetPV = PhotonView.Find(targetViewId);
+        if (targetPV != null)
+            targetEntity = targetPV.GetComponent<LivingEntity>();
+    }
 
-        
+    [PunRPC]
+    public void RPC_ForceSyncPosition(Vector3 pos, Vector3 vel)
+    {
+        navMeshAgent.Warp(pos); // 즉시 위치 일치
+        transform.position = pos;
+        rb.linearVelocity = vel;
+    }
+
+    [PunRPC]
+    public void RPC_BlendIdle(float blendValue)
+    {
+        enemyAnimator.SetFloat("Blend", blendValue);
+    }
+
+    [PunRPC]
+    public void RPC_BlendRun(float blendValue)
+    {
+        enemyAnimator.SetFloat("Blend", blendValue);
     }
 
     // 사망 처리
@@ -158,29 +231,6 @@ public class Enemy : LivingEntity
         navMeshAgent.enabled = false;
         enemyAnimator.SetTrigger("Die");
         /*enemyAudioPlayer.PlayOneShot(deathSound);*/
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (!PhotonNetwork.IsMasterClient || dead) return;
-
-        if (Time.time >= lastAttackTime + timeBetAttack)
-        {
-            
-            LivingEntity attackTarget = other.GetComponent<LivingEntity>();
-            
-            if (attackTarget != null && !attackTarget.dead)
-            {
-                
-                lastAttackTime = Time.time;
-
-                Vector3 hitPoint = other.ClosestPoint(transform.position);
-                Vector3 hitNormal = transform.position - other.transform.position;
-
-                attackTarget.OnDamage(damage, hitPoint, hitNormal);
-                UpdateNearestTarget();
-            }
-        }
     }
 
     private void UpdateNearestTarget()
@@ -208,7 +258,8 @@ public class Enemy : LivingEntity
         {
             targetEntity = closestEntity;
         }
-    }
+    }   
+
     private IEnumerator FlashColor()
     {
         
@@ -227,7 +278,7 @@ public class Enemy : LivingEntity
         StartCoroutine(FlashColor());
     }
     [PunRPC]
-    void RPC_PlayHitEffect(Vector3 hitPoint, Vector3 hitNormal)
+    public void RPC_PlayHitEffect(Vector3 hitPoint, Vector3 hitNormal)
     {
         if (hitEffect != null)
         {

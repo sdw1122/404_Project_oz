@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3086464477865166854}
   - component: {fileID: 3946605923976330019}
   - component: {fileID: 559015041393802801}
-  - component: {fileID: 8787489966555858223}
   - component: {fileID: 1451095722040620637}
   - component: {fileID: -6560972140168879621}
   - component: {fileID: -4550226053062016565}
@@ -136,27 +135,6 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8787489966555858223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4219833358516237574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bbe09087fbf05c4ead60f127c3bc132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 40
-  whatIsTarget:
-    serializedVersion: 2
-    m_Bits: 128
-  hitEffect: {fileID: 1872185741079130679}
-  currentHealth: 0
-  damage: 19
-  timeBetAttack: 0.5
-  isBinded: 0
 --- !u!95 &1451095722040620637
 Animator:
   serializedVersion: 7
@@ -198,7 +176,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 8787489966555858223}
   - {fileID: -4550226053062016565}
   sceneViewId: 0
   InstantiationId: 0
@@ -284,11 +261,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d415c3c4b7dccf4aba3753b8264694f, type: 3}
---- !u!198 &1872185741079130679 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198000011254678926, guid: 1d415c3c4b7dccf4aba3753b8264694f, type: 3}
-  m_PrefabInstance: {fileID: 1964757963210586041}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1966398517556695755 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000013488956786, guid: 1d415c3c4b7dccf4aba3753b8264694f, type: 3}
