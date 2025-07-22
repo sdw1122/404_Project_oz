@@ -5,17 +5,14 @@ using Photon.Pun;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public Enemy enemyPrefab;
-    public string enemyPrefabName = "TinyRobot";
+    public List<GameObject> enemyPrefabs; // 몬스터 프리팹 리스트
     public EnemyData[] enemyDatas;
     public Transform[] spawnPoints;
-    
+    string resourcePath = "Model/Prefab/";
+
     private List<Enemy> enemyList = new List<Enemy>();
     private int wave;
-    private void Awake()
-    {
-       
-    }
+
     private void Update()
     {
         if (!PhotonNetwork.IsMasterClient) return;
@@ -37,12 +34,12 @@ public class EnemySpawner : MonoBehaviour
     private void CreateEnemy()
     {
         Debug.Log("CreateEnemy 메서드 실행");
-        Debug.Log($"enemyPrefab.name = {enemyPrefab.name}");
+        GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
         EnemyData enemyData = enemyDatas[Random.Range(0, enemyDatas.Length)];
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
         // 포톤 인스턴스 생성
-        GameObject enemyObj = PhotonNetwork.Instantiate("Model/Prefab/TinyRobot Red", spawnPoint.position, spawnPoint.rotation);
+        GameObject enemyObj = PhotonNetwork.Instantiate(resourcePath + enemyPrefab.name, spawnPoint.position, spawnPoint.rotation);
         Debug.Log($"{ enemyObj.name}" );
         if (enemyObj == null)
         {
