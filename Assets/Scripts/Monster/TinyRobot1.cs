@@ -4,7 +4,11 @@ using UnityEngine.AI;
 using System.Collections;
 
 public class TinyRobot1 : Enemy
-{    
+{
+    [SerializeField] private PhotonTransformView transformView;
+    [SerializeField] private PhotonRigidbodyView rigidbodyView;
+    [SerializeField] private PhotonView photonViews;
+
     public float jumpAttackRange = 1f;
     public float jumpPower = 0.1f;
     public float jumpAttackCooldown = 2f;
@@ -38,8 +42,6 @@ public class TinyRobot1 : Enemy
         lastJumpAttackTime = Time.time;
         enemyAnimator.SetTrigger("JumpAttack");
         pv.RPC("RPC_JumpAttack", RpcTarget.Others);
-        Debug.Log("공격");
-        Rigidbody rb = GetComponent<Rigidbody>();
         pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
         pv.RPC("RPC_RobotAttack", RpcTarget.All, targetEntity.transform.position);
 
@@ -50,8 +52,8 @@ public class TinyRobot1 : Enemy
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.isKinematic = false;
+        Debug.Log("View : " + transformView);
+        Rigidbody rb = GetComponent<Rigidbody>();        
         if (rb != null)
         {
             Vector3 dir = (targetPos - transform.position).normalized;
@@ -86,6 +88,7 @@ public class TinyRobot1 : Enemy
         isJumpAttacking = false;
         // 공격 종료 후 NavMeshAgent 다시 켜주기!
         Rigidbody rb = GetComponent<Rigidbody>();
+
         pv.RPC("RPC_SetNavMesh", RpcTarget.All, true);
 
         Debug.Log("공격 끝");
@@ -102,8 +105,6 @@ public class TinyRobot1 : Enemy
                 playerRb.linearVelocity = Vector3.ProjectOnPlane(playerRb.linearVelocity, col.GetContact(0).normal);
             }
         }
-
-        // 반대로 플레이어 스크립트에도 몬스터 만나면 같은 로직 적용
     }
 
     [PunRPC]
@@ -111,7 +112,7 @@ public class TinyRobot1 : Enemy
     public void RPC_SetNavMesh(bool active)
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        navMeshAgent.enabled = active;
+        navMeshAgent.enabled = active;        
         rb.isKinematic = active;
     }
 }

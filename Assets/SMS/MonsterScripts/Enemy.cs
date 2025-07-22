@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public abstract class Enemy : LivingEntity
 {
@@ -17,8 +18,7 @@ public abstract class Enemy : LivingEntity
     public Animator enemyAnimator; // 애니메이터 컴포넌트
     /*private AudioSource enemyAudioPlayer; // 오디오 소스 컴포넌트*/
     private Renderer enemyRenderer; // 렌더러 컴포넌트
-    enum EnemyState { Idle, Chase, Attack };
-    private EnemyState currentState = EnemyState.Idle;
+    private Rigidbody rb;        
     public abstract void Attack();
 
     public float currentHealth;
@@ -28,6 +28,7 @@ public abstract class Enemy : LivingEntity
     public float attackRange;
     
     public bool isBinded=false;
+    public bool isFirstChase = true;
     private Color originalColor;    
 
     public PhotonView pv;
@@ -54,25 +55,45 @@ public abstract class Enemy : LivingEntity
         enemyAnimator = GetComponent<Animator>();
         /*enemyAudioPlayer = GetComponent<AudioSource>();*/
         pv=GetComponent<PhotonView>();
+        Debug.Log("Awake: navMeshAgent=" + (navMeshAgent == null ? "NULL" : "OK") + ", pv=" + (pv == null ? "NULL" : "OK"));
         enemyRenderer = GetComponentInChildren<Renderer>();
         originalColor = enemyRenderer.material.color;
+        rb = GetComponent<Rigidbody>();
+        PhotonNetwork.SerializationRate = 20;
+        if (enemyRenderer != null)
+            enemyRenderer.enabled = true;
+        if (enemyAnimator != null)
+            enemyAnimator.enabled = true;
+        Debug.Log("Enemy Awake - Renderer enabled:" + enemyRenderer.enabled + ", color:" + enemyRenderer.material.color);
+        navMeshAgent.enabled = false;
     }
 
-    // 좀비 AI의 초기 스펙을 결정하는 셋업 메서드
+    // 초기 스펙을 결정하는 셋업 메서드
     public void Setup(EnemyData enemyData)
     {
-        startingHealth = enemyData.Max_HP;
-        health = enemyData.Max_HP;
-        damage = enemyData.Atk_Damage;
-        navMeshAgent.speed = enemyData.speed;
+        if (startingHealth <= 0f) // 인스펙터에서 0이면만 덮어씀
+            startingHealth = enemyData.Max_HP;
+        if (health <= 0f)
+            health = enemyData.Max_HP;
+        if (damage <= 0f)
+            damage = enemyData.Atk_Damage;
+        if (navMeshAgent.speed <= 0f)
+            navMeshAgent.speed = enemyData.speed;
         /*originalColor = enemyData.skinColor;
         enemyRenderer.material.color = enemyData.skinColor;*/
     }
 
     private void Start()
     {
+        if (!pv.IsMine)
+        {
+            // 네트워크 위치 동기화 완료 후 워프
+            navMeshAgent.Warp(transform.position);
+        }
+        navMeshAgent.enabled = true; // 위치 맞춘 뒤 에이전트 켜기
+        Debug.Log("Enemy Awake pv = " + (pv != null ? pv.ViewID.ToString() : "NULL"));
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
-        StartCoroutine(UpdatePath());
+        StartCoroutine(UpdatePath());        
     }
 
     private void Update()
@@ -81,11 +102,6 @@ public abstract class Enemy : LivingEntity
         if (isBinded) navMeshAgent.isStopped = true;
         // 추적 대상의 존재 여부에 따라 다른 애니메이션 재생
         /*enemyAnimator.SetBool("HasTarget", hasTarget);*/
-        switch (currentState)
-        {
-            case EnemyState.Idle:
-                break;
-        }
     }
 
     public virtual bool CanAct()
@@ -107,7 +123,7 @@ public abstract class Enemy : LivingEntity
             }
             if (hasTarget)
             {
-                float dist = Vector3.Distance(transform.position, targetEntity.transform.position);
+                float dist = Vector3.Distance(transform.position, targetEntity.transform.position);               
                 if (dist <= attackRange)
                 {
                     enemyAnimator.SetFloat("Blend", 0f); // 공격 전 Idle자세
@@ -120,12 +136,16 @@ public abstract class Enemy : LivingEntity
                 else 
                 {
                     if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
-                    {
+                    {                        
                         navMeshAgent.isStopped = false;
                         navMeshAgent.SetDestination(targetEntity.transform.position);
+                        //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
+                        if (PhotonNetwork.IsMasterClient)
+                        {
+                            pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
+                        }
                         enemyAnimator.SetFloat("Blend", 1f); // 걷기/달리기 애니메이션
-                        pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
-                        currentState = EnemyState.Chase;
+                        pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);                        
                     }
                 }
             }
@@ -145,6 +165,10 @@ public abstract class Enemy : LivingEntity
                     if (livingEntity != null && !livingEntity.dead)
                     {
                         targetEntity = livingEntity;
+                        PhotonView targetPV = targetEntity.GetComponent<PhotonView>();
+
+                        if (targetPV != null && pv != null)
+                            pv.RPC("SetTarget", RpcTarget.Others, targetPV.ViewID);
                         break;
                     }
                 }
@@ -153,6 +177,28 @@ public abstract class Enemy : LivingEntity
             // 0.25초 주기로 처리 반복
             yield return new WaitForSeconds(0.25f);
         }
+    }
+
+    [PunRPC]
+    public void SyncLookRotation(Quaternion rot)
+    {
+        transform.rotation = rot;
+    }
+
+    [PunRPC]
+    public void SetTarget(int targetViewId)
+    {
+        PhotonView targetPV = PhotonView.Find(targetViewId);
+        if (targetPV != null)
+            targetEntity = targetPV.GetComponent<LivingEntity>();
+    }
+
+    [PunRPC]
+    public void RPC_ForceSyncPosition(Vector3 pos, Vector3 vel)
+    {
+        navMeshAgent.Warp(pos); // 즉시 위치 일치
+        transform.position = pos;
+        rb.linearVelocity = vel;
     }
 
     [PunRPC]
