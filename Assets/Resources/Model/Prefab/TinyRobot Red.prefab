@@ -1093,10 +1093,10 @@ GameObject:
   - component: {fileID: -5075713804932305451}
   - component: {fileID: 4293214390794547312}
   - component: {fileID: -4778915355420480149}
+  - component: {fileID: 2517862282340975474}
   - component: {fileID: -4803087579523428329}
   - component: {fileID: -1536756168566807376}
   - component: {fileID: -6209578762180231629}
-  - component: {fileID: 2517862282340975474}
   m_Layer: 8
   m_Name: TinyRobot Red
   m_TagString: Enemy
@@ -1213,6 +1213,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &2517862282340975474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7990584158616284374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d0a4e404cb114408be0e72f682ae85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 20
+  whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 128
+  targetEntity: {fileID: 0}
+  navMeshAgent: {fileID: 0}
+  hitEffect: {fileID: 198000011254678926, guid: 1d415c3c4b7dccf4aba3753b8264694f, type: 3}
+  enemyAnimator: {fileID: 0}
+  currentHealth: 0
+  damage: 3
+  timeBetAttack: 5
+  attackRange: 10
+  isBinded: 0
+  isFirstChase: 0
+  pv: {fileID: 0}
+  throwObj: {fileID: 4799392649775753017, guid: 924d3887ceeb23243910933950a84af7, type: 3}
+  throwPoint: {fileID: 5009277148290514229}
+  throwPower: 15
 --- !u!114 &-4803087579523428329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1232,9 +1262,9 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 2517862282340975474}
   - {fileID: -1536756168566807376}
   - {fileID: -6209578762180231629}
-  - {fileID: 2517862282340975474}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1284,35 +1314,6 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
---- !u!114 &2517862282340975474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7990584158616284374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2d0a4e404cb114408be0e72f682ae85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 20
-  whatIsTarget:
-    serializedVersion: 2
-    m_Bits: 128
-  targetEntity: {fileID: 0}
-  navMeshAgent: {fileID: 0}
-  hitEffect: {fileID: 198000011254678926, guid: 1d415c3c4b7dccf4aba3753b8264694f, type: 3}
-  enemyAnimator: {fileID: 0}
-  currentHealth: 0
-  damage: 3
-  timeBetAttack: 5
-  attackRange: 10
-  isBinded: 0
-  pv: {fileID: 0}
-  throwObj: {fileID: 4799392649775753017, guid: 924d3887ceeb23243910933950a84af7, type: 3}
-  throwPoint: {fileID: 5009277148290514229}
-  throwPower: 15
 --- !u!1 &8202246061390896484
 GameObject:
   m_ObjectHideFlags: 0

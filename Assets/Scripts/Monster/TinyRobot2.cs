@@ -28,6 +28,12 @@ public class TinyRobot2 : Enemy
         {                        
             navMeshAgent.enabled = false;
             rb.isKinematic = false;
+            if (!rb.isKinematic)
+            {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+            pv.RPC("RPC_SyncRigidState", RpcTarget.Others, rb.position, Vector3.zero);
         }
 
         if (targetEntity != null)
@@ -45,6 +51,15 @@ public class TinyRobot2 : Enemy
             enemyAnimator.SetTrigger("Throw");
             pv.RPC("RPC_ThrowAttackAni", RpcTarget.Others, lookRotation);
         }
+    }
+
+    [PunRPC]
+    public void RPC_SyncRigidState(Vector3 pos, Vector3 vel)
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.position = pos;
+        if (!rb.isKinematic)
+            rb.linearVelocity = vel;
     }
 
     [PunRPC]
@@ -76,12 +91,17 @@ public class TinyRobot2 : Enemy
     {
         // 1. 돌맹이 생성
         GameObject rock = Instantiate(throwObj, throwPoint.position, Quaternion.identity);
+        TR2Weapon weaponScript = rock.GetComponent<TR2Weapon>();
+        if (weaponScript != null)
+        {
+            weaponScript.damage = this.damage; // Enemy에 있는 public damage 사용
+        }
 
         // 타겟의 중앙이나 원하는 높이 조준(예: 허리나 머리 높이)
         targetPos.y += 1.0f; // 원하는 만큼 조정
 
         Vector3 dir = (targetPos - start).normalized;
-        dir.y += 0.3f;
+        dir.y += 0.2f;
 
         // 3. 힘 적용
         Rigidbody rb = rock.GetComponent<Rigidbody>();

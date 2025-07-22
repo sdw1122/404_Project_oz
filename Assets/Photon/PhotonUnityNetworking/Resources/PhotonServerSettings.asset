@@ -98,6 +98,11 @@ MonoBehaviour:
   - RPC_Throw
   - RPC_ThrowAttackAni
   - RPC_SetNavMesh2
+  - RPC_ForceSyncPosition
+  - SetTarget
+  - SyncRigidState
+  - RPC_SyncRigidState
+  - SyncLookRotation
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

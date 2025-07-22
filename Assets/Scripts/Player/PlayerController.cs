@@ -193,7 +193,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (!pv.IsMine) return;
-
         
     }
     // Update is called once per frame

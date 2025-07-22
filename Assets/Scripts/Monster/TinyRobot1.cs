@@ -7,7 +7,7 @@ public class TinyRobot1 : Enemy
 {
     [SerializeField] private PhotonTransformView transformView;
     [SerializeField] private PhotonRigidbodyView rigidbodyView;
-    [SerializeField] private PhotonView photonView;
+    [SerializeField] private PhotonView photonViews;
 
     public float jumpAttackRange = 1f;
     public float jumpPower = 0.1f;
