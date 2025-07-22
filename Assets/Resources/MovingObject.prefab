@@ -128,6 +128,7 @@ MonoBehaviour:
   customInteractRange: 0
   targetTransform: {fileID: 3630698657821038160}
   moveSpeed: 0.5
+  isLava: 0
 --- !u!114 &296606346871264984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,8 +147,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 0}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

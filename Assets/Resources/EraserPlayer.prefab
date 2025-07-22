@@ -1306,6 +1306,7 @@ MonoBehaviour:
   interactLayer:
     serializedVersion: 2
     m_Bits: 64
+  maxDetectionDistance: 150
   interactUIObject: {fileID: 8306130326150320638}
 --- !u!114 &4226276362303419168
 MonoBehaviour:

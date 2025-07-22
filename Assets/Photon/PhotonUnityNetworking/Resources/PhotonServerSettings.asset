@@ -101,6 +101,8 @@ MonoBehaviour:
   - RequestDialogueStart_RPC
   - FireCannon_RPC
   - RequestFire_RPC
+  - Reinforce_RPC
+  - StartFalling_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

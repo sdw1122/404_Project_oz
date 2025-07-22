@@ -27,11 +27,23 @@ public class BridgeObject : InteractableBase
         {
             rb = GetComponent<Rigidbody>();
         }
+
+
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
+        else
+        {
+            Debug.LogError($"'{gameObject.name}' 오브젝트에 Rigidbody 컴포넌트가 없습니다.", this);
+        }
     }
 
     public override void Interact(PlayerController player)
     {
         if (hasFallen || forcePoint == null) return;
+
+        rb.isKinematic = false; // 물리 엔진의 영향을 받도록 설정
 
         // 플레이어의 위치를 기준으로, 객체를 밀어낼 방향을 결정
         // (플레이어 -> 객체 방향에서 수평 방향만 사용)
