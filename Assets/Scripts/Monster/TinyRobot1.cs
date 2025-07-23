@@ -25,6 +25,7 @@ public class TinyRobot1 : Enemy
 
     public override void Attack()
     {
+        if (dead) return;
         Debug.Log("Attack 실행");
         if (targetEntity == null || dead) return;
         if (Time.time < lastJumpAttackTime + jumpAttackCooldown) return;

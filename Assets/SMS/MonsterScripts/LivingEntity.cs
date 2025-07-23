@@ -40,6 +40,7 @@ public class LivingEntity : MonoBehaviour, IDamageable, IPunObservable
     // 데미지를 입는 기능
     public virtual void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
+        if (dead) return;
         // 데미지만큼 체력 감소
         health -= damage;
 
@@ -75,8 +76,6 @@ public class LivingEntity : MonoBehaviour, IDamageable, IPunObservable
         {
             onDeath();
         }
-
-        dead = true;
     }
     
 }

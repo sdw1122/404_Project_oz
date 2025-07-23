@@ -24,12 +24,12 @@ public class PenAttack : MonoBehaviour
     private float lastFireTime;
     PhotonView pv;
     private void Awake()
-    {   
-
+    {
+        animator = penPlayer.GetComponent<Animator>();
         pv = GetComponent<PhotonView>();
         if (!pv.IsMine) return;
         Debug.Log("firePoint: " + firePoint);
-        animator=penPlayer.GetComponent<Animator>();
+        
         
     }
     private void Update()
@@ -73,7 +73,7 @@ public class PenAttack : MonoBehaviour
         pv.RPC("RPC_TriggerPenAttack", RpcTarget.Others);
     }
     [PunRPC]
-    void RPC_TriggerPenAttack()
+    public void RPC_TriggerPenAttack()
     {
         animator.SetTrigger("Attack");
     }
