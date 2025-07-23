@@ -13,13 +13,15 @@ public class InteractiveController : MonoBehaviour
     [SerializeField] private float defaultInteractRange = 3f;
     [SerializeField] private LayerMask interactLayer;
 
+    [Tooltip("상호작용을 감지할 최대 거리입니다. 개별 오브젝트의 상호작용 거리보다 길어야 합니다.")]
+    [SerializeField] private float maxDetectionDistance = 150f;
+
     // [SerializeField] private GameObject interactUI; // 이 변수명을 바꿔서 역할을 명확히 합니다.
     [Header("UI 설정")]
     [Tooltip("플레이어 프리팹의 자식으로 있는 상호작용 UI 오브젝트를 직접 연결하세요.")]
     [SerializeField] private GameObject interactUIObject; // 프리팹이 아닌, 씬에 있는 실제 오브젝트를 연결할 변수
 
     private PhotonView pv;
-    // private GameObject uiObjectInstance; // 이 변수는 더 이상 필요 없습니다.
     private InteractableBase currentInteractable;
 
     void Awake()
@@ -40,8 +42,11 @@ public class InteractiveController : MonoBehaviour
     void Update()
     {
         if (!pv.IsMine) return;
+
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, defaultInteractRange, interactLayer))
+
+        // 레이캐스트의 최대 거리를 defaultInteractRange 대신 maxDetectionDistance로 변경합니다.
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDetectionDistance, interactLayer))
         {
             InteractableBase interactable = hit.collider.GetComponent<InteractableBase>();
 

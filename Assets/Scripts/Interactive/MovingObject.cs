@@ -11,6 +11,8 @@ public class MovingObject : InteractableBase
 
     [Tooltip("오브젝트의 이동 속도를 조절합니다.")]
     [SerializeField] private float moveSpeed = 2f;
+    [Header("용암인가?")]
+    [SerializeField] private bool isLava = false; // 용암인지 여부를 나타내는 변수입니다.
 
     private Vector3 startPosition;
     private Quaternion startRotation;
@@ -37,6 +39,33 @@ public class MovingObject : InteractableBase
         else
         {
             Debug.LogError($"'{gameObject.name}' 오브젝트에 targetTransform이 할당되지 않았습니다.", this);
+        }
+        if (isLava)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Lava");
+            if (PhotonNetwork.IsMasterClient)
+            {
+                pv.RPC("ToggleMoveState", RpcTarget.All);
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // 이 오브젝트가 용암이 아니면 아무것도 하지 않음
+        if (!isLava) return;
+
+        // 부딪힌 상대방이 'Player' 태그를 가지고 있는지 확인
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // 플레이어의 PlayerHealth 컴포넌트를 가져옴
+            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                // 플레이어의 최대 체력만큼의 데미지를 주어 즉사시킴
+                // OnDamage는 네트워크 동기화를 위해 RPC로 호출됨
+                playerHealth.OnDamage(playerHealth.startingHealth, collision.contacts[0].point, collision.contacts[0].normal);
+            }
         }
     }
 
