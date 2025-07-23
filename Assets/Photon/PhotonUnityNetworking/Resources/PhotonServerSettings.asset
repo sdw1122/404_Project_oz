@@ -114,6 +114,14 @@ MonoBehaviour:
   - RequestFire_RPC
   - ResetLever
   - StartFalling_RPC
+  - RPC_GolemAttack
+  - RPC_GolemSkill
+  - RPC_GolemAttack2
+  - RPC_MoveIdle
+  - RPC_MoveRun
+  - RPC_Moveset
+  - RPC_MoveSet
+  - RPC_EnemyHit
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -38,9 +38,22 @@ public class PenMissile : MonoBehaviour
                 
                 if (!enemy.dead)
                 {
-                    enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-
-                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage, hitPoint, hitNormal);
+                    if (!enemy.dead)
+                    {
+                        if (other.CompareTag("Golem"))
+                        {
+                            StoneGolem golem = other.GetComponent<StoneGolem>();
+                            if (golem != null && golem.isHammer)
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage * 2f, hitPoint, hitNormal);
+                            }
+                        }
+                        else
+                        {
+                            enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage, hitPoint, hitNormal);
+                        }
+                        enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                    }
                     PhotonNetwork.Destroy(gameObject);
                 }
 

@@ -39,8 +39,22 @@ public class ChargedPenMissile : MonoBehaviour
                 Enemy enemy = other.GetComponent<Enemy>();
                 if (!enemy.dead)
                 {
-                    enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
+                    if (!enemy.dead)
+                    {
+                        if (other.CompareTag("Golem"))
+                        {
+                            StoneGolem golem = other.GetComponent<StoneGolem>();
+                            if (golem != null && golem.isHammer)
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal);
+                            }
+                        }
+                        else
+                        {
+                            enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
+                        }
+                        enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                    }
                 }
             }
         }
