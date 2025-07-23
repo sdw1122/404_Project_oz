@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 8ebeb4729faffde458a3996a3780199c
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _RGMaskDirt: {fileID: 2800000, guid: e8ba2da5a12f312449c38f0b407e2fac, type: 3}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 263656
+  packageName: Medieval Church and Monastery Kit
+  packageVersion: 1.1
+  assetPath: Assets/CreaturePub/Church_Monastery/Shaders/CP_Lit_Masked.shader
+  uploadId: 623234
