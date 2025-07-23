@@ -263,9 +263,13 @@ public class Hammer : MonoBehaviour
                 PhotonView enemyPv = hit.GetComponent<PhotonView>();
                 if (enemy != null)
                 {
-                    enemy.OnDamage(damage, hitPoint, hitNormal);
-                    enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
+                    
+                    if (!enemy.dead)
+                    {
+                        enemy.OnDamage(damage, hitPoint, hitNormal);
+                        enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                        enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
+                    }
                     Debug.Log("Attack맞음");
                 }
             }
@@ -311,9 +315,11 @@ public class Hammer : MonoBehaviour
                     Vector3 hitNormal = (hitPoint - transform.position).normalized;
 
                     PhotonView enemyPv = hit.GetComponent<PhotonView>();
-
-                    enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-                    enemy.OnDamage(attackDamage, hitPoint, hitNormal);
+                    if (!enemy.dead)
+                    {
+                        enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                        enemy.OnDamage(attackDamage, hitPoint, hitNormal);
+                    }
                 }
                 Debug.Log("Skill2 맞음");
             }
@@ -363,8 +369,11 @@ public class Hammer : MonoBehaviour
                     Vector3 hitNormal = (hitPoint - transform.position).normalized;
                     PhotonView enemyPv = hit.GetComponent<PhotonView>();
 
-                    enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-                    enemy.OnDamage(damage, hitPoint, hitNormal); // damage는 원하는 값으로
+                    if (!enemy.dead)
+                    {
+                        enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                        enemy.OnDamage(damage, hitPoint, hitNormal); // damage는 원하는 값으로
+                    }
                 }
             }
         }

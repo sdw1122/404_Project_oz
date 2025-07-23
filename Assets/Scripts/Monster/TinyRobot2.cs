@@ -97,6 +97,7 @@ public class TinyRobot2 : Enemy
 
     public override void Attack()
     {
+        if (dead) return;
         if (isThrowing) return;
         isThrowing = true;
 

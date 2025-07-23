@@ -103,6 +103,8 @@ MonoBehaviour:
   - SyncRigidState
   - RPC_SyncRigidState
   - SyncLookRotation
+  - RPC_Die
+  - RPC_LogMessage
   - ActivateLever
   - FireCannon_RPC
   - MarkAsUsed_RPC
@@ -112,6 +114,8 @@ MonoBehaviour:
   - RequestFire_RPC
   - ResetLever
   - StartFalling_RPC
+  - RPC_SetAirborne
+  - RPC_SetFloat
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

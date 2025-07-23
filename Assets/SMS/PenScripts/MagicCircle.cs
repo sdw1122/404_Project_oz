@@ -90,8 +90,9 @@ public class MagicCircle : MonoBehaviour
                         Vector3 hitNormal = (target.transform.position - transform.position).normalized;
 
                         PhotonView enemyPv = target.GetComponent<PhotonView>();
+                        Enemy enemy = target.GetComponent<Enemy>();
 
-                        if (enemyPv != null)
+                        if (enemyPv != null && !enemy.dead)
                         {
                             enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
                             enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);

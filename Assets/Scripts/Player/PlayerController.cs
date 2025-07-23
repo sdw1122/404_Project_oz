@@ -120,15 +120,13 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
-            animator.SetTrigger("Jump");
-            pv.RPC("RPC_TriggerJump", RpcTarget.Others);
         }
     }
 
     [PunRPC]
-    void RPC_TriggerJump()
+    void RPC_SetFloat(bool floating)
     {
-        animator.SetTrigger("Jump");
+        animator.SetBool("Float", floating);
     }
 
     public void OnSprint(InputAction.CallbackContext context)
@@ -193,7 +191,10 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (!pv.IsMine) return;
-        
+        bool floating = !isGrounded;
+        animator.SetBool("Float", floating);
+        // 필요하면 네트워크로 동기화
+        pv.RPC("RPC_SetFloat", RpcTarget.Others, floating);
     }
     // Update is called once per frame
     void FixedUpdate()

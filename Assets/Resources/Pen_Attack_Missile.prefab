@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3626834733843971565}
   - component: {fileID: -2078483842860659644}
   - component: {fileID: 1507645355193358000}
+  - component: {fileID: 4717222551567085361}
   m_Layer: 0
   m_Name: Pen_Attack_Missile
   m_TagString: Untagged
@@ -133,6 +134,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 10
+--- !u!65 &4717222551567085361
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3286043065174067436}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.002, y: 0.005, z: 0.02}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5653400199688164444
 PrefabInstance:
   m_ObjectHideFlags: 0

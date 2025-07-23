@@ -34,11 +34,16 @@ public class PenMissile : MonoBehaviour
                 Vector3 hitNormal = transform.position - other.transform.position;
 
                 PhotonView enemyPv=other.GetComponent<PhotonView>();
+                Enemy enemy = other.GetComponent<Enemy>();
+                
+                if (!enemy.dead)
+                {
+                    enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
 
-                enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage, hitPoint, hitNormal);
+                    PhotonNetwork.Destroy(gameObject);
+                }
 
-                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage, hitPoint, hitNormal);
-                PhotonNetwork.Destroy(gameObject);
 
             }
         }

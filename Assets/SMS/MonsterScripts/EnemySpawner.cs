@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
     public List<GameObject> enemyPrefabs; // 몬스터 프리팹 리스트
     public EnemyData[] enemyDatas;
     public Transform[] spawnPoints;
-    string resourcePath = "Model/Prefab/";
+    string resourcePath = "Model/Prefab/";    
 
     private List<Enemy> enemyList = new List<Enemy>();
     private int wave;
@@ -60,18 +60,10 @@ public class EnemySpawner : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
         {
             enemy.Setup(enemyData);
-        }
-
-        // 적 리스트 관리도 마스터만 , 둘이 동시에 시행된다면 꼬일 수 있다.
-        if (PhotonNetwork.IsMasterClient)
-        {
             enemyList.Add(enemy);
             enemy.onDeath += () => enemyList.Remove(enemy);
             enemy.onDeath += () => PhotonNetwork.Destroy(enemy.gameObject);
-        }
-
-
-
+        }        
     }
     
 }

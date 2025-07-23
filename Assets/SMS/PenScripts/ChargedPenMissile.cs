@@ -35,10 +35,13 @@ public class ChargedPenMissile : MonoBehaviour
                 Vector3 hitNormal = transform.position - other.transform.position;
 
                 PhotonView enemyPv = other.GetComponent<PhotonView>();
-                enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
 
-
+                Enemy enemy = other.GetComponent<Enemy>();
+                if (!enemy.dead)
+                {
+                    enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
+                }
             }
         }
     }
