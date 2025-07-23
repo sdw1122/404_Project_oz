@@ -103,6 +103,8 @@ MonoBehaviour:
   - SyncRigidState
   - RPC_SyncRigidState
   - SyncLookRotation
+  - RPC_Die
+  - RPC_LogMessage
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

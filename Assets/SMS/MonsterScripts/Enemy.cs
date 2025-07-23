@@ -99,10 +99,17 @@ public abstract class Enemy : LivingEntity
     private void Update()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        if (isBinded) navMeshAgent.isStopped = true;
+        if (isBinded && navMeshAgent.isOnNavMesh)
+        {
+            navMeshAgent.isStopped = true;
+            enemyAnimator.SetFloat("Blend", 0f); // 공격 전 Idle자세
+            pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
+        }
+        currentHealth = health;
         // 추적 대상의 존재 여부에 따라 다른 애니메이션 재생
         /*enemyAnimator.SetBool("HasTarget", hasTarget);*/
     }
+
 
     public virtual bool CanAct()
     {
@@ -128,20 +135,20 @@ public abstract class Enemy : LivingEntity
                 {
                     enemyAnimator.SetFloat("Blend", 0f); // 공격 전 Idle자세
                     pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
-                    if (CanAct())    // (공격 가능한지 자식에게 '질문')
+                    if (CanAct() && !isBinded)    // (공격 가능한지 자식에게 '질문')
                     {                        
                         Attack();    // -> Attack도 override 해서 자식 전용
                     }
                 }
                 else 
                 {
-                    if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
-                    {                        
+                    if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh && !isBinded)
+                    { 
                         navMeshAgent.isStopped = false;
-                        navMeshAgent.SetDestination(targetEntity.transform.position);
-                        //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
+                        navMeshAgent.SetDestination(targetEntity.transform.position);                        
                         if (PhotonNetwork.IsMasterClient)
                         {
+                            //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
                             pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
                         }
                         enemyAnimator.SetFloat("Blend", 1f); // 걷기/달리기 애니메이션
@@ -177,6 +184,13 @@ public abstract class Enemy : LivingEntity
             // 0.25초 주기로 처리 반복
             yield return new WaitForSeconds(0.25f);
         }
+    }
+
+
+    [PunRPC]
+    public void RPC_LogMessage(string msg)
+    {
+        Debug.Log("[네트워크 로그] " + msg);
     }
 
     [PunRPC]
@@ -216,21 +230,33 @@ public abstract class Enemy : LivingEntity
     // 사망 처리
     public override void Die()
     {
-        // LivingEntity의 Die()를 실행하여 기본 사망 처리 실행
-        base.Die();
-
-        Collider[] enemyColliders = GetComponents<Collider>();
-        for (int i = 0; i < enemyColliders.Length; i++)
+        if (dead) return;
+        dead = true;
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
         {
-            enemyColliders[i].enabled = false;
+            rb.isKinematic = false;         // 더 이상 중력/물리 영향 X
         }
-        if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+        if (navMeshAgent != null)
         {
-            navMeshAgent.isStopped = true;
-        }
-        navMeshAgent.enabled = false;
+            navMeshAgent.enabled = false;            
+        }        
         enemyAnimator.SetTrigger("Die");
+        pv.RPC("RPC_Die", RpcTarget.Others);
         /*enemyAudioPlayer.PlayOneShot(deathSound);*/
+    }
+
+    [PunRPC]
+    public void RPC_Die()
+    {
+        enemyAnimator.SetTrigger("Die");
+    }
+    public void DieMotion()
+    {
+        if (enemyAnimator != null)
+            enemyAnimator.enabled = false; // 애니메이션 포즈 고정
+
+        base.Die();
     }
 
     private void UpdateNearestTarget()
