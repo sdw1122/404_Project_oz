@@ -23,13 +23,14 @@ public abstract class Enemy : LivingEntity
 
     public float currentHealth;
     public float damage; // 공격력
-    public float timeBetAttack = 0.5f; // 공격 간격
+    public float Atk_Cooldown; // 공격 간격
     private float lastAttackTime; // 마지막 공격 시점
     public float attackRange;
     
     public bool isBinded=false;
     public bool isFirstChase = true;
     private Color originalColor;    
+    
 
     public PhotonView pv;
     // 추적할 대상이 존재하는지 알려주는 프로퍼티
@@ -57,6 +58,7 @@ public abstract class Enemy : LivingEntity
         pv=GetComponent<PhotonView>();
         Debug.Log("Awake: navMeshAgent=" + (navMeshAgent == null ? "NULL" : "OK") + ", pv=" + (pv == null ? "NULL" : "OK"));
         enemyRenderer = GetComponentInChildren<Renderer>();
+     
         originalColor = enemyRenderer.material.color;
         rb = GetComponent<Rigidbody>();
         PhotonNetwork.SerializationRate = 20;
@@ -96,7 +98,7 @@ public abstract class Enemy : LivingEntity
         StartCoroutine(UpdatePath());        
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (!PhotonNetwork.IsMasterClient) return;
         if (isBinded && navMeshAgent.isOnNavMesh)
@@ -288,10 +290,10 @@ public abstract class Enemy : LivingEntity
 
     private IEnumerator FlashColor()
     {
-        
 
+     
         enemyRenderer.material.color = Color.red;
-
+        
         yield return new WaitForSeconds(0.15f);
 
         enemyRenderer.material.color = originalColor;
@@ -320,9 +322,16 @@ public abstract class Enemy : LivingEntity
         StartCoroutine("FlashColor");
     }
     [PunRPC]
-    public void RPC_ApplyDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    public void RPC_ApplyDamage(float damage, Vector3 hitPoint, Vector3 hitNormal, int attackerViewID)
     {
         if (!PhotonNetwork.IsMasterClient) return; // 마스터만 데미지 처리
+        damage *= DEF_Factor;
         OnDamage(damage, hitPoint, hitNormal);
+        GameObject attacker = PhotonView.Find(attackerViewID)?.gameObject;
+        if (this is WoodMan woodman)
+        {
+            woodman.OnDamaged(attacker, damage);
+        }
     }
+
 }

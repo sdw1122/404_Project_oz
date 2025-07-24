@@ -8,6 +8,7 @@ public class Skill2Projectile : MonoBehaviour
     public float lifeTime = 8.0f;
     public float damage;
     public float tik;
+    int viewID2;
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
@@ -16,10 +17,11 @@ public class Skill2Projectile : MonoBehaviour
     {
         Destroy(gameObject,lifeTime);
     }
-    public void Initialize(float p_damage, float p_tik)
+    public void Initialize(float p_damage, float p_tik,int viewID)
     {
         damage = p_damage;
         tik = p_tik;
+        viewID2 = viewID;
     }
     private void OnCollisionEnter(Collision collision)
     {   if (!pv.IsMine) return;
@@ -28,7 +30,7 @@ public class Skill2Projectile : MonoBehaviour
             Vector3 pos = transform.position;
             Debug.Log("plane");
             GameObject magicCircle =  PhotonNetwork.Instantiate("Pen_Skill2_MagicCircle",pos,Quaternion.identity);
-            magicCircle.GetComponent<PhotonView>().RPC("RPC_Initialize", RpcTarget.AllBuffered, damage, tik);
+            magicCircle.GetComponent<PhotonView>().RPC("RPC_Initialize", RpcTarget.AllBuffered, damage, tik,viewID2);
             if (pv != null && pv.IsMine)
             {
                 PhotonNetwork.Destroy(gameObject);

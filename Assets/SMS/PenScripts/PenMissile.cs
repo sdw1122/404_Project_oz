@@ -6,6 +6,7 @@ public class PenMissile : MonoBehaviour
     int layerMask;
     PhotonView pv;
     float m_Damage;
+    public int ownerViewID;
     public float lifeTime = 10.0f;
     private void Awake()
     {   layerMask= LayerMask.NameToLayer("Enemy");
@@ -44,6 +45,8 @@ public class PenMissile : MonoBehaviour
                     PhotonNetwork.Destroy(gameObject);
                 }
 
+                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage, hitPoint, hitNormal, ownerViewID);
+                PhotonNetwork.Destroy(gameObject);
 
             }
         }

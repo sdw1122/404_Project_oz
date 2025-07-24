@@ -12,7 +12,7 @@ public class MagicCircle : MonoBehaviour
     private HashSet<LivingEntity> targetsInCircle = new HashSet<LivingEntity>();
     private PhotonView pv;
     private int enemyLayer;
-
+    int ownerViewID;
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
@@ -20,11 +20,11 @@ public class MagicCircle : MonoBehaviour
     }
 
     [PunRPC]
-    public void RPC_Initialize(float p_damage, float p_tik)
+    public void RPC_Initialize(float p_damage, float p_tik,int viewID)
     {
         damage = p_damage;
         tik = p_tik;
-
+        ownerViewID = viewID;
         // 데미지 관리는 마스터만!
         if (PhotonNetwork.IsMasterClient)
         {
@@ -52,7 +52,8 @@ public class MagicCircle : MonoBehaviour
         if (target != null)
         {
             Enemy enemy = target as Enemy;
-            if (enemy != null)
+            WoodMan woodMan=enemy as WoodMan;
+            if (enemy != null&&woodMan._currentMode!=WoodMan.WoodMan_Mode.Normal)
             {
                 enemy.isBinded = true;
             }
@@ -95,7 +96,7 @@ public class MagicCircle : MonoBehaviour
                         if (enemyPv != null && !enemy.dead)
                         {
                             enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-                            enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
+                            enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal,ownerViewID);
                         }
                     }
                 }

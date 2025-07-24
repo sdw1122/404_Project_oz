@@ -93,30 +93,15 @@ MonoBehaviour:
   - RequestDestroy
   - RPC_ShowHealingRay
   - ToggleMoveState
-  - RPC_ThrowAttack
-  - RPC_Move
-  - RPC_Throw
-  - RPC_ThrowAttackAni
-  - RPC_SetNavMesh2
-  - RPC_ForceSyncPosition
-  - SetTarget
-  - SyncRigidState
-  - RPC_SyncRigidState
-  - SyncLookRotation
-  - RPC_Die
-  - RPC_LogMessage
-  - ActivateLever
-  - FireCannon_RPC
-  - MarkAsUsed_RPC
-  - PushOver
-  - Reinforce_RPC
-  - RequestDialogueStart_RPC
-  - RequestFire_RPC
-  - ResetLever
-  - StartFalling_RPC
-  - RPC_SetAirborne
-  - RPC_SetFloat
-  - FallTowards_RPC
+  - RPC_SetMove
+  - ResetAndHalfAggro
+  - PerformMeleeAttackRPC
+  - EarthQuakeRPC
+  - ApplyKnockback
+  - StartKnockback
+  - RPC_ApplyMoveSpeedDecrease
+  - RoarRPC
+  - VulnerableRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
