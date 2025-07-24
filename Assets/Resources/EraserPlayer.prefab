@@ -1386,9 +1386,6 @@ MonoBehaviour:
     Name: Move
   - Type: 9
     SynchronizeType: 0
-    Name: Jump
-  - Type: 9
-    SynchronizeType: 0
     Name: Big Attack
   - Type: 9
     SynchronizeType: 0
@@ -1411,6 +1408,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Resurrection
+  - Type: 4
+    SynchronizeType: 0
+    Name: Float
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
