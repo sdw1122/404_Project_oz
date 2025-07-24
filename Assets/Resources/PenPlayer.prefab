@@ -889,7 +889,7 @@ PrefabInstance:
       addedObject: {fileID: 753201435753968830}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5034417889472509189}
+      addedObject: {fileID: 4223970234186116999}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 643891855775759186}
@@ -898,19 +898,13 @@ PrefabInstance:
       addedObject: {fileID: 6087537843303922652}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8742998796796384359}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6663367348026636100}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6408126133112561618}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2608995910681098848}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6365422999106650204}
+      addedObject: {fileID: 5267087757399253399}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5068663392690813216}
@@ -1207,7 +1201,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7726197707958032316}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a11771833a5835a45b39bf2583b22249, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1217,39 +1211,37 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.2
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!54 &5034417889472509189
-Rigidbody:
+--- !u!143 &4223970234186116999
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7726197707958032316}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 0.3
+  m_Radius: 1
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &643891855775759186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1283,25 +1275,13 @@ MonoBehaviour:
   walkSpeed: 10
   runSpeed: 15
   mouseSensitivity: 0.4
-  jumpForce: 5
+  isGrounded: 0
   canMove: 1
+  jumpPressed: 0
+  moveSpeed: 5
+  jumpPower: 8
+  gravity: 20
   job: 
---- !u!114 &8742998796796384359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7726197707958032316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &6663367348026636100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1321,29 +1301,12 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 8742998796796384359}
-  - {fileID: 6408126133112561618}
   - {fileID: 2608995910681098848}
   - {fileID: 4311164335986358036}
+  - {fileID: 5267087757399253399}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &6408126133112561618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7726197707958032316}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &2608995910681098848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1362,9 +1325,6 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 0
     Name: Move
-  - Type: 9
-    SynchronizeType: 0
-    Name: Jump
   - Type: 9
     SynchronizeType: 0
     Name: Attack
@@ -1386,12 +1346,15 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Skill
+  - Type: 4
+    SynchronizeType: 0
+    Name: Float
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
   - SynchronizeType: 0
     LayerIndex: 1
---- !u!114 &6365422999106650204
+--- !u!114 &5267087757399253399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1400,9 +1363,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7726197707958032316}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d08acbb0abbf36543bd484b892578cc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 0
 --- !u!114 &5068663392690813216
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,8 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 
 public class Hammer : MonoBehaviour
-{
-    Rigidbody rb;
+{    
     private PlayerController playerController;
     private PlayerHealth playerHealth;
     Animator animator;
@@ -39,8 +38,7 @@ public class Hammer : MonoBehaviour
     public bool canAttack = true;         // 공격 가능 여부
 
     private void Awake()
-    {        
-        rb = GetComponent<Rigidbody>();
+    {                
         playerController = GetComponent<PlayerController>();
         playerHealth = GetComponent<PlayerHealth>();
         controls = new InputSystem_Actions();        
@@ -71,8 +69,7 @@ public class Hammer : MonoBehaviour
         }
         if (context.canceled && skill1Pressed && playerController.IsGrounded())
         {
-            skill1Pressed = false;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            skill1Pressed = false;            
             skill1 = 0;
             if (skill1HoldTime < 1)
             {
@@ -266,12 +263,24 @@ public class Hammer : MonoBehaviour
                     
                     if (!enemy.dead)
                     {                                                
-                        if (hit.CompareTag("Golem"))
+                        if (hit.CompareTag("StoneGolem"))
                         {
-                            StoneGolem golem = hit.GetComponent<StoneGolem>();
+                            StoneGolem golem = hit.GetComponent<StoneGolem>();                            
                             if (golem != null && golem.isHammer)
                             {
                                 enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal);
+                            }                            
+                        }
+                        else if (hit.CompareTag("FireGolem"))
+                        {
+                            FireGolem golem = hit.GetComponent<FireGolem>();
+                            if (golem != null && !golem.isIce)
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 0.5f, hitPoint, hitNormal);
+                            }
+                            else if (golem != null && golem.isIce)
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 5f, hitPoint, hitNormal);
                             }
                         }
                         else
@@ -330,13 +339,25 @@ public class Hammer : MonoBehaviour
                     {
                         if (!enemy.dead)
                         {
-                            if (hit.CompareTag("Golem"))
+                            if (hit.CompareTag("StoneGolem"))
                             {
                                 StoneGolem golem = hit.GetComponent<StoneGolem>();
                                 if (golem != null)
                                 {
                                     enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage * 2f, hitPoint, hitNormal);
                                     golem.isHammer = true;
+                                }
+                            }
+                            else if (hit.CompareTag("FireGolem"))
+                            {
+                                FireGolem golem = hit.GetComponent<FireGolem>();
+                                if (golem != null && !golem.isIce)
+                                {
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage * 0.5f, hitPoint, hitNormal);
+                                }
+                                else if (golem != null && golem.isIce)
+                                {
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage * 5f, hitPoint, hitNormal);
                                 }
                             }
                             else
@@ -399,12 +420,24 @@ public class Hammer : MonoBehaviour
                     {
                         if (!enemy.dead)
                         {
-                            if (hit.CompareTag("Golem"))
+                            if (hit.CompareTag("StoneGolem"))
                             {
                                 StoneGolem golem = hit.GetComponent<StoneGolem>();
                                 if (golem != null && golem.isHammer)
                                 {
                                     enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal);
+                                }
+                            }
+                            else if (hit.CompareTag("FireGolem"))
+                            {
+                                FireGolem golem = hit.GetComponent<FireGolem>();
+                                if (golem != null && !golem.isIce)
+                                {
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 0.5f, hitPoint, hitNormal);
+                                }
+                                else if (golem != null && golem.isIce)
+                                {
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 5f, hitPoint, hitNormal);
                                 }
                             }
                             else

@@ -96,12 +96,24 @@ public class MagicCircle : MonoBehaviour
                         {
                             if (!enemy.dead)
                             {
-                                if (target.CompareTag("Golem"))
+                                if (target.CompareTag("StoneGolem"))
                                 {
                                     StoneGolem golem = target.GetComponent<StoneGolem>();
                                     if (golem != null && golem.isHammer)
                                     {
                                         enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal);
+                                    }
+                                }
+                                else if (target.CompareTag("FireGolem"))
+                                {
+                                    FireGolem golem = target.GetComponent<FireGolem>();
+                                    if (golem != null && !golem.isIce)
+                                    {
+                                        enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 0.5f, hitPoint, hitNormal);
+                                    }
+                                    else if (golem != null && golem.isIce)
+                                    {
+                                        enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 5f, hitPoint, hitNormal);
                                     }
                                 }
                                 else

@@ -42,8 +42,7 @@ public class LivingEntity : MonoBehaviour, IDamageable, IPunObservable
     {
         if (dead) return;
         // 데미지만큼 체력 감소
-        health -= damage;
-        Debug.Log("골렘 피: " + health);
+        health -= damage;        
 
         // 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
         if (health <= 0 && !dead)

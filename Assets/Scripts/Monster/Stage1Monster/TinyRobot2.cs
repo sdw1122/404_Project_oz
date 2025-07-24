@@ -51,8 +51,33 @@ public class TinyRobot2 : Enemy
                     pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
                     if (CanAct()) { Attack(); }
                 }
-                else
+                else if (dist > 20f)
                 {
+                    if (chaseTarget < 10f)
+                    {
+                        chaseTarget += 0.25f;
+                        if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+                        {
+                            navMeshAgent.isStopped = false;
+                            navMeshAgent.SetDestination(targetEntity.transform.position);
+                            //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
+                            if (PhotonNetwork.IsMasterClient)
+                            {
+                                pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
+                            }
+                            enemyAnimator.SetFloat("Move", 1f); // 걷기/달리기 애니메이션
+                            pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
+                        }
+                    }
+                    else
+                    {
+                        targetEntity = null;
+                        chaseTarget = 0;
+                    }
+                }
+                else if (dist <= 20f)
+                {
+                    chaseTarget = 0;
                     if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
                     {
                         navMeshAgent.isStopped = false;

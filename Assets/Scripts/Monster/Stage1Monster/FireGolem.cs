@@ -2,7 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
-public class StoneGolem : Enemy
+public class FireGolem : Enemy
 {
     private bool canAttack;
     public float armAttackRange;
@@ -14,7 +14,7 @@ public class StoneGolem : Enemy
     public float hitTime = 0f;
 
     public bool isAttacking = false;
-    public bool isHammer = false;
+    public bool isIce = false;
 
     public void Update()
     {
@@ -22,7 +22,7 @@ public class StoneGolem : Enemy
         {
             armAttackCoolTime += Time.deltaTime;
         }
-        
+
         if (groundAttackCoolTime < groundAttackTime)
         {
             groundAttackCoolTime += Time.deltaTime;
@@ -72,6 +72,8 @@ public class StoneGolem : Enemy
                     else
                     {
                         targetEntity = null;
+                        enemyAnimator.SetFloat("Move", 0f);
+                        pv.RPC("RPC_MoveSet", RpcTarget.Others, enemyAnimator.GetFloat("Move"));
                         chaseTarget = 0;
                     }
                 }
@@ -99,6 +101,14 @@ public class StoneGolem : Enemy
                     navMeshAgent.isStopped = true;
                     enemyAnimator.SetFloat("Move", 0f, 0.5f, 0.25f);
                     pv.RPC("RPC_MoveSet", RpcTarget.Others, enemyAnimator.GetFloat("Move"));
+
+                    Rigidbody rb = GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        rb.linearVelocity = Vector3.zero;
+                        rb.angularVelocity = Vector3.zero;
+                    }
+                    // 멈췄을 때 밀리는 현상 때문에 썻는데 질량 높였더니 해결.
                 }
 
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
@@ -168,7 +178,7 @@ public class StoneGolem : Enemy
 
     [PunRPC]
     public void RPC_GolemAttack()
-    {        
+    {
         enemyAnimator.SetTrigger("Attack");
     }
 
@@ -205,7 +215,7 @@ public class StoneGolem : Enemy
             if (hit.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 Debug.Log("골렘 공격 적중: " + hit.gameObject.name);
-               
+
                 LivingEntity player = hit.GetComponent<LivingEntity>();
                 if (player != null)
                 {
@@ -261,7 +271,7 @@ public class StoneGolem : Enemy
                     Vector3 hitPoint = hit.ClosestPoint(center);
                     Vector3 hitNormal = (hitPoint - center).normalized;
                     PhotonView pv = hit.GetComponent<PhotonView>();
-                    player.OnDamage(3 *damage, hitPoint, hitNormal);
+                    player.OnDamage(3 * damage, hitPoint, hitNormal);
                 }
             }
         }

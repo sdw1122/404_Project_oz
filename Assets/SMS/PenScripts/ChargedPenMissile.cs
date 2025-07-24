@@ -41,12 +41,24 @@ public class ChargedPenMissile : MonoBehaviour
                 {
                     if (!enemy.dead)
                     {
-                        if (other.CompareTag("Golem"))
+                        if (other.CompareTag("StoneGolem"))
                         {
                             StoneGolem golem = other.GetComponent<StoneGolem>();
                             if (golem != null && golem.isHammer)
                             {
                                 enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal);
+                            }
+                        }
+                        else if (other.CompareTag("FireGolem"))
+                        {
+                            FireGolem golem = other.GetComponent<FireGolem>();
+                            if (golem != null && !golem.isIce)
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 0.5f, hitPoint, hitNormal);
+                            }
+                            else if (golem != null && golem.isIce)
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 5f, hitPoint, hitNormal);
                             }
                         }
                         else
