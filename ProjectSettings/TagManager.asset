@@ -7,6 +7,7 @@ TagManager:
   - Bullet
   - Enemy
   - Ground
+  - Lava
   layers:
   - Default
   - TransparentFX

@@ -102,6 +102,26 @@ MonoBehaviour:
   - RPC_ApplyMoveSpeedDecrease
   - RoarRPC
   - VulnerableRPC
+  - ActivateLever
+  - FallTowards_RPC
+  - FireCannon_RPC
+  - MarkAsUsed_RPC
+  - PushOver
+  - Reinforce_RPC
+  - RequestDialogueStart_RPC
+  - RequestFire_RPC
+  - ResetLever
+  - RPC_Die
+  - RPC_ForceSyncPosition
+  - RPC_LogMessage
+  - RPC_Move
+  - RPC_SetFloat
+  - RPC_SyncRigidState
+  - RPC_Throw
+  - RPC_ThrowAttackAni
+  - SetTarget
+  - StartFalling_RPC
+  - SyncLookRotation
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

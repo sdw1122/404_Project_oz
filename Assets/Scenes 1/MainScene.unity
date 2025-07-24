@@ -688,9 +688,9 @@ GameObject:
   - component: {fileID: 238787821}
   - component: {fileID: 238787820}
   - component: {fileID: 238787819}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
-  m_TagString: Ground
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -778,7 +778,7 @@ Transform:
   m_GameObject: {fileID: 238787818}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 3.49}
+  m_LocalPosition: {x: 0, y: 0.79, z: 3.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1138,6 +1138,10 @@ PrefabInstance:
     - target: {fileID: 654561284360254830, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 654561284360254830, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
+      propertyPath: m_TagString
+      value: Lava
       objectReference: {fileID: 0}
     - target: {fileID: 2582234777823289562, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3741,12 +3745,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704265699}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.028, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 59.01, y: -16.125793, z: -9.11425}
+  m_LocalScale: {x: 12.98193, y: -16.2605, z: 10.324045}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2097217598}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1779647993
 GameObject:
@@ -4809,7 +4813,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2097217594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4913,8 +4917,7 @@ Transform:
   m_LocalPosition: {x: 59.01, y: 0.59, z: -9.11425}
   m_LocalScale: {x: 12.98193, y: -16.2605, z: 10.324045}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1704265700}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2097217599
@@ -5887,6 +5890,7 @@ SceneRoots:
   - {fileID: 883139461}
   - {fileID: 1041593708}
   - {fileID: 1285581333}
+  - {fileID: 1704265700}
   - {fileID: 2097217598}
   - {fileID: 2115053929}
   - {fileID: 54280272}

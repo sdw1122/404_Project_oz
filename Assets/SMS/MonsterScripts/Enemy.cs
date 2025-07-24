@@ -26,7 +26,7 @@ public abstract class Enemy : LivingEntity
     public float Atk_Cooldown; // 공격 간격
     private float lastAttackTime; // 마지막 공격 시점
     public float attackRange;
-    
+    public float DEF_Factor;
     public bool isBinded=false;
     public bool isFirstChase = true;
     private Color originalColor;    
@@ -81,6 +81,7 @@ public abstract class Enemy : LivingEntity
             damage = enemyData.Atk_Damage;
         if (navMeshAgent.speed <= 0f)
             navMeshAgent.speed = enemyData.speed;
+        DEF_Factor=enemyData.DEF_Factor; // 받는 피해량 계수
         /*originalColor = enemyData.skinColor;
         enemyRenderer.material.color = enemyData.skinColor;*/
     }
