@@ -16,19 +16,23 @@ public abstract class Enemy : LivingEntity
 
     public Animator enemyAnimator; // 애니메이터 컴포넌트
     /*private AudioSource enemyAudioPlayer; // 오디오 소스 컴포넌트*/
-    private Renderer enemyRenderer; // 렌더러 컴포넌트
+    public Renderer enemyRenderer; // 렌더러 컴포넌트
     enum EnemyState { Idle, Chase, Attack };
     private EnemyState currentState = EnemyState.Idle;
     public abstract void Attack();
 
     public float currentHealth;
     public float damage; // 공격력
-    public float timeBetAttack = 0.5f; // 공격 간격
+    public float Atk_Cooldown; // 공격 간격
     private float lastAttackTime; // 마지막 공격 시점
     public float attackRange;
     
     public bool isBinded=false;
+    public bool isBig = false;
+    public bool isOverheat = false;
+    public float DEF_Factor;
     private Color originalColor;    
+    
 
     public PhotonView pv;
     // 추적할 대상이 존재하는지 알려주는 프로퍼티
@@ -55,6 +59,7 @@ public abstract class Enemy : LivingEntity
         /*enemyAudioPlayer = GetComponent<AudioSource>();*/
         pv=GetComponent<PhotonView>();
         enemyRenderer = GetComponentInChildren<Renderer>();
+     
         originalColor = enemyRenderer.material.color;
     }
 
@@ -65,6 +70,9 @@ public abstract class Enemy : LivingEntity
         health = enemyData.Max_HP;
         damage = enemyData.Atk_Damage;
         navMeshAgent.speed = enemyData.speed;
+        DEF_Factor = enemyData.DEF_Factor;
+        isBig = enemyData.isBig;
+        Atk_Cooldown = enemyData.Atk_Cooldown;
         /*originalColor = enemyData.skinColor;
         enemyRenderer.material.color = enemyData.skinColor;*/
     }
@@ -75,10 +83,11 @@ public abstract class Enemy : LivingEntity
         StartCoroutine(UpdatePath());
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        if (isBinded) navMeshAgent.isStopped = true;
+        currentHealth = health;
+        if (isBinded && navMeshAgent.isOnNavMesh) navMeshAgent.isStopped = true;
         // 추적 대상의 존재 여부에 따라 다른 애니메이션 재생
         /*enemyAnimator.SetBool("HasTarget", hasTarget);*/
         switch (currentState)
@@ -108,12 +117,13 @@ public abstract class Enemy : LivingEntity
             if (hasTarget)
             {
                 float dist = Vector3.Distance(transform.position, targetEntity.transform.position);
-                if (dist <= attackRange)
+                if (dist <= attackRange&& isBinded == false)
                 {
                     enemyAnimator.SetFloat("Blend", 0f); // 공격 전 Idle자세
                     pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
                     if (CanAct())    // (공격 가능한지 자식에게 '질문')
-                    {                        
+                    {
+                        
                         Attack();    // -> Attack도 override 해서 자식 전용
                     }
                 }
@@ -216,10 +226,10 @@ public abstract class Enemy : LivingEntity
 
     private IEnumerator FlashColor()
     {
-        
 
+     
         enemyRenderer.material.color = Color.red;
-
+        
         yield return new WaitForSeconds(0.15f);
 
         enemyRenderer.material.color = originalColor;
@@ -248,9 +258,16 @@ public abstract class Enemy : LivingEntity
         StartCoroutine("FlashColor");
     }
     [PunRPC]
-    public void RPC_ApplyDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    public void RPC_ApplyDamage(float damage, Vector3 hitPoint, Vector3 hitNormal, int attackerViewID)
     {
         if (!PhotonNetwork.IsMasterClient) return; // 마스터만 데미지 처리
+        damage *= DEF_Factor;
         OnDamage(damage, hitPoint, hitNormal);
+        GameObject attacker = PhotonView.Find(attackerViewID)?.gameObject;
+        if (this is WoodMan woodman)
+        {
+            woodman.OnDamaged(attacker, damage);
+        }
     }
+
 }

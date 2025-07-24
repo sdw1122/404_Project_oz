@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3626834733843971565}
   - component: {fileID: -2078483842860659644}
   - component: {fileID: 1507645355193358000}
+  - component: {fileID: 4610032153750742808}
   m_Layer: 0
   m_Name: Pen_Attack_Missile
   m_TagString: Untagged
@@ -29,14 +30,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3286043065174067436}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.08396794, y: -0, z: -0, w: 0.99646854}
+  m_LocalPosition: {x: 0, y: 0.000104569364, z: 0.00006912899}
   m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5331788044283704247}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -9.633, y: 0, z: 0}
 --- !u!114 &8888675368391551274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +133,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866ccee9b3ece6e4888e9d1d786f1d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownerViewID: 0
   lifeTime: 10
+--- !u!65 &4610032153750742808
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3286043065174067436}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0020777776, y: 0.0043429937, z: 0.024079986}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5653400199688164444
 PrefabInstance:
   m_ObjectHideFlags: 0

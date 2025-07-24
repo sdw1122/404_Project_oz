@@ -904,9 +904,6 @@ PrefabInstance:
       addedObject: {fileID: 6663367348026636100}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6408126133112561618}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2608995910681098848}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
@@ -932,6 +929,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5632945288692459882}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7759359841293872946}
   m_SourcePrefab: {fileID: 100100000, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
 --- !u!4 &1647411048625105995 stripped
 Transform:
@@ -1322,28 +1322,12 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8742998796796384359}
-  - {fileID: 6408126133112561618}
   - {fileID: 2608995910681098848}
   - {fileID: 4311164335986358036}
+  - {fileID: -7759359841293872946}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &6408126133112561618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7726197707958032316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &2608995910681098848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1360,7 +1344,7 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 1
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: Move
   - Type: 9
     SynchronizeType: 0
@@ -1443,7 +1427,7 @@ MonoBehaviour:
   Charge_Levels: 1
   firePoint: {fileID: 5400129489395142459}
   fireRate: 1
-  MissileSpeed: 10
+  MissileSpeed: 30
   penCamera: {fileID: 8139975940493471537}
 --- !u!114 &3422862404881984722
 MonoBehaviour:
@@ -1506,6 +1490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
+  dead: 0
   current_health: 0
   pv: {fileID: 0}
 --- !u!114 &6089021596233277290
@@ -1637,6 +1622,22 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-7759359841293872946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7726197707958032316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 1
+  m_UseLocal: 1
 --- !u!4 &8470801457687814401 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1330755669629619180, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}

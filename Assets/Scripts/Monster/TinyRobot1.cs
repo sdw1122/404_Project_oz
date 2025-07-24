@@ -112,6 +112,6 @@ public class TinyRobot1 : Enemy
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         navMeshAgent.enabled = active;
-        rb.isKinematic = active;
+        /*rb.isKinematic = active;*/
     }
 }
