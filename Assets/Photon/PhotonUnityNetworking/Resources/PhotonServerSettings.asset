@@ -116,6 +116,7 @@ MonoBehaviour:
   - StartFalling_RPC
   - RPC_SetAirborne
   - RPC_SetFloat
+  - FallTowards_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

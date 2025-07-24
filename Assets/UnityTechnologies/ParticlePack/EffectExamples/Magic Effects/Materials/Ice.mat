@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ice
-  m_Shader: {fileID: -6465566751694194690, guid: f864476927c840340a3accca39dea6c9,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: f864476927c840340a3accca39dea6c9, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -164,7 +163,7 @@ Material:
     - _middle: 1
     - _numSteps: 16
     m_Colors:
-    - _Color: {r: 0.48584908, g: 0.7016089, b: 1, a: 0.39215687}
+    - _Color: {r: 0.30727658, g: 0.3407953, b: 0.3886792, a: 0.45490196}
     - _EmissionColor: {r: 0.14470588, g: 0.15113996, b: 0.16, a: 1}
     - _EmissiveColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0.8726415, g: 0.9390677, b: 1, a: 1}
