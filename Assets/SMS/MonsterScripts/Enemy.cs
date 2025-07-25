@@ -10,6 +10,7 @@ public abstract class Enemy : LivingEntity
 
     public LivingEntity targetEntity; // 추적 대상
     public NavMeshAgent navMeshAgent; // 경로 계산 AI 에이전트
+    public NavMeshObstacle obstacle;
 
     public ParticleSystem hitEffect; // 피격 시 재생할 파티클 효과
     /*public AudioClip deathSound; // 사망 시 재생할 소리
@@ -55,6 +56,7 @@ public abstract class Enemy : LivingEntity
     {
         // 초기화
         navMeshAgent = GetComponent<NavMeshAgent>();
+        obstacle = GetComponent<NavMeshObstacle>();
         enemyAnimator = GetComponent<Animator>();
         /*enemyAudioPlayer = GetComponent<AudioSource>();*/
         pv=GetComponent<PhotonView>();

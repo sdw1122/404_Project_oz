@@ -58,12 +58,13 @@ public class Pen_Skill_1 : MonoBehaviour
 
         if (context.started)
         {
-            
+            playerController.isCharge = true;
             isSkill1Pressed = true;
         }
         else if (context.canceled)
         {
             isSkill1Pressed = false;
+            playerController.isCharge = false;
 
             if (isCharging)
             {

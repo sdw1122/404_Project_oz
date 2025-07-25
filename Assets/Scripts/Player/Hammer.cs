@@ -64,12 +64,14 @@ public class Hammer : MonoBehaviour
         if (context.started && skill1CoolDownTimer >= 10f && playerController.IsGrounded())
         {
             skill1Pressed = true;
+            playerController.isCharge = true;
             animator.SetTrigger("Charge");
             pv.RPC("RPC_TriggerEraserCharge", RpcTarget.Others);
         }
         if (context.canceled && skill1Pressed && playerController.IsGrounded())
         {
             skill1Pressed = false;            
+            playerController.isCharge = false;
             skill1 = 0;
             if (skill1HoldTime < 1)
             {
@@ -107,7 +109,7 @@ public class Hammer : MonoBehaviour
     }
 
     [PunRPC]
-    void RPC_TriggerEraserCancelCharge()
+    public void RPC_TriggerEraserCancelCharge()
     {
         animator.SetTrigger("CancelCharge");
     }
@@ -287,7 +289,7 @@ public class Hammer : MonoBehaviour
                         {
                             enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
                             enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
-                        }
+                        }   
                         enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
                     }
                     Debug.Log("Attack맞음");
@@ -363,6 +365,7 @@ public class Hammer : MonoBehaviour
                             else
                             {
                                 enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage, hitPoint, hitNormal);
+                                enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
                             }
                             enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
                         }
@@ -443,6 +446,7 @@ public class Hammer : MonoBehaviour
                             else
                             {
                                 enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
+                                enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
                             }
                             enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
                         }

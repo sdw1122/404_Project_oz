@@ -135,6 +135,7 @@ public class MagicCircle : MonoBehaviour
                                 else
                                 {
                                     enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
+                                    enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
                                 }
                                 enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
                             }
