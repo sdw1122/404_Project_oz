@@ -60,7 +60,7 @@ public class TinyRobot1 : Enemy
             dir.y = 0.5f; // 위쪽 성분 추가
             rb.linearVelocity = Vector3.zero;
 
-            rb.AddForce(dir * jumpPower, ForceMode.VelocityChange);
+            rb.AddForce(dir * jumpPower, ForceMode.VelocityChange);            
         }
     }
 
@@ -96,14 +96,10 @@ public class TinyRobot1 : Enemy
 
     void OnCollisionStay(Collision col)
     {
-        if (col.gameObject.layer == LayerMask.NameToLayer("Player"))
+        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        if (isJumpAttacking)
         {
-            Rigidbody playerRb = col.gameObject.GetComponent<Rigidbody>();
-            if (playerRb != null)
-            {
-                // 플레이어가 몬스터를 뚫으려 움직일 때, 그 움직임을 상쇄
-                playerRb.linearVelocity = Vector3.ProjectOnPlane(playerRb.linearVelocity, col.GetContact(0).normal);
-            }
+            rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, 1.5f);
         }
     }
 
@@ -112,7 +108,7 @@ public class TinyRobot1 : Enemy
     public void RPC_SetNavMesh(bool active)
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        navMeshAgent.enabled = active;        
+        navMeshAgent.enabled = active;
         rb.isKinematic = active;
     }
 }

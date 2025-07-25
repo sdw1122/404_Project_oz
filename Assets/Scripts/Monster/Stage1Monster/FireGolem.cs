@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class FireGolem : Enemy
 {
@@ -72,8 +73,6 @@ public class FireGolem : Enemy
                     else
                     {
                         targetEntity = null;
-                        enemyAnimator.SetFloat("Move", 0f);
-                        pv.RPC("RPC_MoveSet", RpcTarget.Others, enemyAnimator.GetFloat("Move"));
                         chaseTarget = 0;
                     }
                 }
@@ -101,14 +100,6 @@ public class FireGolem : Enemy
                     navMeshAgent.isStopped = true;
                     enemyAnimator.SetFloat("Move", 0f, 0.5f, 0.25f);
                     pv.RPC("RPC_MoveSet", RpcTarget.Others, enemyAnimator.GetFloat("Move"));
-
-                    Rigidbody rb = GetComponent<Rigidbody>();
-                    if (rb != null)
-                    {
-                        rb.linearVelocity = Vector3.zero;
-                        rb.angularVelocity = Vector3.zero;
-                    }
-                    // 멈췄을 때 밀리는 현상 때문에 썻는데 질량 높였더니 해결.
                 }
 
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
@@ -159,19 +150,19 @@ public class FireGolem : Enemy
         {
             // 애니메이션 필요
             pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
+            pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
             enemyAnimator.SetTrigger("Skill");
             pv.RPC("RPC_GolemSkill", RpcTarget.Others);
-            isAttacking = true;
-            pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
+            isAttacking = true;            
         }
         else if (dist <= armAttackRange && armAttackCoolTime >= armAttackTime)
         {
             // 애니메이션 필요
             pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
+            pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
             enemyAnimator.SetTrigger("Attack");
             pv.RPC("RPC_GolemAttack", RpcTarget.Others);
-            isAttacking = true;
-            pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
+            isAttacking = true;            
         }
 
     }
@@ -344,7 +335,19 @@ public class FireGolem : Enemy
     public void RPC_SetNavMesh(bool active)
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        navMeshAgent.isStopped = !active;
+        if (active)
+        {
+            obstacle.enabled = !active;
+            navMeshAgent.enabled = active;
+            // NavMeshAgent 다시 활성화할 때 위치 동기화 필수!
+            if (navMeshAgent.isOnNavMesh)
+                navMeshAgent.Warp(transform.position);
+        }
+        else
+        {
+            navMeshAgent.enabled = active;
+            obstacle.enabled = !active;
+        }
         //rb.isKinematic = active;
     }
 }

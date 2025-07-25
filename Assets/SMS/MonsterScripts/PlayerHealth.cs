@@ -8,7 +8,7 @@ public class PlayerHealth : LivingEntity
     private Animator playerAnimator; // 플레이어의 애니메이터
     public PhotonView pv;
     private PlayerController playerController; // 플레이어 움직임 컴포넌트
-    private PlayerInput playerInput;
+    private PlayerInput playerInput;    
 
     private void Awake()
     {
@@ -75,8 +75,11 @@ public class PlayerHealth : LivingEntity
         health -= damage;
         current_health = health;
 
-        // 피격 애니메이션을 로컬에서 실행합니다.
-        playerAnimator.SetTrigger("Hit");
+        if (!playerController.isCharge)
+        {
+            // 피격 애니메이션을 로컬에서 실행합니다.
+            playerAnimator.SetTrigger("Hit");
+        }
 
         if (health <= 0)
         {

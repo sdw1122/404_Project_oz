@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private float xRotation = 0f;
 
     public bool isGrounded = false; // 땅에 닿아있는지 여부
+    public bool isCharge = false;
 
     public bool canMove = true;
 
@@ -339,6 +340,17 @@ public class PlayerController : MonoBehaviour
     //        }
     //    }
     //}
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Enemy"))
+        {
+            // 경사도·노멀 값 구해서
+            Vector3 slideDir = Vector3.ProjectOnPlane(Vector3.down, hit.normal).normalized;
+            controller.Move(slideDir * slideSpeed * Time.deltaTime);
+            // 또는 isGrounded 강제 해제 등
+        }
+    }
 
     bool OnTooSteepGround(out Vector3 groundNormal)
     {

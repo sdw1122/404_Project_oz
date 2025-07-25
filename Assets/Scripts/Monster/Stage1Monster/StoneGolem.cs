@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class StoneGolem : Enemy
 {
@@ -149,19 +150,19 @@ public class StoneGolem : Enemy
         {
             // 애니메이션 필요
             pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
+            pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
             enemyAnimator.SetTrigger("Skill");
             pv.RPC("RPC_GolemSkill", RpcTarget.Others);
-            isAttacking = true;
-            pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
+            isAttacking = true;            
         }
         else if (dist <= armAttackRange && armAttackCoolTime >= armAttackTime)
         {
             // 애니메이션 필요
             pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
+            pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
             enemyAnimator.SetTrigger("Attack");
             pv.RPC("RPC_GolemAttack", RpcTarget.Others);
             isAttacking = true;
-            pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
         }
 
     }
@@ -334,7 +335,20 @@ public class StoneGolem : Enemy
     public void RPC_SetNavMesh(bool active)
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        navMeshAgent.isStopped = !active;
+        //navMeshAgent.isStopped = !active;
+        if (active)
+        {
+            obstacle.enabled = !active;
+            navMeshAgent.enabled = active;
+            // NavMeshAgent 다시 활성화할 때 위치 동기화 필수!
+            if (navMeshAgent.isOnNavMesh)
+                navMeshAgent.Warp(transform.position);
+        }
+        else
+        {
+            navMeshAgent.enabled = active;
+            obstacle.enabled = !active;
+        }   
         //rb.isKinematic = active;
     }
 }
