@@ -444,6 +444,7 @@ MonoBehaviour:
     m_Bits: 128
   targetEntity: {fileID: 0}
   navMeshAgent: {fileID: 3334010105286789760}
+  obstacle: {fileID: 0}
   hitEffect: {fileID: 198000011254678926, guid: 1d415c3c4b7dccf4aba3753b8264694f, type: 3}
   enemyAnimator: {fileID: 3677394158664591522}
   enemyRenderer: {fileID: 4162167560060408325}
@@ -455,9 +456,11 @@ MonoBehaviour:
   isBinded: 0
   isFirstChase: 1
   pv: {fileID: 7548695496272439170}
+  chaseTarget: 0
   m_name: "\uAC08\uB9DD\uD558\uB294 \uC591\uCCA0 \uB098\uBB34\uAFBC"
   currentTarget: {fileID: 0}
   groggyTime: 8
+  speed: 6
   minChaseDistance: 0.5
   _currentState: 0
   _currentMode: 0

@@ -122,6 +122,11 @@ MonoBehaviour:
   - SetTarget
   - StartFalling_RPC
   - SyncLookRotation
+  - RPC_EnemyHit
+  - RPC_GolemAttack
+  - RPC_GolemAttack2
+  - RPC_GolemSkill
+  - RPC_MoveSet
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
