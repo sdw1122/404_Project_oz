@@ -209,6 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6310af6f22721a4699fbfc2ef9ff71b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownerViewID: 0
   lifeTime: 7
 --- !u!96 &9028744237741924502
 TrailRenderer:

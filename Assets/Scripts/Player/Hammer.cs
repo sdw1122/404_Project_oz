@@ -6,8 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 
 public class Hammer : MonoBehaviour
-{
-    Rigidbody rb;
+{    
     private PlayerController playerController;
     private PlayerHealth playerHealth;
     Animator animator;
@@ -49,8 +48,7 @@ public class Hammer : MonoBehaviour
     private Color charge3col = new Color(1f, 0.15f, 0.15f, 1f);
 
     private void Awake()
-    {        
-        rb = GetComponent<Rigidbody>();
+    {                
         playerController = GetComponent<PlayerController>();
         playerHealth = GetComponent<PlayerHealth>();
         controls = new InputSystem_Actions();        
@@ -76,16 +74,17 @@ public class Hammer : MonoBehaviour
         if (context.started && skill1CoolDownTimer >= 10f && playerController.IsGrounded())
         {
             skill1Pressed = true;
+            playerController.isCharge = true;
             animator.SetTrigger("Charge");
             pv.RPC("RPC_TriggerEraserCharge", RpcTarget.Others);
         }
         if (context.canceled && skill1Pressed && playerController.IsGrounded())
         {
-            skill1Pressed = false;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
             isCharge1 = false;
             isCharge2 = false;
             isCharge3 = false;
+            skill1Pressed = false;            
+            playerController.isCharge = false;
             skill1 = 0;
             if (skill1HoldTime < 1)
             {
@@ -124,7 +123,7 @@ public class Hammer : MonoBehaviour
     }
 
     [PunRPC]
-    void RPC_TriggerEraserCancelCharge()
+    public void RPC_TriggerEraserCancelCharge()
     {
         animator.SetTrigger("CancelCharge");
     }
@@ -307,10 +306,33 @@ public class Hammer : MonoBehaviour
                 {
                     
                     if (!enemy.dead)
-                    {
-                        enemy.OnDamage(damage, hitPoint, hitNormal);
+                    {                                                
+                        if (hit.CompareTag("StoneGolem"))
+                        {
+                            StoneGolem golem = hit.GetComponent<StoneGolem>();                            
+                            if (golem != null && golem.isHammer)
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
+                            }                            
+                        }
+                        else if (hit.CompareTag("FireGolem"))
+                        {
+                            FireGolem golem = hit.GetComponent<FireGolem>();
+                            if (golem != null && !golem.isIce)
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 0.5f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
+                            }
+                            else if (golem != null && golem.isIce)
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 5f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
+                            }
+                        }
+                        else
+                        {
+                            enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
+                            //enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
+                        }   
                         enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-                        enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
                     }
                     Debug.Log("Attack맞음");
                 }
@@ -359,8 +381,36 @@ public class Hammer : MonoBehaviour
                     PhotonView enemyPv = hit.GetComponent<PhotonView>();
                     if (!enemy.dead)
                     {
-                        enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-                        enemy.OnDamage(attackDamage, hitPoint, hitNormal);
+                        if (!enemy.dead)
+                        {
+                            if (hit.CompareTag("StoneGolem"))
+                            {
+                                StoneGolem golem = hit.GetComponent<StoneGolem>();
+                                if (golem != null)
+                                {
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage * 2f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
+                                    golem.isHammer = true;
+                                }
+                            }
+                            else if (hit.CompareTag("FireGolem"))
+                            {
+                                FireGolem golem = hit.GetComponent<FireGolem>();
+                                if (golem != null && !golem.isIce)
+                                {
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage * 0.5f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
+                                }
+                                else if (golem != null && golem.isIce)
+                                {
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage * 5f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
+                                }
+                            }
+                            else
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
+                                //enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
+                            }
+                            enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                        }
                     }
                 }
                 Debug.Log("Skill2 맞음");
@@ -413,8 +463,35 @@ public class Hammer : MonoBehaviour
 
                     if (!enemy.dead)
                     {
-                        enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-                        enemy.OnDamage(damage, hitPoint, hitNormal); // damage는 원하는 값으로
+                        if (!enemy.dead)
+                        {
+                            if (hit.CompareTag("StoneGolem"))
+                            {
+                                StoneGolem golem = hit.GetComponent<StoneGolem>();
+                                if (golem != null && golem.isHammer)
+                                {
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
+                                }
+                            }
+                            else if (hit.CompareTag("FireGolem"))
+                            {
+                                FireGolem golem = hit.GetComponent<FireGolem>();
+                                if (golem != null && !golem.isIce)
+                                {
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 0.5f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
+                                }
+                                else if (golem != null && golem.isIce)
+                                {
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 5f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
+                                }
+                            }
+                            else
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
+                                //enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
+                            }
+                            enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                        }
                     }
                 }
             }
@@ -475,20 +552,6 @@ public class Hammer : MonoBehaviour
 
         if (weapon != null)
         {
-            //Vector3 gizmo = transform.position; //플레이어 위치 가져오기
-            //Vector3 offset = new Vector3(0f, 1f, 1f); //x, y, z만큼 움직이기
-            //Vector3 gizmocentor = gizmo + offset;
-
-            //Vector3 boxHalfExtents = new Vector3(1f, 0.6f, 0.1f); //x, y, z 크기
-
-            //Quaternion orientation = weapon.transform.rotation;
-
-            //Gizmos.color = new Color(1f, 0.8f, 0.2f, 0.4f);
-            //Matrix4x4 rotationMatrix = Matrix4x4.TRS(gizmo, orientation, Vector3.one);
-            //Gizmos.matrix = rotationMatrix;
-            //Gizmos.DrawCube(Vector3.zero, boxHalfExtents * 2);
-            //Gizmos.matrix = Matrix4x4.identity;
-
             // 플레이어 위치와 방향
             Vector3 playerPos = transform.position;
             Vector3 playerForward = transform.forward;

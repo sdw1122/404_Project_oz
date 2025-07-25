@@ -59,11 +59,13 @@ public class Pen_Skill_1 : MonoBehaviour
 
         if (context.started)
         {
+            playerController.isCharge = true;
             isSkill1Pressed = true;
         }
         else if (context.canceled)
         {
             isSkill1Pressed = false;
+            playerController.isCharge = false;
 
             if (isCharging)
             {
@@ -150,7 +152,7 @@ public class Pen_Skill_1 : MonoBehaviour
         missile.transform.localScale = new Vector3(100.0f, 100.0f, 76.0f);
         missile.GetComponent<ChargedPenMissile>().Initialize(damage);
         missile.GetComponent<Rigidbody>().linearVelocity = rayDir * speed;
-
+        missile.GetComponent<ChargedPenMissile>().ownerViewID = PhotonView.Get(this).ViewID;
         animator.SetTrigger("ChargeAttack");
         pv.RPC("RPC_TriggerChargeAttack", RpcTarget.Others);
         PenAttack.isAttack = true;

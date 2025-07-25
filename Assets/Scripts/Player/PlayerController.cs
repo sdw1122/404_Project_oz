@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Photon.Pun;
 using Unity.Cinemachine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,23 +17,37 @@ public class PlayerController : MonoBehaviour
     public Camera mainCamera;
     public GameObject deadCamera;
     public float walkSpeed = 10f;
-    public float runSpeed = 15f;
+    public float runSpeed;
     public float mouseSensitivity = 0.5f;
     private float currentSpeed;
-
-    private Rigidbody rb;
+    
     private Vector2 moveInput;
     private Vector2 lookInput;
     private float xRotation = 0f;
 
-    private bool prevFloat = false;
-    public float jumpForce = 5f;
-    private bool isGrounded = false; // 땅에 닿아있는지 여부
-    private int groundContactCount = 0; // 여러 지면 접촉을 처리
+    public bool isGrounded = false; // 땅에 닿아있는지 여부
+    public bool isCharge = false;
 
-    public bool canMove = true;    
+    public bool canMove = true;
+
+    private Vector3 moveDirection = Vector3.zero;
+    private CharacterController controller;
+
+    public bool jumpPressed = false;
+
+    public float moveSpeed = 10f;
+    public float jumpPower = 8f;
+    public float gravity = 20f;
+    public float slideSpeed = 5f;
 
     public string job;
+
+    private Coroutine slowCoroutine;
+    private bool isKnockbacked = false;
+    private float knockbackEndTime = 0f;
+    private float originalSpeed;
+    private Rigidbody rb;
+    CapsuleCollider col;
     [PunRPC]
     public void SetJob(string _job)
     {
@@ -60,23 +75,25 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        // 에디터에서 테스트할 땐 오프라인 모드로 전환
-        PhotonNetwork.OfflineMode = true;
-
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
+        col=GetComponent<CapsuleCollider>();
+        animator = GetComponent<Animator>();        
         pv = GetComponent<PhotonView>();
         cineCam = GetComponentInChildren<CinemachineCamera>();
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+        runSpeed = 1.5f * walkSpeed;
         if (!pv.IsMine)
         {
             var input = GetComponent<PlayerInput>();
             if (input != null) input.enabled = false;
-            if (playerCamera != null) playerCamera.gameObject.SetActive(false); // <-- 이걸 꼭 추가
+            if (playerCamera != null) playerCamera.gameObject.SetActive(false); 
             enabled = false;
             cineCam.gameObject.SetActive(false);
             return;
         }
         healingRay =GetComponent<HealingRay>();
+       
+        
         
         playerObj = this.gameObject;
         /*mainCamera = transform.Find("Main Camera").GetComponent<Camera>();*/
@@ -101,8 +118,8 @@ public class PlayerController : MonoBehaviour
             moveValue = 0f;
 
         animator.SetFloat("Move", moveValue);
-        pv.RPC("RPC_Move", RpcTarget.Others, moveValue);
-    }
+        pv.RPC("RPC_SetMove",RpcTarget.Others,moveValue);
+    }   
 
     [PunRPC]
     void RPC_Move(float moveValue)
@@ -119,10 +136,9 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         if (!pv.IsMine || !canMove) return;
-        if (context.started && isGrounded)
+        if (context.started && !jumpPressed)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isGrounded = false;
+            jumpPressed = true;
         }
     }
 
@@ -132,16 +148,21 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Float", floating);
     }
 
+    [PunRPC]
+    void RPC_SetMove(float moveValue)
+    {
+        animator.SetFloat("Move",moveValue);
+    }
     public void OnSprint(InputAction.CallbackContext context)
     {
         if (!pv.IsMine || !canMove) return;
         if (context.started || context.performed)
         {
-            currentSpeed = runSpeed;
+            moveSpeed = runSpeed;
         }
         else if (context.canceled)
         {
-            currentSpeed = walkSpeed;
+            moveSpeed = walkSpeed;
         }
     }
     
@@ -160,9 +181,7 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("[Resurrection] 죽은 플레이어가 없음");
             }
-        }
-       
-
+        }       
     }
     public void ResetSpeed()
     {
@@ -178,6 +197,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         currentSpeed = walkSpeed;
+        originalSpeed = currentSpeed;
         if (!pv.IsMine)
         {
             if (playerCamera != null)
@@ -189,36 +209,137 @@ public class PlayerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-    }
 
+        controller = GetComponent<CharacterController>();
+    }
+    
     private void Update()
     {
-        if (!pv.IsMine) return;
-        bool floating = !isGrounded;
-        animator.SetBool("Float", floating);
-        if (floating != prevFloat)
+       /* if (!pv.IsMine) return;
+        // 넉백중이면 update 금지!
+        if (isKnockbacked)
         {
-            pv.RPC("RPC_SetFloat", RpcTarget.Others, floating);
-            prevFloat = floating;
+            moveDirection = Vector3.zero;
+            if (Time.time > knockbackEndTime)
+            {
+                isKnockbacked = false;
+               
+                controller.enabled = true;
+
+            }
+            return;
         }
+
+        // 1. 입력처리 & 이동벡터 산출
+        if (controller.isGrounded)
+        {
+            // 로컬좌표 기준(forward/right)으로 방향 벡터 생성
+            Vector3 inputDir = new Vector3(moveInput.x, 0, moveInput.y);
+            inputDir = Vector3.ClampMagnitude(inputDir, 1f); // 대각선 속도 보정
+            moveDirection = transform.TransformDirection(inputDir) * moveSpeed;
+
+            if (jumpPressed)
+            {
+                moveDirection.y = jumpPower;
+                jumpPressed = false;
+                animator.SetBool("Float", true);
+                pv.RPC("RPC_SetFloat", RpcTarget.Others, true);
+            }
+            else
+            {
+                animator.SetBool("Float", false);
+                pv.RPC("RPC_SetFloat", RpcTarget.Others, false);
+            }
+        }
+
+        isGrounded = controller.isGrounded;
+
+        HandleSlope();
+
+        // 2. 중력 적용
+        moveDirection.y -= gravity * Time.deltaTime;
+
+        // 3. 이동
+     
+            controller.Move(moveDirection * Time.deltaTime);*/
+
+
+
+
     }
+
     // Update is called once per frame
     void FixedUpdate()
     {
         if (!pv.IsMine) return;
+        // 넉백중이면 update 금지!
+        if (isKnockbacked)
+        {
+            moveDirection = Vector3.zero;
+            if (Time.time > knockbackEndTime)
+            {
+                isKnockbacked = false;
+                rb.useGravity = false;
+                gravity = 20f;
+                col.enabled = false;
+                controller.enabled = true;
 
-        Vector3 forward = playerCamera.transform.forward;
-        Vector3 right = playerCamera.transform.right;
-        forward.y = 0f;
-        right.y = 0f;
-        forward.Normalize();
-        right.Normalize();
+            }
+            
+            return;
+        }
+        else
+        {
+            
+            rb.useGravity = false;
+            gravity = 20f;
+            col.enabled = false;
+            controller.enabled = true;
+        }
+        
+        // 1. 입력처리 & 이동벡터 산출
+        if (controller.isGrounded)
+        {
+            // 로컬좌표 기준(forward/right)으로 방향 벡터 생성
+            
+            Vector3 inputDir = new Vector3(moveInput.x, 0, moveInput.y);
+            inputDir = Vector3.ClampMagnitude(inputDir, 1f); // 대각선 속도 보정
+            moveDirection = transform.TransformDirection(inputDir) * moveSpeed;
 
-        Vector3 move = forward * moveInput.y + right * moveInput.x;
-        Vector3 desiredVelocity = move * currentSpeed;
-        desiredVelocity.y = rb.linearVelocity.y; // 점프 등 Y속도 유지
+            if (jumpPressed)
+            {
+                moveDirection.y = jumpPower;
+                jumpPressed = false;
+                animator.SetBool("Float", true);
+                pv.RPC("RPC_SetFloat", RpcTarget.Others, true);
+            }
+            else
+            {
+                animator.SetBool("Float", false);
+                pv.RPC("RPC_SetFloat", RpcTarget.Others, false);
+            }
+        }
 
-        rb.linearVelocity = desiredVelocity;
+        isGrounded = controller.isGrounded;
+
+        HandleSlope();
+
+        // 2. 중력 적용
+        moveDirection.y -= gravity * Time.deltaTime;
+
+        // 3. 이동
+
+        controller.Move(moveDirection * Time.deltaTime);
+        // 넉백중이면 update 금지!
+        if (isKnockbacked)
+        {
+            if (Time.time > knockbackEndTime)
+            {
+                isKnockbacked = false;
+            }
+            return;
+        }
+
         float mouseX = lookInput.x * mouseSensitivity;
         float mouseY = lookInput.y * mouseSensitivity;
 
@@ -228,35 +349,60 @@ public class PlayerController : MonoBehaviour
         if (playerCamera != null)
             playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         cameraTarget.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        transform.Rotate(Vector3.up * mouseX);
+            transform.Rotate(Vector3.up * mouseX);
     }
+    // 넉백 함수
+    [PunRPC]
+    public void StartKnockback(Vector3 knockbackForce,float duration)
+    {
+        Debug.Log("넉백 호출됨");
+        // 플레이어 현재 속도와 무관하게
+        rb.linearVelocity = Vector3.zero;
+
+        // 넉백 힘 적용
+        isKnockbacked = true;
+        gravity = 0f;
+        rb.useGravity = true;
+        
+        controller.enabled = false;
+        col.enabled = true;
+        rb.AddForce(knockbackForce, ForceMode.VelocityChange);
+        Debug.Log("넉백 힘 : "+knockbackForce);
+        
+        knockbackEndTime = Time.time + duration;
+    }
+    // 슬로우 함수
+    [PunRPC]
+    public void RPC_ApplyMoveSpeedDecrease(float amount,float duration)
+    {
+        if(!pv.IsMine) return;
+        if (slowCoroutine != null)
+        {
+            StopCoroutine(slowCoroutine);
+        }
+        slowCoroutine = StartCoroutine(slowRoutine(amount,duration));
+    }
+    private IEnumerator slowRoutine(float amount,float duration)
+    {
+        currentSpeed = originalSpeed * (1f-amount);
+        /*runSpeed =1.5f*originalSpeed * (1f - amount);*/
+        walkSpeed =originalSpeed * (1f-amount);
+        runSpeed =originalSpeed * (1f-amount);
+        Debug.Log("속도 감소 완료 :"+currentSpeed);
+        yield return new WaitForSeconds(duration);
+        currentSpeed = originalSpeed;
+        walkSpeed = originalSpeed;
+        runSpeed = originalSpeed * 1.5f;
+        slowCoroutine = null;
+        Debug.Log("속도 복구 완료 :"+currentSpeed);
+    }
+    //
     public void ResetMoveInput()
     {
         moveInput = Vector2.zero;
         //animator.SetBool("isMove", false);
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            groundContactCount++;
-            isGrounded = true;
-        }
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {   
-            groundContactCount--;
-            if (groundContactCount <= 0)
-            {
-                isGrounded = false;
-                groundContactCount = 0;
-            }
-        }
-    }
     PlayerHealth FindClosestDeadPlayer()
     {
         PlayerHealth closestDeadPlayer = null;
@@ -314,16 +460,80 @@ public class PlayerController : MonoBehaviour
         mainCamera.gameObject.SetActive(true);
     }
 
-    void OnCollisionStay(Collision col)
+    //void OnControllerColliderHit(ControllerColliderHit col)
+    //{
+    //    if (col.gameObject.layer != LayerMask.NameToLayer("Enemy"))
+    //        return;
+
+    //    Vector3 normal = col.normal;
+    //    float verticalAngle = Vector3.Angle(normal, Vector3.up);
+
+    //    // 1) 위에서 착지했을 때 (점프 착지) 보정하지 않음
+    //    if (verticalAngle < 45f)
+    //    {
+    //        // 경사면 충돌로 간주 → 슬라이드 로직만 처리
+    //        return;
+    //    }
+
+    //    // 2) 옆면에서 서로 밀고 있는 상황만 보정
+    //    float horizontalAngle = Vector3.Angle(normal, Vector3.forward);
+    //    // 예: forward 기준 0°–90° 사이면 옆면 충돌
+    //    if (horizontalAngle > 15f && horizontalAngle < 165f)
+    //    {
+    //        Rigidbody enemyRb = col.gameObject.GetComponent<Rigidbody>();
+    //        if (enemyRb != null)
+    //        {
+    //            enemyRb.linearVelocity = Vector3.ProjectOnPlane(enemyRb.linearVelocity, normal);
+    //        }
+    //    }
+    //}
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (hit.gameObject.CompareTag("Enemy"))
         {
-            Rigidbody EnemyRb = col.gameObject.GetComponent<Rigidbody>();
-            if (EnemyRb != null && !rb.isKinematic)
-            {
-                // 플레이어가 몬스터를 뚫으려 움직일 때, 그 움직임을 상쇄
-                EnemyRb.linearVelocity = Vector3.ProjectOnPlane(EnemyRb.linearVelocity, col.GetContact(0).normal);
-            }
+            // 경사도·노멀 값 구해서
+            Vector3 slideDir = Vector3.ProjectOnPlane(Vector3.down, hit.normal).normalized;
+            controller.Move(slideDir * slideSpeed * Time.deltaTime);
+            // 또는 isGrounded 강제 해제 등
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            isKnockbacked = false;
+        }
+    }
+    bool OnTooSteepGround(out Vector3 groundNormal)
+    {
+        RaycastHit hit;
+        // 캐릭터 발밑에서 짧은 Raycast
+        if (Physics.Raycast(transform.position, Vector3.down,
+                            out hit, controller.height * 0.6f))
+        {
+            groundNormal = hit.normal;
+            float angle = Vector3.Angle(groundNormal, Vector3.up);
+            return angle > controller.slopeLimit;
+        }
+        groundNormal = Vector3.up;
+        return false;
+    }
+
+    void HandleSlope()
+    {
+        Vector3 n;
+        if (controller.isGrounded && OnTooSteepGround(out n))
+        {
+            ///* 방법 A : 접지 해제 → 중력으로 굴러떨어짐 */
+            //moveDirection.y = 0f;              // 위로 기운 속도 제거
+            //controller.Move(Vector3.zero); // 먼저 위치 갱신
+            //isGrounded = false;          // 내부 플래그(직접 쓰는 경우)
+
+            /* 방법 B : 다운-슬라이드 강제 */
+            Vector3 slide = Vector3.ProjectOnPlane(Vector3.down, n).normalized * slideSpeed;
+            moveDirection = slide;
+        }
+    }
+    
 }

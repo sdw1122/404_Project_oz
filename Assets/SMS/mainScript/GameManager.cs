@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviourPun
     Vector3 spawnPos = new Vector3(0, 1, 0);
     PlayerSaveData savedData;
     void Start()
-    {
+    {        
         string userId = PhotonNetwork.LocalPlayer.UserId;
 
         // 저장된 데이터 로드

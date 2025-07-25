@@ -8,7 +8,7 @@ public class PlayerHealth : LivingEntity
     private Animator playerAnimator; // 플레이어의 애니메이터
     public PhotonView pv;
     private PlayerController playerController; // 플레이어 움직임 컴포넌트
-    private PlayerInput playerInput;
+    private PlayerInput playerInput;    
 
     private void Awake()
     {
@@ -75,8 +75,11 @@ public class PlayerHealth : LivingEntity
         health -= damage;
         current_health = health;
 
-        // 피격 애니메이션을 로컬에서 실행합니다.
-        playerAnimator.SetTrigger("Hit");
+        if (!playerController.isCharge)
+        {
+            // 피격 애니메이션을 로컬에서 실행합니다.
+            playerAnimator.SetTrigger("Hit");
+        }
 
         if (health <= 0)
         {
@@ -96,6 +99,28 @@ public class PlayerHealth : LivingEntity
         pv.RPC("SetDeadState", RpcTarget.All, true);
         pv.RPC("RPC_TriggerPlayerDie", RpcTarget.All);
         pv.RPC("DeadCamera", RpcTarget.All);
+        // 죽은 사람은 누구든지 상관없이 woodman에게 전달
+        if (pv.IsMine)
+        {
+            WoodMan woodMan = FindFirstObjectByType<WoodMan>();
+            if (woodMan != null)
+            {
+                AggroSystem aggroSystem = woodMan.GetComponent<AggroSystem>();
+                if (aggroSystem != null)
+                {
+                    aggroSystem.GetComponent<PhotonView>().RPC("ResetAndHalfAggro", RpcTarget.MasterClient, pv.ViewID);
+                    Debug.Log($"{this.gameObject}:WoodMan에게 어그로 리셋 전달 완료");
+                }
+                else
+                {
+                    Debug.LogWarning("AggroSystem 컴포넌트 없음");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("WoodMan을 씬에서 찾지 못함");
+            }
+        }
     }
  
 
@@ -146,7 +171,7 @@ public class PlayerHealth : LivingEntity
         // 조작비활성화 (그 클라이언트만)
         if (pv.IsMine)
         {
-
+            
             playerInput.actions.FindAction("Move")?.Disable();
             playerInput.actions.FindAction("Attack")?.Disable();
             playerInput.actions.FindAction("Skill1")?.Disable();

@@ -52,16 +52,18 @@ public class Pen_Skill_2 : MonoBehaviour
         Vector3 spawnPos = origin + dir * 0.5f;
         Quaternion rot = Quaternion.identity;
         GameObject obj = PhotonNetwork.Instantiate("Pen_Skill2_Projectile", spawnPos, rot);
-        obj.GetComponent<Skill2Projectile>().Initialize(Damage,tik);
-        animator.SetTrigger("Attack");
-        pv.RPC("RPC_TriggerPenAttack1", RpcTarget.Others);
+        obj.GetComponent<Skill2Projectile>().Initialize(Damage,tik, PhotonView.Get(this).ViewID);
+       
+        pv.RPC("RPC_TriggerPenAttack1", RpcTarget.All);
         Rigidbody rb = obj.GetComponent<Rigidbody>();
         Vector3 throwDir = Camera.main.transform.forward;
         rb.linearVelocity = throwDir * throwForce;
+        
     }
     [PunRPC]
     void RPC_TriggerPenAttack1()
     {
+        Debug.Log(animator);
         animator.SetTrigger("Attack");
     }
 }

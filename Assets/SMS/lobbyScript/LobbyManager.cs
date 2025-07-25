@@ -139,7 +139,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LoadLevel("Stage1"); // 메인 씬으로 전환
         }
+    }
 
+    public void ProtoTypeScene()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("MainScene"); // 메인 씬으로 전환
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

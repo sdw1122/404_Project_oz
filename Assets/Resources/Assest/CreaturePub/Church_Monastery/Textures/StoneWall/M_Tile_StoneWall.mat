@@ -62,7 +62,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColor:
-        m_Texture: {fileID: 2800000, guid: d822555339bdc6149a3e3c3a9c134c03, type: 3}
+        m_Texture: {fileID: 2800000, guid: c131f7c1b3497da47aaa740fcc68c867, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap:
@@ -142,7 +142,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MAOHS:
-        m_Texture: {fileID: 2800000, guid: d24268acc5a1b3b48a99a1d61fca3b33, type: 3}
+        m_Texture: {fileID: 2800000, guid: 113957c187175e34e9d3d7974b644e8d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -166,7 +166,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: 42f22abc0f00fa84c8b70d8f0402615b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 13e3c9833fa4919449eb49db0cae5160, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -186,7 +186,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RGMaskDirt:
-        m_Texture: {fileID: 2800000, guid: e8ba2da5a12f312449c38f0b407e2fac, type: 3}
+        m_Texture: {fileID: 2800000, guid: c0c0ab525000fc0468052f7a87ace529, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Secondary_BaseColor:

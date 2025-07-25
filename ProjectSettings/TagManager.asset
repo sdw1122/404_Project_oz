@@ -7,6 +7,8 @@ TagManager:
   - Bullet
   - Enemy
   - Ground
+  - StoneGolem
+  - FireGolem
   layers:
   - Default
   - TransparentFX
@@ -18,8 +20,8 @@ TagManager:
   - Player
   - Enemy
   - Lava
-  - 
-  - 
+  - Ground
+  - EnemyHead
   - 
   - 
   - 

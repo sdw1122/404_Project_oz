@@ -120,4 +120,9 @@ public class MovingObject : InteractableBase
         transform.position = destination;
         transform.rotation = rotation;
     }
+    public void TriggerMovement()
+    {
+        // 기존에 만들어둔 RPC를 그대로 호출하여 모든 클라이언트에서 움직이게 합니다.
+        pv.RPC("ToggleMoveState", RpcTarget.All);
+    }
 }

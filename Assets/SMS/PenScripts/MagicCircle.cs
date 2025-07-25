@@ -12,7 +12,7 @@ public class MagicCircle : MonoBehaviour
     private HashSet<LivingEntity> targetsInCircle = new HashSet<LivingEntity>();
     private PhotonView pv;
     private int enemyLayer;
-
+    int ownerViewID;
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
@@ -20,11 +20,11 @@ public class MagicCircle : MonoBehaviour
     }
 
     [PunRPC]
-    public void RPC_Initialize(float p_damage, float p_tik)
+    public void RPC_Initialize(float p_damage, float p_tik,int viewID)
     {
         damage = p_damage;
         tik = p_tik;
-
+        ownerViewID = viewID;
         // 데미지 관리는 마스터만!
         if (PhotonNetwork.IsMasterClient)
         {
@@ -54,9 +54,22 @@ public class MagicCircle : MonoBehaviour
             Enemy enemy = target as Enemy;
             if (enemy != null)
             {
-                enemy.isBinded = true;
+                WoodMan woodMan = enemy as WoodMan;
+
+                if (woodMan != null)
+                {
+                    if (woodMan._currentMode != WoodMan.WoodMan_Mode.Normal)
+                    {
+                        enemy.isBinded = true;
+                    }
+                }
+                else
+                {
+                    enemy.isBinded = true;
+                }
+
+                targetsInCircle.Add(target);
             }
-            targetsInCircle.Add(target);
         }
     }
 
@@ -67,9 +80,12 @@ public class MagicCircle : MonoBehaviour
         foreach (var target in targetsInCircle)
         {
             Enemy enemy = target as Enemy;
+            Rigidbody enemyRb = enemy.GetComponent<Rigidbody>();
             if (enemy != null)
             {
+              
                 enemy.isBinded = false;
+                
             }
         }
 
@@ -94,8 +110,35 @@ public class MagicCircle : MonoBehaviour
 
                         if (enemyPv != null && !enemy.dead)
                         {
-                            enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-                            enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
+                            if (!enemy.dead)
+                            {
+                                if (target.CompareTag("StoneGolem"))
+                                {
+                                    StoneGolem golem = target.GetComponent<StoneGolem>();
+                                    if (golem != null && golem.isHammer)
+                                    {
+                                        enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal);
+                                    }
+                                }
+                                else if (target.CompareTag("FireGolem"))
+                                {
+                                    FireGolem golem = target.GetComponent<FireGolem>();
+                                    if (golem != null && !golem.isIce)
+                                    {
+                                        enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 0.5f, hitPoint, hitNormal);
+                                    }
+                                    else if (golem != null && golem.isIce)
+                                    {
+                                        enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 5f, hitPoint, hitNormal);
+                                    }
+                                }
+                                else
+                                {
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
+                                    enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
+                                }
+                                enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                            }
                         }
                     }
                 }
