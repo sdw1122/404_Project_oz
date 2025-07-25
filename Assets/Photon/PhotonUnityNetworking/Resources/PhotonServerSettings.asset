@@ -131,6 +131,7 @@ MonoBehaviour:
   - RPC_EnemyHit
   - RPC_SetAirborne
   - RPC_SetFloat
+  - SyncLookRotation
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

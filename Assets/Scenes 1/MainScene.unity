@@ -840,7 +840,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 277501513}
-  sceneViewId: 20
+  sceneViewId: 27
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &277501515
@@ -876,11 +876,9 @@ Transform:
   - {fileID: 1677084450}
   - {fileID: 1910998613}
   - {fileID: 1936460072}
-  - {fileID: 719006358}
   - {fileID: 161702918}
   - {fileID: 1008671367}
   - {fileID: 1564477274}
-  - {fileID: 523909857}
   - {fileID: 1319412571}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -951,7 +949,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 21
+  sceneViewId: 25
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &284059254
@@ -2927,7 +2925,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8309118144831616657, guid: ea4324e39606b124fbc8962ece08c421, type: 3}
       propertyPath: sceneViewId
-      value: 20
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 8742874050866408602, guid: ea4324e39606b124fbc8962ece08c421, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4205,7 +4203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7566620229815113464, guid: 6d225ba0cce192542a57c7e14aec742b, type: 3}
       propertyPath: sceneViewId
-      value: 21
+      value: 24
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6442,3 +6440,6 @@ SceneRoots:
   - {fileID: 2001017424}
   - {fileID: 628241273}
   - {fileID: 611414017}
+  - {fileID: 54280272}
+  - {fileID: 284059258}
+  - {fileID: 2115053929}

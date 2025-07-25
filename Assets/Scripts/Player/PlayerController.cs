@@ -41,6 +41,12 @@ public class PlayerController : MonoBehaviour
     public float slideSpeed = 5f;
 
     public string job;
+
+    private Coroutine slowCoroutine;
+    private bool isKnockbacked = false;
+    private float knockbackEndTime = 0f;
+    private float originalSpeed;
+    private Rigidbody rb;
     [PunRPC]
     public void SetJob(string _job)
     {
