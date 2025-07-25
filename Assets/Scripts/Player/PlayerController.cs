@@ -6,7 +6,6 @@ using Unity.Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
-
     PhotonView pv;
     Animator animator;
     HealingRay healingRay;
@@ -26,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 lookInput;
     private float xRotation = 0f;
 
+    private bool prevFloat = false;
     public float jumpForce = 5f;
     private bool isGrounded = false; // 땅에 닿아있는지 여부
     private int groundContactCount = 0; // 여러 지면 접촉을 처리
@@ -60,6 +60,9 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        // 에디터에서 테스트할 땐 오프라인 모드로 전환
+        PhotonNetwork.OfflineMode = true;
+
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         pv = GetComponent<PhotonView>();
@@ -193,8 +196,11 @@ public class PlayerController : MonoBehaviour
         if (!pv.IsMine) return;
         bool floating = !isGrounded;
         animator.SetBool("Float", floating);
-        // 필요하면 네트워크로 동기화
-        pv.RPC("RPC_SetFloat", RpcTarget.Others, floating);
+        if (floating != prevFloat)
+        {
+            pv.RPC("RPC_SetFloat", RpcTarget.Others, floating);
+            prevFloat = floating;
+        }
     }
     // Update is called once per frame
     void FixedUpdate()

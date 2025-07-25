@@ -35,7 +35,7 @@ Material:
   - EFFECT_BUMP
   - _ALPHABLEND_ON
   - _FLIPBOOKBLENDING_OFF
-  m_LightmapFlags: 0
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
@@ -131,12 +131,12 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 8.000001, g: 8.000001, b: 8.000001, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 0.13725491}
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 8.000002, g: 8.000002, b: 8.000002, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.13725491}
     - _ColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
-    - _EmissionColor: {r: 0.4198113, g: 0.9408545, b: 1, a: 1}
+    - _EmissionColor: {r: 2.670157, g: 0, b: 0, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

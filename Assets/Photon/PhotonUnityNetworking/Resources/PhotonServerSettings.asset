@@ -116,6 +116,9 @@ MonoBehaviour:
   - StartFalling_RPC
   - RPC_SetAirborne
   - RPC_SetFloat
+  - RPC_DisableWeapon
+  - RPC_EnableWeapon
+  - RPC_PlaySkill2Effect
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
