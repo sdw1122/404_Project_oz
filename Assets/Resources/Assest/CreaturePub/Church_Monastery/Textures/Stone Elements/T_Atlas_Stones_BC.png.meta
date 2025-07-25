@@ -1,12 +1,9 @@
 fileFormatVersion: 2
-guid: 5377d50122e9fb948b5da6cbe95507a1
-AssetOrigin:
-  serializedVersion: 1
-  productId: 263656
-  packageName: Medieval Church and Monastery Kit
-  packageVersion: 1.1
-  assetPath: Assets/CreaturePub/Church_Monastery/Textures/Stone Elements/T_Atlas_Stones_BC.png
-  uploadId: 623234
+<<<<<<< HEAD
+guid: c418106d3a0d92b4ead82d9178e233a1
+=======
+guid: e3436763b838f994885c8c415503dde6
+>>>>>>> origin/SMS_Pen
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -76,7 +73,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -100,8 +97,9 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+<<<<<<< HEAD
   - serializedVersion: 4
-    buildTarget: Server
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -113,19 +111,8 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
+=======
+>>>>>>> origin/SMS_Pen
   spriteSheet:
     serializedVersion: 2
     sprites: []

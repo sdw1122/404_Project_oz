@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 01ac960fad8ae314a918ce1016158299
+guid: a1dcd6750b97a634eab1dbdbebcbfe8b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -7,7 +7,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
-    sRGBTexture: 0
+    sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -54,7 +54,7 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
-  textureType: 1
+  textureType: 0
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -70,7 +70,7 @@ TextureImporter:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -115,10 +115,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 315378
-  packageName: Rusty Sword
-  packageVersion: 1.0.0
-  assetPath: Assets/Danvil/Rusty Sword/Meshes/RustySwordNormalMap.png
-  uploadId: 745654

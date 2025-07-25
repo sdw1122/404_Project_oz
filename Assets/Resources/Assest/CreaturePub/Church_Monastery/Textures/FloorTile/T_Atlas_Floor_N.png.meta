@@ -1,12 +1,9 @@
 fileFormatVersion: 2
-guid: 65745db8b330a9e47a822801d11de4fa
-AssetOrigin:
-  serializedVersion: 1
-  productId: 263656
-  packageName: Medieval Church and Monastery Kit
-  packageVersion: 1.1
-  assetPath: Assets/CreaturePub/Church_Monastery/Textures/FloorTile/T_Atlas_Floor_N.png
-  uploadId: 623234
+<<<<<<< HEAD
+guid: cca71c56cf30da84fa39f21537db55f5
+=======
+guid: cfa077a9172b36b41bd28a7e7fbef1cf
+>>>>>>> origin/SMS_Pen
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -14,7 +11,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
-    sRGBTexture: 0
+    sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -61,7 +58,7 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
-  textureType: 1
+  textureType: 0
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -76,7 +73,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -91,17 +88,18 @@ TextureImporter:
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 12
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 1
+    overridden: 0
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+<<<<<<< HEAD
   - serializedVersion: 4
-    buildTarget: Server
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -113,19 +111,8 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: 48
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 1
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
+=======
+>>>>>>> origin/SMS_Pen
   spriteSheet:
     serializedVersion: 2
     sprites: []

@@ -39,13 +39,39 @@ public class PenMissile : MonoBehaviour
                 
                 if (!enemy.dead)
                 {
-                    enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-
-                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage, hitPoint, hitNormal);
+                    if (!enemy.dead)
+                    {
+                        if (other.CompareTag("StoneGolem"))
+                        {
+                            StoneGolem golem = other.GetComponent<StoneGolem>();
+                            if (golem != null && golem.isHammer)
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage * 2f, hitPoint, hitNormal);
+                            }
+                        }
+                        else if (other.CompareTag("FireGolem"))
+                        {
+                            FireGolem golem = other.GetComponent<FireGolem>();
+                            if (golem != null && !golem.isIce)
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage * 0.5f, hitPoint, hitNormal);
+                            }
+                            else if (golem != null && golem.isIce)
+                            {
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage * 5f, hitPoint, hitNormal);
+                            }
+                        }
+                        else
+                        {
+                            enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage, hitPoint, hitNormal);
+                            enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
+                        }
+                        enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                    }
                     PhotonNetwork.Destroy(gameObject);
                 }
 
-                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage, hitPoint, hitNormal, ownerViewID);
+                
                 PhotonNetwork.Destroy(gameObject);
 
             }

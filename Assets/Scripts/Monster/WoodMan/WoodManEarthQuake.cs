@@ -26,6 +26,10 @@ public class WoodManEarthQuake : MonoBehaviour
     {
         return Time.time >= lastSkillTime + skillCooldown;
     }
+    public void SetDamage(float value)
+    {
+        skillDamage = value;
+    }
     public bool IsTargetInRange()
     {
         Vector3 skillCenter = transform.position + Vector3.up * skillRangeYOffset;

@@ -10,6 +10,7 @@ public class WoodMan : Enemy
     private AggroSystem aggroSystem;
     public GameObject currentTarget;
     public float groggyTime=8.0f;
+    public float speed = 6.0f;
     // 공격들
     WoodManAttack woodManAttack;
     WoodManEarthQuake woodManQuake;
@@ -18,8 +19,9 @@ public class WoodMan : Enemy
     float meleeAttackRange;
     float QuakeRange;
     float roarRange;
+    float distanceToTarget;
     public float minChaseDistance=0.5f;
-    Rigidbody rb;
+    Rigidbody woodmanRb;
     bool canAct = true;
     Animator animator;
     public enum WoodMan_State 
@@ -44,7 +46,7 @@ public class WoodMan : Enemy
         aggroSystem = GetComponent<AggroSystem>();
         woodManAttack = GetComponent<WoodManAttack>();
         woodManQuake = GetComponent<WoodManEarthQuake>();
-        rb=GetComponent<Rigidbody>();   
+        woodmanRb = GetComponent<Rigidbody>();   
         woodManRoar = GetComponent<WoodManRoar>();
         _currentState=WoodMan_State.Idle;
         _currentMode = WoodMan_Mode.Normal;
@@ -53,6 +55,7 @@ public class WoodMan : Enemy
         roarRange= woodManRoar.skillRadius;
         attackRange = meleeAttackRange;
         originalDamage = WoodManAttack.meleeAttackDamage;
+        navMeshAgent.speed = speed;
 
     }
     public override void Attack()
@@ -73,12 +76,12 @@ public class WoodMan : Enemy
             case WoodMan_State.Roar:
                 pv.RPC("RoarRPC", RpcTarget.All);
                 _currentState = WoodMan_State.Idle;
-                StartCoroutine(DelayedAction(2.833f));
+                StartCoroutine(DelayedAction(2.0f));
                 break;
             case WoodMan_State.EarthQuake:
                 pv.RPC("EarthQuakeRPC", RpcTarget.All);
                 _currentState = WoodMan_State.Idle;
-                StartCoroutine(DelayedAction(2.633f));
+                StartCoroutine(DelayedAction(2.5f));
                 break;
 
             
@@ -90,7 +93,7 @@ public class WoodMan : Enemy
         yield return new WaitForSeconds(delay);
         canAct = true;
     }
-    protected override void Update()
+    public override void Update()
     {
         
         if (!PhotonNetwork.IsMasterClient) return;
@@ -103,13 +106,16 @@ public class WoodMan : Enemy
         SwitchMode();
         // 갈망 업데이트
         UpdateAggroTarget();
-
-        float distanceToTarget = Vector3.Distance(transform.position, targetEntity.transform.position);
+        if(targetEntity != null) 
+        {  
+            distanceToTarget= Vector3.Distance(transform.position, targetEntity.transform.position); 
+        }
+        
         //
         if (distanceToTarget < minChaseDistance)
         {
             navMeshAgent.isStopped = true;
-            rb.isKinematic = true;
+            woodmanRb.isKinematic = true;
             return;
         }
 
@@ -119,7 +125,6 @@ public class WoodMan : Enemy
             base.attackRange = meleeAttackRange;
             _currentState = WoodMan_State.MeleeAttack;
             navMeshAgent.isStopped = true;
-            rb.isKinematic = false; // 물리 활성화
             canAct = false;
             return;
         }
@@ -127,26 +132,34 @@ public class WoodMan : Enemy
         if (woodManRoar.IsReady() && distanceToTarget < roarRange && distanceToTarget > QuakeRange)
         {
             base.attackRange = roarRange;
-            _currentState = WoodMan_State.Roar;
             navMeshAgent.isStopped = true;
-            rb.isKinematic = false;
+            _currentState = WoodMan_State.Roar;
+          
             canAct = false;
+            Vector3 dir = (targetEntity.transform.position - transform.position).normalized;
+            dir.y = 0f;
+
+            if (dir != Vector3.zero)
+            {
+                navMeshAgent.updateRotation = false;
+                Quaternion lookRotation = Quaternion.LookRotation(dir);
+                transform.rotation = lookRotation;
+                navMeshAgent.updateRotation = true;
+            }
+            Attack();
             return;
         }
         // 대지 파쇄
         if (woodManQuake.isReady() && woodManQuake.IsTargetInRange())
         {
             base.attackRange = QuakeRange;
-            _currentState = WoodMan_State.EarthQuake;
             navMeshAgent.isStopped = true;
-            rb.isKinematic = false;
+            _currentState = WoodMan_State.EarthQuake;
+            
             canAct = false;
-            enemyAnimator.SetFloat("Blend", 0f); // 공격 전 Idle자세
+            enemyAnimator.SetFloat("Move", 0f); // 공격 전 Idle자세
             pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
-            
-
-                Attack();    
-            
+            Attack();
             return;
         }
 
@@ -166,15 +179,21 @@ public class WoodMan : Enemy
         {
             case WoodMan_Mode.Normal:
                 DEF_Factor = 0.5f;
-                WoodManAttack.meleeAttackDamage = originalDamage;
+                woodManAttack.SetDamage(originalDamage);
+                woodManQuake.SetDamage(originalDamage*1.5f);
+                woodManRoar.SetDamage(originalDamage*2f);
                 break;
             case WoodMan_Mode.Overheat:
                 DEF_Factor = 0.8f;
-                WoodManAttack.meleeAttackDamage *= 1.25f;
+                woodManAttack.SetDamage(originalDamage*1.25f);
+                woodManQuake.SetDamage(originalDamage*1.5f*1.25f);
+                woodManRoar.SetDamage(originalDamage *2f* 1.25f);
                 break;
             case WoodMan_Mode.Vulnerable:
                 DEF_Factor = 1.5f;
-                WoodManAttack.meleeAttackDamage = originalDamage;
+                woodManAttack.SetDamage(originalDamage);
+                woodManQuake.SetDamage(originalDamage*1.5f);
+                woodManRoar.SetDamage(originalDamage*2f);
                 pv.RPC("VulnerableRPC", RpcTarget.All);
                 
                 break;

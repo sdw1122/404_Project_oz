@@ -1,12 +1,9 @@
 fileFormatVersion: 2
-guid: d822555339bdc6149a3e3c3a9c134c03
-AssetOrigin:
-  serializedVersion: 1
-  productId: 263656
-  packageName: Medieval Church and Monastery Kit
-  packageVersion: 1.1
-  assetPath: Assets/CreaturePub/Church_Monastery/Textures/StoneWall/T_Tile_StoneWall_BC.png
-  uploadId: 623234
+<<<<<<< HEAD
+guid: c131f7c1b3497da47aaa740fcc68c867
+=======
+guid: c253fe03b17bd524faa3edb6db7046f4
+>>>>>>> origin/SMS_Pen
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -42,7 +39,7 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 1
-    aniso: 4
+    aniso: 1
     mipBias: 0
     wrapU: 0
     wrapV: 0
@@ -76,32 +73,6 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Standalone
-    maxTextureSize: 4096
-    resizeAlgorithm: 0
-    textureFormat: 10
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 1
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -114,7 +85,23 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
+    buildTarget: Standalone
+<<<<<<< HEAD
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+=======
+>>>>>>> origin/SMS_Pen
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
