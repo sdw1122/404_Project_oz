@@ -138,7 +138,7 @@ public abstract class Enemy : LivingEntity
                     navMeshAgent.isStopped = true;
                     navMeshAgent.updateRotation = false;
                     // 바인드 중엔 달리기 애니매이션 출력
-                    enemyAnimator.SetFloat("Blend", 1f); // 걷기/달리기 애니메이션
+                    enemyAnimator.SetFloat("Move", 1f); // 걷기/달리기 애니메이션
                     pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
                     navMeshAgent.updateRotation = true;
                 }

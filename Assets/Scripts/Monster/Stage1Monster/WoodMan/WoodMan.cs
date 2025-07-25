@@ -139,13 +139,13 @@ public class WoodMan : Enemy
             Vector3 dir = (targetEntity.transform.position - transform.position).normalized;
             dir.y = 0f;
 
-            if (dir != Vector3.zero)
+            /*if (dir != Vector3.zero)
             {
                 navMeshAgent.updateRotation = false;
                 Quaternion lookRotation = Quaternion.LookRotation(dir);
                 transform.rotation = lookRotation;
                 navMeshAgent.updateRotation = true;
-            }
+            }*/
             Attack();
             return;
         }
