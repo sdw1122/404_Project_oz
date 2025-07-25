@@ -147,6 +147,12 @@ public class Hammer : MonoBehaviour
         animator.SetTrigger("Big Attack");
     }
 
+    [PunRPC]
+    void RPC_ChargeEffect()
+    {
+        ChargeEffect.Play();
+    }
+
     void Update()
     {
         if (skill1Pressed)
@@ -158,18 +164,21 @@ public class Hammer : MonoBehaviour
                 isCharge1 = true;
                 main.startColor = charge1col;
                 ChargeEffect.Play();
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
             }
             if (skill1HoldTime >= 2 && !isCharge2)
             {
                 isCharge2 = true;
                 main.startColor = charge2col;
                 ChargeEffect.Play();
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others, main);
             }
             if (skill1HoldTime >= 3 && !isCharge3)
             {
                 isCharge3 = true;
                 main.startColor = charge3col;
                 ChargeEffect.Play();
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others, main);
             }
             playerController.canMove = false;
             playerController.ResetMoveInput();

@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class Pen_Skill_1 : MonoBehaviour
 {
     public GameObject PenPlayer;
+    public GameObject bow;
     Rigidbody rb;
     Animator animator;
     [Header("스킬 정보")]
@@ -58,7 +59,6 @@ public class Pen_Skill_1 : MonoBehaviour
 
         if (context.started)
         {
-            
             isSkill1Pressed = true;
         }
         else if (context.canceled)
@@ -81,7 +81,6 @@ public class Pen_Skill_1 : MonoBehaviour
         PenAttack.isAttack = false;
         Pen_Skill_2.isThrow = false;
 
-
         animator.ResetTrigger("ChargeAttack");
         animator.SetBool("Charge", true);
         pv.RPC("RPC_TriggerChargeStart", RpcTarget.Others);
@@ -93,6 +92,7 @@ public class Pen_Skill_1 : MonoBehaviour
         animator.SetBool("Charge", false);
         animator.ResetTrigger("ChargeAttack");
         animator.SetTrigger("ChargeAttack");   // 발사 애니메이션
+        BowDisable();
         pv.RPC("RPC_TriggerChargeFinish", RpcTarget.Others);
         pv.RPC("RPC_TriggerChargeAttack", RpcTarget.Others);
         /*
@@ -145,9 +145,9 @@ public class Pen_Skill_1 : MonoBehaviour
 
         Vector3 spawnPos = rayOrigin + rayDir * minDistance; // 카메라 앞 0.5m 지점
         Quaternion rotation = Quaternion.LookRotation(rayDir);
-        rotation *= Quaternion.Euler(90, 0, 0);
+        //rotation *= Quaternion.Euler(90, 0, 0);
         GameObject missile = PhotonNetwork.Instantiate("Pen_Charged_Missile", spawnPos, rotation);
-        missile.transform.localScale = new Vector3(2.0f*chargeLevel, 10.0f, 2.0f * chargeLevel);
+        missile.transform.localScale = new Vector3(100.0f, 100.0f, 76.0f);
         missile.GetComponent<ChargedPenMissile>().Initialize(damage);
         missile.GetComponent<Rigidbody>().linearVelocity = rayDir * speed;
 
@@ -156,6 +156,16 @@ public class Pen_Skill_1 : MonoBehaviour
         PenAttack.isAttack = true;
         PlayerController1.isMove = true;
         Pen_Skill_2.isThrow = true;
+    }
+    void BowDisable()
+    {
+        bow.SetActive(false);
+        pv.RPC("RPC_BowDisable",RpcTarget.Others);
+    }
+    void BowEnable()
+    {
+        bow.SetActive(true);
+        pv.RPC("RPC_BowEnable", RpcTarget.Others);
     }
     [PunRPC]
     void RPC_TriggerChargeAttack()
@@ -172,7 +182,14 @@ public class Pen_Skill_1 : MonoBehaviour
     {
         animator.SetBool("Charge", false);
     }
-
-
-
+    [PunRPC]
+    void RPC_BowEnable()
+    {
+        bow.SetActive(true);
+    }
+    [PunRPC]
+    void RPC_BowDisable()
+    {
+        bow.SetActive(false);
+    }
 }

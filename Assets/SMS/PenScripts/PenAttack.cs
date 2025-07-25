@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PenAttack : MonoBehaviour
 {
     public GameObject penPlayer;
+    public GameObject pen;
 
     Animator animator;
     [Header("스킬 정보")]
@@ -65,7 +66,7 @@ public class PenAttack : MonoBehaviour
         
         Vector3 spawnPos = rayOrigin + rayDir * 0.5f; // 카메라 앞 0.5m 지점
         Quaternion rotation = Quaternion.LookRotation(rayDir);
-        /*rotation *= Quaternion.Euler(90, 0, 0);*/
+        rotation *= Quaternion.Euler(-90f, 0, 0);
         GameObject missile = PhotonNetwork.Instantiate("Pen_Attack_Missile", spawnPos, rotation);
         missile.GetComponent<Rigidbody>().linearVelocity = rayDir * MissileSpeed;
         animator.SetTrigger("Attack");
@@ -77,5 +78,24 @@ public class PenAttack : MonoBehaviour
     {
         animator.SetTrigger("Attack");
     }
-
+    public void PenEnable()
+    {
+        pen.SetActive(true);
+        pv.RPC("RPC_PenEnable",RpcTarget.Others);
+    }
+    public void PenDisable()
+    {
+        pen.SetActive(false);
+        pv.RPC("RPC_PenDisable", RpcTarget.Others);
+    }
+    [PunRPC]
+    public void RPC_PenEnable()
+    {
+        pen.SetActive(true);
+    }
+    [PunRPC]
+    public void RPC_PenDisable()
+    {
+        pen.SetActive(false);
+    }
 }
