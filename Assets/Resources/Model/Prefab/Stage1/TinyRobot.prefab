@@ -324,10 +324,9 @@ MonoBehaviour:
   damage: 5
   Atk_Cooldown: 0.5
   attackRange: 6
-  isBinded: 0
-  isBig: 0
-  isOverheat: 0
   DEF_Factor: 0
+  isBinded: 0
+  isFirstChase: 1
   pv: {fileID: 0}
   chaseTarget: 0
   transformView: {fileID: 0}

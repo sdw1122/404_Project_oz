@@ -17,7 +17,7 @@ public abstract class Enemy : LivingEntity
 
     public Animator enemyAnimator; // 애니메이터 컴포넌트
     /*private AudioSource enemyAudioPlayer; // 오디오 소스 컴포넌트*/
-    private Renderer enemyRenderer; // 렌더러 컴포넌트
+    public Renderer enemyRenderer; // 렌더러 컴포넌트
     private Rigidbody rb;        
     public abstract void Attack();
 
@@ -60,7 +60,7 @@ public abstract class Enemy : LivingEntity
         pv=GetComponent<PhotonView>();
         Debug.Log("Awake: navMeshAgent=" + (navMeshAgent == null ? "NULL" : "OK") + ", pv=" + (pv == null ? "NULL" : "OK"));
         enemyRenderer = GetComponentInChildren<Renderer>();
-     
+        
         originalColor = enemyRenderer.material.color;
         rb = GetComponent<Rigidbody>();
         PhotonNetwork.SerializationRate = 20;
@@ -83,7 +83,7 @@ public abstract class Enemy : LivingEntity
             damage = enemyData.Atk_Damage;
         if (navMeshAgent.speed <= 0f)
             navMeshAgent.speed = enemyData.speed;
-        DEF_Factor=enemyData.DEF_Factor; // 받는 피해량 계수
+        DEF_Factor = enemyData.DEF_Factor;
         /*originalColor = enemyData.skinColor;
         enemyRenderer.material.color = enemyData.skinColor;*/
     }
@@ -107,8 +107,10 @@ public abstract class Enemy : LivingEntity
         if (isBinded && navMeshAgent.isOnNavMesh)
         {
             navMeshAgent.isStopped = true;
-            enemyAnimator.SetFloat("Blend", 0f); // 공격 전 Idle자세
-            pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
+            /*rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            enemyAnimator.SetFloat("Blend", 1f); // 공격 전 Idle자세
+            pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);*/
         }
         currentHealth = health;
         // 추적 대상의 존재 여부에 따라 다른 애니메이션 재생
@@ -126,7 +128,20 @@ public abstract class Enemy : LivingEntity
     {
         // 살아 있는 동안 무한 루프
         while (!dead)
-        {   
+        {
+            if (isBinded)
+            {
+                if (navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+                {
+                    navMeshAgent.isStopped = true;
+                    navMeshAgent.updateRotation = false;
+                    // 바인드 중엔 달리기 애니매이션 출력
+                    enemyAnimator.SetFloat("Blend", 1f); // 걷기/달리기 애니메이션
+                    pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
+                    navMeshAgent.updateRotation = true;
+                }
+                
+            }
             // 추적 로직은 마스터에서만 실행시켜 둘의 Enemy의 움직임을 동기화함.
             if (!PhotonNetwork.IsMasterClient)
             {
@@ -136,11 +151,11 @@ public abstract class Enemy : LivingEntity
             if (hasTarget)
             {
                 float dist = Vector3.Distance(transform.position, targetEntity.transform.position);               
-                if (dist <= attackRange)
+                if (dist <= attackRange&&!isBinded)
                 {
                     enemyAnimator.SetFloat("Move", 0f); // 공격 전 Idle자세
                     pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
-                    if (CanAct() && !isBinded)    // (공격 가능한지 자식에게 '질문')
+                    if (CanAct())    // (공격 가능한지 자식에게 '질문')
                     {                        
                         Attack();    // -> Attack도 override 해서 자식 전용
                     }
@@ -220,6 +235,7 @@ public abstract class Enemy : LivingEntity
     public void SyncLookRotation(Quaternion rot)
     {
         transform.rotation = rot;
+        Debug.Log("실행중");
     }
 
     [PunRPC]
@@ -320,7 +336,7 @@ public abstract class Enemy : LivingEntity
     private IEnumerator FlashColor()
     {
 
-     
+       
         enemyRenderer.material.color = Color.red;
         
         yield return new WaitForSeconds(0.15f);
@@ -331,6 +347,7 @@ public abstract class Enemy : LivingEntity
     private void RPC_FlashColor()
     {
         if (dead) return;
+        
         StopCoroutine("FlashColor"); // 중복 방지
         StartCoroutine(FlashColor());
     }

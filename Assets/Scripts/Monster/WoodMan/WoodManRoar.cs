@@ -27,6 +27,10 @@ public class WoodManRoar : MonoBehaviour
     {
         return Time.time >= _lastSkillTime + skillCooldown;
     }
+    public void SetDamage(float value)
+    {
+        skillDamage = value;
+    }
     public bool IsInMeleeRange(float targetPos)
     {
         return targetPos <= skillRadius;

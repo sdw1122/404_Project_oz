@@ -52,12 +52,24 @@ public class MagicCircle : MonoBehaviour
         if (target != null)
         {
             Enemy enemy = target as Enemy;
-            WoodMan woodMan=enemy as WoodMan;
-            if (enemy != null&&woodMan._currentMode!=WoodMan.WoodMan_Mode.Normal)
+            if (enemy != null)
             {
-                enemy.isBinded = true;
+                WoodMan woodMan = enemy as WoodMan;
+
+                if (woodMan != null)
+                {
+                    if (woodMan._currentMode != WoodMan.WoodMan_Mode.Normal)
+                    {
+                        enemy.isBinded = true;
+                    }
+                }
+                else
+                {
+                    enemy.isBinded = true;
+                }
+
+                targetsInCircle.Add(target);
             }
-            targetsInCircle.Add(target);
         }
     }
 
@@ -68,9 +80,12 @@ public class MagicCircle : MonoBehaviour
         foreach (var target in targetsInCircle)
         {
             Enemy enemy = target as Enemy;
+            Rigidbody enemyRb = enemy.GetComponent<Rigidbody>();
             if (enemy != null)
             {
+              
                 enemy.isBinded = false;
+                
             }
         }
 

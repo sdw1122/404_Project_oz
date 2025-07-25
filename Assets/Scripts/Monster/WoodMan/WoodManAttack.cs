@@ -29,6 +29,10 @@ public class WoodManAttack : MonoBehaviour
         return Time.time >= lastAttackTime + currentAttackCooldown;
         
     }
+    public void SetDamage(float value)
+    {
+        meleeAttackDamage = value;
+    }
     public bool IsInMeleeRange(float targetPos)
     {
         return targetPos <= meleeAttackRange;

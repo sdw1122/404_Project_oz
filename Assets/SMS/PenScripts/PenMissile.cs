@@ -70,7 +70,7 @@ public class PenMissile : MonoBehaviour
                     PhotonNetwork.Destroy(gameObject);
                 }
 
-                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage, hitPoint, hitNormal, ownerViewID);
+                
                 PhotonNetwork.Destroy(gameObject);
 
             }

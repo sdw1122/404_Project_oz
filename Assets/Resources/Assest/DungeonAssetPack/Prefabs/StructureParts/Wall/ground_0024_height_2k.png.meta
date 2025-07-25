@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 77550066a07a6a94ca83301935ed3881
+=======
+guid: 8b30e6ace2b9f7642bb539070161761f
+>>>>>>> origin/SMS_Pen
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
