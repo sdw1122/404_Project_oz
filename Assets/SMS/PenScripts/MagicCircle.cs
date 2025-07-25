@@ -95,8 +95,34 @@ public class MagicCircle : MonoBehaviour
 
                         if (enemyPv != null && !enemy.dead)
                         {
-                            enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-                            enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal,ownerViewID);
+                            if (!enemy.dead)
+                            {
+                                if (target.CompareTag("StoneGolem"))
+                                {
+                                    StoneGolem golem = target.GetComponent<StoneGolem>();
+                                    if (golem != null && golem.isHammer)
+                                    {
+                                        enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal);
+                                    }
+                                }
+                                else if (target.CompareTag("FireGolem"))
+                                {
+                                    FireGolem golem = target.GetComponent<FireGolem>();
+                                    if (golem != null && !golem.isIce)
+                                    {
+                                        enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 0.5f, hitPoint, hitNormal);
+                                    }
+                                    else if (golem != null && golem.isIce)
+                                    {
+                                        enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 5f, hitPoint, hitNormal);
+                                    }
+                                }
+                                else
+                                {
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
+                                }
+                                enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                            }
                         }
                     }
                 }

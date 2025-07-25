@@ -33,6 +33,8 @@ public abstract class Enemy : LivingEntity
     
 
     public PhotonView pv;
+    public float chaseTarget;
+
     // 추적할 대상이 존재하는지 알려주는 프로퍼티
     public bool hasTarget
     {
@@ -136,26 +138,51 @@ public abstract class Enemy : LivingEntity
                 float dist = Vector3.Distance(transform.position, targetEntity.transform.position);               
                 if (dist <= attackRange)
                 {
-                    enemyAnimator.SetFloat("Blend", 0f); // 공격 전 Idle자세
+                    enemyAnimator.SetFloat("Move", 0f); // 공격 전 Idle자세
                     pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
                     if (CanAct() && !isBinded)    // (공격 가능한지 자식에게 '질문')
                     {                        
                         Attack();    // -> Attack도 override 해서 자식 전용
                     }
                 }
-                else 
+                else if (dist > 20f)
                 {
+                    if (chaseTarget < 10f)
+                    {
+                        chaseTarget += 0.25f;
+                        if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh && !isBinded)
+                        {
+                            navMeshAgent.isStopped = false;
+                            navMeshAgent.SetDestination(targetEntity.transform.position);
+                            if (PhotonNetwork.IsMasterClient)
+                            {
+                                //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
+                                pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
+                            }
+                            enemyAnimator.SetFloat("Move", 1f); // 걷기/달리기 애니메이션
+                            pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
+                        }
+                    }
+                    else
+                    {
+                        targetEntity = null;
+                        chaseTarget = 0;
+                    }
+                }
+                else if (dist <= 20f)
+                {
+                    chaseTarget = 0;
                     if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh && !isBinded)
-                    { 
+                    {
                         navMeshAgent.isStopped = false;
-                        navMeshAgent.SetDestination(targetEntity.transform.position);                        
+                        navMeshAgent.SetDestination(targetEntity.transform.position);
                         if (PhotonNetwork.IsMasterClient)
                         {
                             //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
                             pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
                         }
-                        enemyAnimator.SetFloat("Blend", 1f); // 걷기/달리기 애니메이션
-                        pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);                        
+                        enemyAnimator.SetFloat("Move", 1f); // 걷기/달리기 애니메이션
+                        pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
                     }
                 }
             }
@@ -164,7 +191,7 @@ public abstract class Enemy : LivingEntity
                 if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
                 {
                     navMeshAgent.isStopped = true;
-                    enemyAnimator.SetFloat("Blend", 0f);
+                    enemyAnimator.SetFloat("Move", 0f);
                     pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
                 }
 
@@ -187,13 +214,6 @@ public abstract class Enemy : LivingEntity
             // 0.25초 주기로 처리 반복
             yield return new WaitForSeconds(0.25f);
         }
-    }
-
-
-    [PunRPC]
-    public void RPC_LogMessage(string msg)
-    {
-        Debug.Log("[네트워크 로그] " + msg);
     }
 
     [PunRPC]
@@ -221,13 +241,21 @@ public abstract class Enemy : LivingEntity
     [PunRPC]
     public void RPC_BlendIdle(float blendValue)
     {
-        enemyAnimator.SetFloat("Blend", blendValue);
+        enemyAnimator.SetFloat("Move", blendValue);
     }
 
     [PunRPC]
     public void RPC_BlendRun(float blendValue)
     {
-        enemyAnimator.SetFloat("Blend", blendValue);
+        enemyAnimator.SetFloat("Move", blendValue);
+    }
+
+    public void Timer()
+    {
+        if (chaseTarget < 30f)
+        {
+            chaseTarget += Time.deltaTime;
+        }
     }
 
     // 사망 처리
@@ -335,4 +363,9 @@ public abstract class Enemy : LivingEntity
         }
     }
 
+    [PunRPC]
+    public void RPC_EnemyHit()
+    {
+        enemyAnimator.SetTrigger("Hit");
+    }
 }
