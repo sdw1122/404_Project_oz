@@ -16,5 +16,5 @@ MonoBehaviour:
   Atk_Damage: 40
   Atk_Cooldown: 3
   DEF_Factor: 0.5
-  speed: 3
+  speed: 6
   isBig: 1

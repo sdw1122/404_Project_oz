@@ -509,7 +509,7 @@ MonoBehaviour:
   skillDamage: 60
   knockbackForce: 10
   knockbackUpwardForce: 5
-  knockbackDuration: 1
+  knockbackDuration: 2
   skillRangeYOffset: 1
   skillCooldown: 8
 --- !u!114 &3115222663461090094
