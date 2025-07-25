@@ -7,7 +7,6 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-
     PhotonView pv;
     Animator animator;
     HealingRay healingRay;

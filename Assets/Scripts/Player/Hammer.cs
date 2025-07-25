@@ -15,6 +15,8 @@ public class Hammer : MonoBehaviour
     public GameObject weapon;
     public float damage = 40f;
 
+    public ParticleSystem ChargeEffect;
+
     private bool isAttackButtonPressed = false;
     private float attackDelay = 1.0f;
     private float attackTimer = 0f;    
@@ -36,6 +38,14 @@ public class Hammer : MonoBehaviour
     private int attackStep = 1;            // 1: 왼쪽, 2: 오른쪽
     private float timeSinceLastAttack = 0f;// 마지막 공격 이후 경과 시간
     public bool canAttack = true;         // 공격 가능 여부
+
+    private bool isCharge1 = false;
+    private bool isCharge2 = false;
+    private bool isCharge3 = false;
+
+    private Color charge1col = new Color(1f, 1f, 1f, 0.5f);
+    private Color charge2col = new Color(1f, 0.9f, 0.3f, 1f);
+    private Color charge3col = new Color(1f, 0.15f, 0.15f, 1f);
 
     private void Awake()
     {                
@@ -70,6 +80,9 @@ public class Hammer : MonoBehaviour
         }
         if (context.canceled && skill1Pressed && playerController.IsGrounded())
         {
+            isCharge1 = false;
+            isCharge2 = false;
+            isCharge3 = false;
             skill1Pressed = false;            
             playerController.isCharge = false;
             skill1 = 0;
@@ -82,6 +95,7 @@ public class Hammer : MonoBehaviour
                 animator.SetTrigger("CancelCharge");
                 pv.RPC("RPC_TriggerEraserCancelCharge", RpcTarget.Others);
                 playerController.canMove = true;
+                DisableWeapon();
                 return;
             }
             else if (skill1HoldTime < 2)
@@ -132,11 +146,39 @@ public class Hammer : MonoBehaviour
         animator.SetTrigger("Big Attack");
     }
 
+    [PunRPC]
+    void RPC_ChargeEffect()
+    {
+        ChargeEffect.Play();
+    }
+
     void Update()
     {
         if (skill1Pressed)
         {
+            var main = ChargeEffect.main;
             skill1HoldTime += Time.deltaTime;
+            if(skill1HoldTime >= 1 && !isCharge1)
+            {
+                isCharge1 = true;
+                main.startColor = charge1col;
+                ChargeEffect.Play();
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
+            }
+            if (skill1HoldTime >= 2 && !isCharge2)
+            {
+                isCharge2 = true;
+                main.startColor = charge2col;
+                ChargeEffect.Play();
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others, main);
+            }
+            if (skill1HoldTime >= 3 && !isCharge3)
+            {
+                isCharge3 = true;
+                main.startColor = charge3col;
+                ChargeEffect.Play();
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others, main);
+            }
             playerController.canMove = false;
             playerController.ResetMoveInput();
         }
@@ -536,5 +578,37 @@ public class Hammer : MonoBehaviour
             Gizmos.DrawCube(Vector3.zero, boxHalfExtents * 2);
             Gizmos.matrix = Matrix4x4.identity;
         }
+    }
+
+    /// <summary>
+    /// 애니메이션 이벤트로 호출해서 무기를 활성화합니다.
+    /// </summary>
+    public void EnableWeapon()
+    {
+        if (weapon != null)
+            weapon.SetActive(true);
+
+        pv.RPC(nameof(RPC_EnableWeapon), RpcTarget.OthersBuffered);
+    }
+
+    /// <summary>
+    /// 애니메이션 이벤트로 호출해서 무기를 비활성화합니다.
+    /// </summary>
+    public void DisableWeapon()
+    {
+        if (weapon != null)
+            weapon.SetActive(false);
+        pv.RPC(nameof(RPC_DisableWeapon), RpcTarget.OthersBuffered);
+    }
+    [PunRPC]
+    void RPC_EnableWeapon()
+    {
+        weapon.SetActive(true);
+    }
+
+    [PunRPC]
+    void RPC_DisableWeapon()
+    {
+        weapon.SetActive(false);
     }
 }
