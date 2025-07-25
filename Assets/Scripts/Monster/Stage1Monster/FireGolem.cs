@@ -17,7 +17,7 @@ public class FireGolem : Enemy
     public bool isAttacking = false;
     public bool isIce = false;
 
-    public void Update()
+    public override void Update()
     {
         if (armAttackCoolTime < armAttackTime)
         {

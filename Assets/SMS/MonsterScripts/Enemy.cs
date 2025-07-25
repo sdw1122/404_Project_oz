@@ -103,7 +103,7 @@ public abstract class Enemy : LivingEntity
         StartCoroutine(UpdatePath());        
     }
 
-    protected virtual void Update()
+    public virtual void Update()
     {
         if (!PhotonNetwork.IsMasterClient) return;
         if (isBinded && navMeshAgent.isOnNavMesh)
@@ -281,6 +281,7 @@ public abstract class Enemy : LivingEntity
     {
         if (dead) return;
         dead = true;
+        Debug.Log("dead : " + dead);
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {

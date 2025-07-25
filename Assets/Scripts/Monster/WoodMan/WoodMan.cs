@@ -93,7 +93,7 @@ public class WoodMan : Enemy
         yield return new WaitForSeconds(delay);
         canAct = true;
     }
-    protected override void Update()
+    public override void Update()
     {
         
         if (!PhotonNetwork.IsMasterClient) return;
@@ -157,7 +157,7 @@ public class WoodMan : Enemy
             _currentState = WoodMan_State.EarthQuake;
             
             canAct = false;
-            enemyAnimator.SetFloat("Blend", 0f); // 공격 전 Idle자세
+            enemyAnimator.SetFloat("Move", 0f); // 공격 전 Idle자세
             pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
             Attack();
             return;
