@@ -288,7 +288,7 @@ public class Hammer : MonoBehaviour
                         else
                         {
                             enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
-                            enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
+                            //enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
                         }   
                         enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
                     }
@@ -365,7 +365,7 @@ public class Hammer : MonoBehaviour
                             else
                             {
                                 enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
-                                enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
+                                //enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
                             }
                             enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
                         }
@@ -446,7 +446,7 @@ public class Hammer : MonoBehaviour
                             else
                             {
                                 enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
-                                enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
+                                //enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
                             }
                             enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
                         }
