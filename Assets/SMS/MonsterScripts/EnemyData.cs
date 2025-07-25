@@ -8,6 +8,6 @@ public class EnemyData : ScriptableObject
     public float Atk_Cooldown = 2.0f; // 공격 간격
     public float DEF_Factor = 1f; // 받는 피해량 계수
     public float speed = 2f; // 이동 속도
+    public bool isBig;
    
-    public Color skinColor = Color.white; // 피부색
 }

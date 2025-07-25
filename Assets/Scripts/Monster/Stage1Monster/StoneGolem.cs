@@ -17,7 +17,7 @@ public class StoneGolem : Enemy
     public bool isAttacking = false;
     public bool isHammer = false;
 
-    public void Update()
+    public override void Update()
     {
         if (armAttackCoolTime < armAttackTime)
         {

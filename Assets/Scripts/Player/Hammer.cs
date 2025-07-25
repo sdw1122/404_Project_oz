@@ -270,7 +270,7 @@ public class Hammer : MonoBehaviour
                             StoneGolem golem = hit.GetComponent<StoneGolem>();                            
                             if (golem != null && golem.isHammer)
                             {
-                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal);
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
                             }                            
                         }
                         else if (hit.CompareTag("FireGolem"))
@@ -278,16 +278,16 @@ public class Hammer : MonoBehaviour
                             FireGolem golem = hit.GetComponent<FireGolem>();
                             if (golem != null && !golem.isIce)
                             {
-                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 0.5f, hitPoint, hitNormal);
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 0.5f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
                             }
                             else if (golem != null && golem.isIce)
                             {
-                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 5f, hitPoint, hitNormal);
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 5f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
                             }
                         }
                         else
                         {
-                            enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
+                            enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
                             enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
                         }   
                         enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
@@ -346,7 +346,7 @@ public class Hammer : MonoBehaviour
                                 StoneGolem golem = hit.GetComponent<StoneGolem>();
                                 if (golem != null)
                                 {
-                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage * 2f, hitPoint, hitNormal);
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage * 2f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
                                     golem.isHammer = true;
                                 }
                             }
@@ -355,16 +355,16 @@ public class Hammer : MonoBehaviour
                                 FireGolem golem = hit.GetComponent<FireGolem>();
                                 if (golem != null && !golem.isIce)
                                 {
-                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage * 0.5f, hitPoint, hitNormal);
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage * 0.5f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
                                 }
                                 else if (golem != null && golem.isIce)
                                 {
-                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage * 5f, hitPoint, hitNormal);
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage * 5f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
                                 }
                             }
                             else
                             {
-                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage, hitPoint, hitNormal);
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, attackDamage, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
                                 enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
                             }
                             enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
@@ -428,7 +428,7 @@ public class Hammer : MonoBehaviour
                                 StoneGolem golem = hit.GetComponent<StoneGolem>();
                                 if (golem != null && golem.isHammer)
                                 {
-                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal);
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
                                 }
                             }
                             else if (hit.CompareTag("FireGolem"))
@@ -436,16 +436,16 @@ public class Hammer : MonoBehaviour
                                 FireGolem golem = hit.GetComponent<FireGolem>();
                                 if (golem != null && !golem.isIce)
                                 {
-                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 0.5f, hitPoint, hitNormal);
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 0.5f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
                                 }
                                 else if (golem != null && golem.isIce)
                                 {
-                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 5f, hitPoint, hitNormal);
+                                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 5f, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
                                 }
                             }
                             else
                             {
-                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
+                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
                                 enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
                             }
                             enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);

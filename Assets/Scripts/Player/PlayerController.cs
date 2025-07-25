@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Photon.Pun;
 using Unity.Cinemachine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class PlayerController : MonoBehaviour
     public Camera mainCamera;
     public GameObject deadCamera;
     public float walkSpeed = 10f;
-    public float runSpeed = 15f;
+    public float runSpeed;
     public float mouseSensitivity = 0.5f;
     private float currentSpeed;
     
@@ -41,6 +42,12 @@ public class PlayerController : MonoBehaviour
     public float slideSpeed = 5f;
 
     public string job;
+
+    private Coroutine slowCoroutine;
+    private bool isKnockbacked = false;
+    private float knockbackEndTime = 0f;
+    private float originalSpeed;
+    private Rigidbody rb;
     [PunRPC]
     public void SetJob(string _job)
     {
@@ -71,16 +78,21 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();        
         pv = GetComponent<PhotonView>();
         cineCam = GetComponentInChildren<CinemachineCamera>();
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+        runSpeed = 1.5f * walkSpeed;
         if (!pv.IsMine)
         {
             var input = GetComponent<PlayerInput>();
             if (input != null) input.enabled = false;
-            if (playerCamera != null) playerCamera.gameObject.SetActive(false); // <-- 이걸 꼭 추가
+            if (playerCamera != null) playerCamera.gameObject.SetActive(false); 
             enabled = false;
             cineCam.gameObject.SetActive(false);
             return;
         }
         healingRay =GetComponent<HealingRay>();
+       
+        
         
         playerObj = this.gameObject;
         /*mainCamera = transform.Find("Main Camera").GetComponent<Camera>();*/
@@ -105,8 +117,8 @@ public class PlayerController : MonoBehaviour
             moveValue = 0f;
 
         animator.SetFloat("Move", moveValue);
-        pv.RPC("RPC_Move", RpcTarget.Others, moveValue);
-    }
+        pv.RPC("RPC_SetMove",RpcTarget.Others,moveValue);
+    }   
 
     [PunRPC]
     void RPC_Move(float moveValue)
@@ -135,6 +147,11 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Float", floating);
     }
 
+    [PunRPC]
+    void RPC_SetMove(float moveValue)
+    {
+        animator.SetFloat("Move",moveValue);
+    }
     public void OnSprint(InputAction.CallbackContext context)
     {
         if (!pv.IsMine || !canMove) return;
@@ -179,6 +196,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         currentSpeed = walkSpeed;
+        originalSpeed = currentSpeed;
         if (!pv.IsMine)
         {
             if (playerCamera != null)
@@ -238,6 +256,15 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (!pv.IsMine) return;
+        // 넉백중이면 update 금지!
+        if (isKnockbacked)
+        {
+            if (Time.time > knockbackEndTime)
+            {
+                isKnockbacked = false;
+            }
+            return;
+        }
 
         float mouseX = lookInput.x * mouseSensitivity;
         float mouseY = lookInput.y * mouseSensitivity;
@@ -250,6 +277,45 @@ public class PlayerController : MonoBehaviour
         cameraTarget.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
     }
+    // 넉백 함수
+    [PunRPC]
+    public void StartKnockback(Vector3 knockbackForce,float duration)
+    {
+        Debug.Log("넉백 호출됨");
+        // 플레이어 현재 속도와 무관하게
+        rb.linearVelocity = Vector3.zero;
+
+        // 넉백 힘 적용
+        rb.AddForce(knockbackForce, ForceMode.VelocityChange);
+        isKnockbacked = true;
+        knockbackEndTime = Time.time + duration;
+    }
+    // 슬로우 함수
+    [PunRPC]
+    public void RPC_ApplyMoveSpeedDecrease(float amount,float duration)
+    {
+        if(!pv.IsMine) return;
+        if (slowCoroutine != null)
+        {
+            StopCoroutine(slowCoroutine);
+        }
+        slowCoroutine = StartCoroutine(slowRoutine(amount,duration));
+    }
+    private IEnumerator slowRoutine(float amount,float duration)
+    {
+        currentSpeed = originalSpeed * (1f-amount);
+        /*runSpeed =1.5f*originalSpeed * (1f - amount);*/
+        walkSpeed =originalSpeed * (1f-amount);
+        runSpeed =originalSpeed * (1f-amount);
+        Debug.Log("속도 감소 완료 :"+currentSpeed);
+        yield return new WaitForSeconds(duration);
+        currentSpeed = originalSpeed;
+        walkSpeed = originalSpeed;
+        runSpeed = originalSpeed * 1.5f;
+        slowCoroutine = null;
+        Debug.Log("속도 복구 완료 :"+currentSpeed);
+    }
+    //
     public void ResetMoveInput()
     {
         moveInput = Vector2.zero;

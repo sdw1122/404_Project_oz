@@ -9,7 +9,7 @@ public class LivingEntity : MonoBehaviour, IDamageable, IPunObservable
 {    
     public float startingHealth = 100f; // 시작 체력
     public float health { get; protected set; } // 현재 체력
-    public bool dead { get; protected set; } // 사망 상태
+    public bool dead = false;
     public event Action onDeath; // 사망시 발동할 이벤트
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -50,7 +50,7 @@ public class LivingEntity : MonoBehaviour, IDamageable, IPunObservable
             Die();
         }
     }
-
+    protected virtual void OnPostDamage(float damage, GameObject attacker) { }
     // 체력을 회복하는 기능
     public virtual void RestoreHealth(float newHealth)
     {

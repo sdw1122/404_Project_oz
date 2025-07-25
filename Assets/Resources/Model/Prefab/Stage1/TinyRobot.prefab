@@ -311,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
+  dead: 0
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
@@ -318,12 +319,14 @@ MonoBehaviour:
   navMeshAgent: {fileID: 0}
   hitEffect: {fileID: 198000011254678926, guid: 1d415c3c4b7dccf4aba3753b8264694f, type: 3}
   enemyAnimator: {fileID: 0}
+  enemyRenderer: {fileID: 0}
   currentHealth: 0
   damage: 5
-  timeBetAttack: 0.5
+  Atk_Cooldown: 0.5
   attackRange: 6
+  DEF_Factor: 0
   isBinded: 0
-  isFirstChase: 0
+  isFirstChase: 1
   pv: {fileID: 0}
   chaseTarget: 0
   transformView: {fileID: 0}

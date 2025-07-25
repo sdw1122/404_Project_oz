@@ -151,7 +151,7 @@ public class Pen_Skill_1 : MonoBehaviour
         missile.transform.localScale = new Vector3(2.0f*chargeLevel, 10.0f, 2.0f * chargeLevel);
         missile.GetComponent<ChargedPenMissile>().Initialize(damage);
         missile.GetComponent<Rigidbody>().linearVelocity = rayDir * speed;
-
+        missile.GetComponent<ChargedPenMissile>().ownerViewID = PhotonView.Get(this).ViewID;
         animator.SetTrigger("ChargeAttack");
         pv.RPC("RPC_TriggerChargeAttack", RpcTarget.Others);
         PenAttack.isAttack = true;

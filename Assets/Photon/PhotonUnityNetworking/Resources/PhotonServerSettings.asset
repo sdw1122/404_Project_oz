@@ -93,19 +93,17 @@ MonoBehaviour:
   - RequestDestroy
   - RPC_ShowHealingRay
   - ToggleMoveState
-  - RPC_ThrowAttack
-  - RPC_Move
-  - RPC_Throw
-  - RPC_ThrowAttackAni
-  - RPC_SetNavMesh2
-  - RPC_ForceSyncPosition
-  - SetTarget
-  - SyncRigidState
-  - RPC_SyncRigidState
-  - SyncLookRotation
-  - RPC_Die
-  - RPC_LogMessage
+  - RPC_SetMove
+  - ResetAndHalfAggro
+  - PerformMeleeAttackRPC
+  - EarthQuakeRPC
+  - ApplyKnockback
+  - StartKnockback
+  - RPC_ApplyMoveSpeedDecrease
+  - RoarRPC
+  - VulnerableRPC
   - ActivateLever
+  - FallTowards_RPC
   - FireCannon_RPC
   - MarkAsUsed_RPC
   - PushOver
@@ -113,17 +111,22 @@ MonoBehaviour:
   - RequestDialogueStart_RPC
   - RequestFire_RPC
   - ResetLever
-  - StartFalling_RPC
-  - RPC_GolemAttack
-  - RPC_GolemSkill
-  - RPC_GolemAttack2
-  - RPC_MoveIdle
-  - RPC_MoveRun
-  - RPC_Moveset
-  - RPC_MoveSet
-  - RPC_EnemyHit
-  - RPC_SetAirborne
+  - RPC_Die
+  - RPC_ForceSyncPosition
+  - RPC_LogMessage
+  - RPC_Move
   - RPC_SetFloat
+  - RPC_SyncRigidState
+  - RPC_Throw
+  - RPC_ThrowAttackAni
+  - SetTarget
+  - StartFalling_RPC
+  - SyncLookRotation
+  - RPC_EnemyHit
+  - RPC_GolemAttack
+  - RPC_GolemAttack2
+  - RPC_GolemSkill
+  - RPC_MoveSet
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -7,6 +7,7 @@ public class ChargedPenMissile : MonoBehaviour
     float damage;
     int level;
     PhotonView pv;
+    public int ownerViewID;
     public float lifeTime = 7.0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -35,6 +36,8 @@ public class ChargedPenMissile : MonoBehaviour
                 Vector3 hitNormal = transform.position - other.transform.position;
 
                 PhotonView enemyPv = other.GetComponent<PhotonView>();
+                enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal,ownerViewID);
 
                 Enemy enemy = other.GetComponent<Enemy>();
                 if (!enemy.dead)

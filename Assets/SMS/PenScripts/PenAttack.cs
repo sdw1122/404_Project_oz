@@ -27,6 +27,7 @@ public class PenAttack : MonoBehaviour
     {
         animator = penPlayer.GetComponent<Animator>();
         pv = GetComponent<PhotonView>();
+        animator = penPlayer.GetComponent<Animator>();
         if (!pv.IsMine) return;
         Debug.Log("firePoint: " + firePoint);
         
@@ -68,13 +69,14 @@ public class PenAttack : MonoBehaviour
         /*rotation *= Quaternion.Euler(90, 0, 0);*/
         GameObject missile = PhotonNetwork.Instantiate("Pen_Attack_Missile", spawnPos, rotation);
         missile.GetComponent<Rigidbody>().linearVelocity = rayDir * MissileSpeed;
-        animator.SetTrigger("Attack");
+        missile.GetComponent<PenMissile>().ownerViewID = PhotonView.Get(this).ViewID;
 
-        pv.RPC("RPC_TriggerPenAttack", RpcTarget.Others);
+        pv.RPC("RPC_TriggerPenAttack", RpcTarget.All);
     }
     [PunRPC]
     public void RPC_TriggerPenAttack()
     {
+      
         animator.SetTrigger("Attack");
     }
 
