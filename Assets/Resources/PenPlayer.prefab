@@ -932,6 +932,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
       addedObject: {fileID: -7759359841293872946}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6408126133112561618}
   m_SourcePrefab: {fileID: 100100000, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
 --- !u!4 &1647411048625105995 stripped
 Transform:
@@ -1328,22 +1331,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &6408126133112561618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7726197707958032316}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &2608995910681098848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1654,6 +1641,22 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
+  m_UseLocal: 1
+--- !u!114 &6408126133112561618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7726197707958032316}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
   m_UseLocal: 1
 --- !u!4 &8470801457687814401 stripped
 Transform:

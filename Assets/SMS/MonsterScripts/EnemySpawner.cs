@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
     public List<GameObject> enemyPrefabs; // 몬스터 프리팹 리스트
     public EnemyData[] enemyDatas;
     public Transform[] spawnPoints;
-    string resourcePath = "Model/Prefab/";    
+    string resourcePath = "Model/Prefab/Stage1/";    
 
     private List<Enemy> enemyList = new List<Enemy>();
     private int wave;

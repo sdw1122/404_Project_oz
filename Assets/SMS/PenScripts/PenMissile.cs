@@ -41,11 +41,11 @@ public class PenMissile : MonoBehaviour
                 {
                     enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
 
-                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage, hitPoint, hitNormal);
-                    PhotonNetwork.Destroy(gameObject);
+                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage, hitPoint, hitNormal, ownerViewID);
+                    
                 }
 
-                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, m_Damage, hitPoint, hitNormal, ownerViewID);
+                
                 PhotonNetwork.Destroy(gameObject);
 
             }

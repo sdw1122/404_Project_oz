@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d842b0a50fe97e9429d7500d80a805d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  startingHealth: 5000
   dead: 0
   whatIsTarget:
     serializedVersion: 2
@@ -448,13 +448,12 @@ MonoBehaviour:
   enemyAnimator: {fileID: 3677394158664591522}
   enemyRenderer: {fileID: 4162167560060408325}
   currentHealth: 0
-  damage: 0
+  damage: 40
   Atk_Cooldown: 3
-  attackRange: 0
+  attackRange: 2
+  DEF_Factor: 0.5
   isBinded: 0
-  isBig: 0
-  isOverheat: 0
-  DEF_Factor: 0
+  isFirstChase: 1
   pv: {fileID: 7548695496272439170}
   m_name: "\uAC08\uB9DD\uD558\uB294 \uC591\uCCA0 \uB098\uBB34\uAFBC"
   currentTarget: {fileID: 0}
