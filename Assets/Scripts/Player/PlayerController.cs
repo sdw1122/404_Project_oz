@@ -37,7 +37,9 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed = 10f;
     public float jumpPower = 8f;
-    public float gravity = 20f;
+    float jumpBufferTime = 0.15f;
+    float jumpBufferCounter = 0f;
+    public float gravity = 9.81f;
     public float slideSpeed = 5f;
 
     public string job;
@@ -136,10 +138,12 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         if (!pv.IsMine || !canMove) return;
-        if (context.started && !jumpPressed)
-        {
-            jumpPressed = true;
-        }
+        //if (context.started && !jumpPressed)
+        //{
+        //    jumpPressed = true;
+        //}
+        if (context.performed)
+            jumpBufferCounter = jumpBufferTime;
     }
 
     [PunRPC]
@@ -196,6 +200,7 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
+        transform.position = new Vector3(0, 0, 0);
         currentSpeed = walkSpeed;
         originalSpeed = currentSpeed;
         if (!pv.IsMine)
@@ -215,56 +220,6 @@ public class PlayerController : MonoBehaviour
     
     private void Update()
     {
-       /* if (!pv.IsMine) return;
-        // 넉백중이면 update 금지!
-        if (isKnockbacked)
-        {
-            moveDirection = Vector3.zero;
-            if (Time.time > knockbackEndTime)
-            {
-                isKnockbacked = false;
-               
-                controller.enabled = true;
-
-            }
-            return;
-        }
-
-        // 1. 입력처리 & 이동벡터 산출
-        if (controller.isGrounded)
-        {
-            // 로컬좌표 기준(forward/right)으로 방향 벡터 생성
-            Vector3 inputDir = new Vector3(moveInput.x, 0, moveInput.y);
-            inputDir = Vector3.ClampMagnitude(inputDir, 1f); // 대각선 속도 보정
-            moveDirection = transform.TransformDirection(inputDir) * moveSpeed;
-
-            if (jumpPressed)
-            {
-                moveDirection.y = jumpPower;
-                jumpPressed = false;
-                animator.SetBool("Float", true);
-                pv.RPC("RPC_SetFloat", RpcTarget.Others, true);
-            }
-            else
-            {
-                animator.SetBool("Float", false);
-                pv.RPC("RPC_SetFloat", RpcTarget.Others, false);
-            }
-        }
-
-        isGrounded = controller.isGrounded;
-
-        HandleSlope();
-
-        // 2. 중력 적용
-        moveDirection.y -= gravity * Time.deltaTime;
-
-        // 3. 이동
-     
-            controller.Move(moveDirection * Time.deltaTime);*/
-
-
-
 
     }
 
@@ -296,25 +251,34 @@ public class PlayerController : MonoBehaviour
             col.enabled = false;
             controller.enabled = true;
         }
-        
+
+        if (jumpBufferCounter > 0)
+            jumpBufferCounter -= Time.deltaTime;
+
         // 1. 입력처리 & 이동벡터 산출
+        // 로컬좌표 기준(forward/right)으로 방향 벡터 생성
+        Vector3 inputDir = new Vector3(moveInput.x, 0, moveInput.y);
+        inputDir = Vector3.ClampMagnitude(inputDir, 1f); // 대각선 속도 보정
+        Vector3 worldDir = transform.TransformDirection(inputDir) * moveSpeed;
+        moveDirection.x = worldDir.x;
+        moveDirection.z = worldDir.z;
+
         if (controller.isGrounded)
         {
-            // 로컬좌표 기준(forward/right)으로 방향 벡터 생성
-            
-            Vector3 inputDir = new Vector3(moveInput.x, 0, moveInput.y);
-            inputDir = Vector3.ClampMagnitude(inputDir, 1f); // 대각선 속도 보정
-            moveDirection = transform.TransformDirection(inputDir) * moveSpeed;
 
-            if (jumpPressed)
+            moveDirection.y = worldDir.y;
+
+            if (jumpBufferCounter > 0)
             {
                 moveDirection.y = jumpPower;
-                jumpPressed = false;
+                jumpBufferCounter = 0;
+    
                 animator.SetBool("Float", true);
                 pv.RPC("RPC_SetFloat", RpcTarget.Others, true);
             }
             else
             {
+                //moveDirection.y = -1f; // 약간의 음수값으로 둠 (중력을 위해)
                 animator.SetBool("Float", false);
                 pv.RPC("RPC_SetFloat", RpcTarget.Others, false);
             }
@@ -330,15 +294,6 @@ public class PlayerController : MonoBehaviour
         // 3. 이동
 
         controller.Move(moveDirection * Time.deltaTime);
-        // 넉백중이면 update 금지!
-        if (isKnockbacked)
-        {
-            if (Time.time > knockbackEndTime)
-            {
-                isKnockbacked = false;
-            }
-            return;
-        }
 
         float mouseX = lookInput.x * mouseSensitivity;
         float mouseY = lookInput.y * mouseSensitivity;
@@ -434,6 +389,8 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded()
     {
         return isGrounded;
+        //float rayDistance = controller.height / 2 + 0.2f; // 조금 더 여유있게
+        //return Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, rayDistance, LayerMask.GetMask("Ground"));
     }
 
     public void ActivateCamera()
@@ -459,34 +416,6 @@ public class PlayerController : MonoBehaviour
 
         mainCamera.gameObject.SetActive(true);
     }
-
-    //void OnControllerColliderHit(ControllerColliderHit col)
-    //{
-    //    if (col.gameObject.layer != LayerMask.NameToLayer("Enemy"))
-    //        return;
-
-    //    Vector3 normal = col.normal;
-    //    float verticalAngle = Vector3.Angle(normal, Vector3.up);
-
-    //    // 1) 위에서 착지했을 때 (점프 착지) 보정하지 않음
-    //    if (verticalAngle < 45f)
-    //    {
-    //        // 경사면 충돌로 간주 → 슬라이드 로직만 처리
-    //        return;
-    //    }
-
-    //    // 2) 옆면에서 서로 밀고 있는 상황만 보정
-    //    float horizontalAngle = Vector3.Angle(normal, Vector3.forward);
-    //    // 예: forward 기준 0°–90° 사이면 옆면 충돌
-    //    if (horizontalAngle > 15f && horizontalAngle < 165f)
-    //    {
-    //        Rigidbody enemyRb = col.gameObject.GetComponent<Rigidbody>();
-    //        if (enemyRb != null)
-    //        {
-    //            enemyRb.linearVelocity = Vector3.ProjectOnPlane(enemyRb.linearVelocity, normal);
-    //        }
-    //    }
-    //}
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
@@ -532,7 +461,8 @@ public class PlayerController : MonoBehaviour
 
             /* 방법 B : 다운-슬라이드 강제 */
             Vector3 slide = Vector3.ProjectOnPlane(Vector3.down, n).normalized * slideSpeed;
-            moveDirection = slide;
+            moveDirection.x += slide.x;
+            moveDirection.z += slide.z;
         }
     }
     

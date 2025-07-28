@@ -1713,8 +1713,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d78a06e8dca580e428a0a7a487939fdc, type: 2}
   spawnPoints:
   - {fileID: 286657217}
-  - {fileID: 1584933301}
   - {fileID: 1956724348}
+  - {fileID: 1584933301}
 --- !u!4 &454400023
 Transform:
   m_ObjectHideFlags: 0
@@ -3058,8 +3058,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9a3b64e710f41e64589b1ed23060fb75, type: 2}
   spawnPoints:
   - {fileID: 286657217}
-  - {fileID: 1584933301}
   - {fileID: 1956724348}
+  - {fileID: 1584933301}
 --- !u!4 &1473201437
 Transform:
   m_ObjectHideFlags: 0

@@ -1952,7 +1952,7 @@ GameObject:
   - component: {fileID: 3793045525177061630}
   - component: {fileID: 6457256188694104584}
   - component: {fileID: -7380603563252991598}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fire Golem
   m_TagString: FireGolem
   m_Icon: {fileID: 0}

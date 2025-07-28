@@ -43,9 +43,10 @@ public class Hammer : MonoBehaviour
     private bool isCharge2 = false;
     private bool isCharge3 = false;
 
-    private Color charge1col = new Color(1f, 1f, 1f, 0.5f);
-    private Color charge2col = new Color(1f, 0.9f, 0.3f, 1f);
-    private Color charge3col = new Color(1f, 0.15f, 0.15f, 1f);
+    //private Color charge1col = new Color(1f, 1f, 1f, 0.5f);
+    //private Color charge2col = new Color(1f, 0.9f, 0.3f, 1f);
+    //private Color charge3col = new Color(1f, 0.15f, 0.15f, 1f);
+    private Color[] chargeColor = { new Color(1f, 1f, 1f, 0.5f), new Color(1f, 0.9f, 0.3f, 1f), new Color(1f, 0.15f, 0.15f, 1f)};
 
     private void Awake()
     {                
@@ -146,12 +147,6 @@ public class Hammer : MonoBehaviour
         animator.SetTrigger("Big Attack");
     }
 
-    [PunRPC]
-    void RPC_ChargeEffect()
-    {
-        ChargeEffect.Play();
-    }
-
     void Update()
     {
         if (skill1Pressed)
@@ -161,23 +156,23 @@ public class Hammer : MonoBehaviour
             if(skill1HoldTime >= 1 && !isCharge1)
             {
                 isCharge1 = true;
-                main.startColor = charge1col;
+                main.startColor = chargeColor[0];
                 ChargeEffect.Play();
                 pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
             }
             if (skill1HoldTime >= 2 && !isCharge2)
             {
                 isCharge2 = true;
-                main.startColor = charge2col;
+                main.startColor = chargeColor[1];
                 ChargeEffect.Play();
-                pv.RPC("RPC_ChargeEffect", RpcTarget.Others, main);
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
             }
             if (skill1HoldTime >= 3 && !isCharge3)
             {
                 isCharge3 = true;
-                main.startColor = charge3col;
+                main.startColor = chargeColor[2];
                 ChargeEffect.Play();
-                pv.RPC("RPC_ChargeEffect", RpcTarget.Others, main);
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
             }
             playerController.canMove = false;
             playerController.ResetMoveInput();
@@ -227,6 +222,12 @@ public class Hammer : MonoBehaviour
         {
             canAttack = false;
         }
+    }
+
+    [PunRPC]
+    void RPC_ChargeEffect()
+    {
+        ChargeEffect.Play();
     }
 
     [PunRPC]
