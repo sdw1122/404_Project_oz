@@ -46,7 +46,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColor:
-        m_Texture: {fileID: 2800000, guid: 211a132a82653b94a9a6e65fba8b5a63, type: 3}
+        m_Texture: {fileID: 2800000, guid: 64395b821c35ec24a8edb920c9183417, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap:
@@ -98,7 +98,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MAOHS:
-        m_Texture: {fileID: 2800000, guid: 6d938bfa5e190c64aad543b4cbc1d71d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 71ea7006789f0114b9e441259b1bc210, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -118,7 +118,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: 625c8e646ecd57d42959152f8189c292, type: 3}
+        m_Texture: {fileID: 2800000, guid: 98c5e043168486449ae96784d691b3e1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -130,7 +130,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RGMaskDirt:
-        m_Texture: {fileID: 2800000, guid: e8ba2da5a12f312449c38f0b407e2fac, type: 3}
+        m_Texture: {fileID: 2800000, guid: c0c0ab525000fc0468052f7a87ace529, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecularColorMap:
@@ -245,7 +245,7 @@ Material:
     - _Metallnes_Tweak: 0
     - _NormalMapSpace: 0
     - _NormalScale: 1
-    - _NormalStrength: 1
+    - _NormalStrength: 3
     - _OpaqueCullMode: 2
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15

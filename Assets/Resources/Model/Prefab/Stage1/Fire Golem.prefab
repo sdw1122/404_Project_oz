@@ -2155,6 +2155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 800
+  dead: 0
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
@@ -2163,10 +2164,12 @@ MonoBehaviour:
   obstacle: {fileID: 0}
   hitEffect: {fileID: 0}
   enemyAnimator: {fileID: 0}
+  enemyRenderer: {fileID: 0}
   currentHealth: 0
   damage: 20
-  timeBetAttack: 0.5
+  Atk_Cooldown: 0
   attackRange: 3
+  DEF_Factor: 0
   isBinded: 0
   isFirstChase: 1
   pv: {fileID: 0}

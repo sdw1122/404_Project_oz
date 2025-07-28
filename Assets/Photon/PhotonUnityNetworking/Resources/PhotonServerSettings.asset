@@ -135,6 +135,11 @@ MonoBehaviour:
   - RPC_PenDisable
   - RPC_PenEnable
   - RPC_PlaySkill2Effect
+  - RegisterInteraction
+  - DismountRPC
+  - FireCannonRPC
+  - MountRPC
+  - RequestFall
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
