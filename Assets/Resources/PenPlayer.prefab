@@ -633,6 +633,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spear
       objectReference: {fileID: 0}
+    - target: {fileID: 7193960259325718621, guid: 17f0356fc526f3244b053d1a46762e5c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7538396928645704423, guid: 17f0356fc526f3244b053d1a46762e5c, type: 3}
       propertyPath: m_LocalScale.z
       value: 75.13001
@@ -676,6 +680,10 @@ PrefabInstance:
     - target: {fileID: 7538396928645704423, guid: 17f0356fc526f3244b053d1a46762e5c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7538396928645704423, guid: 17f0356fc526f3244b053d1a46762e5c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9028744237741924502, guid: 17f0356fc526f3244b053d1a46762e5c, type: 3}
       propertyPath: m_Time
@@ -969,7 +977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       propertyPath: m_TagString

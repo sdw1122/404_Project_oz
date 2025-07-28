@@ -278,10 +278,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4767058395093135474, guid: 72ad61e1ed220784985e6d0e6c3d801d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e546d2d7171981b468cf29388d902e99, type: 2}
     - target: {fileID: 5658755052459384054, guid: 72ad61e1ed220784985e6d0e6c3d801d, type: 3}
       propertyPath: m_Name
       value: Freeze circle
       objectReference: {fileID: 0}
+    - target: {fileID: 6013753641452332822, guid: 72ad61e1ed220784985e6d0e6c3d801d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8fce5540653d6d8439e52364661e10c9, type: 2}
     - target: {fileID: 8029580260301966316, guid: 72ad61e1ed220784985e6d0e6c3d801d, type: 3}
       propertyPath: lengthInSec
       value: 6
