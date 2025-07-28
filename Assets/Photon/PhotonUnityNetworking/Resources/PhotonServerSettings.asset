@@ -135,6 +135,7 @@ MonoBehaviour:
   - RPC_PenDisable
   - RPC_PenEnable
   - RPC_PlaySkill2Effect
+  - RPC_SetDEF
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -37,7 +37,24 @@ public class Pen_Skill_1 : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         rb = PenPlayer.GetComponent<Rigidbody>();
     }
+    public void CancelCharging()
+    {
+        if (!isCharging) return;
 
+        isCharging = false;
+        chargeTime = 0f;
+        isSkill1Pressed = false;
+        playerController.isCharge = false;
+
+        animator.SetBool("Charge", false);
+        animator.ResetTrigger("ChargeAttack");
+
+        playerController.canMove = true;
+        PenAttack.isAttack = true;
+        Pen_Skill_2.isThrow = true;
+
+        
+    }
     private void Update()
     {
         if (!pv.IsMine) return;

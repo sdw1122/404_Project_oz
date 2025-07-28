@@ -75,10 +75,14 @@ public class PlayerHealth : LivingEntity
         health -= damage;
         current_health = health;
 
-        if (!playerController.isCharge)
+        var stateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
+        if (!stateInfo.IsTag("Attack"))
         {
-            // 피격 애니메이션을 로컬에서 실행합니다.
+            // 피격 애니메이션을 실행
+            GetComponent<Pen_Skill_1>()?.CancelCharging();
+            GetComponent<Hammer>()?.CancelCharging();
             playerAnimator.SetTrigger("Hit");
+            pv.RPC("RPC_TriggerPlayerHit", RpcTarget.Others);
         }
 
         if (health <= 0)
