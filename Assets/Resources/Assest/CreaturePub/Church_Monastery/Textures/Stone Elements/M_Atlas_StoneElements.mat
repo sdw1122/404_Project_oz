@@ -46,7 +46,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColor:
-        m_Texture: {fileID: 2800000, guid: 5377d50122e9fb948b5da6cbe95507a1, type: 3}
+        m_Texture: {fileID: 2800000, guid: c418106d3a0d92b4ead82d9178e233a1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap:
@@ -98,7 +98,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MAOHS:
-        m_Texture: {fileID: 2800000, guid: 436e6f5821c284e49bae30f95f342455, type: 3}
+        m_Texture: {fileID: 2800000, guid: 33518634ee71924459b90572e78380a1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -118,7 +118,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: 95c225c44c708f343a0f3c04b27fd423, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6b54a9a394e8dde488832008e9675abf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -130,7 +130,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RGMaskDirt:
-        m_Texture: {fileID: 2800000, guid: e8ba2da5a12f312449c38f0b407e2fac, type: 3}
+        m_Texture: {fileID: 2800000, guid: c0c0ab525000fc0468052f7a87ace529, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecularColorMap:
@@ -251,7 +251,7 @@ Material:
     - _Metallnes_Tweak: 1
     - _NormalMapSpace: 0
     - _NormalScale: 1
-    - _NormalStrength: 1
+    - _NormalStrength: 0
     - _ObjectSpaceUVMapping: 0
     - _ObjectSpaceUVMappingEmissive: 0
     - _OpaqueCullMode: 2
