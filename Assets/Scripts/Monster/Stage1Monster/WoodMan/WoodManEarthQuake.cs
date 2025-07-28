@@ -6,7 +6,7 @@ public class WoodManEarthQuake : MonoBehaviour
     public float skillRadius = 5f; // 스킬 반경
     public float skillDamage = WoodManAttack.meleeAttackDamage*1.5f; // 스킬 피해량
     public float knockbackForce = 10f; // 넉백 힘 
-    public float knockbackUpwardForce = 5f;
+    public float knockbackUpwardForce = 10f;
     public float knockbackDuration = 2f; // 넉백 시간
     public float skillRangeYOffset = 1f;
     [Header("쿨타임")]
@@ -83,7 +83,7 @@ public class WoodManEarthQuake : MonoBehaviour
     {
         Debug.Log("Apply넉백 호출됨");
         Rigidbody targetRb = target.GetComponent<Rigidbody>();
-        if (targetRb == null) return;
+      
         Vector3 knockbackDirection = (target.transform.position - pos).normalized;
 
         // 넉백 방향의 Y축을 무시하고 수평 방향으로만 계산(위로 치솟지 않게)
@@ -103,9 +103,10 @@ public class WoodManEarthQuake : MonoBehaviour
 
         Vector3 finalKnockbackForce = knockbackDirection * knockbackForce + Vector3.up * knockbackUpwardForce;
 
-         // <<< 
+     
         PhotonView targetPv = target.GetComponent<PhotonView>();
         Debug.Log("타겟pv : "+targetPv);
+       
         if (targetPv != null/* && targetPv.IsMine*/)
         {
             /*PlayerController pc = target.GetComponent<PlayerController>();

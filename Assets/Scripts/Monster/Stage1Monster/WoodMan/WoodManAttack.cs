@@ -42,12 +42,10 @@ public class WoodManAttack : MonoBehaviour
     {
         
          
-           Debug.Log(Time.time);
-        Debug.Log(lastAttackTime);
-        Debug.Log(currentAttackCooldown);
+          
            if (Time.time < lastAttackTime + currentAttackCooldown)
            {
-                Debug.Log("공격 쿨타임 중입니다.");
+                
                 return;
            }
            lastAttackTime = Time.time;
