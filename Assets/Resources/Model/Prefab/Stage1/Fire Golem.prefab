@@ -2169,7 +2169,7 @@ MonoBehaviour:
   damage: 20
   Atk_Cooldown: 0
   attackRange: 3
-  DEF_Factor: 0
+  DEF_Factor: 0.5
   isBinded: 0
   isFirstChase: 1
   pv: {fileID: 0}

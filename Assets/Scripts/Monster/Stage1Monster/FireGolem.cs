@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using static WoodMan;
 
 public class FireGolem : Enemy
 {
@@ -40,14 +41,28 @@ public class FireGolem : Enemy
                 yield return new WaitForSeconds(0.25f);
                 continue;
             }
-            if (hasTarget && !isAttacking)
+            if (isBinded)
+            {
+                if (navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+                {
+                    navMeshAgent.isStopped = true;
+                    navMeshAgent.updateRotation = false;
+                    // 바인드 중엔 달리기 애니매이션 출력
+                    enemyAnimator.SetFloat("Move", 1f); // 걷기/달리기 애니메이션
+                    pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
+                    navMeshAgent.updateRotation = true;
+                }
+
+            }
+
+            if (hasTarget)
             {
                 float dist = Vector3.Distance(transform.position, targetEntity.transform.position);
-                if (dist <= armAttackRange)
+                if (dist <= attackRange && !isBinded)
                 {
-                    enemyAnimator.SetFloat("Move", 0f, 0.5f, Time.deltaTime);
-                    pv.RPC("RPC_MoveSet", RpcTarget.Others, enemyAnimator.GetFloat("Move"));
-                    if (CanAct() && !isBinded)
+                    enemyAnimator.SetFloat("Move", 0f); // 공격 전 Idle자세
+                    pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
+                    if (CanAct())    // (공격 가능한지 자식에게 '질문')
                     {
                         Attack();    // -> Attack도 override 해서 자식 전용
                     }
@@ -57,17 +72,17 @@ public class FireGolem : Enemy
                     if (chaseTarget < 10f)
                     {
                         chaseTarget += 0.25f;
-                        if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+                        if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh && !isBinded)
                         {
                             navMeshAgent.isStopped = false;
                             navMeshAgent.SetDestination(targetEntity.transform.position);
-                            //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
                             if (PhotonNetwork.IsMasterClient)
                             {
+                                //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
                                 pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
                             }
                             enemyAnimator.SetFloat("Move", 1f); // 걷기/달리기 애니메이션
-                            pv.RPC("RPC_MoveSet", RpcTarget.Others, enemyAnimator.GetFloat("Move"));
+                            pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
                         }
                     }
                     else
@@ -79,17 +94,17 @@ public class FireGolem : Enemy
                 else if (dist <= 20f)
                 {
                     chaseTarget = 0;
-                    if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
+                    if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh && !isBinded)
                     {
                         navMeshAgent.isStopped = false;
                         navMeshAgent.SetDestination(targetEntity.transform.position);
-                        //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
                         if (PhotonNetwork.IsMasterClient)
                         {
+                            //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
                             pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
                         }
                         enemyAnimator.SetFloat("Move", 1f); // 걷기/달리기 애니메이션
-                        pv.RPC("RPC_MoveSet", RpcTarget.Others, enemyAnimator.GetFloat("Move"));
+                        pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
                     }
                 }
             }
@@ -98,8 +113,8 @@ public class FireGolem : Enemy
                 if (navMeshAgent != null && navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
                 {
                     navMeshAgent.isStopped = true;
-                    enemyAnimator.SetFloat("Move", 0f, 0.5f, 0.25f);
-                    pv.RPC("RPC_MoveSet", RpcTarget.Others, enemyAnimator.GetFloat("Move"));
+                    enemyAnimator.SetFloat("Move", 0f);
+                    pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
                 }
 
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
@@ -349,5 +364,12 @@ public class FireGolem : Enemy
             obstacle.enabled = !active;
         }
         //rb.isKinematic = active;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Coolant"))
+        {
+            DEF_Factor = 5f;
+        }
     }
 }

@@ -19,8 +19,10 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed = 10f;
     public float runSpeed;
     public float mouseSensitivity = 0.5f;
-    private float currentSpeed;
-    
+    public float knockbackGravity = 10f;
+    private Vector3 knockbackVelocity = Vector3.zero;
+    private float knockbackTimer = 0f;
+
     private Vector2 moveInput;
     private Vector2 lookInput;
     private float xRotation = 0f;
@@ -48,7 +50,7 @@ public class PlayerController : MonoBehaviour
     private bool isKnockbacked = false;
     private float knockbackEndTime = 0f;
     private float originalSpeed;
-    private Rigidbody rb;
+    
     CapsuleCollider col;
     [PunRPC]
     public void SetJob(string _job)
@@ -82,7 +84,7 @@ public class PlayerController : MonoBehaviour
         pv = GetComponent<PhotonView>();
         cineCam = GetComponentInChildren<CinemachineCamera>();
         animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
+        
         runSpeed = 1.5f * walkSpeed;
         if (!pv.IsMine)
         {
@@ -200,9 +202,8 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
-        transform.position = new Vector3(0, 0, 0);
-        currentSpeed = walkSpeed;
-        originalSpeed = currentSpeed;
+        moveSpeed = walkSpeed;
+        originalSpeed = moveSpeed;
         if (!pv.IsMine)
         {
             if (playerCamera != null)
@@ -227,29 +228,26 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (!pv.IsMine) return;
-        // 넉백중이면 update 금지!
-        if (isKnockbacked)
+        if (knockbackTimer > 0f)
         {
-            moveDirection = Vector3.zero;
-            if (Time.time > knockbackEndTime)
+            
+            knockbackVelocity.y -= knockbackGravity * Time.deltaTime;
+            controller.Move(knockbackVelocity * Time.deltaTime);
+            knockbackTimer -= Time.deltaTime;
+            if (controller.isGrounded)
             {
                 isKnockbacked = false;
-                rb.useGravity = false;
-                gravity = 20f;
-                col.enabled = false;
-                controller.enabled = true;
-
+                knockbackVelocity = Vector3.zero;
+                knockbackTimer = 0f;
             }
-            
             return;
-        }
-        else
+        }   
+        else if (isKnockbacked)
         {
-            
-            rb.useGravity = false;
-            gravity = 20f;
-            col.enabled = false;
-            controller.enabled = true;
+            isKnockbacked = false;
+            knockbackVelocity.y -= knockbackGravity * Time.deltaTime;
+            controller.Move(knockbackVelocity * Time.deltaTime);
+
         }
 
         if (jumpBufferCounter > 0)
@@ -310,21 +308,14 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     public void StartKnockback(Vector3 knockbackForce,float duration)
     {
-        Debug.Log("넉백 호출됨");
-        // 플레이어 현재 속도와 무관하게
-        rb.linearVelocity = Vector3.zero;
+        Debug.Log("넉백 시작: Force=" + knockbackForce + ", duration=" + duration);
+        knockbackVelocity = knockbackForce;
+        knockbackTimer = duration;
 
-        // 넉백 힘 적용
         isKnockbacked = true;
-        gravity = 0f;
-        rb.useGravity = true;
-        
-        controller.enabled = false;
-        col.enabled = true;
-        rb.AddForce(knockbackForce, ForceMode.VelocityChange);
-        Debug.Log("넉백 힘 : "+knockbackForce);
-        
-        knockbackEndTime = Time.time + duration;
+
+     
+       
     }
     // 슬로우 함수
     [PunRPC]
@@ -339,17 +330,18 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator slowRoutine(float amount,float duration)
     {
-        currentSpeed = originalSpeed * (1f-amount);
+        float slowFactor = 1f - amount;
+        moveSpeed = originalSpeed * (1f-amount);
         /*runSpeed =1.5f*originalSpeed * (1f - amount);*/
         walkSpeed =originalSpeed * (1f-amount);
         runSpeed =originalSpeed * (1f-amount);
-        Debug.Log("속도 감소 완료 :"+currentSpeed);
+        Debug.Log("속도 감소 완료 :"+ moveSpeed);
         yield return new WaitForSeconds(duration);
-        currentSpeed = originalSpeed;
+        moveSpeed = originalSpeed;
         walkSpeed = originalSpeed;
         runSpeed = originalSpeed * 1.5f;
         slowCoroutine = null;
-        Debug.Log("속도 복구 완료 :"+currentSpeed);
+        Debug.Log("속도 복구 완료 :"+moveSpeed);
     }
     //
     public void ResetMoveInput()
