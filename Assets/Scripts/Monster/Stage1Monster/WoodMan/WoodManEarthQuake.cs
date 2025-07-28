@@ -7,7 +7,7 @@ public class WoodManEarthQuake : MonoBehaviour
     public float skillDamage = WoodManAttack.meleeAttackDamage*1.5f; // 스킬 피해량
     public float knockbackForce = 10f; // 넉백 힘 
     public float knockbackUpwardForce = 5f;
-    public float knockbackDuration = 1f; // 넉백 시간
+    public float knockbackDuration = 2f; // 넉백 시간
     public float skillRangeYOffset = 1f;
     [Header("쿨타임")]
     
@@ -105,6 +105,7 @@ public class WoodManEarthQuake : MonoBehaviour
 
          // <<< 
         PhotonView targetPv = target.GetComponent<PhotonView>();
+        Debug.Log("타겟pv : "+targetPv);
         if (targetPv != null/* && targetPv.IsMine*/)
         {
             /*PlayerController pc = target.GetComponent<PlayerController>();

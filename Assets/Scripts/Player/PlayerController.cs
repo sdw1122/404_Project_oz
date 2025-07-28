@@ -7,7 +7,6 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-
     PhotonView pv;
     Animator animator;
     HealingRay healingRay;
@@ -48,6 +47,7 @@ public class PlayerController : MonoBehaviour
     private float knockbackEndTime = 0f;
     private float originalSpeed;
     private Rigidbody rb;
+    CapsuleCollider col;
     [PunRPC]
     public void SetJob(string _job)
     {
@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        col=GetComponent<CapsuleCollider>();
         animator = GetComponent<Animator>();        
         pv = GetComponent<PhotonView>();
         cineCam = GetComponentInChildren<CinemachineCamera>();
@@ -211,11 +212,23 @@ public class PlayerController : MonoBehaviour
 
         controller = GetComponent<CharacterController>();
     }
-
+    
     private void Update()
     {
-        if (!pv.IsMine) return;
+       /* if (!pv.IsMine) return;
+        // 넉백중이면 update 금지!
+        if (isKnockbacked)
+        {
+            moveDirection = Vector3.zero;
+            if (Time.time > knockbackEndTime)
+            {
+                isKnockbacked = false;
+               
+                controller.enabled = true;
 
+            }
+            return;
+        }
 
         // 1. 입력처리 & 이동벡터 산출
         if (controller.isGrounded)
@@ -247,7 +260,10 @@ public class PlayerController : MonoBehaviour
         moveDirection.y -= gravity * Time.deltaTime;
 
         // 3. 이동
-        controller.Move(moveDirection * Time.deltaTime);
+     
+            controller.Move(moveDirection * Time.deltaTime);*/
+
+
 
 
     }
@@ -256,6 +272,64 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (!pv.IsMine) return;
+        // 넉백중이면 update 금지!
+        if (isKnockbacked)
+        {
+            moveDirection = Vector3.zero;
+            if (Time.time > knockbackEndTime)
+            {
+                isKnockbacked = false;
+                rb.useGravity = false;
+                gravity = 20f;
+                col.enabled = false;
+                controller.enabled = true;
+
+            }
+            
+            return;
+        }
+        else
+        {
+            
+            rb.useGravity = false;
+            gravity = 20f;
+            col.enabled = false;
+            controller.enabled = true;
+        }
+        
+        // 1. 입력처리 & 이동벡터 산출
+        if (controller.isGrounded)
+        {
+            // 로컬좌표 기준(forward/right)으로 방향 벡터 생성
+            
+            Vector3 inputDir = new Vector3(moveInput.x, 0, moveInput.y);
+            inputDir = Vector3.ClampMagnitude(inputDir, 1f); // 대각선 속도 보정
+            moveDirection = transform.TransformDirection(inputDir) * moveSpeed;
+
+            if (jumpPressed)
+            {
+                moveDirection.y = jumpPower;
+                jumpPressed = false;
+                animator.SetBool("Float", true);
+                pv.RPC("RPC_SetFloat", RpcTarget.Others, true);
+            }
+            else
+            {
+                animator.SetBool("Float", false);
+                pv.RPC("RPC_SetFloat", RpcTarget.Others, false);
+            }
+        }
+
+        isGrounded = controller.isGrounded;
+
+        HandleSlope();
+
+        // 2. 중력 적용
+        moveDirection.y -= gravity * Time.deltaTime;
+
+        // 3. 이동
+
+        controller.Move(moveDirection * Time.deltaTime);
         // 넉백중이면 update 금지!
         if (isKnockbacked)
         {
@@ -275,7 +349,7 @@ public class PlayerController : MonoBehaviour
         if (playerCamera != null)
             playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         cameraTarget.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        transform.Rotate(Vector3.up * mouseX);
+            transform.Rotate(Vector3.up * mouseX);
     }
     // 넉백 함수
     [PunRPC]
@@ -286,8 +360,15 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
 
         // 넉백 힘 적용
-        rb.AddForce(knockbackForce, ForceMode.VelocityChange);
         isKnockbacked = true;
+        gravity = 0f;
+        rb.useGravity = true;
+        
+        controller.enabled = false;
+        col.enabled = true;
+        rb.AddForce(knockbackForce, ForceMode.VelocityChange);
+        Debug.Log("넉백 힘 : "+knockbackForce);
+        
         knockbackEndTime = Time.time + duration;
     }
     // 슬로우 함수
@@ -417,7 +498,13 @@ public class PlayerController : MonoBehaviour
             // 또는 isGrounded 강제 해제 등
         }
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            isKnockbacked = false;
+        }
+    }
     bool OnTooSteepGround(out Vector3 groundNormal)
     {
         RaycastHit hit;
@@ -448,4 +535,5 @@ public class PlayerController : MonoBehaviour
             moveDirection = slide;
         }
     }
+    
 }

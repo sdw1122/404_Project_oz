@@ -127,6 +127,14 @@ MonoBehaviour:
   - RPC_GolemAttack2
   - RPC_GolemSkill
   - RPC_MoveSet
+  - RPC_BowDisable
+  - RPC_BowEnable
+  - RPC_ChargeEffect
+  - RPC_DisableWeapon
+  - RPC_EnableWeapon
+  - RPC_PenDisable
+  - RPC_PenEnable
+  - RPC_PlaySkill2Effect
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

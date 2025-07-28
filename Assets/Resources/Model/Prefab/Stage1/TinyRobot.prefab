@@ -317,6 +317,7 @@ MonoBehaviour:
     m_Bits: 128
   targetEntity: {fileID: 0}
   navMeshAgent: {fileID: 0}
+  obstacle: {fileID: 0}
   hitEffect: {fileID: 198000011254678926, guid: 1d415c3c4b7dccf4aba3753b8264694f, type: 3}
   enemyAnimator: {fileID: 0}
   enemyRenderer: {fileID: 0}

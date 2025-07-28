@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes 1/LobbyScene.unity
     guid: 6e630c190762f9b44bc6eafd13e53405
-  - enabled: 1
+  - enabled: 0
     path: Assets/UI/UIScripts/mainmenu.unity
     guid: 7a3d441b5df3f1248a68995f7e6671d6
   - enabled: 1
