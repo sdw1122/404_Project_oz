@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     private bool isKnockbacked = false;
     private float knockbackEndTime = 0f;
     private float originalSpeed;
-    private Rigidbody rb;
+    //private Rigidbody rb;
     CapsuleCollider col;
     [PunRPC]
     public void SetJob(string _job)
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
         pv = GetComponent<PhotonView>();
         cineCam = GetComponentInChildren<CinemachineCamera>();
         animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         runSpeed = 1.5f * walkSpeed;
         if (!pv.IsMine)
         {
@@ -227,29 +227,29 @@ public class PlayerController : MonoBehaviour
     {
         if (!pv.IsMine) return;
         // 넉백중이면 update 금지!
-        if (isKnockbacked)
-        {
-            moveDirection = Vector3.zero;
-            if (Time.time > knockbackEndTime)
-            {
-                isKnockbacked = false;
-                rb.useGravity = false;
-                gravity = 20f;
-                col.enabled = false;
-                controller.enabled = true;
+        //if (isKnockbacked)
+        //{
+        //    moveDirection = Vector3.zero;
+        //    if (Time.time > knockbackEndTime)
+        //    {
+        //        isKnockbacked = false;
+        //        rb.useGravity = false;
+        //        gravity = 20f;
+        //        col.enabled = false;
+        //        controller.enabled = true;
 
-            }
+        //    }
             
-            return;
-        }
-        else
-        {
+        //    return;
+        //}
+        //else
+        //{
             
-            rb.useGravity = false;
-            gravity = 20f;
-            col.enabled = false;
-            controller.enabled = true;
-        }
+        //    rb.useGravity = false;
+        //    gravity = 20f;
+        //    col.enabled = false;
+        //    controller.enabled = true;
+        //}
 
         if (jumpBufferCounter > 0)
             jumpBufferCounter -= Time.deltaTime;
@@ -305,26 +305,26 @@ public class PlayerController : MonoBehaviour
         cameraTarget.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
             transform.Rotate(Vector3.up * mouseX);
     }
-    // 넉백 함수
-    [PunRPC]
-    public void StartKnockback(Vector3 knockbackForce,float duration)
-    {
-        Debug.Log("넉백 호출됨");
-        // 플레이어 현재 속도와 무관하게
-        rb.linearVelocity = Vector3.zero;
+    //// 넉백 함수
+    //[PunRPC]
+    //public void StartKnockback(Vector3 knockbackForce,float duration)
+    //{
+    //    Debug.Log("넉백 호출됨");
+    //    // 플레이어 현재 속도와 무관하게
+    //    rb.linearVelocity = Vector3.zero;
 
-        // 넉백 힘 적용
-        isKnockbacked = true;
-        gravity = 0f;
-        rb.useGravity = true;
+    //    // 넉백 힘 적용
+    //    isKnockbacked = true;
+    //    gravity = 0f;
+    //    rb.useGravity = true;
         
-        controller.enabled = false;
-        col.enabled = true;
-        rb.AddForce(knockbackForce, ForceMode.VelocityChange);
-        Debug.Log("넉백 힘 : "+knockbackForce);
+    //    controller.enabled = false;
+    //    col.enabled = true;
+    //    rb.AddForce(knockbackForce, ForceMode.VelocityChange);
+    //    Debug.Log("넉백 힘 : "+knockbackForce);
         
-        knockbackEndTime = Time.time + duration;
-    }
+    //    knockbackEndTime = Time.time + duration;
+    //}
     // 슬로우 함수
     [PunRPC]
     public void RPC_ApplyMoveSpeedDecrease(float amount,float duration)
@@ -427,13 +427,13 @@ public class PlayerController : MonoBehaviour
             // 또는 isGrounded 강제 해제 등
         }
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            isKnockbacked = false;
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+    //    {
+    //        isKnockbacked = false;
+    //    }
+    //}
     bool OnTooSteepGround(out Vector3 groundNormal)
     {
         RaycastHit hit;
