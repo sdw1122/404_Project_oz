@@ -131,6 +131,12 @@ public abstract class Enemy : LivingEntity
         // 살아 있는 동안 무한 루프
         while (!dead)
         {
+            // 추적 로직은 마스터에서만 실행시켜 둘의 Enemy의 움직임을 동기화함.
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                yield return new WaitForSeconds(0.25f);
+                continue;
+            }
             if (isBinded)
             {
                 if (navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
@@ -144,12 +150,7 @@ public abstract class Enemy : LivingEntity
                 }
                 
             }
-            // 추적 로직은 마스터에서만 실행시켜 둘의 Enemy의 움직임을 동기화함.
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                yield return new WaitForSeconds(0.25f);
-                continue;
-            }
+            
             if (hasTarget)
             {
                 float dist = Vector3.Distance(transform.position, targetEntity.transform.position);               
@@ -290,7 +291,8 @@ public abstract class Enemy : LivingEntity
         if (navMeshAgent != null)
         {
             navMeshAgent.enabled = false;            
-        }        
+        }    
+        
         enemyAnimator.SetTrigger("Die");
         pv.RPC("RPC_Die", RpcTarget.Others);
         /*enemyAudioPlayer.PlayOneShot(deathSound);*/
@@ -375,6 +377,7 @@ public abstract class Enemy : LivingEntity
     {
         if (!PhotonNetwork.IsMasterClient) return; // 마스터만 데미지 처리
         damage *= DEF_Factor;
+        
         OnDamage(damage, hitPoint, hitNormal);
         GameObject attacker = PhotonView.Find(attackerViewID)?.gameObject;
         if (this is WoodMan woodman)
@@ -386,6 +389,15 @@ public abstract class Enemy : LivingEntity
     [PunRPC]
     public void RPC_EnemyHit()
     {
+        if (dead) return;
+        var stateInfo = enemyAnimator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.IsTag("Attack")) return;
         enemyAnimator.SetTrigger("Hit");
+
+    }
+    [PunRPC]
+    public void RPC_SetDEF(float value)
+    {
+        DEF_Factor = value;
     }
 }

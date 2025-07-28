@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed = 10f;
     public float runSpeed;
     public float mouseSensitivity = 0.5f;
-    private float currentSpeed;
+
     
     private Vector2 moveInput;
     private Vector2 lookInput;
@@ -200,9 +200,8 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
-        transform.position = new Vector3(0, 0, 0);
-        currentSpeed = walkSpeed;
-        originalSpeed = currentSpeed;
+        moveSpeed = walkSpeed;
+        originalSpeed = moveSpeed;
         if (!pv.IsMine)
         {
             if (playerCamera != null)
@@ -339,17 +338,18 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator slowRoutine(float amount,float duration)
     {
-        currentSpeed = originalSpeed * (1f-amount);
+        float slowFactor = 1f - amount;
+        moveSpeed = originalSpeed * (1f-amount);
         /*runSpeed =1.5f*originalSpeed * (1f - amount);*/
         walkSpeed =originalSpeed * (1f-amount);
         runSpeed =originalSpeed * (1f-amount);
-        Debug.Log("속도 감소 완료 :"+currentSpeed);
+        Debug.Log("속도 감소 완료 :"+ moveSpeed);
         yield return new WaitForSeconds(duration);
-        currentSpeed = originalSpeed;
+        moveSpeed = originalSpeed;
         walkSpeed = originalSpeed;
         runSpeed = originalSpeed * 1.5f;
         slowCoroutine = null;
-        Debug.Log("속도 복구 완료 :"+currentSpeed);
+        Debug.Log("속도 복구 완료 :"+moveSpeed);
     }
     //
     public void ResetMoveInput()

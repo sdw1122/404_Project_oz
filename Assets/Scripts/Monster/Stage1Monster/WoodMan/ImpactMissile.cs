@@ -12,7 +12,7 @@ public class ImpactMissile : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        Debug.Log("미사일 리지드 바디 받아옴");
+   
     }
     public void Initialize(float dmg,float spd,float sDu,float sAm)
     {
