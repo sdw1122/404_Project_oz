@@ -293,15 +293,19 @@ public abstract class Enemy : LivingEntity
             navMeshAgent.enabled = false;            
         }    
         
-        enemyAnimator.SetTrigger("Die");
-        pv.RPC("RPC_Die", RpcTarget.Others);
+        enemyAnimator.SetBool("Die", true);
+        pv.RPC("RPC_Die", RpcTarget.Others, true);
         /*enemyAudioPlayer.PlayOneShot(deathSound);*/
     }
 
     [PunRPC]
-    public void RPC_Die()
+    public void RPC_Die(bool state)
     {
-        enemyAnimator.SetTrigger("Die");
+        enemyAnimator.SetBool("Die", true);
+    }
+    public void SetDie()
+    {
+        enemyAnimator.SetBool("Die", false);
     }
     public void DieMotion()
     {
