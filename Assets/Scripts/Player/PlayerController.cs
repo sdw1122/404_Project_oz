@@ -200,6 +200,7 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
+        transform.position = new Vector3(0, 0, 0);
         currentSpeed = walkSpeed;
         originalSpeed = currentSpeed;
         if (!pv.IsMine)
