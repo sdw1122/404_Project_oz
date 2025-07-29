@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
             cineCam.gameObject.SetActive(false);
             return;
         }
+        EnemyHealthBarController.LocalPlayerCamera = playerCamera;
         healingRay =GetComponent<HealingRay>();
        
         

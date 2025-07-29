@@ -454,6 +454,8 @@ MonoBehaviour:
   isFirstChase: 1
   pv: {fileID: 7548695496272439170}
   chaseTarget: 0
+  healthBarPrefab: {fileID: 0}
+  healthBarPoint: {fileID: 0}
   m_name: "\uAC08\uB9DD\uD558\uB294 \uC591\uCCA0 \uB098\uBB34\uAFBC"
   currentTarget: {fileID: 0}
   groggyTime: 8
