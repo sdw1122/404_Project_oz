@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviourPun
                 break;
         }
 
-        GameObject player = PhotonNetwork.Instantiate("test/"+prefabName, spawnPos, Quaternion.identity);
+        GameObject player = PhotonNetwork.Instantiate(prefabName, spawnPos, Quaternion.identity);
         player.name = userId;
         // 본인 것일 때만 job 세팅
         if (player.GetComponent<PhotonView>().IsMine)
