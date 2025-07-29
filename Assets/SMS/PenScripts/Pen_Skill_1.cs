@@ -165,7 +165,7 @@ public class Pen_Skill_1 : MonoBehaviour
         Vector3 spawnPos = rayOrigin + rayDir * minDistance; // 카메라 앞 0.5m 지점
         Quaternion rotation = Quaternion.LookRotation(rayDir);
         //rotation *= Quaternion.Euler(90, 0, 0);
-        GameObject missile = PhotonNetwork.Instantiate("Pen_Charged_Missile", spawnPos, rotation);
+        GameObject missile = PhotonNetwork.Instantiate("test/" + "Pen_Charged_Missile", spawnPos, rotation);
         missile.transform.localScale = new Vector3(100.0f, 100.0f, 76.0f);
         missile.GetComponent<ChargedPenMissile>().Initialize(damage);
         missile.GetComponent<Rigidbody>().linearVelocity = rayDir * speed;
