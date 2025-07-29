@@ -1291,6 +1291,7 @@ MonoBehaviour:
   walkSpeed: 10
   runSpeed: 15
   mouseSensitivity: 0.4
+  knockbackGravity: 10
   isGrounded: 0
   isCharge: 0
   canMove: 1
