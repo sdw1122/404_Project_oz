@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2420270237598204599
+--- !u!114 &-4711866841531393750
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,10 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 0
+  version: 13
+  hdPluginSubTargetMaterialVersions:
+    m_Keys: []
+    m_Values: 
+--- !u!114 &-676644771895405093
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,7 +36,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Atlas_StoneElements
+  m_Name: M_Tile_Plaster
   m_Shader: {fileID: 4800000, guid: 8ebeb4729faffde458a3996a3780199c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -46,15 +62,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColor:
-        m_Texture: {fileID: 2800000, guid: c418106d3a0d92b4ead82d9178e233a1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 13f93070ed847164982a632377095493, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap:
-        m_Texture: {fileID: 2800000, guid: 5377d50122e9fb948b5da6cbe95507a1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 912daf7096bf9174bbf63d058f89a56c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColorTexture:
-        m_Texture: {fileID: 2800000, guid: 5377d50122e9fb948b5da6cbe95507a1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 912daf7096bf9174bbf63d058f89a56c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BentNormalMap:
@@ -98,11 +114,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MAOHS:
-        m_Texture: {fileID: 2800000, guid: 6b54a9a394e8dde488832008e9675abf, type: 3}
+        m_Texture: {fileID: 2800000, guid: bd78fd9eeffe01b4481926a343925178, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 5377d50122e9fb948b5da6cbe95507a1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 912daf7096bf9174bbf63d058f89a56c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask:
@@ -110,19 +126,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
-        m_Texture: {fileID: 2800000, guid: 436e6f5821c284e49bae30f95f342455, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5fddb8a48d9e8f2488e0d46731f45397, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMapUnity:
-        m_Texture: {fileID: 2800000, guid: 436e6f5821c284e49bae30f95f342455, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5fddb8a48d9e8f2488e0d46731f45397, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: 33518634ee71924459b90572e78380a1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6c829badee62d0c4395c7d41b949923c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 95c225c44c708f343a0f3c04b27fd423, type: 3}
+        m_Texture: {fileID: 2800000, guid: ad81b2e744aba574fb6f1fec5022cc9d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapOS:
@@ -178,7 +194,7 @@ Material:
     - _AOMax: 1
     - _AOMin: 0
     - _AORemapMax: 1
-    - _AORemapMin: 0
+    - _AORemapMin: 0.6721536
     - _AO_tweak: 0
     - _ATDistance: 1
     - _AddPrecomputedVelocity: 0
@@ -201,8 +217,8 @@ Material:
     - _BlendMode: 0
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
-    - _CullMode: 2
-    - _CullModeForward: 2
+    - _CullMode: 0
+    - _CullModeForward: 0
     - _Cutoff: 0.5
     - _DepthOffsetEnable: 0
     - _DetailAlbedoScale: 1
@@ -213,7 +229,7 @@ Material:
     - _DisplacementLockObjectScale: 1
     - _DisplacementLockTilingScale: 1
     - _DisplacementMode: 0
-    - _DoubleSidedEnable: 0
+    - _DoubleSidedEnable: 1
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 0
@@ -226,7 +242,7 @@ Material:
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
     - _EnvironmentReflections: 1
-    - _GMaskStrength: 0
+    - _GMaskStrength: 0.293
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
     - _HeightMapParametrization: 0
@@ -263,7 +279,7 @@ Material:
     - _Parallax_Amplitude: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RMaskStrength: 0
+    - _RMaskStrength: 0.459
     - _RayTracing: 0
     - _ReceiveShadows: 1
     - _ReceivesSSR: 1
@@ -336,7 +352,7 @@ Material:
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _MaskTint_R: {r: 0.5471698, g: 0.17292628, b: 0.17292628, a: 1}
     - _Mask_Tint_G: {r: 0, g: 0, b: 0, a: 0}
-    - _RTint: {r: 0.5, g: 0.5, b: 0.5, a: 0}
+    - _RTint: {r: 0.5377358, g: 0.45431438, b: 0.367791, a: 0}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _TextureOffset: {r: 0, g: 0, b: 0, a: 0}
     - _TextureTiling: {r: 1, g: 1, b: 0, a: 0}
@@ -349,7 +365,7 @@ Material:
     - _Vertex_AO_Tint: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &3657790777406589844
+--- !u!114 &6038765202688155093
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -358,23 +374,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 13
-  hdPluginSubTargetMaterialVersions:
-    m_Keys: []
-    m_Values: 
---- !u!114 &9029691605448267028
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 7
+  version: 0

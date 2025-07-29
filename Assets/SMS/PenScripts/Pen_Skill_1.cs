@@ -7,6 +7,11 @@ public class Pen_Skill_1 : MonoBehaviour
 {
     public GameObject PenPlayer;
     public GameObject bow;
+    public GameObject missile1;
+    public GameObject missile2;
+    public GameObject missile3;
+    public ParticleSystem ChargeEffect;
+    private bool didChargeLevel1, didChargeLevel2, didChargeLevel3;
     Rigidbody rb;
     Animator animator;
     [Header("스킬 정보")]
@@ -30,6 +35,7 @@ public class Pen_Skill_1 : MonoBehaviour
     public Transform firePoint;
     PlayerController playerController;
     PhotonView pv;
+    private Color[] chargeColors = { new Color(1f, 1f, 1f, 0.5f), new Color(0f, 1f, 0.79f, 0.5f), new Color(0f, 0.46f, 1f, 1f) };
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
@@ -61,12 +67,32 @@ public class Pen_Skill_1 : MonoBehaviour
 
         if (isSkill1Pressed && !isCharging && Time.time - lastFireTime > Cooldown)
         {
+            didChargeLevel1 = false;
+            didChargeLevel2 = false;
+            didChargeLevel3 = false;
             StartCharging();
         }
 
         if (isCharging)
         {
+            float nomalized = chargeTime / maxChargeTime;
             chargeTime += Time.deltaTime;
+
+            if (!didChargeLevel1 && nomalized >= 0)
+            {
+                PlayChargeLevelEffect(1);
+                didChargeLevel1 = true;
+            }
+            if (!didChargeLevel2 && nomalized >= 1f / 3f)
+            {
+                PlayChargeLevelEffect(2);
+                didChargeLevel2 = true;
+            }
+            if (!didChargeLevel3 && nomalized >= 2f / 3f)
+            {
+                PlayChargeLevelEffect(3);
+                didChargeLevel3 = true;
+            }
         }
     }
 
@@ -148,6 +174,13 @@ public class Pen_Skill_1 : MonoBehaviour
             3 => ChargeDamage_3,
             _ => ChargeDamage_1
         };
+        string missilePath = chargeLevel switch
+        {
+            1 => "Pen_1Charged_missile",
+            2 => "Pen_2Charged_missile",
+            3 => "Pen_3Charged_missile",
+            _ => "Pen_1Charged_missile"
+        };
         float speed = charged_Pen_Speed + 5f * chargeLevel;
         // 카메라 기준 마우스 방향 계산
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -165,7 +198,10 @@ public class Pen_Skill_1 : MonoBehaviour
         Vector3 spawnPos = rayOrigin + rayDir * minDistance; // 카메라 앞 0.5m 지점
         Quaternion rotation = Quaternion.LookRotation(rayDir);
         //rotation *= Quaternion.Euler(90, 0, 0);
-        GameObject missile = PhotonNetwork.Instantiate("test/" + "Pen_Charged_Missile", spawnPos, rotation);
+        missile1.SetActive(false);
+        missile2.SetActive(false);
+        missile3.SetActive(false);
+        GameObject missile = PhotonNetwork.Instantiate("test/"+missilePath, spawnPos, rotation);
         missile.transform.localScale = new Vector3(100.0f, 100.0f, 76.0f);
         missile.GetComponent<ChargedPenMissile>().Initialize(damage);
         missile.GetComponent<Rigidbody>().linearVelocity = rayDir * speed;
@@ -176,6 +212,34 @@ public class Pen_Skill_1 : MonoBehaviour
         PlayerController1.isMove = true;
         Pen_Skill_2.isThrow = true;
     }
+
+    void PlayChargeLevelEffect(int chargeLevel)
+    {
+        var main = ChargeEffect.main;
+        if (chargeLevel == 1)
+        {
+            main.startColor = chargeColors[0];
+            ChargeEffect.Play();
+            pv.RPC("RPC_PlayChargeLevelEffect",RpcTarget.Others);
+            missile1.SetActive(true);
+        }
+        else if (chargeLevel == 2)
+        {
+            main.startColor = chargeColors[1];
+            ChargeEffect.Play();
+            pv.RPC("RPC_PlayChargeLevelEffect", RpcTarget.Others);
+            missile1.SetActive(false);
+            missile2.SetActive(true);
+        }
+        else if (chargeLevel == 3)
+        {
+            main.startColor= chargeColors[2];
+            ChargeEffect.Play();
+            pv.RPC("RPC_PlayChargeLevelEffect", RpcTarget.Others);
+            missile2.SetActive(false);
+            missile3.SetActive(true);
+        }
+    }
     void BowDisable()
     {
         bow.SetActive(false);
@@ -185,6 +249,11 @@ public class Pen_Skill_1 : MonoBehaviour
     {
         bow.SetActive(true);
         pv.RPC("RPC_BowEnable", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_PlayChargeLevelEffect()
+    {
+        ChargeEffect.Play();
     }
     [PunRPC]
     void RPC_TriggerChargeAttack()
