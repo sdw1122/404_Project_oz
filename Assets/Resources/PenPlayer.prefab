@@ -613,9 +613,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6949941865084275974}
     m_Modifications:
+    - target: {fileID: 602445138470757027, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 602445138470757027, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 602445138470757027, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 892242200119504156, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_Name
       value: UI_for_player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6487505620612747275, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8367748109802491025, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8873107383478142889, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_Pivot.x
