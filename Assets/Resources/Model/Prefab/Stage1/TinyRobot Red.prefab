@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2858533012555543018}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &467549742428756570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7854848161686391839}
+  m_Layer: 8
+  m_Name: HealthBarPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7854848161686391839
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467549742428756570}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.37, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7134637859043600166}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &527006647973774962
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,6 +1151,7 @@ Transform:
   - {fileID: 1841401711962648860}
   - {fileID: 6702092125038183308}
   - {fileID: 4077342838978779120}
+  - {fileID: 7854848161686391839}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4143298018857967933
@@ -1246,8 +1278,8 @@ MonoBehaviour:
   isFirstChase: 0
   pv: {fileID: 0}
   chaseTarget: 0
-  healthBarPrefab: {fileID: 0}
-  healthBarPoint: {fileID: 0}
+  healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
+  healthBarPoint: {fileID: 7854848161686391839}
   throwObj: {fileID: 4799392649775753017, guid: 924d3887ceeb23243910933950a84af7, type: 3}
   throwPoint: {fileID: 5009277148290514229}
   throwPower: 15

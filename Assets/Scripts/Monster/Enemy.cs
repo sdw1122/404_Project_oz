@@ -44,6 +44,7 @@ public abstract class Enemy : LivingEntity
     public Transform healthBarPoint;
 
     private EnemyHealthBarController healthBarController; // 생성된 체력바 컨트롤러를 저장할 변수
+    private float lastKnownHealth;
 
     // 추적할 대상이 존재하는지 알려주는 프로퍼티
     public bool hasTarget
@@ -99,6 +100,7 @@ public abstract class Enemy : LivingEntity
 
     private void Start()
     {
+        lastKnownHealth = health;
         if (!pv.IsMine)
         {
             // 네트워크 위치 동기화 완료 후 워프
@@ -107,23 +109,40 @@ public abstract class Enemy : LivingEntity
         navMeshAgent.enabled = true; // 위치 맞춘 뒤 에이전트 켜기
         Debug.Log("Enemy Awake pv = " + (pv != null ? pv.ViewID.ToString() : "NULL"));
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
-        StartCoroutine(UpdatePath());        
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(UpdatePath());
+        }
     }
 
     public virtual void Update()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
+        // --- 1. UI 업데이트 로직 (모든 클라이언트에서 실행) ---
+        // OnPhotonSerializeView를 통해 자동으로 동기화된 health 값이 이전 프레임과 다른지 확인합니다.
+        if (health != lastKnownHealth)
+        {
+            // 체력 값이 바뀌었다면, 체력 바 UI를 업데이트합니다.
+            if (healthBarController != null)
+            {
+                healthBarController.UpdateHealth(health, startingHealth);
+            }
+            // 현재 체력 값을 lastKnownHealth에 저장하여 다음 프레임에 비교할 수 있도록 합니다.
+            lastKnownHealth = health;
+        }
+
+        // --- 2. AI 및 이동 로직 (마스터 클라이언트에서만 실행) ---
+        // 마스터 클라이언트가 아니면 AI 로직을 실행하지 않고 여기서 함수를 종료합니다.
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+
+        // 이 아래는 기존 Update()에 있던 마스터 클라이언트 전용 로직입니다.
         if (isBinded && navMeshAgent.isOnNavMesh)
         {
             navMeshAgent.isStopped = true;
-            /*rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            enemyAnimator.SetFloat("Blend", 1f); // 공격 전 Idle자세
-            pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);*/
         }
         currentHealth = health;
-        // 추적 대상의 존재 여부에 따라 다른 애니메이션 재생
-        /*enemyAnimator.SetBool("HasTarget", hasTarget);*/
     }
 
 
@@ -417,16 +436,4 @@ public abstract class Enemy : LivingEntity
     {
         DEF_Factor = value;
     }
-
-    [PunRPC]
-    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
-    {
-        if (dead) return;
-        base.OnDamage(damage, hitPoint, hitNormal); // 부모 클래스의 OnDamage를 호출하여 실제 체력 감소 처리
-        if (healthBarController != null)
-        {
-            healthBarController.UpdateHealth(health, startingHealth);
-        }
-    }
-
 }

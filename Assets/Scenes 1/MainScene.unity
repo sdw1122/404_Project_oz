@@ -1694,7 +1694,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &454400022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3081,9 +3081,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefabs:
   - {fileID: 733209288390456040, guid: 6d225ba0cce192542a57c7e14aec742b, type: 3}
-  - {fileID: 7990584158616284374, guid: 64e09d66777b4004dabd0729a506ef02, type: 3}
-  - {fileID: 3684965418754927697, guid: 246c242d331a08d4695fdd75eb3e8f93, type: 3}
-  - {fileID: 288691541403118600, guid: ea4324e39606b124fbc8962ece08c421, type: 3}
+  - {fileID: 733209288390456040, guid: 6d225ba0cce192542a57c7e14aec742b, type: 3}
+  - {fileID: 733209288390456040, guid: 6d225ba0cce192542a57c7e14aec742b, type: 3}
+  - {fileID: 733209288390456040, guid: 6d225ba0cce192542a57c7e14aec742b, type: 3}
   enemyDatas:
   - {fileID: 11400000, guid: 9a3b64e710f41e64589b1ed23060fb75, type: 2}
   spawnPoints:
