@@ -142,6 +142,10 @@ MonoBehaviour:
   - RequestFall
   - RPC_SetDEF
   - RPC_ZombieAttack
+  - RPC_HangingAttack
+  - RPC_HangingThrow
+  - RPC_StrawDollAttack
+  - RPC_PlayJumpAttack
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

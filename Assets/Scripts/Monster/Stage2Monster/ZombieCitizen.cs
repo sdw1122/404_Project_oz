@@ -3,16 +3,13 @@ using UnityEngine;
 
 public class ZombieCitizen : Enemy
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public bool isAttack = false;
 
     public override void Attack()
     {
         if (targetEntity == null || dead) return;
-
+        if (isAttack) return;
+        isAttack = true;
         if (targetEntity != null)
         {
             Vector3 lookPos = targetEntity.transform.position - transform.position;
@@ -21,6 +18,8 @@ public class ZombieCitizen : Enemy
                 transform.rotation = Quaternion.LookRotation(lookPos);
         }
 
+        Debug.Log("공격");
+        pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
         enemyAnimator.SetTrigger("Attack");
         pv.RPC("RPC_ZombieAttack", RpcTarget.Others);
     }
@@ -72,6 +71,12 @@ public class ZombieCitizen : Enemy
         }
     }
 
+    public void EndAttack()
+    {
+        pv.RPC("RPC_SetNavMesh", RpcTarget.All, true);
+        isAttack = false;
+    }
+
     void OnDrawGizmosSelected()
     {
         // 일반 휘두르기
@@ -103,5 +108,25 @@ public class ZombieCitizen : Enemy
             Gizmos.DrawCube(Vector3.zero, boxHalfExtents * 2);
             Gizmos.matrix = Matrix4x4.identity;
         }
+    }
+
+    [PunRPC]
+    public void RPC_SetNavMesh(bool active)
+    {
+        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        if (active)
+        {
+            obstacle.enabled = !active;
+            navMeshAgent.enabled = active;
+            // NavMeshAgent 다시 활성화할 때 위치 동기화 필수!
+            if (navMeshAgent.isOnNavMesh)
+                navMeshAgent.Warp(transform.position);
+        }
+        else
+        {
+            navMeshAgent.enabled = active;
+            obstacle.enabled = !active;
+        }
+        //rb.isKinematic = active;
     }
 }
