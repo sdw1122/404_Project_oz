@@ -63,5 +63,98 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ebf62046ad114b48a562a88b4bb2ea0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8709944255518976286}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ebf62046ad114b48a562a88b4bb2ea0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3089583259511223100}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ebf62046ad114b48a562a88b4bb2ea0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4149561954065366028}
   m_SourcePrefab: {fileID: 100100000, guid: 8ebf62046ad114b48a562a88b4bb2ea0, type: 3}
+--- !u!1 &1260822862546409975 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ebf62046ad114b48a562a88b4bb2ea0, type: 3}
+  m_PrefabInstance: {fileID: 2143219086837425318}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &8709944255518976286
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260822862546409975}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &3089583259511223100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260822862546409975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1477ed39d235b749bcaf660cf4955cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 50
+  dead: 0
+  whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 128
+  targetEntity: {fileID: 0}
+  navMeshAgent: {fileID: 0}
+  obstacle: {fileID: 0}
+  hitEffect: {fileID: 0}
+  enemyAnimator: {fileID: 0}
+  enemyRenderer: {fileID: 0}
+  currentHealth: 0
+  damage: 30
+  Atk_Cooldown: 6
+  attackRange: 0
+  DEF_Factor: 1
+  isBinded: 0
+  isFirstChase: 1
+  pv: {fileID: 0}
+  chaseTarget: 0
+  healthBarPrefab: {fileID: 0}
+  healthBarPoint: {fileID: 0}
+--- !u!114 &4149561954065366028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260822862546409975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 3089583259511223100}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
