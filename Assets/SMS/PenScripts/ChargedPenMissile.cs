@@ -36,41 +36,14 @@ public class ChargedPenMissile : MonoBehaviour
                 Vector3 hitNormal = transform.position - other.transform.position;
 
                 PhotonView enemyPv = other.GetComponent<PhotonView>();
-                enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal,ownerViewID);
-
                 Enemy enemy = other.GetComponent<Enemy>();
                 if (!enemy.dead)
                 {
-                    if (!enemy.dead)
-                    {
-                        if (other.CompareTag("StoneGolem"))
-                        {
-                            StoneGolem golem = other.GetComponent<StoneGolem>();
-                            if (golem != null && golem.isHammer)
-                            {
-                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 2f, hitPoint, hitNormal);
-                            }
-                        }
-                        else if (other.CompareTag("FireGolem"))
-                        {
-                            FireGolem golem = other.GetComponent<FireGolem>();
-                            if (golem != null && !golem.isIce)
-                            {
-                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 0.5f, hitPoint, hitNormal);
-                            }
-                            else if (golem != null && golem.isIce)
-                            {
-                                enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage * 5f, hitPoint, hitNormal);
-                            }
-                        }
-                        else
-                        {
-                            enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal);
-                            enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
-                        }
-                        enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
-                    }
+
+                    enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal,ownerViewID);
+                    enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
+                    enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                    
                 }
             }
         }

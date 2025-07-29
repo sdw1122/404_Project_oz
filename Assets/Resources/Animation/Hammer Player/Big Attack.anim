@@ -76611,7 +76611,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.36666667
+  - time: 0.06666667
     functionName: EnableWeapon
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 0dd11883cf7c12f40959ecd1a8350473, type: 3}

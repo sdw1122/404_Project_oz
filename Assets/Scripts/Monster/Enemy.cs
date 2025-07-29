@@ -36,6 +36,15 @@ public abstract class Enemy : LivingEntity
     public PhotonView pv;
     public float chaseTarget;
 
+    [Header("UI 설정")]
+    [Tooltip("몬스터 머리 위에 생성될 체력 바")]
+    public GameObject healthBarPrefab;
+
+    [Tooltip("체력 바가 생성될 기준 위치")]
+    public Transform healthBarPoint;
+
+    private EnemyHealthBarController healthBarController; // 생성된 체력바 컨트롤러를 저장할 변수
+
     // 추적할 대상이 존재하는지 알려주는 프로퍼티
     public bool hasTarget
     {
@@ -72,22 +81,20 @@ public abstract class Enemy : LivingEntity
             enemyAnimator.enabled = true;
         Debug.Log("Enemy Awake - Renderer enabled:" + enemyRenderer.enabled + ", color:" + enemyRenderer.material.color);
         navMeshAgent.enabled = false;
+
+        //체력 바 추가
+        if (healthBarPrefab != null && healthBarPoint != null)
+        {
+            // healthBarPoint의 자식으로 생성하여 몬스터를 따라다니도록 합니다.
+            GameObject healthBarObj = Instantiate(healthBarPrefab, healthBarPoint.position, healthBarPoint.rotation, healthBarPoint);
+            healthBarController = healthBarObj.GetComponent<EnemyHealthBarController>();
+        }
     }
 
     // 초기 스펙을 결정하는 셋업 메서드
     public void Setup(EnemyData enemyData)
     {
-        if (startingHealth <= 0f) // 인스펙터에서 0이면만 덮어씀
-            startingHealth = enemyData.Max_HP;
-        if (health <= 0f)
-            health = enemyData.Max_HP;
-        if (damage <= 0f)
-            damage = enemyData.Atk_Damage;
-        if (navMeshAgent.speed <= 0f)
-            navMeshAgent.speed = enemyData.speed;
-        DEF_Factor = enemyData.DEF_Factor;
-        /*originalColor = enemyData.skinColor;
-        enemyRenderer.material.color = enemyData.skinColor;*/
+        
     }
 
     private void Start()
@@ -131,6 +138,12 @@ public abstract class Enemy : LivingEntity
         // 살아 있는 동안 무한 루프
         while (!dead)
         {
+            // 추적 로직은 마스터에서만 실행시켜 둘의 Enemy의 움직임을 동기화함.
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                yield return new WaitForSeconds(0.25f);
+                continue;
+            }
             if (isBinded)
             {
                 if (navMeshAgent.enabled && navMeshAgent.isOnNavMesh)
@@ -144,12 +157,7 @@ public abstract class Enemy : LivingEntity
                 }
                 
             }
-            // 추적 로직은 마스터에서만 실행시켜 둘의 Enemy의 움직임을 동기화함.
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                yield return new WaitForSeconds(0.25f);
-                continue;
-            }
+            
             if (hasTarget)
             {
                 float dist = Vector3.Distance(transform.position, targetEntity.transform.position);               
@@ -281,6 +289,12 @@ public abstract class Enemy : LivingEntity
     {
         if (dead) return;
         dead = true;
+        //체력바 숨김
+        if (healthBarController != null)
+        {
+            healthBarController.Hide();
+        }
+
         Debug.Log("dead : " + dead);
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
@@ -290,8 +304,9 @@ public abstract class Enemy : LivingEntity
         if (navMeshAgent != null)
         {
             navMeshAgent.enabled = false;            
-        }        
-        enemyAnimator.SetTrigger("Die");
+        }    
+        
+        enemyAnimator.SetBool("Die", true);
         pv.RPC("RPC_Die", RpcTarget.Others);
         /*enemyAudioPlayer.PlayOneShot(deathSound);*/
     }
@@ -299,7 +314,11 @@ public abstract class Enemy : LivingEntity
     [PunRPC]
     public void RPC_Die()
     {
-        enemyAnimator.SetTrigger("Die");
+        enemyAnimator.SetBool("Die", true);
+    }
+    public void DieState()
+    {
+        enemyAnimator.SetBool("Die", false);
     }
     public void DieMotion()
     {
@@ -375,6 +394,7 @@ public abstract class Enemy : LivingEntity
     {
         if (!PhotonNetwork.IsMasterClient) return; // 마스터만 데미지 처리
         damage *= DEF_Factor;
+        
         OnDamage(damage, hitPoint, hitNormal);
         GameObject attacker = PhotonView.Find(attackerViewID)?.gameObject;
         if (this is WoodMan woodman)
@@ -386,6 +406,27 @@ public abstract class Enemy : LivingEntity
     [PunRPC]
     public void RPC_EnemyHit()
     {
+        if (dead) return;
+        var stateInfo = enemyAnimator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.IsTag("Attack")) return;
         enemyAnimator.SetTrigger("Hit");
+
     }
+    [PunRPC]
+    public void RPC_SetDEF(float value)
+    {
+        DEF_Factor = value;
+    }
+
+    [PunRPC]
+    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    {
+        if (dead) return;
+        base.OnDamage(damage, hitPoint, hitNormal); // 부모 클래스의 OnDamage를 호출하여 실제 체력 감소 처리
+        if (healthBarController != null)
+        {
+            healthBarController.UpdateHealth(health, startingHealth);
+        }
+    }
+
 }

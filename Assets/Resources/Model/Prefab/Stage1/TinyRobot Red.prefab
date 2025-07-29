@@ -1091,7 +1091,6 @@ GameObject:
   - component: {fileID: 7134637859043600166}
   - component: {fileID: 4143298018857967933}
   - component: {fileID: -5075713804932305451}
-  - component: {fileID: 5381278464464465738}
   - component: {fileID: 4293214390794547312}
   - component: {fileID: -4778915355420480149}
   - component: {fileID: 2517862282340975474}
@@ -1120,6 +1119,7 @@ Transform:
   m_Children:
   - {fileID: 1841401711962648860}
   - {fileID: 6702092125038183308}
+  - {fileID: 4077342838978779120}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4143298018857967933
@@ -1152,7 +1152,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7990584158616284374}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -902729914
   m_Radius: 0.5
   m_Speed: 3
   m_Acceleration: 8
@@ -1166,27 +1166,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &5381278464464465738
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7990584158616284374}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.3
-  m_Center: {x: 0, y: 1.6, z: 0}
 --- !u!65 &4293214390794547312
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1262,11 +1241,13 @@ MonoBehaviour:
   damage: 3
   Atk_Cooldown: 0
   attackRange: 10
-  DEF_Factor: 0
+  DEF_Factor: 1
   isBinded: 0
   isFirstChase: 0
   pv: {fileID: 0}
   chaseTarget: 0
+  healthBarPrefab: {fileID: 0}
+  healthBarPoint: {fileID: 0}
   throwObj: {fileID: 4799392649775753017, guid: 924d3887ceeb23243910933950a84af7, type: 3}
   throwPoint: {fileID: 5009277148290514229}
   throwPower: 15
@@ -1543,6 +1524,73 @@ Transform:
   - {fileID: 4362221263824985389}
   m_Father: {fileID: 618082296962560847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8741789170490511275
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4077342838978779120}
+  - component: {fileID: 7595224491910196799}
+  - component: {fileID: 3470862677161346389}
+  m_Layer: 0
+  m_Name: HeadCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4077342838978779120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8741789170490511275}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.4285713, y: 1.4285713, z: 1.4285713}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7134637859043600166}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7595224491910196799
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8741789170490511275}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.4
+  m_Center: {x: 0, y: 1.07, z: 0}
+--- !u!114 &3470862677161346389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8741789170490511275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2efc4f356f996b04d865a75c73d011d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slideSpeed: 2
 --- !u!1 &8741829135620674144
 GameObject:
   m_ObjectHideFlags: 0

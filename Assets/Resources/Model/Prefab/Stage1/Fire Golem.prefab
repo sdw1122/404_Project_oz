@@ -1952,7 +1952,7 @@ GameObject:
   - component: {fileID: 3793045525177061630}
   - component: {fileID: 6457256188694104584}
   - component: {fileID: -7380603563252991598}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fire Golem
   m_TagString: FireGolem
   m_Icon: {fileID: 0}
@@ -1969,8 +1969,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5891458420868525779}
   - {fileID: 175774980556897663}
@@ -1985,7 +1985,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3684965418754927697}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -1923039037
   m_Radius: 0.5
   m_Speed: 1
   m_Acceleration: 8
@@ -2155,6 +2155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 800
+  dead: 0
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
@@ -2163,14 +2164,18 @@ MonoBehaviour:
   obstacle: {fileID: 0}
   hitEffect: {fileID: 0}
   enemyAnimator: {fileID: 0}
+  enemyRenderer: {fileID: 0}
   currentHealth: 0
   damage: 20
-  timeBetAttack: 0.5
+  Atk_Cooldown: 0
   attackRange: 3
+  DEF_Factor: 0.5
   isBinded: 0
   isFirstChase: 1
   pv: {fileID: 0}
   chaseTarget: 0
+  healthBarPrefab: {fileID: 0}
+  healthBarPoint: {fileID: 0}
   armAttackRange: 4
   groundAttackRange: 2
   armAttackCoolTime: 3

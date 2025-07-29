@@ -1,105 +1,212 @@
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.InputSystem; // 새로운 입력 시스템 사용
 
-public class Cannon : InteractableBase
+public class Cannon : InteractableBase, IPunObservable
 {
-    [Header("대포 설정")]
-    [Tooltip("발사될 포탄의 프리팹입니다. 'Resources' 폴더 안에 있어야 합니다.")]
+    [Header("탑승 및 조작 설정")]
+    [Tooltip("플레이어가 탑승했을 때 카메라가 위치할 지점")]
+    [SerializeField] private Transform cameraMountPoint;
+    [Tooltip("플레이어가 내릴 위치")]
+    [SerializeField] private Transform dismountPoint;
+    [Tooltip("포신이 좌우로 회전하는 축 (Y축 회전)")]
+    [SerializeField] private Transform turretPivot;
+    [Tooltip("포신이 상하로 회전하는 축 (X축 회전)")]
+    [SerializeField] private Transform barrelPivot;
+
+    [Header("발사 설정")]
+    [Tooltip("발사될 포탄 프리팹 ('Resources' 폴더 안에 있어야 함)")]
     [SerializeField] private GameObject projectilePrefab;
-
-    [Tooltip("포탄이 생성될 위치입니다. (대포의 포구)")]
+    [Tooltip("포탄이 생성될 위치")]
     [SerializeField] private Transform firePoint;
+    [Tooltip("포탄 발사 힘")]
+    [SerializeField] private float fireForce = 25f;
+    [Tooltip("발사 쿨타임")]
+    [SerializeField] private float fireCooldown = 1f;
 
-    [Tooltip("포탄에 가해질 힘의 크기입니다.")]
-    [SerializeField] private float fireForce = 20f;
+    [Header("조준 설정")]
+    [SerializeField] private float mouseSensitivity = 0.5f;
+    [SerializeField] private float minPitch = -15f;
+    [SerializeField] private float maxPitch = 45f;
+    [SerializeField] private float yawRange = 90f;
 
-    [Tooltip("발사 후 다음 발사까지의 대기 시간(쿨타임)입니다.")]
-    [SerializeField] private float cooldownTime = 3f;
+    // --- 상태 변수 ---
+    private bool isOccupied = false;
+    private int occupantViewID = -1;
+    private float lastFireTime = -99f;
+    private float initialTurretY;
 
-    // 마지막으로 발사한 시간을 기록합니다.
-    private float lastFireTime = -999f;
+    // --- 탑승자 정보 캐싱 ---
+    private Camera occupantCamera;
+    private CharacterController occupantControllerComponent;
+    private Renderer[] occupantRenderers;
+    private Transform originalCameraParent;
+
+    // --- 네트워크 동기화용 변수 ---
+    private Quaternion networkTurretRotation;
+    private Quaternion networkBarrelRotation;
+
 
     protected override void Awake()
     {
-        base.Awake(); // 부모 클래스의 Awake() 실행
-        if (projectilePrefab == null)
-        {
-            Debug.LogError("'projectilePrefab'이 설정되지 않았습니다!", this);
-        }
-        if (firePoint == null)
-        {
-            Debug.LogError("'firePoint'가 설정되지 않았습니다! 포탄 발사 위치를 지정해주세요.", this);
-        }
+        base.Awake();
+        initialTurretY = turretPivot.localRotation.eulerAngles.y;
+        networkTurretRotation = turretPivot.localRotation;
+        networkBarrelRotation = barrelPivot.localRotation;
     }
 
-    /// <summary>
-    /// 플레이어가 이 대포와 상호작용할 수 있는지 확인합니다.
-    /// 쿨타임이 차지 않았다면 상호작용할 수 없습니다.
-    /// </summary>
-    public override bool CanInteract(PlayerController player)
+    private void Update()
     {
-        // 쿨타임이 아직 안 지났으면 false
-        if (Time.time < lastFireTime + cooldownTime)
+        // 탑승한 플레이어만 조작 가능
+        if (isOccupied && PhotonView.Find(occupantViewID).IsMine)
         {
-            // 여기에 "재장전 중..." 같은 UI 메시지를 띄우는 로직을 추가할 수도 있습니다.
-            return false;
+            HandleAiming();
+            HandleFiring();
         }
-        // 쿨타임이 다 찼으면, 부모 클래스의 직업 체크 로직을 따릅니다.
-        return base.CanInteract(player);
+        // 다른 클라이언트에서는 동기화된 회전값을 부드럽게 적용
+        else
+        {
+            turretPivot.localRotation = Quaternion.Slerp(turretPivot.localRotation, networkTurretRotation, Time.deltaTime * 10);
+            barrelPivot.localRotation = Quaternion.Slerp(barrelPivot.localRotation, networkBarrelRotation, Time.deltaTime * 10);
+        }
     }
 
-    /// <summary>
-    /// 플레이어가 상호작용했을 때 호출됩니다.
-    /// 마스터 클라이언트에게 발사를 요청합니다.
-    /// </summary>
     public override void Interact(PlayerController player)
     {
-        if (!CanInteract(player)) return;
-
-        // 실제 발사 로직은 마스터 클라이언트가 실행하도록 요청을 보냅니다.
-        // 이는 여러 명이 동시에 발사하는 것을 막고, 권한을 중앙에서 관리하기 위함입니다.
-        pv.RPC("RequestFire_RPC", RpcTarget.MasterClient);
+        // 아무도 안 탔을 때 -> 탑승
+        if (!isOccupied)
+        {
+            pv.RPC("MountRPC", RpcTarget.AllBuffered, player.GetComponent<PhotonView>().ViewID);
+        }
+        // 내가 타고 있을 때 -> 내리기
+        else if (occupantViewID == player.GetComponent<PhotonView>().ViewID)
+        {
+            pv.RPC("DismountRPC", RpcTarget.AllBuffered);
+        }
     }
 
-    /// <summary>
-    /// [마스터 클라이언트에서만 실행됨]
-    /// 클라이언트의 요청을 받아 모든 클라이언트에게 대포를 발사하라고 명령합니다.
-    /// </summary>
     [PunRPC]
-    private void RequestFire_RPC()
+    private void MountRPC(int playerViewID)
     {
-        // 쿨타임 재확인 (네트워크 지연 등으로 인한 중복 실행 방지)
-        if (Time.time < lastFireTime + cooldownTime) return;
+        isOccupied = true;
+        occupantViewID = playerViewID;
 
-        // 모든 클라이언트에게 발사 RPC를 호출합니다.
-        pv.RPC("FireCannon_RPC", RpcTarget.All);
+        PhotonView playerPV = PhotonView.Find(playerViewID);
+        if (playerPV == null) return;
+
+        // 플레이어의 주요 컴포넌트들을 찾아서 저장
+        occupantControllerComponent = playerPV.GetComponent<CharacterController>();
+        occupantCamera = playerPV.GetComponentInChildren<Camera>();
+        occupantRenderers = playerPV.GetComponentsInChildren<Renderer>();
+        originalCameraParent = occupantCamera.transform.parent;
+
+        // 플레이어 컨트롤 비활성화 및 숨기기
+        occupantControllerComponent.enabled = false;
+        foreach (var renderer in occupantRenderers)
+        {
+            renderer.enabled = false;
+        }
+
+        // 카메라를 대포의 조준 위치로 이동
+        occupantCamera.transform.SetParent(cameraMountPoint);
+        occupantCamera.transform.SetPositionAndRotation(cameraMountPoint.position, cameraMountPoint.rotation);
+
+        // 탑승한 플레이어는 커서 고정
+        if (playerPV.IsMine)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
-    /// <summary>
-    /// [모든 클라이언트에서 실행됨]
-    /// 실제 발사 로직과 쿨타임 초기화가 이루어집니다.
-    /// </summary>
     [PunRPC]
-    private void FireCannon_RPC()
+    private void DismountRPC()
     {
-        // 쿨타임 갱신
+        // 플레이어 컨트롤 활성화 및 보이기
+        if (occupantControllerComponent != null) occupantControllerComponent.enabled = true;
+        if (occupantRenderers != null)
+        {
+            foreach (var renderer in occupantRenderers)
+            {
+                if (renderer != null) renderer.enabled = true;
+            }
+        }
+
+        // 카메라를 원래 위치로 복구
+        if (occupantCamera != null)
+        {
+            occupantCamera.transform.SetParent(originalCameraParent);
+            occupantCamera.transform.localPosition = Vector3.zero; // 부모 기준 원래 위치로
+            occupantCamera.transform.localRotation = Quaternion.identity;
+        }
+
+        // 플레이어를 내리는 위치로 이동
+        if (occupantControllerComponent != null)
+        {
+            // CharacterController가 비활성화된 상태에서 위치를 변경해야 순간이동이 가능
+            occupantControllerComponent.transform.SetPositionAndRotation(dismountPoint.position, dismountPoint.rotation);
+        }
+
+        // 상태 초기화
+        isOccupied = false;
+        occupantViewID = -1;
+    }
+
+    private void HandleAiming()
+    {
+        // 새로운 입력 시스템에서 마우스 입력을 직접 읽어옴
+        Vector2 lookInput = Mouse.current.delta.ReadValue();
+        float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime * 50; // deltaTime 보정
+        float mouseY = lookInput.y * mouseSensitivity * Time.deltaTime * 50;
+
+        // 좌우 회전 (Turret)
+        float currentYaw = turretPivot.localRotation.eulerAngles.y;
+        currentYaw += mouseX;
+        currentYaw = Mathf.Clamp(Mathf.DeltaAngle(initialTurretY, currentYaw), -yawRange, yawRange) + initialTurretY;
+        turretPivot.localRotation = Quaternion.Euler(0, currentYaw, 0);
+
+        // 상하 회전 (Barrel)
+        float currentPitch = barrelPivot.localRotation.eulerAngles.x;
+        currentPitch -= mouseY;
+        currentPitch = Mathf.Clamp(Mathf.DeltaAngle(0, currentPitch), minPitch, maxPitch);
+        barrelPivot.localRotation = Quaternion.Euler(currentPitch, 0, 0);
+    }
+
+    private void HandleFiring()
+    {
+        // 마우스 왼쪽 버튼 클릭 감지
+        if (Mouse.current.leftButton.wasPressedThisFrame && Time.time > lastFireTime + fireCooldown)
+        {
+            pv.RPC("FireCannonRPC", RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    private void FireCannonRPC()
+    {
         lastFireTime = Time.time;
-
-        // 이 코드는 마스터 클라이언트에서만 실행되어야 네트워크 오브젝트가 정상적으로 생성됩니다.
+        // 마스터 클라이언트만 포탄 생성
         if (PhotonNetwork.IsMasterClient)
         {
-            // PhotonNetwork.Instantiate를 사용하여 네트워크상의 모든 플레이어에게 포탄을 생성합니다.
-            // 프리팹 이름으로 생성하므로, 프리팹은 반드시 'Resources' 폴더 안에 있어야 합니다.
             GameObject projectile = PhotonNetwork.Instantiate(projectilePrefab.name, firePoint.position, firePoint.rotation);
-
-            // 포탄에 힘을 가합니다.
             if (projectile.GetComponent<Rigidbody>() != null)
             {
                 projectile.GetComponent<Rigidbody>().AddForce(firePoint.forward * fireForce, ForceMode.Impulse);
             }
         }
+    }
 
-        // 여기에 발사 사운드나 파티클 효과를 모든 클라이언트에서 재생하는 코드를 추가할 수 있습니다.
-        // ex) audioSource.PlayOneShot(fireSound);
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(turretPivot.localRotation);
+            stream.SendNext(barrelPivot.localRotation);
+        }
+        else
+        {
+            networkTurretRotation = (Quaternion)stream.ReceiveNext();
+            networkBarrelRotation = (Quaternion)stream.ReceiveNext();
+        }
     }
 }

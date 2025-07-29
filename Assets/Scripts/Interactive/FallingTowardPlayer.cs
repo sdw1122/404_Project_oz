@@ -13,6 +13,9 @@ public class FallTowardPlayer : InteractableBase
     [Tooltip("플레이어 방향으로 밀 때 가할 힘의 크기입니다.")]
     [SerializeField] private float pushForce = 10f;
 
+    [Tooltip("낙하 시 충돌한 대상에게 입힐 데미지입니다.")]
+    [SerializeField] private float damageOnImpact = 30f;
+
     private bool hasFallen = false; // 중복 상호작용을 막기 위한 플래그
 
     protected override void Awake()
@@ -70,6 +73,34 @@ public class FallTowardPlayer : InteractableBase
 
             // 계산된 방향으로 힘을 가합니다. ForceMode.Impulse는 순간적인 힘을 가할 때 적합합니다.
             rb.AddForce(direction.normalized * pushForce, ForceMode.Impulse);
+        }
+    }
+
+    /// <summary>
+    /// 충돌을 감지하여 피해를 줍니다.
+    /// </summary>
+    private void OnCollisionEnter(Collision collision)
+    {
+        // 아직 넘어지지 않았거나, 땅(Ground)에 부딪힌 경우에는 데미지를 주지 않음
+        if (!hasFallen || collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            return;
+        }
+
+        // 충돌한 상대방에게 LivingEntity 컴포넌트가 있는지 확인
+        LivingEntity targetEntity = collision.gameObject.GetComponent<LivingEntity>();
+
+        // LivingEntity가 있고, 아직 죽지 않았다면 데미지 처리
+        if (targetEntity != null && !targetEntity.dead)
+        {
+            // 데미지 처리는 마스터 클라이언트가 담당하여 일관성을 유지
+            if (PhotonNetwork.IsMasterClient)
+            {
+                targetEntity.OnDamage(damageOnImpact, collision.contacts[0].point, collision.contacts[0].normal);
+
+                // 데미지를 한 번 준 후에는 오브젝트를 네트워크에서 파괴하여 중복 피해를 방지합니다.
+                PhotonNetwork.Destroy(gameObject);
+            }
         }
     }
 }

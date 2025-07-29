@@ -141,6 +141,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void BossRoom()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Stage1Boss"); // 메인 씬으로 전환
+        }
+    }
+
     public void ProtoTypeScene()
     {
         if (PhotonNetwork.IsMasterClient)

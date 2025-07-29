@@ -42,8 +42,8 @@ public class LivingEntity : MonoBehaviour, IDamageable, IPunObservable
     {
         if (dead) return;
         // 데미지만큼 체력 감소
-        health -= damage;        
-
+        health -= damage;
+        Debug.Log("남은체력" + health);
         // 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
         if (health <= 0 && !dead)
         {
@@ -70,7 +70,8 @@ public class LivingEntity : MonoBehaviour, IDamageable, IPunObservable
     }
     // 사망 처리
     public virtual void Die()
-    {        
+    {
+        Debug.Log("livingentity의 die 호출됨");
         // onDeath 이벤트에 등록된 메서드가 있다면 실행
         if (onDeath != null)
         {

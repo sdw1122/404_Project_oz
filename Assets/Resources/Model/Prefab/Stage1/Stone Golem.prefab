@@ -155,8 +155,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7413111710830587530}
   - {fileID: 3842267035396275494}
@@ -193,7 +193,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 288691541403118600}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -1923039037
   m_Radius: 0.5
   m_Speed: 1
   m_Acceleration: 8
@@ -361,7 +361,7 @@ MonoBehaviour:
   damage: 10
   Atk_Cooldown: 0
   attackRange: 3
-  DEF_Factor: 0
+  DEF_Factor: 1
   isBinded: 0
   isFirstChase: 1
   pv: {fileID: 0}
