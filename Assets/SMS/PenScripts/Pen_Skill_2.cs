@@ -51,7 +51,7 @@ public class Pen_Skill_2 : MonoBehaviour
         Vector3 dir = Camera.main.transform.forward;
         Vector3 spawnPos = origin + dir * 0.5f;
         Quaternion rot = Quaternion.identity;
-        GameObject obj = PhotonNetwork.Instantiate("Pen_Skill2_Projectile", spawnPos, rot);
+        GameObject obj = PhotonNetwork.Instantiate("test/" + "Pen_Skill2_Projectile", spawnPos, rot);
         obj.GetComponent<Skill2Projectile>().Initialize(Damage,tik, PhotonView.Get(this).ViewID);
        
         pv.RPC("RPC_TriggerPenAttack1", RpcTarget.All);

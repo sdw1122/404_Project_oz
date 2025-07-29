@@ -68,7 +68,7 @@ public class PenAttack : MonoBehaviour
         Vector3 spawnPos = rayOrigin + rayDir * 0.5f; // 카메라 앞 0.5m 지점
         Quaternion rotation = Quaternion.LookRotation(rayDir);
         rotation *= Quaternion.Euler(-90f, 0, 0);
-        GameObject missile = PhotonNetwork.Instantiate("Pen_Attack_Missile", spawnPos, rotation);
+        GameObject missile = PhotonNetwork.Instantiate("test/" + "Pen_Attack_Missile", spawnPos, rotation);
         missile.GetComponent<Rigidbody>().linearVelocity = rayDir * MissileSpeed;
         missile.GetComponent<PenMissile>().ownerViewID = PhotonView.Get(this).ViewID;
 

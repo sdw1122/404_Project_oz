@@ -29,7 +29,7 @@ public class Skill2Projectile : MonoBehaviour
         {
             Vector3 pos = transform.position;
             Debug.Log("plane");
-            GameObject magicCircle =  PhotonNetwork.Instantiate("Pen_Skill2_MagicCircle",pos,Quaternion.identity);
+            GameObject magicCircle =  PhotonNetwork.Instantiate("test/" + "Pen_Skill2_MagicCircle",pos,Quaternion.identity);
             magicCircle.GetComponent<PhotonView>().RPC("RPC_Initialize", RpcTarget.AllBuffered, damage, tik,viewID2);
             if (pv != null && pv.IsMine)
             {
