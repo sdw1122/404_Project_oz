@@ -43,7 +43,7 @@ public class BridgeObject : InteractableBase
     {
         if (hasFallen || forcePoint == null) return;
 
-        rb.isKinematic = false; // 물리 엔진의 영향을 받도록 설정
+        
 
         // 플레이어의 위치를 기준으로, 객체를 밀어낼 방향을 결정
         // (플레이어 -> 객체 방향에서 수평 방향만 사용)
@@ -57,15 +57,19 @@ public class BridgeObject : InteractableBase
     [PunRPC]
     private void PushOver(Vector3 force, Vector3 position)
     {
+        // isKinematic 변경과 물리 효과 적용이 같은 RPC 안에서 실행되도록 순서를 보장합니다.
         if (hasFallen) return;
         hasFallen = true;
 
         if (rb != null)
         {
-            // 지정된 위치에 지정된 힘을 가함
+            // 1. 모든 클라이언트에서 isKinematic을 false로 만들어 물리 엔진의 영향을 받게 합니다.
+            rb.isKinematic = false;
+
+            // 2. 지정된 위치에 지정된 힘을 가합니다.
             rb.AddForceAtPosition(force, position);
 
-            // 일정 시간 후 다리를 완전히 고정시키는 코루틴 실행
+            // 3. 일정 시간 후 다리를 완전히 고정시키는 코루틴 실행
             StartCoroutine(SettleBridge());
         }
     }

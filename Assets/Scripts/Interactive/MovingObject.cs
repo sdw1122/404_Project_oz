@@ -20,6 +20,7 @@ public class MovingObject : InteractableBase
     private Quaternion targetRotation;
 
     private bool isMoved = false; // 오브젝트가 목표 위치에 있는지 여부를 추적합니다.
+    public bool IsMoving { get; private set; }
 
     // Awake를 override하여 초기 위치를 저장합니다.
     protected override void Awake()
@@ -103,6 +104,7 @@ public class MovingObject : InteractableBase
         // isMoved 상태에 따라 목적지(destination)와 목표 회전값(rotation)을 설정합니다.
         Vector3 destination = isMoved ? targetPosition : startPosition;
         Quaternion rotation = isMoved ? targetRotation : startRotation;
+        IsMoving = true; // 이동 시작 상태로 설정
 
         // 목표 위치에 도달할 때까지 반복합니다.
         while (Vector3.Distance(transform.position, destination) > 0.01f)
@@ -119,6 +121,7 @@ public class MovingObject : InteractableBase
         // 루프 종료 후 정확한 위치와 회전값으로 설정
         transform.position = destination;
         transform.rotation = rotation;
+        IsMoving = false; // 이동 완료 상태로 설정
     }
     public void TriggerMovement()
     {
