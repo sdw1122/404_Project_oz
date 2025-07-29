@@ -6281,7 +6281,7 @@ MonoBehaviour:
   jumpPressed: 0
   moveSpeed: 5
   jumpPower: 8
-  gravity: 1
+  gravity: 20
   slideSpeed: 5
   job: 
 --- !u!114 &838222234075561870

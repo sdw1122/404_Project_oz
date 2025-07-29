@@ -94,17 +94,7 @@ public abstract class Enemy : LivingEntity
     // 초기 스펙을 결정하는 셋업 메서드
     public void Setup(EnemyData enemyData)
     {
-        if (startingHealth <= 0f) // 인스펙터에서 0이면만 덮어씀
-            startingHealth = enemyData.Max_HP;
-        if (health <= 0f)
-            health = enemyData.Max_HP;
-        if (damage <= 0f)
-            damage = enemyData.Atk_Damage;
-        if (navMeshAgent.speed <= 0f)
-            navMeshAgent.speed = enemyData.speed;
-        DEF_Factor = enemyData.DEF_Factor;
-        /*originalColor = enemyData.skinColor;
-        enemyRenderer.material.color = enemyData.skinColor;*/
+        
     }
 
     private void Start()
