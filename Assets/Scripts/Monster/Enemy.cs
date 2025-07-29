@@ -316,7 +316,7 @@ public abstract class Enemy : LivingEntity
             navMeshAgent.enabled = false;            
         }    
         
-        enemyAnimator.SetTrigger("Die");
+        enemyAnimator.SetBool("Die", true);
         pv.RPC("RPC_Die", RpcTarget.Others);
         /*enemyAudioPlayer.PlayOneShot(deathSound);*/
     }
@@ -324,7 +324,11 @@ public abstract class Enemy : LivingEntity
     [PunRPC]
     public void RPC_Die()
     {
-        enemyAnimator.SetTrigger("Die");
+        enemyAnimator.SetBool("Die", true);
+    }
+    public void DieState()
+    {
+        enemyAnimator.SetBool("Die", false);
     }
     public void DieMotion()
     {
