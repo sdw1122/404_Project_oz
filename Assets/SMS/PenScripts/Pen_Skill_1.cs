@@ -52,6 +52,9 @@ public class Pen_Skill_1 : MonoBehaviour
         isSkill1Pressed = false;
         playerController.isCharge = false;
 
+        BowDisable();
+        ArrowDisable();
+
         animator.SetBool("Charge", false);
         animator.ResetTrigger("ChargeAttack");
 
@@ -198,9 +201,7 @@ public class Pen_Skill_1 : MonoBehaviour
         Vector3 spawnPos = rayOrigin + rayDir * minDistance; // 카메라 앞 0.5m 지점
         Quaternion rotation = Quaternion.LookRotation(rayDir);
         //rotation *= Quaternion.Euler(90, 0, 0);
-        missile1.SetActive(false);
-        missile2.SetActive(false);
-        missile3.SetActive(false);
+        ArrowDisable();
         GameObject missile = PhotonNetwork.Instantiate("test/"+missilePath, spawnPos, rotation);
         missile.transform.localScale = new Vector3(100.0f, 100.0f, 76.0f);
         missile.GetComponent<ChargedPenMissile>().Initialize(damage);
@@ -216,28 +217,24 @@ public class Pen_Skill_1 : MonoBehaviour
     void PlayChargeLevelEffect(int chargeLevel)
     {
         var main = ChargeEffect.main;
+        ArrowEnable(chargeLevel);
         if (chargeLevel == 1)
         {
             main.startColor = chargeColors[0];
             ChargeEffect.Play();
             pv.RPC("RPC_PlayChargeLevelEffect",RpcTarget.Others);
-            missile1.SetActive(true);
         }
         else if (chargeLevel == 2)
         {
             main.startColor = chargeColors[1];
             ChargeEffect.Play();
             pv.RPC("RPC_PlayChargeLevelEffect", RpcTarget.Others);
-            missile1.SetActive(false);
-            missile2.SetActive(true);
         }
         else if (chargeLevel == 3)
         {
             main.startColor= chargeColors[2];
             ChargeEffect.Play();
             pv.RPC("RPC_PlayChargeLevelEffect", RpcTarget.Others);
-            missile2.SetActive(false);
-            missile3.SetActive(true);
         }
     }
     void BowDisable()
@@ -249,6 +246,40 @@ public class Pen_Skill_1 : MonoBehaviour
     {
         bow.SetActive(true);
         pv.RPC("RPC_BowEnable", RpcTarget.Others);
+    }
+    void ArrowEnable(int level)
+    {
+        if (level == 1)
+        {
+            missile1.SetActive(true);
+            pv.RPC("RPC_ArrowEnable", RpcTarget.Others, level);
+        }
+        else if (level == 2)
+        {
+            missile1.SetActive(false);
+            missile2.SetActive(true);
+            pv.RPC("RPC_ArrowEnable", RpcTarget.Others, level);
+        }
+        else if(level == 3)
+        {
+            missile2.SetActive(false);
+            missile3.SetActive(true);
+            pv.RPC("RPC_ArrowEnable", RpcTarget.Others, level);
+        }
+    }
+    void ArrowDisable()
+    {
+        missile1.SetActive(false);
+        missile2.SetActive(false);
+        missile3.SetActive(false);
+        pv.RPC("RPC_ArrowDisable", RpcTarget.Others);
+    }
+    [PunRPC]
+    void RPC_ArrowDisable()
+    {
+        missile1.SetActive(false);
+        missile2.SetActive(false);
+        missile3.SetActive(false);
     }
     [PunRPC]
     void RPC_PlayChargeLevelEffect()
@@ -279,5 +310,23 @@ public class Pen_Skill_1 : MonoBehaviour
     void RPC_BowDisable()
     {
         bow.SetActive(false);
+    }
+    [PunRPC]
+    void RPC_ArrowEnable(int level)
+    {
+        if (level == 1)
+        {
+            missile1.SetActive(true);
+        }
+        else if (level == 2)
+        {
+            missile1.SetActive(false);
+            missile2.SetActive(true);
+        }
+        else if (level == 3)
+        {
+            missile2.SetActive(false);
+            missile3.SetActive(true);
+        }
     }
 }
