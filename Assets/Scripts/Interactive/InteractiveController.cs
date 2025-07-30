@@ -23,10 +23,12 @@ public class InteractiveController : MonoBehaviour
 
     private PhotonView pv;
     private InteractableBase currentInteractable;
+    Animator animator;
 
     void Awake()
     {
         pv = GetComponent<PhotonView>();
+        animator = GetComponent<Animator>();
 
         // Instantiate 코드를 삭제하고, 대신 연결된 UI가 있는지 확인하고 비활성화합니다.
         if (interactUIObject != null)
@@ -92,6 +94,13 @@ public class InteractiveController : MonoBehaviour
         if (context.performed && currentInteractable != null && pv.IsMine)
         {
             currentInteractable.Interact(playerController);
+            animator.SetTrigger("Interactive");
+            pv.RPC("RPC_Interactive", RpcTarget.Others);
         }
+    }
+    [PunRPC]
+    void RPC_Interactive()
+    {
+        animator.SetTrigger("Interactive");
     }
 }
