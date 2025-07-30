@@ -46,14 +46,13 @@ public class Pen_Skill_1 : MonoBehaviour
     public void CancelCharging()
     {
         if (!isCharging) return;
+        BowDisable();
+        ArrowDisable();
 
         isCharging = false;
         chargeTime = 0f;
         isSkill1Pressed = false;
         playerController.isCharge = false;
-
-        BowDisable();
-        ArrowDisable();
 
         animator.SetBool("Charge", false);
         animator.ResetTrigger("ChargeAttack");
@@ -61,8 +60,6 @@ public class Pen_Skill_1 : MonoBehaviour
         playerController.canMove = true;
         PenAttack.isAttack = true;
         Pen_Skill_2.isThrow = true;
-
-        
     }
     private void Update()
     {
@@ -107,6 +104,7 @@ public class Pen_Skill_1 : MonoBehaviour
         {
             playerController.isCharge = true;
             isSkill1Pressed = true;
+            BowEnable();
         }
         else if (context.canceled)
         {
@@ -136,11 +134,11 @@ public class Pen_Skill_1 : MonoBehaviour
     private void FinishChargingAndFire()
     {
         isCharging = false;
-
+        BowDisable();
         animator.SetBool("Charge", false);
         animator.ResetTrigger("ChargeAttack");
         animator.SetTrigger("ChargeAttack");   // 발사 애니메이션
-        BowDisable();
+        
         pv.RPC("RPC_TriggerChargeFinish", RpcTarget.Others);
         pv.RPC("RPC_TriggerChargeAttack", RpcTarget.Others);
         /*
