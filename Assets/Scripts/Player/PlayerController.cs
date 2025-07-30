@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public GameObject playerObj;
     public Camera mainCamera;
     public GameObject deadCamera;
+    public Transform foot;
     public float walkSpeed = 10f;
     public float runSpeed;
     public float mouseSensitivity = 0.5f;
@@ -52,6 +53,8 @@ public class PlayerController : MonoBehaviour
     private float originalSpeed;
     public ParticleSystem knockbackEffect;
     public ParticleSystem slowEffect;
+    public GameObject jumpEffect;
+    private GameObject jumpEffectins;
     
     CapsuleCollider col;
     [PunRPC]
@@ -279,9 +282,10 @@ public class PlayerController : MonoBehaviour
 
             if (jumpBufferCounter > 0)
             {
+                StartCoroutine(DestroyJumpEffect());
                 moveDirection.y = jumpPower;
                 jumpBufferCounter = 0;
-    
+
                 animator.SetBool("Float", true);
                 pv.RPC("RPC_SetFloat", RpcTarget.Others, true);
             }
@@ -468,5 +472,10 @@ public class PlayerController : MonoBehaviour
             moveDirection.z += slide.z;
         }
     }
-    
+    private IEnumerator DestroyJumpEffect()
+    {
+        jumpEffectins = Instantiate(jumpEffect, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.5f);
+        Destroy(jumpEffectins);
+    }
 }

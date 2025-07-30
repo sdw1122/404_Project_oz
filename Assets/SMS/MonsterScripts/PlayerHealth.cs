@@ -8,8 +8,9 @@ public class PlayerHealth : LivingEntity
     private Animator playerAnimator; // 플레이어의 애니메이터
     public PhotonView pv;
     private PlayerController playerController; // 플레이어 움직임 컴포넌트
-    private PlayerInput playerInput;    
-
+    private PlayerInput playerInput;
+    public ParticleSystem resurrectionEffect;
+    public ParticleSystem HealingEffect;
     private void Awake()
     {
         playerAnimator = GetComponent<Animator>();
@@ -33,7 +34,7 @@ public class PlayerHealth : LivingEntity
     public override void Resurrection()
     {
         base.Resurrection();
-
+        resurrectionEffect.Play();
         pv.RPC("SetDeadState", RpcTarget.All, false);
         pv.RPC("RPC_TriggerPlayerResurrection", RpcTarget.All);
         pv.RPC("DeActivateCamera", RpcTarget.All);
@@ -154,6 +155,7 @@ public class PlayerHealth : LivingEntity
         if (health < startingHealth)
         {
             health += healAmount;
+            HealingEffect.Play();
             if (health > startingHealth)
             {
                 health = startingHealth;
@@ -191,7 +193,7 @@ public class PlayerHealth : LivingEntity
     void RPC_TriggerPlayerResurrection()
     {
 
-
+        resurrectionEffect.Play();
         playerAnimator.ResetTrigger("Die");
         playerAnimator.SetTrigger("Resurrection");
         // 조작활성화,체력 동기화
