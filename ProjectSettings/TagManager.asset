@@ -10,7 +10,6 @@ TagManager:
   - StoneGolem
   - FireGolem
   - Lava
-  - PenWeapon
   layers:
   - Default
   - TransparentFX
