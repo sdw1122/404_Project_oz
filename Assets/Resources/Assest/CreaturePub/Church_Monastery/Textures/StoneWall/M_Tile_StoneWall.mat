@@ -357,7 +357,7 @@ Material:
     - _SecondaryTextureTiling: 1
     - _ShadowLOD: 0
     - _Smoothness: 0.5
-    - _SmoothnessMax: 1
+    - _SmoothnessMax: 0
     - _SmoothnessMin: 0
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
