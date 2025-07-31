@@ -2,10 +2,12 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EnemyHealthBarController : MonoBehaviour
 {
     public Slider healthSlider;
+    public TextMeshProUGUI nameText; // 이름 표시용 변수
 
     // 모든 체력 바 UI가 공유할 단 하나의 '정적(static)' 카메라 변수입니다.
     // static으로 선언하면, 이 변수는 모든 EnemyHealthBarController 인스턴스가 함께 사용합니다.
@@ -38,6 +40,14 @@ public class EnemyHealthBarController : MonoBehaviour
 
         // 슬라이더의 값을 0과 1 사이의 비율로 설정합니다.
         healthSlider.value = currentHealth / maxHealth;
+    }
+
+    public void SetName(string newName)
+    {
+        if (nameText != null)
+        {
+            nameText.text = newName;
+        }
     }
 
     /// <summary>

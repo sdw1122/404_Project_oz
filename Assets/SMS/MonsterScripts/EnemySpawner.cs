@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
     string resourcePath = "Model/Prefab/Stage1/";    
 
     private List<Enemy> enemyList = new List<Enemy>();
+    [SerializeField] private int SpawnCount = 1;
     private int wave;
 
     private void Update()
@@ -61,12 +62,9 @@ public class EnemySpawner : MonoBehaviour
         // 무슨적이 나올지는 "마스터 클라이언트만" 수행
         if (PhotonNetwork.IsMasterClient)
         {
-           
             enemy.Setup(enemyData);
             enemyList.Add(enemy);
             enemy.onDeath += () => enemyList.Remove(enemy);
-            enemy.onDeath += () => PhotonNetwork.Destroy(enemy.gameObject);
         }        
     }
-    
 }

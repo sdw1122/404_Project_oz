@@ -5,7 +5,6 @@ using static WoodMan;
 
 public class WoodMan : Enemy
 {
-    public string m_name = "갈망하는 양철 나무꾼";
     // 어그로 시스템
     private AggroSystem aggroSystem;
     public GameObject currentTarget;

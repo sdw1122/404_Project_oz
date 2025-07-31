@@ -1213,7 +1213,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1258,7 +1258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2d0a4e404cb114408be0e72f682ae85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 20
+  startingHealth: 100
   dead: 0
   whatIsTarget:
     serializedVersion: 2
@@ -1280,6 +1280,8 @@ MonoBehaviour:
   chaseTarget: 0
   healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
   healthBarPoint: {fileID: 7854848161686391839}
+  destroyDelay: 2
+  m_name: Iron Man Mark 42
   throwObj: {fileID: 4799392649775753017, guid: 924d3887ceeb23243910933950a84af7, type: 3}
   throwPoint: {fileID: 5009277148290514229}
   throwPower: 15

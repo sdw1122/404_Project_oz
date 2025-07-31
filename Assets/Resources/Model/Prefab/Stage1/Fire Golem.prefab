@@ -2186,7 +2186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb56d58bde3fb554fb8d1c6366cf2371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 800
+  startingHealth: 100
   dead: 0
   whatIsTarget:
     serializedVersion: 2
@@ -2208,6 +2208,8 @@ MonoBehaviour:
   chaseTarget: 0
   healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
   healthBarPoint: {fileID: 5131407860868086003}
+  destroyDelay: 2
+  m_name: Fire Golem
   armAttackRange: 4
   groundAttackRange: 2
   armAttackCoolTime: 3

@@ -51,22 +51,17 @@ public class MovingObject : InteractableBase
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        // 이 오브젝트가 용암이 아니면 아무것도 하지 않음
-        if (!isLava) return;
+        // 이 오브젝트가 용암이 아니거나, 부딪힌 대상이 플레이어가 아니면 무시
+        if (!isLava || !other.CompareTag("Player")) return;
 
-        // 부딪힌 상대방이 'Player' 태그를 가지고 있는지 확인
-        if (collision.gameObject.CompareTag("Player"))
+        // 부딪힌 플레이어의 PlayerHealth 컴포넌트를 가져옴
+        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+        if (playerHealth != null)
         {
-            // 플레이어의 PlayerHealth 컴포넌트를 가져옴
-            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
-            {
-                // 플레이어의 최대 체력만큼의 데미지를 주어 즉사시킴
-                // OnDamage는 네트워크 동기화를 위해 RPC로 호출됨
-                playerHealth.OnDamage(playerHealth.startingHealth, collision.contacts[0].point, collision.contacts[0].normal);
-            }
+            // 플레이어의 최대 체력만큼의 데미지를 주어 즉사시킴
+            playerHealth.OnDamage(playerHealth.startingHealth, other.transform.position, Vector3.zero);
         }
     }
 
@@ -85,7 +80,7 @@ public class MovingObject : InteractableBase
     /// 오브젝트의 상태를 바꾸고 이동 코루틴을 시작합니다.
     /// </summary>
     [PunRPC]
-    private void ToggleMoveState()
+    public void ToggleMoveState()
     {
         // 상태 변경 (원래 위치 -> 목표 위치, 목표 위치 -> 원래 위치)
         isMoved = !isMoved;

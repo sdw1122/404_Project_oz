@@ -45,6 +45,8 @@ public abstract class Enemy : LivingEntity
 
     private EnemyHealthBarController healthBarController; // 생성된 체력바 컨트롤러를 저장할 변수
     private float lastKnownHealth;
+    [SerializeField] private float destroyDelay = 2.0f; // 시체 유지 시간
+    public string m_name;
 
     // 추적할 대상이 존재하는지 알려주는 프로퍼티
     public bool hasTarget
@@ -86,9 +88,15 @@ public abstract class Enemy : LivingEntity
         //체력 바 추가
         if (healthBarPrefab != null && healthBarPoint != null)
         {
-            // healthBarPoint의 자식으로 생성하여 몬스터를 따라다니도록 합니다.
             GameObject healthBarObj = Instantiate(healthBarPrefab, healthBarPoint.position, healthBarPoint.rotation, healthBarPoint);
             healthBarController = healthBarObj.GetComponent<EnemyHealthBarController>();
+
+            // Enemy 스크립트를 상속받는 모든 몬스터는
+            // 자신의 Inspector 창에서 설정한 m_name 값을 체력 바에 자동으로 표시.
+            if (healthBarController != null)
+            {
+                healthBarController.SetName(m_name);
+            }
         }
     }
 
@@ -307,7 +315,9 @@ public abstract class Enemy : LivingEntity
     public override void Die()
     {
         if (dead) return;
+        base.Die();
         dead = true;
+        
         //체력바 숨김
         if (healthBarController != null)
         {
@@ -328,6 +338,25 @@ public abstract class Enemy : LivingEntity
         enemyAnimator.SetBool("Die", true);
         pv.RPC("RPC_Die", RpcTarget.Others);
         /*enemyAudioPlayer.PlayOneShot(deathSound);*/
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 정해진 시간 후에 네트워크 상에서 오브젝트를 파괴합니다.
+            StartCoroutine(DestroyAfterDelay());
+        }
+    }
+
+    private IEnumerator DestroyAfterDelay()
+    {
+        // destroyDelay 만큼 기다립니다.
+        yield return new WaitForSeconds(destroyDelay);
+
+        // 네트워크 상의 모든 클라이언트에서 이 오브젝트를 파괴합니다.
+        // 오브젝트가 이미 파괴되었을 수 있으므로 null 체크를 해주는 것이 안전합니다.
+        if (this.gameObject != null)
+        {
+            PhotonNetwork.Destroy(this.gameObject);
+        }
     }
 
     [PunRPC]

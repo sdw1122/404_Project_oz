@@ -9,6 +9,8 @@ public class LeverController1 : InteractableBase
     [Tooltip("이 레버를 당겼을 때 움직일 MovingObject들을 여기에 연결하세요.")]
     [SerializeField] private MovingObject[] controlledObjects;
 
+    [SerializeField] private Tower3MonsterSpawner monsterSpawner;
+
     private List<int> interactingPlayerIDs = new List<int>();
 
     // ▼▼▼ [추가] 레버가 이미 활성화되었는지 확인하는 변수 ▼▼▼
@@ -27,7 +29,6 @@ public class LeverController1 : InteractableBase
     [PunRPC]
     private void RegisterInteraction(int playerActorNumber)
     {
-        // ▼▼▼ [추가] 여기서도 한 번 더 체크하여 중복 실행을 방지합니다. ▼▼▼
         if (hasBeenActivated) return;
         
         /*
@@ -39,7 +40,6 @@ public class LeverController1 : InteractableBase
         }
         */
 
-        // ▼▼▼ 수정된 코드 ▼▼▼
         // 같은 플레이어가 여러 번 상호작용해도 ID가 리스트에 추가되도록 수정했습니다.
         // 이제 한 명이 두 번 눌러도 카운트가 2가 됩니다.
         interactingPlayerIDs.Add(playerActorNumber);
@@ -50,18 +50,30 @@ public class LeverController1 : InteractableBase
             hasBeenActivated = true;
             gameObject.layer = IGNORE_INTERACTION_LAYER;
 
-            if (controlledObjects == null || controlledObjects.Length == 0)
+            // --- 1. MovingObject 작동 로직 (기존 기능) ---
+            if (controlledObjects != null && controlledObjects.Length > 0)
+            {
+                foreach (MovingObject obj in controlledObjects)
+                {
+                    if (obj != null)
+                    {
+                        obj.TriggerMovement();
+                    }
+                }
+            }
+            else
             {
                 Debug.LogWarning($"'{gameObject.name}' 레버에 연결된 MovingObject가 없습니다.", this);
-                return;
             }
 
-            foreach (MovingObject obj in controlledObjects)
+            // --- 2. 몬스터 스포너 작동 로직 (추가된 기능) ---
+            if (monsterSpawner != null)
             {
-                if (obj != null)
-                {
-                    obj.TriggerMovement();
-                }
+                monsterSpawner.ActivateSpawner();
+            }
+            else
+            {
+                Debug.LogWarning($"'{gameObject.name}' 레버에 연결된 몬스터 스포너가 없습니다.", this);
             }
         }
     }
