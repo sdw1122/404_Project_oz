@@ -117,6 +117,7 @@ public class Hammer : MonoBehaviour
             }
             Skill1(skill1);
             animator.SetTrigger("Charge Attack");
+            Invoke("DisableWeapon", 0.8f);
             pv.RPC("RPC_TriggerEraserChargeAttack", RpcTarget.Others);
             playerController.canMove = true;
             skill1CoolDownTimer = 0;

@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - StoneGolem
   - FireGolem
+  - Lava
   layers:
   - Default
   - TransparentFX
