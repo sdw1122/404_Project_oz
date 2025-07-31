@@ -5,7 +5,7 @@ using UnityEngine;
 public class HammerEffect : MonoBehaviour
 {
     public GameObject skill2Effect;
-    public GameObject skill2EffectInstance;
+    private GameObject skill2EffectInstance;
     public float effectDistance = 1.5f;
     private PhotonView pv;
 

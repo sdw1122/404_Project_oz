@@ -94,6 +94,77 @@ Transform:
   - {fileID: 3977387071923223557}
   m_Father: {fileID: 1389209334249804693}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1607437766830969910
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7343284481747415768}
+    m_Modifications:
+    - target: {fileID: 578755783426251370, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350034135309904283, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350034135309904283, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350034135309904283, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350034135309904283, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.046869334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350034135309904283, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.014814271
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350034135309904283, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.95235157
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350034135309904283, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.3010155
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350034135309904283, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -35.081
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350034135309904283, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -174.365
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350034135309904283, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944396702758532163, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+      propertyPath: m_Name
+      value: Iron hit
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+--- !u!4 &356502099582631341 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1350034135309904283, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+  m_PrefabInstance: {fileID: 1607437766830969910}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &2181681141567901276 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 578755783426251370, guid: ba18ee8d72eb6f4468851583b2e81fc4, type: 3}
+  m_PrefabInstance: {fileID: 1607437766830969910}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3510623003275402222
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -294,6 +365,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d99754217ae3e114fa85a6c1f4f6e465, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4998571064511228779}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d99754217ae3e114fa85a6c1f4f6e465, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 356502099582631341}
     - targetCorrespondingSourceObject: {fileID: -1070350730909333850, guid: d99754217ae3e114fa85a6c1f4f6e465, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4256635647795789498}
@@ -467,7 +541,7 @@ MonoBehaviour:
   targetEntity: {fileID: 0}
   navMeshAgent: {fileID: 3334010105286789760}
   obstacle: {fileID: 0}
-  hitEffect: {fileID: 198000011254678926, guid: 1d415c3c4b7dccf4aba3753b8264694f, type: 3}
+  hitEffect: {fileID: 2181681141567901276}
   enemyAnimator: {fileID: 3677394158664591522}
   enemyRenderer: {fileID: 4162167560060408325}
   currentHealth: 0
