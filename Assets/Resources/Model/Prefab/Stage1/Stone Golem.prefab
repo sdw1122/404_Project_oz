@@ -366,6 +366,10 @@ MonoBehaviour:
   DEF_Factor: 1
   isBinded: 0
   isFirstChase: 1
+  isAttacking: 0
+  isHit: 0
+  isRotatingToTarget: 0
+  angleToTarget: 0
   pv: {fileID: 0}
   chaseTarget: 0
   healthBarPrefab: {fileID: 0}
@@ -377,7 +381,6 @@ MonoBehaviour:
   armAttackCoolTime: 3
   groundAttackCoolTime: 3
   hitTime: 0
-  isAttacking: 0
   isHammer: 0
 --- !u!114 &-2577421897455739883
 MonoBehaviour:

@@ -141,6 +141,14 @@ MonoBehaviour:
   - MountRPC
   - RequestFall
   - RPC_SetDEF
+  - RPC_ZombieAttack
+  - RPC_HangingAttack
+  - RPC_HangingThrow
+  - RPC_StrawDollAttack
+  - RPC_PlayJumpAttack
+  - RPC_KnightSkill1
+  - RPC_KnightAttack
+  - RPC_KnightSkill2
   - ActivateAndStartTimer_RPC
   - DeactivateAndReturn_RPC
   - SpawnMonsters_RPC

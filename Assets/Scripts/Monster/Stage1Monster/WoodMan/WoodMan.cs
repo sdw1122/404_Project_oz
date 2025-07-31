@@ -20,8 +20,7 @@ public class WoodMan : Enemy
     float roarRange;
     float distanceToTarget;
     public float minChaseDistance=0.5f;
-    Rigidbody woodmanRb;
-    bool canAct = true;
+    Rigidbody woodmanRb;    
     Animator animator;
     public enum WoodMan_State 
     {
@@ -90,18 +89,18 @@ public class WoodMan : Enemy
     private IEnumerator DelayedAction(float delay)
     {
         yield return new WaitForSeconds(delay);
-        canAct = true;
+        isAttacking = false;
     }
     public override void Update()
-    {
-        
-        if (!PhotonNetwork.IsMasterClient) return;
-        if (!canAct) return;
+    {        
+        if (!PhotonNetwork.IsMasterClient) return;       
+        if (isAttacking) return;
         if (isBinded && navMeshAgent.isOnNavMesh)
         {
             navMeshAgent.isStopped = true;
             return;
         }
+        base.Update();
         SwitchMode();
         // 갈망 업데이트
         UpdateAggroTarget();
@@ -124,7 +123,7 @@ public class WoodMan : Enemy
             base.attackRange = meleeAttackRange;
             _currentState = WoodMan_State.MeleeAttack;
             navMeshAgent.isStopped = true;
-            canAct = false;
+            isAttacking = true;
             return;
         }
         // 충격파 포효
@@ -133,8 +132,8 @@ public class WoodMan : Enemy
             base.attackRange = roarRange;
             navMeshAgent.isStopped = true;
             _currentState = WoodMan_State.Roar;
-          
-            canAct = false;
+
+            isAttacking = true;
             Vector3 dir = (targetEntity.transform.position - transform.position).normalized;
             dir.y = 0f;
 
@@ -155,7 +154,7 @@ public class WoodMan : Enemy
             navMeshAgent.isStopped = true;
             _currentState = WoodMan_State.EarthQuake;
             
-            canAct = false;
+            isAttacking = true;
             enemyAnimator.SetFloat("Move", 0f); // 공격 전 Idle자세
             pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
             Attack();

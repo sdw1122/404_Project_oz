@@ -215,15 +215,6 @@ public class Hammer : MonoBehaviour
         // 마지막 공격 이후 시간 업데이트
         if (!isAttacking)
             timeSinceLastAttack += Time.deltaTime;
-
-        if (!playerHealth.dead)
-        {
-            canAttack = true;
-        }
-        else
-        {
-            canAttack = false;
-        }
     }
 
     [PunRPC]
@@ -240,7 +231,7 @@ public class Hammer : MonoBehaviour
 
     public void Attack()
     {
-        if (!canAttack || !playerController.IsGrounded())
+        if (!canAttack)
             return;
         Debug.Log("Attacking");
         // 2초 이상 공격 안 했으면 1타로 초기화
@@ -444,7 +435,7 @@ public class Hammer : MonoBehaviour
                         if (!enemy.dead)
                         {
                             enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
-                            
+                            enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
                             enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
                         }
                     }
