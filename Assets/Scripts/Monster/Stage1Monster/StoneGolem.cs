@@ -17,6 +17,8 @@ public class StoneGolem : Enemy
     public bool isAttacking = false;
     public bool isHammer = false;
 
+    public ParticleSystem circleEffect;
+
     public override void Update()
     {
         if (armAttackCoolTime < armAttackTime)
@@ -280,6 +282,11 @@ public class StoneGolem : Enemy
                 }
             }
         }
+    }
+
+    void PlayCircleEffect()
+    {
+        circleEffect.Play();
     }
 
     public void EndAni()
