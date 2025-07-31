@@ -78,7 +78,7 @@ public class WoodManRoar : MonoBehaviour
         if (target == null) return;
 
         Vector3 directionToTarget = (target.transform.position - firePos.position).normalized;
-        GameObject impactObj = PhotonNetwork.Instantiate("WoodMan_Impact", firePos.position, Quaternion.LookRotation(directionToTarget));
+        GameObject impactObj = PhotonNetwork.Instantiate("/test"+"WoodMan_Impact", firePos.position, Quaternion.LookRotation(directionToTarget));
         ImpactMissile missile= impactObj.GetComponent<ImpactMissile>();
        
         if (missile != null)

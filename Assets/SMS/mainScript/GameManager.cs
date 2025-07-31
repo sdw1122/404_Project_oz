@@ -4,7 +4,7 @@ using static LobbyManager;
 
 public class GameManager : MonoBehaviourPun
 {
-    Vector3 spawnPos = new Vector3(0, 1, 0);
+    Vector3 spawnPos = new Vector3(0, 20, 0);
     PlayerSaveData savedData;
     void Start()
     {        
@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviourPun
 
         if (savedData != null)
         {
-            spawnPos = savedData.position;
+            //spawnPos = savedData.position;
             Debug.Log($"[GameManager] 저장된 위치로 스폰: {spawnPos}");
         }
         else
