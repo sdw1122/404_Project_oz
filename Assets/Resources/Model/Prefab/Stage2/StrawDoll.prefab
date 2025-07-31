@@ -67,7 +67,7 @@ PrefabInstance:
     - target: {fileID: -6610695142025030868, guid: e088a4f5743302e468a3435fa03d5d6c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3f29efbe92f0c0642989f7bcd2c830ce, type: 2}
+      objectReference: {fileID: 2100000, guid: 1b4171fdbd8e97b419edae5c70bc705c, type: 2}
     - target: {fileID: 919132149155446097, guid: e088a4f5743302e468a3435fa03d5d6c, type: 3}
       propertyPath: m_Name
       value: StrawDoll
@@ -222,6 +222,8 @@ MonoBehaviour:
   chaseTarget: 0
   healthBarPrefab: {fileID: 0}
   healthBarPoint: {fileID: 0}
+  destroyDelay: 2
+  m_name: 
   jumpPower: 10
   jumpUpPower: 5
   Atk: 1
