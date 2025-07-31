@@ -279,15 +279,18 @@ MonoBehaviour:
   currentHealth: 0
   damage: 30
   Atk_Cooldown: 6
-  attackRange: 1.2
+  attackRange: 1.5
   DEF_Factor: 1
   isBinded: 0
   isFirstChase: 1
+  isAttacking: 0
+  isHit: 0
+  isRotatingToTarget: 0
+  angleToTarget: 0
   pv: {fileID: 0}
   chaseTarget: 0
   healthBarPrefab: {fileID: 0}
   healthBarPoint: {fileID: 0}
-  isAttack: 0
 --- !u!114 &4149561954065366028
 MonoBehaviour:
   m_ObjectHideFlags: 0
