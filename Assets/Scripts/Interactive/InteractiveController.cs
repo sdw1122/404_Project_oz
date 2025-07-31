@@ -4,6 +4,7 @@ using Photon.Pun;
 
 public class InteractiveController : MonoBehaviour
 {
+    public ParticleSystem interactEffect;
     [Header("플레이어 컴포넌트")]
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Camera playerCamera;
@@ -23,6 +24,7 @@ public class InteractiveController : MonoBehaviour
 
     private PhotonView pv;
     private InteractableBase currentInteractable;
+
     Animator animator;
 
     void Awake()
@@ -94,6 +96,7 @@ public class InteractiveController : MonoBehaviour
         if (context.performed && currentInteractable != null && pv.IsMine)
         {
             currentInteractable.Interact(playerController);
+            interactEffect.Play();
             animator.SetTrigger("Interactive");
             pv.RPC("RPC_Interactive", RpcTarget.Others);
         }
