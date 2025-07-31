@@ -144,6 +144,11 @@ MonoBehaviour:
   - ActivateAndStartTimer_RPC
   - DeactivateAndReturn_RPC
   - SpawnMonsters_RPC
+  - RPC_ArrowDisable
+  - RPC_ArrowEnable
+  - RPC_HealAnimation
+  - RPC_Interactive
+  - RPC_PlayChargeLevelEffect
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

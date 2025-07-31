@@ -368,6 +368,10 @@ MonoBehaviour:
   isFirstChase: 1
   pv: {fileID: 0}
   chaseTarget: 0
+  healthBarPrefab: {fileID: 0}
+  healthBarPoint: {fileID: 0}
+  destroyDelay: 2
+  m_name: 
   armAttackRange: 4
   groundAttackRange: 2
   armAttackCoolTime: 3
