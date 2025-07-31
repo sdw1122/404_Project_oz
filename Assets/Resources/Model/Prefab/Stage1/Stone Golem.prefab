@@ -162,6 +162,7 @@ Transform:
   - {fileID: 3842267035396275494}
   - {fileID: 6749373562582314}
   - {fileID: 1989512439079605505}
+  - {fileID: 212209846599559635}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6461081161248779464
@@ -347,7 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa86e8e2f730ca4449147f4ad80a4902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 600
+  startingHealth: 100
   dead: 0
   whatIsTarget:
     serializedVersion: 2
@@ -367,8 +368,6 @@ MonoBehaviour:
   isFirstChase: 1
   pv: {fileID: 0}
   chaseTarget: 0
-  healthBarPrefab: {fileID: 0}
-  healthBarPoint: {fileID: 0}
   armAttackRange: 4
   groundAttackRange: 2
   armAttackCoolTime: 3
@@ -4930,6 +4929,37 @@ Transform:
   - {fileID: 8926136319847018094}
   m_Father: {fileID: 204297187088115438}
   m_LocalEulerAnglesHint: {x: 25.946106, y: -59.7759, z: -42.090286}
+--- !u!1 &8403490509679347501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 212209846599559635}
+  m_Layer: 8
+  m_Name: HealthBarPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &212209846599559635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8403490509679347501}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.226, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1101820335844390578}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8511155727228630517
 GameObject:
   m_ObjectHideFlags: 0

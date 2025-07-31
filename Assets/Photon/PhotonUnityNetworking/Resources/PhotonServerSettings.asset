@@ -141,11 +141,9 @@ MonoBehaviour:
   - MountRPC
   - RequestFall
   - RPC_SetDEF
-  - RPC_PlayChargeLevelEffect
-  - RPC_Interactive
-  - RPC_HealAnimation
-  - RPC_ArrowDisable
-  - RPC_ArrowEnable
+  - ActivateAndStartTimer_RPC
+  - DeactivateAndReturn_RPC
+  - SpawnMonsters_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

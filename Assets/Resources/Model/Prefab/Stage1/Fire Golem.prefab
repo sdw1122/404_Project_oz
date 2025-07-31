@@ -419,6 +419,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1775096026855280798}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &738606652266175906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5131407860868086003}
+  m_Layer: 8
+  m_Name: HealthBarPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5131407860868086003
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738606652266175906}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.246, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4064621992895854315}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &972633713311026081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1976,6 +2007,7 @@ Transform:
   - {fileID: 175774980556897663}
   - {fileID: 4752477845808465712}
   - {fileID: 2584496439991597545}
+  - {fileID: 5131407860868086003}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &4520987822293906918
@@ -2155,7 +2187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb56d58bde3fb554fb8d1c6366cf2371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 800
+  startingHealth: 100
   dead: 0
   whatIsTarget:
     serializedVersion: 2
@@ -2175,8 +2207,10 @@ MonoBehaviour:
   isFirstChase: 1
   pv: {fileID: 0}
   chaseTarget: 0
-  healthBarPrefab: {fileID: 0}
-  healthBarPoint: {fileID: 0}
+  healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
+  healthBarPoint: {fileID: 5131407860868086003}
+  destroyDelay: 2
+  m_name: Fire Golem
   armAttackRange: 4
   groundAttackRange: 2
   armAttackCoolTime: 3

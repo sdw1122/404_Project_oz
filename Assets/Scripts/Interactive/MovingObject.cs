@@ -20,6 +20,7 @@ public class MovingObject : InteractableBase
     private Quaternion targetRotation;
 
     private bool isMoved = false; // 오브젝트가 목표 위치에 있는지 여부를 추적합니다.
+    public bool IsMoving { get; private set; }
 
     // Awake를 override하여 초기 위치를 저장합니다.
     protected override void Awake()
@@ -50,22 +51,17 @@ public class MovingObject : InteractableBase
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        // 이 오브젝트가 용암이 아니면 아무것도 하지 않음
-        if (!isLava) return;
+        // 이 오브젝트가 용암이 아니거나, 부딪힌 대상이 플레이어가 아니면 무시
+        if (!isLava || !other.CompareTag("Player")) return;
 
-        // 부딪힌 상대방이 'Player' 태그를 가지고 있는지 확인
-        if (collision.gameObject.CompareTag("Player"))
+        // 부딪힌 플레이어의 PlayerHealth 컴포넌트를 가져옴
+        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+        if (playerHealth != null)
         {
-            // 플레이어의 PlayerHealth 컴포넌트를 가져옴
-            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
-            {
-                // 플레이어의 최대 체력만큼의 데미지를 주어 즉사시킴
-                // OnDamage는 네트워크 동기화를 위해 RPC로 호출됨
-                playerHealth.OnDamage(playerHealth.startingHealth, collision.contacts[0].point, collision.contacts[0].normal);
-            }
+            // 플레이어의 최대 체력만큼의 데미지를 주어 즉사시킴
+            playerHealth.OnDamage(playerHealth.startingHealth, other.transform.position, Vector3.zero);
         }
     }
 
@@ -84,7 +80,7 @@ public class MovingObject : InteractableBase
     /// 오브젝트의 상태를 바꾸고 이동 코루틴을 시작합니다.
     /// </summary>
     [PunRPC]
-    private void ToggleMoveState()
+    public void ToggleMoveState()
     {
         // 상태 변경 (원래 위치 -> 목표 위치, 목표 위치 -> 원래 위치)
         isMoved = !isMoved;
@@ -103,6 +99,7 @@ public class MovingObject : InteractableBase
         // isMoved 상태에 따라 목적지(destination)와 목표 회전값(rotation)을 설정합니다.
         Vector3 destination = isMoved ? targetPosition : startPosition;
         Quaternion rotation = isMoved ? targetRotation : startRotation;
+        IsMoving = true; // 이동 시작 상태로 설정
 
         // 목표 위치에 도달할 때까지 반복합니다.
         while (Vector3.Distance(transform.position, destination) > 0.01f)
@@ -119,6 +116,7 @@ public class MovingObject : InteractableBase
         // 루프 종료 후 정확한 위치와 회전값으로 설정
         transform.position = destination;
         transform.rotation = rotation;
+        IsMoving = false; // 이동 완료 상태로 설정
     }
     public void TriggerMovement()
     {
