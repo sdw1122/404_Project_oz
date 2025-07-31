@@ -2,21 +2,14 @@ using Photon.Pun;
 using UnityEngine;
 
 public class ZombieCitizen : Enemy
-{
-    public bool isAttack = false;
-
+{ 
     public override void Attack()
     {
         if (targetEntity == null || dead) return;
-        if (isAttack) return;
-        isAttack = true;
-        if (targetEntity != null)
-        {
-            Vector3 lookPos = targetEntity.transform.position - transform.position;
-            lookPos.y = 0; // 수평 방향만 고려
-            if (lookPos != Vector3.zero)
-                transform.rotation = Quaternion.LookRotation(lookPos);
-        }
+        if (isAttacking) return;
+        isAttacking = true;
+
+        isRotatingToTarget = true;
 
         Debug.Log("공격");
         pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
@@ -74,7 +67,7 @@ public class ZombieCitizen : Enemy
     public void EndAttack()
     {
         pv.RPC("RPC_SetNavMesh", RpcTarget.All, true);
-        isAttack = false;
+        isAttacking = false;
     }
 
     void OnDrawGizmosSelected()

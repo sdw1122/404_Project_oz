@@ -13,13 +13,12 @@ public class TinyRobot1 : Enemy
     public float jumpPower = 0.1f;
     public float jumpAttackCooldown = 5f;  
 
-    private float lastJumpAttackTime = -99f;
-    private bool isJumpAttacking = false;
+    private float lastJumpAttackTime = -99f;    
 
     public override bool CanAct()
     {
         // 점프 공격 중에는 부모에서 Attack() 못하도록
-        return !isJumpAttacking;
+        return !isAttacking;
     }
 
     public override void Attack()
@@ -28,7 +27,7 @@ public class TinyRobot1 : Enemy
         Debug.Log("Attack 실행");
         if (targetEntity == null || dead) return;
         if (Time.time < lastJumpAttackTime + jumpAttackCooldown) return;
-        if (isJumpAttacking) return;
+        if (isAttacking) return;
 
         if (targetEntity != null)
         {            
@@ -36,9 +35,9 @@ public class TinyRobot1 : Enemy
             lookPos.y = 0; // 수평 방향만 고려
             if (lookPos != Vector3.zero)
                 transform.rotation = Quaternion.LookRotation(lookPos);
-        }        
+        }
 
-        isJumpAttacking = true;
+        isAttacking = true;
         lastJumpAttackTime = Time.time;
         enemyAnimator.SetTrigger("JumpAttack");
         pv.RPC("RPC_JumpAttack", RpcTarget.Others);
@@ -72,7 +71,7 @@ public class TinyRobot1 : Enemy
 
     public void OnJumpAttackHit()
     {
-        if (targetEntity != null && !targetEntity.dead && isJumpAttacking)
+        if (targetEntity != null && !targetEntity.dead && isAttacking)
         {
             float hitDist = Vector3.Distance(transform.position, targetEntity.transform.position);
             if (hitDist <= jumpAttackRange + 0.3f) // 약간 오차 허용
@@ -85,7 +84,7 @@ public class TinyRobot1 : Enemy
                 targetEntity.OnDamage(damage, hitPoint, hitNormal);
             }
         }
-        isJumpAttacking = false;
+        isAttacking = false;
         // 공격 종료 후 NavMeshAgent 다시 켜주기!
         Rigidbody rb = GetComponent<Rigidbody>();
 
@@ -97,7 +96,7 @@ public class TinyRobot1 : Enemy
     void OnCollisionStay(Collision col)
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        if (isJumpAttacking)
+        if (isAttacking)
         {
             rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, 1.5f);
         }

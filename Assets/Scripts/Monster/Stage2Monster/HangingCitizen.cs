@@ -6,8 +6,7 @@ public class HangingCitizen : Enemy
 {
     public GameObject throwObj;
     public Transform throwPoint;
-    public float throwPower = 15f;
-    public bool isThrowing = false;
+    public float throwPower = 15f;    
 
     public override IEnumerator UpdatePath()
     {
@@ -64,7 +63,6 @@ public class HangingCitizen : Enemy
                     }
                 }
             }
-            Debug.Log("Oh");
             // 0.25초 주기로 처리 반복
             yield return new WaitForSeconds(0.25f);
         }
@@ -72,8 +70,8 @@ public class HangingCitizen : Enemy
 
     public override void Attack()
     {
-        if (isThrowing) return;
-        isThrowing = true;
+        if (isAttacking) return;
+        isAttacking = true;
 
         if (targetEntity != null)
         {
@@ -136,6 +134,6 @@ public class HangingCitizen : Enemy
 
     public void EndThrow()
     {
-        isThrowing = false;
+        isAttacking = false;
     }
 }

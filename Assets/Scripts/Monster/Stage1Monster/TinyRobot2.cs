@@ -8,13 +8,11 @@ public class TinyRobot2 : Enemy
     public GameObject throwObj;
     public Transform throwPoint;
     public float throwPower = 15f;
-    public float fleeDistance = 8f;
-
-    private bool isThrowing = false;
+    public float fleeDistance = 8f;    
 
     public override bool CanAct()
     {        
-        return !isThrowing;
+        return !isAttacking;
     }
 
     public override IEnumerator UpdatePath()
@@ -123,8 +121,8 @@ public class TinyRobot2 : Enemy
     public override void Attack()
     {
         if (dead) return;
-        if (isThrowing) return;
-        isThrowing = true;
+        if (isAttacking) return;
+        isAttacking = true;
 
         Rigidbody rb = GetComponent<Rigidbody>();
 
@@ -220,7 +218,7 @@ public class TinyRobot2 : Enemy
 
     public void ThrowEnd()
     {
-        isThrowing = false;
+        isAttacking = false;
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         rb.WakeUp();

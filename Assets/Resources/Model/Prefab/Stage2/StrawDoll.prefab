@@ -214,13 +214,16 @@ MonoBehaviour:
   DEF_Factor: 1
   isBinded: 0
   isFirstChase: 1
+  isAttacking: 0
+  isHit: 0
+  isRotatingToTarget: 0
+  angleToTarget: 0
   pv: {fileID: 0}
   chaseTarget: 0
   healthBarPrefab: {fileID: 0}
   healthBarPoint: {fileID: 0}
   jumpPower: 10
   jumpUpPower: 5
-  isAttack: 0
   Atk: 1
 --- !u!114 &5712348503973814520
 MonoBehaviour:

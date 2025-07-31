@@ -6,8 +6,7 @@ public class StrawDoll : Enemy
 {
     public float jumpPower = 10f;
     public float jumpUpPower = 5f;
-
-    public bool isAttack = false;
+    
     public bool Atk = true;
     public override void Attack()
     {
@@ -19,9 +18,31 @@ public class StrawDoll : Enemy
         }
     }
 
-    IEnumerator JumpAttackRoutine()
+    IEnumerator JumpAttackRoutine() 
     {
-        if (isAttack) yield break;
+        if (isAttacking || dead) yield break;
+        int repeatCount = 3;
+        float interval = 1f;
+
+        for (int i = 0; i < repeatCount; i++)
+        {
+            if (dead) yield break;
+            // -- 1초마다 피격 이펙트 실행 (부모/RPC이벤트 호출)
+            pv.RPC("RPC_PlayHitEffect", RpcTarget.All, transform.position, transform.forward);
+            yield return new WaitForSeconds(interval); // 1초 대기
+        }
+
+        if (!isAttacking)
+        {
+            Debug.Log("dead : " + dead);
+            Attacking();
+            isAttacking = true;
+        }
+    }
+
+    public IEnumerator DieBoom()
+    {
+        if (!dead) yield break;
         int repeatCount = 3;
         float interval = 1f;
 
@@ -32,15 +53,12 @@ public class StrawDoll : Enemy
             yield return new WaitForSeconds(interval); // 1초 대기
         }
 
-        if (!isAttack)
-        {
-            Attacking();
-            isAttack = true;
-        }
+        Boom();
     }
 
     public void Attacking()
     {
+        if (dead) return;
         if (targetEntity != null)
         {
             Vector3 lookPos = targetEntity.transform.position - transform.position;

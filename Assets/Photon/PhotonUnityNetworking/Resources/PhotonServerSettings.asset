@@ -146,6 +146,9 @@ MonoBehaviour:
   - RPC_HangingThrow
   - RPC_StrawDollAttack
   - RPC_PlayJumpAttack
+  - RPC_KnightSkill1
+  - RPC_KnightAttack
+  - RPC_KnightSkill2
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
