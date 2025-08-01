@@ -1520,6 +1520,7 @@ MonoBehaviour:
   - {fileID: 1584933301}
   - {fileID: 1584933301}
   resourcePath: Model/Prefab/Stage2/
+  SpawnCount: 1
 --- !u!4 &334041568
 Transform:
   m_ObjectHideFlags: 0
@@ -1770,6 +1771,7 @@ MonoBehaviour:
   - {fileID: 1956724348}
   - {fileID: 1584933301}
   resourcePath: Model/Prefab/Stage1/
+  SpawnCount: 1
 --- !u!4 &454400023
 Transform:
   m_ObjectHideFlags: 0
@@ -1961,9 +1963,7 @@ MonoBehaviour:
   enemyDatas:
   - {fileID: 11400000, guid: 9a3b64e710f41e64589b1ed23060fb75, type: 2}
   spawnPoints:
-  - {fileID: 314964947}
   - {fileID: 28838383}
-  - {fileID: 0}
   - {fileID: 1981396300}
   totalSpawnCount: 5
   spawnInterval: 1
@@ -1981,7 +1981,6 @@ Transform:
   m_LocalScale: {x: 0.32567987, y: 0.32567987, z: 0.32567987}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 314964947}
   - {fileID: 28838383}
   - {fileID: 1981396300}
   m_Father: {fileID: 1724818461}
@@ -2289,11 +2288,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a53ebd4fb92a0c746a499c463b3248fe, type: 3}
---- !u!4 &979108676 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5223713966527065527, guid: a53ebd4fb92a0c746a499c463b3248fe, type: 3}
-  m_PrefabInstance: {fileID: 2593679909981259467}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1008671366
 GameObject:
   m_ObjectHideFlags: 0
@@ -2835,6 +2829,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9a3b64e710f41e64589b1ed23060fb75, type: 2}
   spawnPoints:
   - {fileID: 1956724348}
+  resourcePath: Model/Prefab/Stage1/
   SpawnCount: 1
 --- !u!4 &1219928833
 Transform:
@@ -3324,7 +3319,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 317137853}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &1465278766
 MonoBehaviour:
@@ -3453,6 +3448,7 @@ MonoBehaviour:
   - {fileID: 1956724348}
   - {fileID: 1584933301}
   resourcePath: Model/Prefab/Stage1/
+  SpawnCount: 1
 --- !u!4 &1473201437
 Transform:
   m_ObjectHideFlags: 0
@@ -4352,7 +4348,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 6
+  sceneViewId: 23
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &1724818457
@@ -6384,7 +6380,7 @@ PrefabInstance:
     - target: {fileID: 3696292567139821487, guid: a53ebd4fb92a0c746a499c463b3248fe, type: 3}
       propertyPath: spawnPoint
       value: 
-      objectReference: {fileID: 452353907}
+      objectReference: {fileID: 0}
     - target: {fileID: 3696292567139821487, guid: a53ebd4fb92a0c746a499c463b3248fe, type: 3}
       propertyPath: objectToSpawn
       value: 
@@ -6395,7 +6391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4179704537444897245, guid: a53ebd4fb92a0c746a499c463b3248fe, type: 3}
       propertyPath: sceneViewId
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5223713966527065527, guid: a53ebd4fb92a0c746a499c463b3248fe, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6439,10 +6435,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 5223713966527065527, guid: a53ebd4fb92a0c746a499c463b3248fe, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 452353907}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a53ebd4fb92a0c746a499c463b3248fe, type: 3}
 --- !u!1 &2593679909981259468 stripped
@@ -6910,3 +6903,9 @@ SceneRoots:
   - {fileID: 1999851306948492461}
   - {fileID: 1279124268762434911}
   - {fileID: 8010652559817770108}
+  - {fileID: 889697408}
+  - {fileID: 2593679909981259467}
+  - {fileID: 1219928833}
+  - {fileID: 1236556794}
+  - {fileID: 1465278765}
+  - {fileID: 1724818461}
