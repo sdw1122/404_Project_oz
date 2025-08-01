@@ -68,7 +68,7 @@ public abstract class Enemy : LivingEntity
         }
     }
 
-    private void Awake()
+    public virtual void Awake()
     {
         // 초기화
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -77,9 +77,18 @@ public abstract class Enemy : LivingEntity
         /*enemyAudioPlayer = GetComponent<AudioSource>();*/
         pv=GetComponent<PhotonView>();
         Debug.Log("Awake: navMeshAgent=" + (navMeshAgent == null ? "NULL" : "OK") + ", pv=" + (pv == null ? "NULL" : "OK"));
-        enemyRenderer = GetComponentInChildren<Renderer>();
+        if (enemyRenderer == null)
+        {
+            enemyRenderer = GetComponentInChildren<Renderer>();
+        }
+        if (gameObject.CompareTag("StrawMagician"))
+        {
+            originalColor = Color.white;
+            
+        }
+        else { originalColor = enemyRenderer.material.color; }
+        Debug.Log("원 색" + originalColor);
         
-        originalColor = enemyRenderer.material.color;
         rb = GetComponent<Rigidbody>();
         PhotonNetwork.SerializationRate = 20;
         if (enemyRenderer != null)
@@ -201,6 +210,7 @@ public abstract class Enemy : LivingEntity
         // 살아 있는 동안 무한 루프
         while (!dead)
         {
+            
             // 추적 로직은 마스터에서만 실행시켜 둘의 Enemy의 움직임을 동기화함.
             if (!PhotonNetwork.IsMasterClient)
             {
@@ -213,9 +223,7 @@ public abstract class Enemy : LivingEntity
                 {
                     navMeshAgent.isStopped = true;
                     navMeshAgent.updateRotation = false;
-                    // 바인드 중엔 달리기 애니매이션 출력
-                    enemyAnimator.SetFloat("Move", 1f); // 걷기/달리기 애니메이션
-                    pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
+                    
                     navMeshAgent.updateRotation = true;
                 }
                 
@@ -242,6 +250,7 @@ public abstract class Enemy : LivingEntity
                         {
                             navMeshAgent.isStopped = false;
                             navMeshAgent.SetDestination(targetEntity.transform.position);
+                            Debug.Log("목적지설정");
                             if (PhotonNetwork.IsMasterClient)
                             {
                                 //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
@@ -441,7 +450,7 @@ public abstract class Enemy : LivingEntity
 
     private IEnumerator FlashColor()
     {
-
+        Debug.Log("색깔"+originalColor);
        
         enemyRenderer.material.color = Color.red;
         
@@ -484,6 +493,9 @@ public abstract class Enemy : LivingEntity
         if (this is WoodMan woodman)
         {
             woodman.OnDamaged(attacker, damage);
+        }else if (this is StrawMagician strawMagician)
+        {
+            strawMagician.OnDamaged();
         }
     }
 

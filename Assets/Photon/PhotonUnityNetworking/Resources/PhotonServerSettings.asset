@@ -162,6 +162,16 @@ MonoBehaviour:
   - SetState_RPC
   - StartMovement_RPC
   - TriggerDeeperFall_RPC
+  - StrawMagician_AttackRPC
+  - StrawMagician_FireBallRPC
+  - StrawMagician_BindCircleRPC
+  - PerformTeleportRPC
+  - RPC_StrawRun
+  - RPC_StrawGroggy
+  - RPC_ForceStrawSyncPosition
+  - RPC_EndGroggy
+  - RPC_PlayGetUpAnim
+  - RPC_PlayStumbleAnim
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -6,7 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 
 public class Hammer : MonoBehaviour
-{    
+{
     private PlayerController playerController;
     private PlayerHealth playerHealth;
     Animator animator;
@@ -20,7 +20,7 @@ public class Hammer : MonoBehaviour
 
     private bool isAttackButtonPressed = false;
     private float attackDelay = 1.0f;
-    private float attackTimer = 0f;    
+    private float attackTimer = 0f;
     private int attackLayerIndex;
 
     public float skill1;
@@ -47,24 +47,31 @@ public class Hammer : MonoBehaviour
     //private Color charge1col = new Color(1f, 1f, 1f, 0.5f);
     //private Color charge2col = new Color(1f, 0.9f, 0.3f, 1f);
     //private Color charge3col = new Color(1f, 0.15f, 0.15f, 1f);
-    private Color[] chargeColor = { new Color(1f, 1f, 1f, 0.5f), new Color(1f, 0.9f, 0.3f, 1f), new Color(1f, 0.15f, 0.15f, 1f)};
+    private Color[] chargeColor = { new Color(1f, 1f, 1f, 0.5f), new Color(1f, 0.9f, 0.3f, 1f), new Color(1f, 0.15f, 0.15f, 1f) };
 
     private void Awake()
-    {                
+    {
         playerController = GetComponent<PlayerController>();
         playerHealth = GetComponent<PlayerHealth>();
-        controls = new InputSystem_Actions();        
+        controls = new InputSystem_Actions();
         animator = GetComponent<Animator>();
         pv = GetComponent<PhotonView>();
         attackLayerIndex = animator.GetLayerIndex("Upper Body");
     }
-
+    public void setBind()
+    {
+        canAttack = false;
+    }
+    public void freeBind()
+    {
+        canAttack = true;
+    }
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (!pv.IsMine || !canAttack || skill1Pressed) return;
         if (context.started)
         {
-            isAttackButtonPressed = true;            
+            isAttackButtonPressed = true;
         }
         if (context.canceled)
             isAttackButtonPressed = false;
@@ -72,9 +79,12 @@ public class Hammer : MonoBehaviour
 
     public void OnSkill1(InputAction.CallbackContext context)
     {
+        
         if (!pv.IsMine || !canAttack) return;
+     
         if (context.started && skill1CoolDownTimer >= 10f && playerController.IsGrounded())
         {
+          
             skill1Pressed = true;
             playerController.isCharge = true;
             animator.SetTrigger("Charge");
@@ -82,10 +92,11 @@ public class Hammer : MonoBehaviour
         }
         if (context.canceled && skill1Pressed && playerController.IsGrounded())
         {
+           
             isCharge1 = false;
             isCharge2 = false;
             isCharge3 = false;
-            skill1Pressed = false;            
+            skill1Pressed = false;
             playerController.isCharge = false;
             skill1 = 0;
             if (skill1HoldTime < 1)
@@ -123,6 +134,7 @@ public class Hammer : MonoBehaviour
             skill1CoolDownTimer = 0;
             skill1HoldTime = 0;
         }
+        
     }
 
     [PunRPC]
@@ -155,7 +167,7 @@ public class Hammer : MonoBehaviour
         {
             var main = ChargeEffect.main;
             skill1HoldTime += Time.deltaTime;
-            if(skill1HoldTime >= 1 && !isCharge1)
+            if (skill1HoldTime >= 1 && !isCharge1)
             {
                 isCharge1 = true;
                 main.startColor = chargeColor[0];
@@ -215,6 +227,8 @@ public class Hammer : MonoBehaviour
         // 마지막 공격 이후 시간 업데이트
         if (!isAttacking)
             timeSinceLastAttack += Time.deltaTime;
+
+        
     }
 
     [PunRPC]
@@ -298,7 +312,7 @@ public class Hammer : MonoBehaviour
                 PhotonView enemyPv = hit.GetComponent<PhotonView>();
                 if (enemy != null)
                 {
-                    
+
                     if (!enemy.dead)
                     {
                         enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal, PhotonView.Get(this).ViewID);
@@ -321,14 +335,14 @@ public class Hammer : MonoBehaviour
         playerController.isCharge = false;
         skill1 = 0;
         skill1HoldTime = 0f;
-        
+
         playerController.canMove = true;
 
-      
+
 
         DisableWeapon();
 
-      
+
     }
     [PunRPC]
     void RPC_TriggerEraserChargeAttack()
@@ -379,14 +393,18 @@ public class Hammer : MonoBehaviour
                         {
                             enemyPv.RPC("RPC_SetDEF", RpcTarget.MasterClient, skill2_defF);
                         }
-                        
+                        if (hit.CompareTag("StrawMagician"))
+                        {
+                            enemyPv.RPC("RPC_StrawGroggy", RpcTarget.All);
+                        }
+
                     }
                 }
                 Debug.Log("Skill2 맞음");
             }
         }
     }
-    
+
     // 정해진 애니메이션 타이밍에 호출
     public void ApplyAttack()
     {

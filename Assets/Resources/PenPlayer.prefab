@@ -7013,6 +7013,7 @@ MonoBehaviour:
   isGrounded: 0
   isCharge: 0
   canMove: 1
+  moveDirection: {x: 0, y: 0, z: 0}
   jumpPressed: 0
   moveSpeed: 5
   jumpPower: 8
@@ -7188,6 +7189,7 @@ MonoBehaviour:
   chargeTime: 0
   maxChargeTime: 3
   minDistance: 0.5
+  canCharge: 1
   firePoint: {fileID: 5400129489395142459}
 --- !u!114 &7449891611214493504
 MonoBehaviour:
