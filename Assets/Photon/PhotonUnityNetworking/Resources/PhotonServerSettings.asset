@@ -157,6 +157,11 @@ MonoBehaviour:
   - RPC_HealAnimation
   - RPC_Interactive
   - RPC_PlayChargeLevelEffect
+  - ToggleObjectActiveState_RPC
+  - ToggleObjectsActiveState_RPC
+  - SetState_RPC
+  - StartMovement_RPC
+  - TriggerDeeperFall_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

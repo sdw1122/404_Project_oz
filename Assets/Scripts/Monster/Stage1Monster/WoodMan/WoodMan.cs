@@ -240,19 +240,18 @@ public class WoodMan : Enemy
         if (target != null)
             targetEntity = target.GetComponent<LivingEntity>();
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Lava")&&_currentMode==WoodMan_Mode.Normal)
+        // "Lava" 레이어와 겹쳤고, 현재 상태가 "Normal"일 때
+        if (other.gameObject.layer == LayerMask.NameToLayer("Lava") && _currentMode == WoodMan_Mode.Normal)
         {
+            Debug.Log("[Woodman 상태 변화] Lava와 접촉하여 '과열(Overheat)' 상태로 전환!");
             SetMode(WoodMan_Mode.Overheat);
-            Debug.Log("Overheat 전환");
         }
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("Coolant") && _currentMode == WoodMan_Mode.Overheat)
+        // "Coolant" 레이어와 겹쳤고, 현재 상태가 "Overheat"일 때
+        else if (other.gameObject.layer == LayerMask.NameToLayer("Coolant") && _currentMode == WoodMan_Mode.Overheat)
         {
             SetMode(WoodMan_Mode.Vulnerable);
-            Debug.Log("냉각상태 전환");
         }
     }
-
-
 }
