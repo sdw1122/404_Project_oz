@@ -8,7 +8,7 @@
     {
     public bool IsGroggy() => isGroggy;
     private bool isGroggy = false;
-    public string m_name = "허수아비 마법사";
+    
         public float speed = 4.0f;
         float distanceToTarget;
         Straw_MagicArrow straw_MagicArrow;

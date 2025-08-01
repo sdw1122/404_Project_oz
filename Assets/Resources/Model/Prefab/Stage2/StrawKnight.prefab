@@ -422,7 +422,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 0}
   healthBarPoint: {fileID: 0}
   destroyDelay: 2
-  m_name: 
+  m_name: Straw Knight
   stingDamage: 70
   stingCoolTime: 0
   attackCoolTime: 0
