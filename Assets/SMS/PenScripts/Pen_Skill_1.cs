@@ -25,6 +25,7 @@ public class Pen_Skill_1 : MonoBehaviour
     public float maxChargeTime = 3.0f;
     public float minDistance = 5f;
     bool isCharging = false;
+    public bool canCharge = true;
     bool isSkill1Pressed = false;
     float lastFireTime;
     public Transform firePoint;
@@ -55,10 +56,24 @@ public class Pen_Skill_1 : MonoBehaviour
 
         
     }
+    public void setBind()
+    {
+        CancelCharging();
+        canCharge = false;
+        PenAttack.isAttack = false;
+        Pen_Skill_2.isThrow = false;
+    }
+    public void freeBind()
+    {
+        
+        canCharge = true;
+        PenAttack.isAttack = true;
+        Pen_Skill_2.isThrow = true;
+    }
     private void Update()
     {
         if (!pv.IsMine) return;
-
+        if(!canCharge) return;
         if (isSkill1Pressed && !isCharging && Time.time - lastFireTime > Cooldown)
         {
             StartCharging();
@@ -72,8 +87,9 @@ public class Pen_Skill_1 : MonoBehaviour
 
     public void OnSkill1(InputAction.CallbackContext context)
     {
+        Debug.Log(canCharge);
         if (!pv.IsMine) return;
-
+        if (!canCharge) return;
         if (context.started)
         {
             playerController.isCharge = true;
@@ -132,6 +148,7 @@ public class Pen_Skill_1 : MonoBehaviour
         PenAttack.isAttack = true;
         PlayerController1.isMove = true;
         Pen_Skill_2.isThrow = true;
+
     }
     int GetChargeLevel(float ratio)
     {
@@ -175,6 +192,8 @@ public class Pen_Skill_1 : MonoBehaviour
         PenAttack.isAttack = true;
         PlayerController1.isMove = true;
         Pen_Skill_2.isThrow = true;
+        animator.SetFloat("Move", 0f);
+        pv.RPC("RPC_SetMove", RpcTarget.Others, 0f);
     }
     void BowDisable()
     {

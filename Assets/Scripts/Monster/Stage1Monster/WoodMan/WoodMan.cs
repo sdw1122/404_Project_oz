@@ -40,8 +40,9 @@ public class WoodMan : Enemy
     }*/
     [SerializeField] private WoodMan_State _currentState;
     [SerializeField] public WoodMan_Mode _currentMode;
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         animator = GetComponent<Animator>();
         aggroSystem = GetComponent<AggroSystem>();
         woodManAttack = GetComponent<WoodManAttack>();

@@ -9,6 +9,8 @@ TagManager:
   - Ground
   - StoneGolem
   - FireGolem
+  - Lava
+  - StrawMagician
   layers:
   - Default
   - TransparentFX
