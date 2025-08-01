@@ -196,10 +196,15 @@ MonoBehaviour:
   DEF_Factor: 1
   isBinded: 0
   isFirstChase: 1
+  isAttacking: 0
+  isHit: 0
+  isRotatingToTarget: 0
+  angleToTarget: 0
   pv: {fileID: 8304561853474447239}
   chaseTarget: 0
   healthBarPrefab: {fileID: 0}
   healthBarPoint: {fileID: 0}
+  destroyDelay: 2
   m_name: "\uD5C8\uC218\uC544\uBE44 \uB9C8\uBC95\uC0AC"
   speed: 4
   canAct: 1
