@@ -6732,7 +6732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 7cebeca4371254d43833133750ca9964, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -6842,38 +6842,6 @@ MonoBehaviour:
     m_ActionId: 641cd816-40e6-41b4-8c3d-04687c349290
     m_ActionName: 'Player/Sprint[/Keyboard/leftShift]'
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3422862404881984722}
-        m_TargetAssemblyTypeName: Pen_Skill_1, Assembly-CSharp
-        m_MethodName: OnSkill1
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 94a7139e-81c8-49ce-aef9-069e235f84b1
-    m_ActionName: 'Player/Skill1[/Keyboard/r]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7449891611214493504}
-        m_TargetAssemblyTypeName: Pen_Skill_2, Assembly-CSharp
-        m_MethodName: OnSkill2
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 7e7c0245-e5b7-406a-981a-742e8736f4f0
-    m_ActionName: 'Player/Skill2[/Keyboard/q]'
-  - m_PersistentCalls:
       m_Calls: []
     m_ActionId: c95b2375-e6d9-4b88-9c4c-c5e76515df4b
     m_ActionName: 'UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
@@ -6915,6 +6883,38 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 3422862404881984722}
+        m_TargetAssemblyTypeName: Pen_Skill_1, Assembly-CSharp
+        m_MethodName: OnSkill1
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 50bda449-0c19-497f-b616-b12f588d6129
+    m_ActionName: 'Player/Skill1[/Keyboard/r]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7449891611214493504}
+        m_TargetAssemblyTypeName: Pen_Skill_2, Assembly-CSharp
+        m_MethodName: OnSkill2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e5e89ed9-29a2-4e11-9166-65f33f164d71
+    m_ActionName: 'Player/Skill2[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls:
       - m_Target: {fileID: 6087537843303922652}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnResurrection
@@ -6927,7 +6927,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: be8b860e-2f79-42c7-af99-6d281c9ba50c
+    m_ActionId: 6e7bbc16-7ca2-4bdd-89ca-17a6bb18cf63
     m_ActionName: 'Player/Resurrection[/Keyboard/v]'
   - m_PersistentCalls:
       m_Calls:
@@ -6943,7 +6943,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: cb19cff3-be13-44b2-be7d-1c3271821ab1
+    m_ActionId: 70ea86ed-d576-436d-b437-0613cd5ab41c
     m_ActionName: 'Player/HealRay[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
