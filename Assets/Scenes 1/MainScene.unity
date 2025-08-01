@@ -4251,6 +4251,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PressurisedSteam
       objectReference: {fileID: 0}
+    - target: {fileID: 1533138625715334, guid: 61bb62591466c3649bdf4905822d72f6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1824827258223664, guid: 61bb62591466c3649bdf4905822d72f6, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 4363000815121756, guid: 61bb62591466c3649bdf4905822d72f6, type: 3}
       propertyPath: m_LocalScale.x
       value: 15.868151
@@ -4326,7 +4334,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1533138625715334, guid: 61bb62591466c3649bdf4905822d72f6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1682806467}
   m_SourcePrefab: {fileID: 100100000, guid: 61bb62591466c3649bdf4905822d72f6, type: 3}
 --- !u!198 &1682806464 stripped
 ParticleSystem:
@@ -4338,6 +4349,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4363000815121756, guid: 61bb62591466c3649bdf4905822d72f6, type: 3}
   m_PrefabInstance: {fileID: 1682806463}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1682806466 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1533138625715334, guid: 61bb62591466c3649bdf4905822d72f6, type: 3}
+  m_PrefabInstance: {fileID: 1682806463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1682806467
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682806466}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3765688, y: 1.8691735, z: 2.3555892}
+  m_Center: {x: -0.020025948, y: -0.013493102, z: 0.745367}
 --- !u!1 &1704265699
 GameObject:
   m_ObjectHideFlags: 0
@@ -4363,11 +4400,11 @@ Transform:
   m_GameObject: {fileID: 1704265699}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 59.01, y: -16.925795, z: -9.11425}
-  m_LocalScale: {x: 12.98193, y: -16.2605, z: 10.324045}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.596386, y: -3.2521, z: 2.064809}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2097217598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1724818455
 GameObject:
@@ -5605,7 +5642,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2097217594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5621,7 +5658,7 @@ MonoBehaviour:
   interactionType: 2
   customInteractRange: 0
   targetTransform: {fileID: 1704265700}
-  moveSpeed: 0.01
+  moveSpeed: 0
   isLava: 1
 --- !u!65 &2097217595
 BoxCollider:
@@ -5638,7 +5675,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -5706,10 +5743,11 @@ Transform:
   m_GameObject: {fileID: 2097217593}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 59.06, y: -0.20999932, z: -21.8}
-  m_LocalScale: {x: 12.98193, y: -16.2605, z: 10.324045}
+  m_LocalPosition: {x: 21.42, y: -0.20999932, z: 25.46}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1704265700}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2097217599
@@ -6038,6 +6076,10 @@ PrefabInstance:
       propertyPath: coolantEffect
       value: 
       objectReference: {fileID: 1682806464}
+    - target: {fileID: 40374280635780382, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
+      propertyPath: sprayCollider
+      value: 
+      objectReference: {fileID: 1682806467}
     - target: {fileID: 2309378890599769791, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
       propertyPath: sceneViewId
       value: 11
@@ -6952,7 +6994,6 @@ SceneRoots:
   - {fileID: 883139461}
   - {fileID: 1041593708}
   - {fileID: 1285581333}
-  - {fileID: 1704265700}
   - {fileID: 2097217598}
   - {fileID: 611414017}
   - {fileID: 54280272}

@@ -42,27 +42,27 @@ public class TimedLeverController : InteractableBase
         if (isActivated) return;
         isActivated = true;
 
-        // 연결된 MovingObject들을 움직입니다.
-        if (controlledObjects != null && controlledObjects.Length > 0)
-        {
-            foreach (MovingObject obj in controlledObjects)
-            {
-                if (obj != null) obj.TriggerMovement();
-            }
-        }
-
-        // 연결된 하강 용암들을 활성화하고 1단계 하강시킵니다.
-        if (fallingLavas != null && fallingLavas.Length > 0)
-        {
-            foreach (FallingLava lava in fallingLavas)
-            {
-                if (lava != null) lava.ActivateAndFall();
-            }
-        }
-
-        // 마스터 클라이언트만 복구 타이머를 시작합니다.
         if (PhotonNetwork.IsMasterClient)
         {
+            // 1. MovingObject 이동
+            if (controlledObjects != null && controlledObjects.Length > 0)
+            {
+                foreach (MovingObject obj in controlledObjects)
+                {
+                    if (obj != null) obj.TriggerMovement();
+                }
+            }
+
+            // 2. 하강 용암 활성화
+            if (fallingLavas != null && fallingLavas.Length > 0)
+            {
+                foreach (FallingLava lava in fallingLavas)
+                {
+                    if (lava != null) lava.ActivateAndFall();
+                }
+            }
+
+            // 3. 복구 코루틴 시작
             StartCoroutine(ReturnAfterDelay());
         }
     }

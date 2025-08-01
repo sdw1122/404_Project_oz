@@ -50,31 +50,36 @@ public class LeverController1 : InteractableBase
             hasBeenActivated = true;
             gameObject.layer = IGNORE_INTERACTION_LAYER;
 
-            // --- 1. MovingObject 작동 로직 (기존 기능) ---
-            if (controlledObjects != null && controlledObjects.Length > 0)
+            // ----- [수정됨] 마스터 클라이언트만 아래 로직을 실행하도록 변경 -----
+            if (PhotonNetwork.IsMasterClient)
             {
-                foreach (MovingObject obj in controlledObjects)
+                // 1. MovingObject 작동 로직
+                if (controlledObjects != null && controlledObjects.Length > 0)
                 {
-                    if (obj != null)
+                    foreach (MovingObject obj in controlledObjects)
                     {
-                        obj.TriggerMovement();
+                        if (obj != null)
+                        {
+                            obj.TriggerMovement();
+                        }
                     }
                 }
-            }
-            else
-            {
-                Debug.LogWarning($"'{gameObject.name}' 레버에 연결된 MovingObject가 없습니다.", this);
-            }
+                else
+                {
+                    Debug.LogWarning($"'{gameObject.name}' 레버에 연결된 MovingObject가 없습니다.", this);
+                }
 
-            // --- 2. 몬스터 스포너 작동 로직 (추가된 기능) ---
-            if (monsterSpawner != null)
-            {
-                monsterSpawner.ActivateSpawner();
+                // 2. 몬스터 스포너 작동 로직
+                if (monsterSpawner != null)
+                {
+                    monsterSpawner.ActivateSpawner();
+                }
+                else
+                {
+                    Debug.LogWarning($"'{gameObject.name}' 레버에 연결된 몬스터 스포너가 없습니다.", this);
+                }
             }
-            else
-            {
-                Debug.LogWarning($"'{gameObject.name}' 레버에 연결된 몬스터 스포너가 없습니다.", this);
-            }
+            // ----- [수정됨] -----
         }
     }
 }
