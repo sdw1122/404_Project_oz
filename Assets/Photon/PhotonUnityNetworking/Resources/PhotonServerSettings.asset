@@ -141,27 +141,16 @@ MonoBehaviour:
   - MountRPC
   - RequestFall
   - RPC_SetDEF
-  - RPC_ZombieAttack
-  - RPC_HangingAttack
-  - RPC_HangingThrow
-  - RPC_StrawDollAttack
-  - RPC_PlayJumpAttack
-  - RPC_KnightSkill1
-  - RPC_KnightAttack
-  - RPC_KnightSkill2
-  - ActivateAndStartTimer_RPC
-  - DeactivateAndReturn_RPC
-  - SpawnMonsters_RPC
-  - RPC_ArrowDisable
-  - RPC_ArrowEnable
-  - RPC_HealAnimation
-  - RPC_Interactive
-  - RPC_PlayChargeLevelEffect
-  - ToggleObjectActiveState_RPC
-  - ToggleObjectsActiveState_RPC
-  - SetState_RPC
-  - StartMovement_RPC
-  - TriggerDeeperFall_RPC
+  - StrawMagician_AttackRPC
+  - StrawMagician_FireBallRPC
+  - StrawMagician_BindCircleRPC
+  - PerformTeleportRPC
+  - RPC_StrawRun
+  - RPC_StrawGroggy
+  - RPC_ForceStrawSyncPosition
+  - RPC_EndGroggy
+  - RPC_PlayGetUpAnim
+  - RPC_PlayStumbleAnim
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

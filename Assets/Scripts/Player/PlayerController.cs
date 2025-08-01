@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     public GameObject playerObj;
     public Camera mainCamera;
     public GameObject deadCamera;
-    public Transform foot;
     public float walkSpeed = 10f;
     public float runSpeed;
     public float mouseSensitivity = 0.5f;
@@ -33,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     public bool canMove = true;
 
-    private Vector3 moveDirection = Vector3.zero;
+    public Vector3 moveDirection = Vector3.zero;
     private CharacterController controller;
 
     public bool jumpPressed = false;
@@ -49,14 +48,8 @@ public class PlayerController : MonoBehaviour
 
     private Coroutine slowCoroutine;
     private bool isKnockbacked = false;
-    private float knockbackEndTime = 0f;
     private float originalSpeed;
-    public ParticleSystem knockbackEffect;
-    public ParticleSystem slowEffect;
-    public GameObject jumpEffect;
-    private GameObject jumpEffectins;
     
-    CapsuleCollider col;
     [PunRPC]
     public void SetJob(string _job)
     {
@@ -84,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        col=GetComponent<CapsuleCollider>();
+        
         animator = GetComponent<Animator>();        
         pv = GetComponent<PhotonView>();
         cineCam = GetComponentInChildren<CinemachineCamera>();
@@ -109,6 +102,22 @@ public class PlayerController : MonoBehaviour
         /*mainCamera = transform.Find("Main Camera").GetComponent<Camera>();*/
         deadCamera = transform.Find("Dead Camera")?.gameObject;
         Debug.Log($"[{pv.ViewID}] 내 카메라 이름: {playerCamera.name}, 활성 상태: {playerCamera.enabled}");
+    }
+    public void setBind()
+    {
+        moveInput = Vector2.zero; 
+        /*controller.Move(Vector3.zero);*/
+        moveDirection = Vector3.zero;
+        canMove = false;
+        isCharge = true;
+        animator.SetFloat("Move", 0f);
+        pv.RPC("RPC_SetMove", RpcTarget.Others, 0f);
+    }
+    public void clearBind()
+    {
+        canMove = true;
+        isCharge = false;
+
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -204,15 +213,7 @@ public class PlayerController : MonoBehaviour
         if (context.performed)
         {
             healingRay.FireHealingRay();
-            animator.SetTrigger("Interactive");
-            pv.RPC("RPC_HealAnimation", RpcTarget.Others);
         }
-    }
-
-    [PunRPC]
-    void RPC_HealAnimation()
-    {
-        animator.SetTrigger("Interactive");
     }
     void Start()
     {
@@ -242,6 +243,18 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (!pv.IsMine) return;
+        // 카메라 회전은 무조건 실행
+        float mouseX = lookInput.x * mouseSensitivity;
+        float mouseY = lookInput.y * mouseSensitivity;
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -40f, 60f);
+
+        if (playerCamera != null)
+            playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        cameraTarget.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        transform.Rotate(Vector3.up * mouseX);
+        // 넉백 
         if (knockbackTimer > 0f)
         {
             
@@ -267,57 +280,64 @@ public class PlayerController : MonoBehaviour
         if (jumpBufferCounter > 0)
             jumpBufferCounter -= Time.deltaTime;
 
-        // 1. 입력처리 & 이동벡터 산출
-        // 로컬좌표 기준(forward/right)으로 방향 벡터 생성
-        Vector3 inputDir = new Vector3(moveInput.x, 0, moveInput.y);
-        inputDir = Vector3.ClampMagnitude(inputDir, 1f); // 대각선 속도 보정
-        Vector3 worldDir = transform.TransformDirection(inputDir) * moveSpeed;
-        moveDirection.x = worldDir.x;
-        moveDirection.z = worldDir.z;
-
-        if (controller.isGrounded)
+        
+        
+        // 바인드 상태가 아니면 움직임
+        if (canMove)
         {
-
-            moveDirection.y = worldDir.y;
-
             if (jumpBufferCounter > 0)
-            {
-                StartCoroutine(DestroyJumpEffect());
-                moveDirection.y = jumpPower;
-                jumpBufferCounter = 0;
+                jumpBufferCounter -= Time.deltaTime;
+            // 1. 입력처리 & 이동벡터 산출
+            // 로컬좌표 기준(forward/right)으로 방향 벡터 생성
+            Vector3 inputDir = new Vector3(moveInput.x, 0, moveInput.y);
+            inputDir = Vector3.ClampMagnitude(inputDir, 1f);
+            Vector3 worldDir = transform.TransformDirection(inputDir) * moveSpeed;
 
-                animator.SetBool("Float", true);
-                pv.RPC("RPC_SetFloat", RpcTarget.Others, true);
+            moveDirection.x = worldDir.x;
+            moveDirection.z = worldDir.z;
+
+            if (controller.isGrounded)
+            {   
+                moveDirection.y = worldDir.y;
+
+                if (jumpBufferCounter > 0)
+                {
+                    moveDirection.y = jumpPower;
+                    jumpBufferCounter = 0;
+                    animator.SetBool("Float", true);
+                    pv.RPC("RPC_SetFloat", RpcTarget.Others, true);
+                }
+                else
+                {
+                    animator.SetBool("Float", false);
+                    pv.RPC("RPC_SetFloat", RpcTarget.Others, false);
+                }
+            }
+
+            moveDirection.y -= gravity * Time.deltaTime;
+            isGrounded=controller.isGrounded;
+            HandleSlope();
+
+            controller.Move(moveDirection * Time.deltaTime);
+        }
+        else
+        {
+            // x,z 이동은 막지만, 중력은 계속 적용
+            moveDirection.x = 0f;
+            moveDirection.z = 0f;
+
+            if (!controller.isGrounded)
+            {
+                moveDirection.y -= gravity * Time.deltaTime;
             }
             else
             {
-                //moveDirection.y = -1f; // 약간의 음수값으로 둠 (중력을 위해)
-                animator.SetBool("Float", false);
-                pv.RPC("RPC_SetFloat", RpcTarget.Others, false);
+                moveDirection.y = -1f; // 바닥에 있을 때 고정
             }
+
+            controller.Move(moveDirection * Time.deltaTime);
         }
 
-        isGrounded = controller.isGrounded;
-
-        HandleSlope();
-
-        // 2. 중력 적용
-        moveDirection.y -= gravity * Time.deltaTime;
-
-        // 3. 이동
-
-        controller.Move(moveDirection * Time.deltaTime);
-
-        float mouseX = lookInput.x * mouseSensitivity;
-        float mouseY = lookInput.y * mouseSensitivity;
-
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -40f, 60f);
-
-        if (playerCamera != null)
-            playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        cameraTarget.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-            transform.Rotate(Vector3.up * mouseX);
     }
     // 넉백 함수
     [PunRPC]
@@ -328,7 +348,9 @@ public class PlayerController : MonoBehaviour
         knockbackTimer = duration;
 
         isKnockbacked = true;
-        knockbackEffect.Play();
+
+     
+       
     }
     // 슬로우 함수
     [PunRPC]
@@ -343,7 +365,6 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator slowRoutine(float amount,float duration)
     {
-        slowEffect.Play();
         float slowFactor = 1f - amount;
         moveSpeed = originalSpeed * (1f-amount);
         /*runSpeed =1.5f*originalSpeed * (1f - amount);*/
@@ -356,7 +377,6 @@ public class PlayerController : MonoBehaviour
         runSpeed = originalSpeed * 1.5f;
         slowCoroutine = null;
         Debug.Log("속도 복구 완료 :"+moveSpeed);
-        slowEffect.Stop();
     }
     //
     public void ResetMoveInput()
@@ -472,25 +492,5 @@ public class PlayerController : MonoBehaviour
             moveDirection.z += slide.z;
         }
     }
-    private IEnumerator DestroyJumpEffect()
-    {
-        jumpEffectins = Instantiate(jumpEffect, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(0.5f);
-        Destroy(jumpEffectins);
-    }
-    public void SpawnDust()
-    {
-        // 1) 위치 & 회전 결정
-        Vector3 pos = foot.position;
-        // 땅 노말을 따서 정렬하고 싶다면 Raycast로 hit.normal 사용 가능
-        Quaternion rot = Quaternion.LookRotation(Vector3.forward);
-
-        // 2) 풀에서 꺼내
-        var go = DustPool.Instance.GetDust(pos, rot);
-
-        // 3) 재생 시간만큼 뒤에 반납
-        var ps = go.GetComponent<ParticleSystem>();
-        float dur = ps.main.duration + ps.main.startLifetime.constantMax;
-        DustPool.Instance.ReturnDust(go, dur);
-    }
+    
 }
