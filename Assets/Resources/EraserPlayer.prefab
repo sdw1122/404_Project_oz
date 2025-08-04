@@ -6305,6 +6305,7 @@ MonoBehaviour:
   isGrounded: 0
   isCharge: 0
   canMove: 1
+  moveDirection: {x: 0, y: 0, z: 0}
   jumpPressed: 0
   moveSpeed: 5
   jumpPower: 8
