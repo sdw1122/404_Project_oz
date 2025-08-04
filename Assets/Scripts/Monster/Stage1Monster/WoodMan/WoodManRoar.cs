@@ -105,6 +105,4 @@ public class WoodManRoar : MonoBehaviour
             Gizmos.DrawLine(transform.position, transform.position + transform.forward * knockbackForce * 0.1f);
         }*/
     }
-
-
 }

@@ -2841,6 +2841,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 1533138625715334, guid: 61bb62591466c3649bdf4905822d72f6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1824827258223664, guid: 61bb62591466c3649bdf4905822d72f6, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -2955,7 +2959,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -6542,6 +6546,10 @@ PrefabInstance:
       propertyPath: coolantEffect
       value: 
       objectReference: {fileID: 924297252}
+    - target: {fileID: 40374280635780382, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
+      propertyPath: sprayCollider
+      value: 
+      objectReference: {fileID: 924297255}
     - target: {fileID: 392866931292236960, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -7894,7 +7902,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.375
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 9f332def7d67f954ba762dc48aeec910, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &2065921782
 MonoBehaviour:
@@ -7926,7 +7934,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.25
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 8e487297959061d4b8672d5490dcc050, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &2108866508
 GameObject:

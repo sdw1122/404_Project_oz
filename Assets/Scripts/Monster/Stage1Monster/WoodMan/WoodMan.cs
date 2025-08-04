@@ -125,6 +125,7 @@ public class WoodMan : Enemy
             _currentState = WoodMan_State.MeleeAttack;
             navMeshAgent.isStopped = true;
             isAttacking = true;
+            Attack();
             return;
         }
         // 충격파 포효
@@ -193,7 +194,7 @@ public class WoodMan : Enemy
                 woodManAttack.SetDamage(originalDamage);
                 woodManQuake.SetDamage(originalDamage*1.5f);
                 woodManRoar.SetDamage(originalDamage*2f);
-                pv.RPC("VulnerableRPC", RpcTarget.All);
+                //pv.RPC("VulnerableRPC", RpcTarget.All);
                 
                 break;
         }
@@ -224,7 +225,16 @@ public class WoodMan : Enemy
     }
     public void SetMode(WoodMan_Mode newMode)
     {
+        // 이미 같은 모드이면 아무것도 하지 않음
+        if (_currentMode == newMode) return;
+
         _currentMode = newMode;
+
+        // 모드가 Vulnerable로 변경될 때만 RPC를 호출
+        if (newMode == WoodMan_Mode.Vulnerable)
+        {
+            pv.RPC("VulnerableRPC", RpcTarget.All);
+        }
     }
 
     public void OnDamaged(GameObject attacker, float damage)
