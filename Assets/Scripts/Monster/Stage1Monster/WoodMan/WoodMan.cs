@@ -125,6 +125,7 @@ public class WoodMan : Enemy
             _currentState = WoodMan_State.MeleeAttack;
             navMeshAgent.isStopped = true;
             isAttacking = true;
+            Attack();
             return;
         }
         // 충격파 포효
