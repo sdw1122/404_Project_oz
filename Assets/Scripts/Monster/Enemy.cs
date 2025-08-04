@@ -30,8 +30,12 @@ public abstract class Enemy : LivingEntity
     public float DEF_Factor;
     public bool isBinded=false;
     public bool isFirstChase = true;
-    private Color originalColor;    
-    
+    private Color originalColor;
+    public bool isAttacking = false;
+    public bool isHit = false;
+
+    public bool isRotatingToTarget = false;  // 초깃값: false
+    public float angleToTarget;
 
     public PhotonView pv;
     public float chaseTarget;
@@ -64,7 +68,7 @@ public abstract class Enemy : LivingEntity
         }
     }
 
-    private void Awake()
+    public virtual void Awake()
     {
         // 초기화
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -73,9 +77,18 @@ public abstract class Enemy : LivingEntity
         /*enemyAudioPlayer = GetComponent<AudioSource>();*/
         pv=GetComponent<PhotonView>();
         Debug.Log("Awake: navMeshAgent=" + (navMeshAgent == null ? "NULL" : "OK") + ", pv=" + (pv == null ? "NULL" : "OK"));
-        enemyRenderer = GetComponentInChildren<Renderer>();
+        if (enemyRenderer == null)
+        {
+            enemyRenderer = GetComponentInChildren<Renderer>();
+        }
+        if (gameObject.CompareTag("StrawMagician"))
+        {
+            originalColor = Color.white;
+            
+        }
+        else { originalColor = enemyRenderer.material.color; }
+        Debug.Log("원 색" + originalColor);
         
-        originalColor = enemyRenderer.material.color;
         rb = GetComponent<Rigidbody>();
         PhotonNetwork.SerializationRate = 20;
         if (enemyRenderer != null)
@@ -151,12 +164,44 @@ public abstract class Enemy : LivingEntity
             navMeshAgent.isStopped = true;
         }
         currentHealth = health;
+        // 추적 대상의 존재 여부에 따라 다른 애니메이션 재생
+        /*enemyAnimator.SetBool("HasTarget", hasTarget);*/
+        if (targetEntity != null && isRotatingToTarget && !isAttacking)
+        {
+            Vector3 dir = targetEntity.transform.position - transform.position;
+            dir.y = 0f;
+
+            if (dir.sqrMagnitude > 0.001f)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(dir);
+                float angleToTarget = Quaternion.Angle(transform.rotation, targetRot);
+
+                float stopThreshold = 5f; // 임계각(도 단위, 2~5 사이에서 조절)
+
+                if (angleToTarget > stopThreshold)
+                {
+                    // 아직 목표에 충분히 도달하지 않았으면 부드럽게 돌기
+                    float slerpSpeed = 10f;
+                    float t = Time.deltaTime * slerpSpeed;
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, t);
+                }
+                else
+                {
+                    // 각도 차이가 임계값 이하! "딱" 목표 방향으로 고정 후, 회전 멈춤
+                    transform.rotation = targetRot;
+                    isRotatingToTarget = false; // 여기서 회전 종료
+                }
+
+                // angleToTarget 변수는 필요시 계속 갱신
+                this.angleToTarget = angleToTarget;
+            }
+        }
     }
 
 
     public virtual bool CanAct()
     {
-        return true;
+        return !isAttacking;
     }
 
     // 주기적으로 추적할 대상의 위치를 찾아 경로 갱신
@@ -165,6 +210,7 @@ public abstract class Enemy : LivingEntity
         // 살아 있는 동안 무한 루프
         while (!dead)
         {
+            
             // 추적 로직은 마스터에서만 실행시켜 둘의 Enemy의 움직임을 동기화함.
             if (!PhotonNetwork.IsMasterClient)
             {
@@ -177,9 +223,7 @@ public abstract class Enemy : LivingEntity
                 {
                     navMeshAgent.isStopped = true;
                     navMeshAgent.updateRotation = false;
-                    // 바인드 중엔 달리기 애니매이션 출력
-                    enemyAnimator.SetFloat("Move", 1f); // 걷기/달리기 애니메이션
-                    pv.RPC("RPC_BlendRun", RpcTarget.Others, 1f);
+                    
                     navMeshAgent.updateRotation = true;
                 }
                 
@@ -192,7 +236,7 @@ public abstract class Enemy : LivingEntity
                 {
                     enemyAnimator.SetFloat("Move", 0f); // 공격 전 Idle자세
                     pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
-                    if (CanAct())    // (공격 가능한지 자식에게 '질문')
+                    if (CanAct() && !isHit)    // (공격 가능한지 자식에게 '질문')
                     {                        
                         Attack();    // -> Attack도 override 해서 자식 전용
                     }
@@ -206,6 +250,7 @@ public abstract class Enemy : LivingEntity
                         {
                             navMeshAgent.isStopped = false;
                             navMeshAgent.SetDestination(targetEntity.transform.position);
+                            Debug.Log("목적지설정");
                             if (PhotonNetwork.IsMasterClient)
                             {
                                 //pv.RPC("SyncRigidState", RpcTarget.Others, rb.position, rb.linearVelocity);
@@ -405,7 +450,7 @@ public abstract class Enemy : LivingEntity
 
     private IEnumerator FlashColor()
     {
-
+        Debug.Log("색깔"+originalColor);
        
         enemyRenderer.material.color = Color.red;
         
@@ -448,6 +493,9 @@ public abstract class Enemy : LivingEntity
         if (this is WoodMan woodman)
         {
             woodman.OnDamaged(attacker, damage);
+        }else if (this is StrawMagician strawMagician)
+        {
+            strawMagician.OnDamaged();
         }
     }
 
@@ -456,9 +504,20 @@ public abstract class Enemy : LivingEntity
     {
         if (dead) return;
         var stateInfo = enemyAnimator.GetCurrentAnimatorStateInfo(0);
-        if (stateInfo.IsTag("Attack")) return;
+        if (stateInfo.IsTag("Attack") || isAttacking || isHit) return;
+        isHit = true;
         enemyAnimator.SetTrigger("Hit");
-
+    }
+    public void TriggerOff()
+    {
+        enemyAnimator.ResetTrigger("Attack");
+        enemyAnimator.ResetTrigger("Skill1");
+        enemyAnimator.ResetTrigger("Skill2");
+    }
+    public void EndHit()
+    {
+        isHit = false;
+        isRotatingToTarget = true;
     }
     [PunRPC]
     public void RPC_SetDEF(float value)

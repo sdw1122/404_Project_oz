@@ -6642,9 +6642,6 @@ PrefabInstance:
       addedObject: {fileID: 375746185215400081}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 753201435753968830}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 4223970234186116999}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
@@ -6953,29 +6950,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 8139975940493471537}
---- !u!136 &753201435753968830
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7726197707958032316}
-  m_Material: {fileID: 13400000, guid: a11771833a5835a45b39bf2583b22249, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!143 &4223970234186116999
 CharacterController:
   m_ObjectHideFlags: 0
@@ -7039,6 +7013,7 @@ MonoBehaviour:
   isGrounded: 0
   isCharge: 0
   canMove: 1
+  moveDirection: {x: 0, y: 0, z: 0}
   jumpPressed: 0
   moveSpeed: 5
   jumpPower: 8
@@ -7214,6 +7189,7 @@ MonoBehaviour:
   chargeTime: 0
   maxChargeTime: 3
   minDistance: 0.5
+  canCharge: 1
   firePoint: {fileID: 5400129489395142459}
 --- !u!114 &7449891611214493504
 MonoBehaviour:

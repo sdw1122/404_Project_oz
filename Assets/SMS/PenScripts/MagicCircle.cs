@@ -55,21 +55,34 @@ public class MagicCircle : MonoBehaviour
             if (enemy != null)
             {
                 WoodMan woodMan = enemy as WoodMan;
-
+                StrawMagician strawMagician=enemy as StrawMagician;
+                
                 if (woodMan != null)
                 {
-                    if (woodMan._currentMode != WoodMan.WoodMan_Mode.Normal)
+                    if (woodMan._currentMode == WoodMan.WoodMan_Mode.Overheat)
                     {
                         enemy.isBinded = true;
                     }
                 }
-                else
+                else if(strawMagician==null)
                 {
                     enemy.isBinded = true;
+                }
+                if (strawMagician != null && !strawMagician.dead)
+                {
+                    strawMagician.RunFromBind();
                 }
 
                 targetsInCircle.Add(target);
             }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        var target = other.GetComponent<LivingEntity>();
+        if (target != null)
+        {
+            targetsInCircle.Remove(target);
         }
     }
 
@@ -80,12 +93,23 @@ public class MagicCircle : MonoBehaviour
         foreach (var target in targetsInCircle)
         {
             Enemy enemy = target as Enemy;
-            Rigidbody enemyRb = enemy.GetComponent<Rigidbody>();
+            WoodMan woodMan = enemy as WoodMan;
+            StrawMagician strawMagician = enemy as StrawMagician;
+            
             if (enemy != null)
             {
-              
-                enemy.isBinded = false;
-                
+
+                if (woodMan != null)
+                {
+                    if (woodMan._currentMode == WoodMan.WoodMan_Mode.Overheat)
+                    {
+                        enemy.isBinded = false;
+                    }
+                }else if (strawMagician == null)
+                {
+                    enemy.isBinded = false;
+                }
+
             }
         }
 
@@ -107,12 +131,15 @@ public class MagicCircle : MonoBehaviour
 
                         PhotonView enemyPv = target.GetComponent<PhotonView>();
                         Enemy enemy = target.GetComponent<Enemy>();
-
+                        StrawMagician strawMagician = enemy as StrawMagician;
                         if (enemyPv != null && !enemy.dead)
                         {
 
                             enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal,ownerViewID);
-                            enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
+                            if (strawMagician == null)
+                            {
+                                enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
+                            }
                             enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
                             
                         }

@@ -8,27 +8,54 @@ public class CoolantSprayer : MonoBehaviour
     [Tooltip("냉각수 분사 효과를 위한 파티클 시스템을 연결하세요.")]
     [SerializeField] private ParticleSystem coolantEffect;
 
-    [Tooltip("분사 효과가 지속될 시간(초)입니다.")]
-    [SerializeField] private float sprayDuration = 5f;
+    // ----- [수정됨] 분사 지속 시간 설정 -----
+    [Tooltip("분사 효과가 지속될 시간(초)입니다. 이 값을 직접 설정할 수 있습니다.")]
+    [SerializeField] private float sprayDuration = 5f; // 기본값 5초로 설정
+
+    [Header("충돌 설정")]
+    [Tooltip("활성화/비활성화할 콜라이더를 연결하세요. (보통 Box Collider)")]
+    [SerializeField] private Collider sprayCollider;
 
     private bool isSpraying = false;
+
+    void Awake()
+    {
+        if (sprayCollider != null)
+        {
+            sprayCollider.enabled = false;
+        }
+        else
+        {
+            Debug.LogError($"'{gameObject.name}' 오브젝트에 sprayCollider가 연결되지 않았습니다!", this);
+        }
+    }
 
     // 레버에 의해 호출되는 메서드
     public void StartSpray()
     {
         if (isSpraying) return;
 
-        // 시각 효과 재생
         if (coolantEffect != null)
         {
             coolantEffect.Play();
         }
 
-        isSpraying = true;
-        Invoke(nameof(StopSpray), sprayDuration);
+        if (sprayCollider != null)
+        {
+            sprayCollider.enabled = true;
+        }
 
-        // 분사 범위 내의 보스를 찾아 약화 상태로 만듦
-        //CheckForBoss();
+        isSpraying = true;
+
+        // ----- [수정됨] 이제 파티클 시스템이 아닌, 직접 설정한 sprayDuration 값을 사용합니다. -----
+        if (sprayDuration > 0)
+        {
+            Invoke(nameof(StopSpray), sprayDuration);
+        }
+        else
+        {
+            StopSpray();
+        }
     }
 
     // 분사 효과를 멈추는 메서드
@@ -38,29 +65,12 @@ public class CoolantSprayer : MonoBehaviour
         {
             coolantEffect.Stop();
         }
+
+        if (sprayCollider != null)
+        {
+            sprayCollider.enabled = false;
+        }
+
         isSpraying = false;
     }
-
-    // 분사 범위 내에 보스가 있는지 확인하는 메서드
-    /*private void CheckForBoss()
-    {
-        // 이 스크립트가 붙은 객체에 설정된 Collider를 트리거로 사용
-        Collider[] hitColliders = Physics.OverlapBox(transform.position, transform.localScale / 2, transform.rotation);
-
-        foreach (var hitCollider in hitColliders)
-        {
-            // "Boss" 태그를 가진 객체를 찾음 (보스 객체에 태그 설정 필요)
-            if (hitCollider.CompareTag("Boss"))
-            {
-                // 보스의 PhotonView를 찾아 RPC 호출
-                PhotonView bossPv = hitCollider.GetComponent<PhotonView>();
-                if (bossPv != null)
-                {
-                    // 보스 스크립트에 있는 'ApplyWeakness'와 같은 약화 메서드를 RPC로 호출
-                    bossPv.RPC("ApplyWeakness", RpcTarget.All, sprayDuration);
-                }
-                break; // 보스를 한 번만 찾으면 루프 종료
-            }
-        }
-    }*/
 }

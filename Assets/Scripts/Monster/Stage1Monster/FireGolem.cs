@@ -14,12 +14,12 @@ public class FireGolem : Enemy
     private float groundAttackTime = 6f;
     public float groundAttackCoolTime = 3f;
     public float hitTime = 0f;
-
-    public bool isAttacking = false;
+    
     public bool isIce = false;
 
     public override void Update()
     {
+        base.Update();
         if (armAttackCoolTime < armAttackTime)
         {
             armAttackCoolTime += Time.deltaTime;
@@ -62,7 +62,7 @@ public class FireGolem : Enemy
                 {
                     enemyAnimator.SetFloat("Move", 0f); // 공격 전 Idle자세
                     pv.RPC("RPC_BlendIdle", RpcTarget.Others, 0f);
-                    if (CanAct())    // (공격 가능한지 자식에게 '질문')
+                    if (CanAct() && !isHit)    // (공격 가능한지 자식에게 '질문')
                     {
                         Attack();    // -> Attack도 override 해서 자식 전용
                     }
@@ -150,34 +150,27 @@ public class FireGolem : Enemy
         if (targetEntity == null || dead) return;
         Debug.Log("Attacking");
 
-        // 공격 시 항상 타겟 바라보기
-        Vector3 dir = targetEntity.transform.position - transform.position;
-        dir.y = 0;
-        if (dir != Vector3.zero)
-        {
-            float lerpSpeed = 8f;
-            Quaternion targetRot = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, Time.deltaTime * lerpSpeed);
-        }
+        isRotatingToTarget = true;
+        pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
 
         float dist = Vector3.Distance(transform.position, targetEntity.transform.position);
         if (dist <= groundAttackRange && groundAttackCoolTime >= groundAttackTime)
         {
-            // 애니메이션 필요
-            pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
-            pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
+            // 애니메이션 필요     
             enemyAnimator.SetTrigger("Skill");
             pv.RPC("RPC_GolemSkill", RpcTarget.Others);
             isAttacking = true;            
         }
         else if (dist <= armAttackRange && armAttackCoolTime >= armAttackTime)
         {
-            // 애니메이션 필요
-            pv.RPC("SyncLookRotation", RpcTarget.Others, transform.rotation);
-            pv.RPC("RPC_SetNavMesh", RpcTarget.All, false);
+            // 애니메이션 필요    
             enemyAnimator.SetTrigger("Attack");
             pv.RPC("RPC_GolemAttack", RpcTarget.Others);
             isAttacking = true;            
+        }
+        else
+        {
+            pv.RPC("RPC_SetNavMesh", RpcTarget.All, true);
         }
 
     }
@@ -354,9 +347,6 @@ public class FireGolem : Enemy
         {
             obstacle.enabled = !active;
             navMeshAgent.enabled = active;
-            // NavMeshAgent 다시 활성화할 때 위치 동기화 필수!
-            if (navMeshAgent.isOnNavMesh)
-                navMeshAgent.Warp(transform.position);
         }
         else
         {
