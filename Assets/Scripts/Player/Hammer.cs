@@ -128,7 +128,6 @@ public class Hammer : MonoBehaviour
             }
             Skill1(skill1);
             animator.SetTrigger("Charge Attack");
-            Invoke("DisableWeapon", 0.8f);
             pv.RPC("RPC_TriggerEraserChargeAttack", RpcTarget.Others);
             playerController.canMove = true;
             skill1CoolDownTimer = 0;
@@ -245,7 +244,7 @@ public class Hammer : MonoBehaviour
 
     public void Attack()
     {
-        if (!canAttack)
+        if (!canAttack || !playerController.IsGrounded())
             return;
         Debug.Log("Attacking");
         // 2초 이상 공격 안 했으면 1타로 초기화
