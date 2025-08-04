@@ -255,9 +255,21 @@ public class WoodMan : Enemy
     }
     void UpdateAggroTarget()
     {
-        GameObject target = aggroSystem.GetTopAggroTarget();
-        if (target != null)
-            targetEntity = target.GetComponent<LivingEntity>();
+        GameObject newTargetObject = aggroSystem.GetTopAggroTarget();
+
+        // 새로 찾은 타겟이 있고 (null이 아니고),
+        // 그 타겟이 현재 타겟과 다를 경우에만 동기화
+        if (newTargetObject != null)
+        {
+            LivingEntity newTargetEntity = newTargetObject.GetComponent<LivingEntity>();
+
+            // targetEntity가 아직 없거나, 새로 찾은 타겟과 다를 때만 RPC 호출
+            if (newTargetEntity != null && targetEntity != newTargetEntity)
+            {
+                // 부모(Enemy.cs)의 SetTarget RPC를 호출하여 모든 클라이언트의 타겟을 동기화
+                pv.RPC("SetTarget", RpcTarget.All, newTargetEntity.GetComponent<PhotonView>().ViewID);
+            }
+        }
     }
     private void OnTriggerEnter(Collider other)
     {

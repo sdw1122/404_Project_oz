@@ -30,6 +30,24 @@ public class WoodmanBossManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        if (bossUIPrefab != null)
+        {
+
+            GameObject uiInstance = Instantiate(bossUIPrefab);
+            BossUIController uiController = uiInstance.GetComponent<BossUIController>();
+
+            // WoodMan.cs가 UI를 직접 제어하도록 참조를 넘겨줍니다.
+            if (uiController != null)
+            {
+                Debug.Log("BossUIController를 찾았습니다. Setup을 호출합니다.");
+                uiController.Setup(woodmanBoss);
+            }
+            else
+            {
+                Debug.LogError("생성된 UI 프리팹에서 BossUIController 컴포넌트를 찾지 못했습니다!");
+            }
+        }
+
         // 마스터 클라이언트만 보스전 로직을 시작합니다.
         if (PhotonNetwork.IsMasterClient)
         {
@@ -41,23 +59,7 @@ public class WoodmanBossManager : MonoBehaviourPunCallbacks
             }
 
             // ▼▼▼ [수정] 보스 UI 생성 및 설정 ▼▼▼
-            if (bossUIPrefab != null)
-            {
-
-                GameObject uiInstance = Instantiate(bossUIPrefab);
-                BossUIController uiController = uiInstance.GetComponent<BossUIController>();
-
-                // WoodMan.cs가 UI를 직접 제어하도록 참조를 넘겨줍니다.
-                if (uiController != null)
-                {
-                    Debug.Log("BossUIController를 찾았습니다. Setup을 호출합니다.");
-                    uiController.Setup(woodmanBoss);
-                }
-                else
-                {
-                    Debug.LogError("생성된 UI 프리팹에서 BossUIController 컴포넌트를 찾지 못했습니다!");
-                }
-            }
+            
 
             // 몬스터 소환 시작
             spawnCoroutine = StartCoroutine(SpawnMonstersRoutine());
