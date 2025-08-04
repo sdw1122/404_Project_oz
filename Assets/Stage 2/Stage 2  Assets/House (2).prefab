@@ -2028,6 +2028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 539279108589241215}
+  - component: {fileID: 6635957742528814646}
   m_Layer: 0
   m_Name: House (2)
   m_TagString: Untagged
@@ -2051,6 +2052,27 @@ Transform:
   - {fileID: 721103396700831283}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6635957742528814646
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4682480547912268926}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 30, y: 45, z: 30}
+  m_Center: {x: -15, y: 20, z: -15}
 --- !u!1 &4703272137504332052
 GameObject:
   m_ObjectHideFlags: 0
