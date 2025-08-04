@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ca32c1122ba07f94f8e1633d85222ccb
+timeCreated: 1483404260
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 79686
+  packageName: Glowing Forest
+  packageVersion: 1.0
+  assetPath: Assets/SkythianCat/Glowing_Forest/Prefabs/Props/Streetlight_ON.prefab
+  uploadId: 166613

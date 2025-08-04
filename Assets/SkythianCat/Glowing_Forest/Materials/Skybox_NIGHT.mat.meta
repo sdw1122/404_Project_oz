@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 538e81a3dd9acdc428c9dcefcbb6f566
+timeCreated: 1483387826
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 79686
+  packageName: Glowing Forest
+  packageVersion: 1.0
+  assetPath: Assets/SkythianCat/Glowing_Forest/Materials/Skybox_NIGHT.mat
+  uploadId: 166613

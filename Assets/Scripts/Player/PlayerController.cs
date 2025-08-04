@@ -468,8 +468,9 @@ public class PlayerController : MonoBehaviour
 
             /* 방법 B : 다운-슬라이드 강제 */
             Vector3 slide = Vector3.ProjectOnPlane(Vector3.down, n).normalized * slideSpeed;
-            moveDirection.x += slide.x;
+            moveDirection.x += slide.x; 
             moveDirection.z += slide.z;
+            moveDirection.y += slide.y;
         }
     }
     private IEnumerator DestroyJumpEffect()

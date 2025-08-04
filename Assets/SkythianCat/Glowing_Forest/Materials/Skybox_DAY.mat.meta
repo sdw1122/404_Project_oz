@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5c378e2ef25ab334a88daa47d032b24b
+timeCreated: 1483387826
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 79686
+  packageName: Glowing Forest
+  packageVersion: 1.0
+  assetPath: Assets/SkythianCat/Glowing_Forest/Materials/Skybox_DAY.mat
+  uploadId: 166613
