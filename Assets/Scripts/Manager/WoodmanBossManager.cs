@@ -20,6 +20,10 @@ public class WoodmanBossManager : MonoBehaviourPunCallbacks
     [Tooltip("몬스터 소환 간격 (초)")]
     [SerializeField] private float spawnInterval = 5f;
 
+    [Header("UI 설정")]
+    [Tooltip("화면에 생성할 보스 UI 프리팹을 연결하세요.")]
+    [SerializeField] private GameObject bossUIPrefab;
+
     // --- 내부 변수 ---
     private Coroutine spawnCoroutine;
     private bool isBossDead = false;
@@ -29,10 +33,30 @@ public class WoodmanBossManager : MonoBehaviourPunCallbacks
         // 마스터 클라이언트만 보스전 로직을 시작합니다.
         if (PhotonNetwork.IsMasterClient)
         {
+            Debug.Log("WoodmanBossManager 시작! 보스: " + (woodmanBoss != null ? woodmanBoss.name : "없음") + ", UI 프리팹: " + (bossUIPrefab != null ? bossUIPrefab.name : "없음"));
             if (woodmanBoss == null || monsterSpawner == null)
             {
                 Debug.LogError("WoodmanBossManager에 보스 또는 몬스터 스포너가 연결되지 않았습니다!");
                 return;
+            }
+
+            // ▼▼▼ [수정] 보스 UI 생성 및 설정 ▼▼▼
+            if (bossUIPrefab != null)
+            {
+
+                GameObject uiInstance = Instantiate(bossUIPrefab);
+                BossUIController uiController = uiInstance.GetComponent<BossUIController>();
+
+                // WoodMan.cs가 UI를 직접 제어하도록 참조를 넘겨줍니다.
+                if (uiController != null)
+                {
+                    Debug.Log("BossUIController를 찾았습니다. Setup을 호출합니다.");
+                    uiController.Setup(woodmanBoss);
+                }
+                else
+                {
+                    Debug.LogError("생성된 UI 프리팹에서 BossUIController 컴포넌트를 찾지 못했습니다!");
+                }
             }
 
             // 몬스터 소환 시작

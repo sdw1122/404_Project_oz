@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8f9905bf996cdc74cb9766b8781e580e
+timeCreated: 1483398641
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 79686
+  packageName: Glowing Forest
+  packageVersion: 1.0
+  assetPath: Assets/SkythianCat/Glowing_Forest/Prefabs/Props/Fence.prefab
+  uploadId: 166613

@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     public GameObject playerObj;
     public Camera mainCamera;
     public GameObject deadCamera;
-    public Transform foot;
     public float walkSpeed = 10f;
     public float runSpeed;
     public float mouseSensitivity = 0.5f;
@@ -54,7 +53,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem slowEffect;
     public GameObject jumpEffect;
     private GameObject jumpEffectins;
-    
+
     [PunRPC]
     public void SetJob(string _job)
     {
@@ -218,15 +217,7 @@ public class PlayerController : MonoBehaviour
         if (context.performed)
         {
             healingRay.FireHealingRay();
-            animator.SetTrigger("Interactive");
-            pv.RPC("RPC_HealAnimation", RpcTarget.Others);
         }
-    }
-
-    [PunRPC]
-    void RPC_HealAnimation()
-    {
-        animator.SetTrigger("Interactive");
     }
     void Start()
     {
@@ -306,51 +297,22 @@ public class PlayerController : MonoBehaviour
             inputDir = Vector3.ClampMagnitude(inputDir, 1f);
             Vector3 worldDir = transform.TransformDirection(inputDir) * moveSpeed;
 
-            moveDirection.x = worldDir.x;
-            moveDirection.z = worldDir.z;
-
-            if (controller.isGrounded)
-            {   
-                moveDirection.y = worldDir.y;
-
-                if (jumpBufferCounter > 0)
-                {
-                    moveDirection.y = jumpPower;
-                    jumpBufferCounter = 0;
-                    animator.SetBool("Float", true);
-                    pv.RPC("RPC_SetFloat", RpcTarget.Others, true);
-                }
-                else
-                {
-                    animator.SetBool("Float", false);
-                    pv.RPC("RPC_SetFloat", RpcTarget.Others, false);
-                }
-            }
-
-            moveDirection.y -= gravity * Time.deltaTime;
-            isGrounded=controller.isGrounded;
-            HandleSlope();
-
-            controller.Move(moveDirection * Time.deltaTime);
-        }
-        else
-        {
-            // x,z 이동은 막지만, 중력은 계속 적용
-            moveDirection.x = 0f;
-            moveDirection.z = 0f;
-
-            if (!controller.isGrounded)
+            //경사 미끄러짐 관리
+            Vector3 groundNormal = Vector3.up;
+            bool steepSlope = controller.isGrounded && OnTooSteepGround(out groundNormal);
+            if (steepSlope)
             {
-                moveDirection.y -= gravity * Time.deltaTime;
+                // 경사면 전용 이동 처리
+                HandleSlopeMovement(groundNormal);
             }
             else
             {
-                moveDirection.y = -1f; // 바닥에 있을 때 고정
+                HandleNormalMovement(worldDir);
             }
+            isGrounded = controller.isGrounded;
 
             controller.Move(moveDirection * Time.deltaTime);
         }
-
     }
     // 넉백 함수
     [PunRPC]
@@ -361,7 +323,9 @@ public class PlayerController : MonoBehaviour
         knockbackTimer = duration;
 
         isKnockbacked = true;
-        knockbackEffect.Play();
+
+     
+       
     }
     // 슬로우 함수
     [PunRPC]
@@ -376,7 +340,6 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator slowRoutine(float amount,float duration)
     {
-        slowEffect.Play();
         float slowFactor = 1f - amount;
         moveSpeed = originalSpeed * (1f-amount);
         /*runSpeed =1.5f*originalSpeed * (1f - amount);*/
@@ -389,7 +352,6 @@ public class PlayerController : MonoBehaviour
         runSpeed = originalSpeed * 1.5f;
         slowCoroutine = null;
         Debug.Log("속도 복구 완료 :"+moveSpeed);
-        slowEffect.Stop();
     }
     //
     public void ResetMoveInput()
@@ -488,21 +450,53 @@ public class PlayerController : MonoBehaviour
         groundNormal = Vector3.up;
         return false;
     }
-
-    void HandleSlope()
+    void HandleSlopeMovement(Vector3 groundNormal)
     {
-        Vector3 n;
-        if (controller.isGrounded && OnTooSteepGround(out n))
-        {
-            ///* 방법 A : 접지 해제 → 중력으로 굴러떨어짐 */
-            //moveDirection.y = 0f;              // 위로 기운 속도 제거
-            //controller.Move(Vector3.zero); // 먼저 위치 갱신
-            //isGrounded = false;          // 내부 플래그(직접 쓰는 경우)
+        // 슬라이드 방향과 속도 계산
+        float slopeAngle = Vector3.Angle(groundNormal, Vector3.up);
+        float slideMultiplier = Mathf.Lerp(1f, 2.5f, (slopeAngle - controller.slopeLimit) / (90f - controller.slopeLimit));
 
-            /* 방법 B : 다운-슬라이드 강제 */
-            Vector3 slide = Vector3.ProjectOnPlane(Vector3.down, n).normalized * slideSpeed;
-            moveDirection.x += slide.x;
-            moveDirection.z += slide.z;
+        Vector3 slideDirection = Vector3.ProjectOnPlane(Vector3.down, groundNormal).normalized;
+        Vector3 slideVelocity = slideDirection * slideSpeed * slideMultiplier;
+
+        moveDirection = slideVelocity;
+
+        // 경사면에서 강제 하향력 적용 (떨림 방지의 핵심!)
+        float slopeForce = 5f; // 조절 가능한 값
+        moveDirection.y = slideVelocity.y - (controller.height * 0.5f * slopeForce);
+
+        // 추가 하향력으로 지면 밀착 강화
+        controller.Move(Vector3.down * slopeForce * Time.deltaTime);
+
+        // 경사면에서는 점프 금지
+        animator.SetBool("Float", false);
+        pv.RPC("RPC_SetFloat", RpcTarget.Others, false);
+    }
+
+    void HandleNormalMovement(Vector3 worldDir)
+    {
+        moveDirection.x = worldDir.x;
+        moveDirection.z = worldDir.z;
+
+        if (controller.isGrounded)
+        {
+            if (jumpBufferCounter > 0)
+            {
+                moveDirection.y = jumpPower;
+                jumpBufferCounter = 0;
+                animator.SetBool("Float", true);
+                pv.RPC("RPC_SetFloat", RpcTarget.Others, true);
+            }
+            else
+            {
+                moveDirection.y = -0.5f;
+                animator.SetBool("Float", false);
+                pv.RPC("RPC_SetFloat", RpcTarget.Others, false);
+            }
+        }
+        else
+        {
+            moveDirection.y -= gravity * Time.deltaTime;
         }
     }
     private IEnumerator DestroyJumpEffect()
@@ -511,19 +505,19 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         Destroy(jumpEffectins);
     }
-    public void SpawnDust()
-    {
-        // 1) 위치 & 회전 결정
-        Vector3 pos = foot.position;
-        // 땅 노말을 따서 정렬하고 싶다면 Raycast로 hit.normal 사용 가능
-        Quaternion rot = Quaternion.LookRotation(Vector3.forward);
+    //public void SpawnDust()
+    //{
+    //    // 1) 위치 & 회전 결정
+    //    Vector3 pos = foot.position;
+    //    // 땅 노말을 따서 정렬하고 싶다면 Raycast로 hit.normal 사용 가능
+    //    Quaternion rot = Quaternion.LookRotation(Vector3.forward);
 
-        // 2) 풀에서 꺼내
-        var go = DustPool.Instance.GetDust(pos, rot);
+    //    // 2) 풀에서 꺼내
+    //    var go = DustPool.Instance.GetDust(pos, rot);
 
-        // 3) 재생 시간만큼 뒤에 반납
-        var ps = go.GetComponent<ParticleSystem>();
-        float dur = ps.main.duration + ps.main.startLifetime.constantMax;
-        DustPool.Instance.ReturnDust(go, dur);
-    }
+    //    // 3) 재생 시간만큼 뒤에 반납
+    //    var ps = go.GetComponent<ParticleSystem>();
+    //    float dur = ps.main.duration + ps.main.startLifetime.constantMax;
+    //    DustPool.Instance.ReturnDust(go, dur);
+    //}
 }

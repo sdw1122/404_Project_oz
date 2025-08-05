@@ -38,6 +38,10 @@ public class WoodMan : Enemy
     }*/
     [SerializeField] private WoodMan_State _currentState;
     [SerializeField] public WoodMan_Mode _currentMode;
+
+    [HideInInspector] // Inspector 창에서는 숨김
+    public float groggyRemainingTime = 0f;
+
     public override void Awake()
     {
         base.Awake();
@@ -210,16 +214,20 @@ public class WoodMan : Enemy
         isBinded = true;
         animator.SetTrigger("Groggy");
 
-        
-        yield return new WaitForSeconds(groggyTime);
+        // --- 타이머 로직 추가 ---
+        float timer = groggyTime;
+        while (timer > 0)
+        {
+            groggyRemainingTime = timer; // 남은 시간을 계속 업데이트
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+        groggyRemainingTime = 0; // 타이머 종료
+        // --- 타이머 로직 끝 ---
 
-       
         animator.SetTrigger("Awake");
-
-        
         yield return new WaitForSeconds(2.767f);
 
-        
         SetMode(WoodMan_Mode.Normal);
         isBinded = false;
     }

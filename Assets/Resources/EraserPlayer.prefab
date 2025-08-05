@@ -6297,7 +6297,6 @@ MonoBehaviour:
   playerObj: {fileID: 1100591750975983674}
   mainCamera: {fileID: 9208752162825375673}
   deadCamera: {fileID: 2644813597406364153}
-  foot: {fileID: 3601988123414445552}
   walkSpeed: 10
   runSpeed: 15
   mouseSensitivity: 0.5
@@ -6312,9 +6311,6 @@ MonoBehaviour:
   gravity: 20
   slideSpeed: 5
   job: 
-  knockbackEffect: {fileID: 8055080864472481139}
-  slowEffect: {fileID: 574614039159805082}
-  jumpEffect: {fileID: 2661852520061383647, guid: fca001ac3e2d0074ca6bcf31973982ff, type: 3}
 --- !u!114 &838222234075561870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6997,11 +6993,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 328558227413381630, guid: 027b345240469404fa8cc9a10eee3b3f, type: 3}
   m_PrefabInstance: {fileID: 5762770750237137623}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &8055080864472481139 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 2319384772025575332, guid: 027b345240469404fa8cc9a10eee3b3f, type: 3}
-  m_PrefabInstance: {fileID: 5762770750237137623}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6007788604283795875
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7240,11 +7231,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f197d6dd8c0771248a5a58092d5551f3, type: 3}
---- !u!198 &574614039159805082 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7551388611195229131, guid: f197d6dd8c0771248a5a58092d5551f3, type: 3}
-  m_PrefabInstance: {fileID: 8012637670837208913}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3897841163585538419 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6423666203348373026, guid: f197d6dd8c0771248a5a58092d5551f3, type: 3}
