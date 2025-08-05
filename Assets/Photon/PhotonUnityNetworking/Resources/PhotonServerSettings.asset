@@ -176,6 +176,12 @@ MonoBehaviour:
   - OnAimingRPC
   - StopAimingRPC
   - StartAimingRPC
+  - RPC_DeactivateObstacle
+  - RPC_ActivateDevice
+  - RPC_RegisterInteraction
+  - RPC_ResetDevice
+  - RPC_DeactivateWall
+  - RPC_ToggleWall
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

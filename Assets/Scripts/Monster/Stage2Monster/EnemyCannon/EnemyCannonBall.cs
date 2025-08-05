@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyCannonBall : MonoBehaviour
 {
-    float damage;
+    public float damage;
     float speed;
     public float duration = 5f;
     public float explosionRadius = 3f;
