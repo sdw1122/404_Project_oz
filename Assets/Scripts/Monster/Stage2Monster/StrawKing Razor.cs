@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class StrawKingRazor : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class StrawKingRazor : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+
     public void RazorCharge()
     {
         animator.speed = 0f;
@@ -20,7 +22,6 @@ public class StrawKingRazor : MonoBehaviour
         {
             var CEmain = particleSystem.main;
             CEmain.duration = chargeTime;
-            CEmain.startLifetime = chargeTime;
             particleSystem.Play();
         }
         StartCoroutine(AfterCharge());
