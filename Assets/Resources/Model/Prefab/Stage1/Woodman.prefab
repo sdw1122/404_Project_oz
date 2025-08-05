@@ -276,6 +276,101 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.007844241, y: 0.0026260822, z: 0.019974392}
   m_Center: {x: 0.00003878644, y: 0.000009370039, z: 0.0000029383182}
+--- !u!1001 &3570692236651850917
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7343284481747415768}
+    m_Modifications:
+    - target: {fileID: 4932088507883938021, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: m_Name
+      value: ShockWave circle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984980826245493072, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984980826245493072, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984980826245493072, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984980826245493072, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984980826245493072, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984980826245493072, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984980826245493072, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984980826245493072, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984980826245493072, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984980826245493072, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7412180122720427599, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: scalingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7412180122720427599, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: simulationSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7412180122720427599, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7412180122720427599, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: InitialModule.startSizeZ.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8977316153704399556, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: scalingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8977316153704399556, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: simulationSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8977316153704399556, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+--- !u!198 &5555314187171638881 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8977316153704399556, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+  m_PrefabInstance: {fileID: 3570692236651850917}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8404719718864133621 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4984980826245493072, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+  m_PrefabInstance: {fileID: 3570692236651850917}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7089280616936248627
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -298,7 +393,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d99754217ae3e114fa85a6c1f4f6e465, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.6035879
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d99754217ae3e114fa85a6c1f4f6e465, type: 3}
       propertyPath: m_LocalPosition.y
@@ -306,7 +401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d99754217ae3e114fa85a6c1f4f6e465, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.347029
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d99754217ae3e114fa85a6c1f4f6e465, type: 3}
       propertyPath: m_LocalRotation.w
@@ -368,6 +463,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d99754217ae3e114fa85a6c1f4f6e465, type: 3}
       insertIndex: -1
       addedObject: {fileID: 356502099582631341}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d99754217ae3e114fa85a6c1f4f6e465, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8404719718864133621}
     - targetCorrespondingSourceObject: {fileID: -1070350730909333850, guid: d99754217ae3e114fa85a6c1f4f6e465, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4256635647795789498}
@@ -615,7 +713,8 @@ MonoBehaviour:
   knockbackUpwardForce: 5
   knockbackDuration: 2
   skillRangeYOffset: 1
-  skillCooldown: 8
+  skillCooldown: 5
+  skillEffect: {fileID: 5555314187171638881}
 --- !u!114 &3115222663461090094
 MonoBehaviour:
   m_ObjectHideFlags: 0

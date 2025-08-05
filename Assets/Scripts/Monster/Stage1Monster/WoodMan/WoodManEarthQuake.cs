@@ -9,11 +9,12 @@ public class WoodManEarthQuake : MonoBehaviour
     public float knockbackUpwardForce = 10f;
     public float knockbackDuration = 2f; // 넉백 시간
     public float skillRangeYOffset = 1f;
+
     [Header("쿨타임")]
-    
     public float skillCooldown = 8f;
     
     private Animator animator;
+    public ParticleSystem skillEffect;
     private WoodMan woodMan; // WoodMan 스크립트 참조
     private float lastSkillTime; // 마지막 스킬 사용 시간 (네트워크 동기화 필요)
 
@@ -77,6 +78,11 @@ public class WoodManEarthQuake : MonoBehaviour
             Debug.Log(targetLivingEntity);
 
         }
+    }
+
+    void PlaySkill2Effect()
+    {
+        skillEffect.Play();
     }
     
     void ApplyKnockback(LivingEntity target,Vector3 pos)
