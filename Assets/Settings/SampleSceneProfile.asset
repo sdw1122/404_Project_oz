@@ -18,7 +18,7 @@ MonoBehaviour:
     m_Value: 0
   threshold:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.7
   intensity:
     m_OverrideState: 1
     m_Value: 1
@@ -71,7 +71,7 @@ MonoBehaviour:
     m_Value: {r: 1, g: 0.8745098, b: 0.78431374, a: 1}
   hueShift:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 5
   saturation:
     m_OverrideState: 1
     m_Value: 10
