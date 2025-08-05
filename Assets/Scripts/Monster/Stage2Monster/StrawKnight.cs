@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using Photon.Pun;
-using UnityEditor.ShaderGraph.Internal;
 
 public class StrawKnight : Enemy
 {

@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     public GameObject playerObj;
     public Camera mainCamera;
     public GameObject deadCamera;
-    public Transform foot;
     public float walkSpeed = 10f;
     public float runSpeed;
     public float mouseSensitivity = 0.5f;
@@ -218,15 +217,7 @@ public class PlayerController : MonoBehaviour
         if (context.performed)
         {
             healingRay.FireHealingRay();
-            animator.SetTrigger("Interactive");
-            pv.RPC("RPC_HealAnimation", RpcTarget.Others);
         }
-    }
-
-    [PunRPC]
-    void RPC_HealAnimation()
-    {
-        animator.SetTrigger("Interactive");
     }
     void Start()
     {
@@ -332,7 +323,9 @@ public class PlayerController : MonoBehaviour
         knockbackTimer = duration;
 
         isKnockbacked = true;
-        knockbackEffect.Play();
+
+     
+       
     }
     // 슬로우 함수
     [PunRPC]
@@ -347,7 +340,6 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator slowRoutine(float amount,float duration)
     {
-        slowEffect.Play();
         float slowFactor = 1f - amount;
         moveSpeed = originalSpeed * (1f-amount);
         /*runSpeed =1.5f*originalSpeed * (1f - amount);*/
@@ -360,7 +352,6 @@ public class PlayerController : MonoBehaviour
         runSpeed = originalSpeed * 1.5f;
         slowCoroutine = null;
         Debug.Log("속도 복구 완료 :"+moveSpeed);
-        slowEffect.Stop();
     }
     //
     public void ResetMoveInput()
