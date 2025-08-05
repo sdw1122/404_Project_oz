@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 55e2bd5103b0fb4448bec460c72b2fd1
+timeCreated: 1473946157
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 149788
+  packageName: PBR Log
+  packageVersion: 1.0
+  assetPath: Assets/Materials/WoodLog/Scene/Sky1.mat
+  uploadId: 318563

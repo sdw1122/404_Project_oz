@@ -153,7 +153,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("MainScene"); // 메인 씬으로 전환
+            PhotonNetwork.LoadLevel("TutorialScene"); // 메인 씬으로 전환
         }
     }
 
