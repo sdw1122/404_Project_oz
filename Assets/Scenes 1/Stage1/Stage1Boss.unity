@@ -1374,6 +1374,10 @@ PrefabInstance:
       value: Tin Man, The Heartless Automaton
       objectReference: {fileID: 0}
     - target: {fileID: 3409697527030605058, guid: 52635194ca69f56429c264da7223b122, type: 3}
+      propertyPath: destroyDelay
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3409697527030605058, guid: 52635194ca69f56429c264da7223b122, type: 3}
       propertyPath: startingHealth
       value: 1000
       objectReference: {fileID: 0}
@@ -3065,8 +3069,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.05273334, y: 1.0285523, z: 0.041862216}
-  m_Center: {x: -0.00500177, y: -0.004330179, z: 0.047803074}
+  m_Size: {x: 0.06227197, y: 1.0285523, z: 0.052658338}
+  m_Center: {x: -0.0002324694, y: -0.004330179, z: 0.04240504}
 --- !u!1 &930131578
 GameObject:
   m_ObjectHideFlags: 0
