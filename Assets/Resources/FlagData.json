@@ -1,0 +1,16 @@
+{
+  "flags": [
+    {
+      "label": "Stage1_FlagA",
+      "scene": "Stage1"
+    },
+    {
+      "label": "Stage1_FlagB",
+      "scene": "Stage1"
+    },
+    {
+      "label": "TestFlag_A",
+      "scene": "MainScene"
+    }
+  ]
+}
