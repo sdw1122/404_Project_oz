@@ -4,7 +4,7 @@ using static LobbyManager;
 
 public class GameManager : MonoBehaviourPun
 {
-    Vector3 spawnPos = new Vector3(505, 5.5f, 197);
+    Vector3 spawnPos = new Vector3(77, -1.5f, 0.7f);
     PlayerSaveData savedData;
     void Start()
     {        
