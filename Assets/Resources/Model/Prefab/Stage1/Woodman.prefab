@@ -665,6 +665,7 @@ MonoBehaviour:
   minChaseDistance: 0.5
   _currentState: 0
   _currentMode: 0
+  groggyRemainingTime: 0
 --- !u!114 &4919654844752762113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,7 +799,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &-8637856111022677779
 MonoBehaviour:

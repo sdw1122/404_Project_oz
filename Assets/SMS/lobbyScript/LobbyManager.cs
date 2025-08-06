@@ -157,6 +157,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void Stage2Scene()
+    {
+        if(PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Stage2"); // Stage2으로 전환
+        }
+    }
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         UpdatePlayerList();

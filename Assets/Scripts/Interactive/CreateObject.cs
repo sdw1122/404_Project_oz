@@ -9,7 +9,7 @@ public class CreateObject : InteractableBase
 
     [Tooltip("오브젝트가 생성될 위치를 지정합니다. 지정하지 않으면 이 오브젝트의 위치에 생성됩니다.")]
     [SerializeField] private Transform spawnPoint;
-    private string resourcePath = "test";
+    private string resourcePath = "test/";
     private bool isUsed = false; // 중복 생성을 막기 위한 플래그
 
     protected override void Awake()
