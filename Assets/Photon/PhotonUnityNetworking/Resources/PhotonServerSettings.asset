@@ -182,6 +182,14 @@ MonoBehaviour:
   - RPC_ResetDevice
   - RPC_DeactivateWall
   - RPC_ToggleWall
+  - SaveFlagRPC
+  - SaveFlagGetSpawnPos
+  - RPC_ShowUnlockedFlags
+  - setFlagLabelRPC
+  - SyncClickedFlag
+  - ReceiveDataFromMaster
+  - SendDataToClient
+  - ReceiveAndDelayResurrect
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

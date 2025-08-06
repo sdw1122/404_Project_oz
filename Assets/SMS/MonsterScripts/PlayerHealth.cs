@@ -1,6 +1,9 @@
 using Photon.Pun;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static LobbyManager;
 
 public class PlayerHealth : LivingEntity
 {
@@ -11,6 +14,8 @@ public class PlayerHealth : LivingEntity
     private PlayerInput playerInput;
     public ParticleSystem resurrectionEffect;
     public ParticleSystem HealingEffect;
+    public float resurrectionDelay = 25f;
+    public Camera myDeadCam;
     private void Awake()
     {
         playerAnimator = GetComponent<Animator>();
@@ -33,7 +38,9 @@ public class PlayerHealth : LivingEntity
 
     public override void Resurrection()
     {
+       
         base.Resurrection();
+        
         resurrectionEffect.Play();
         pv.RPC("SetDeadState", RpcTarget.All, false);
         pv.RPC("RPC_TriggerPlayerResurrection", RpcTarget.All);
@@ -94,7 +101,7 @@ public class PlayerHealth : LivingEntity
 
     public override void Die()
     {
-        PJS_GameManager.Instance.photonView.RPC("ProcessPlayerDeath", RpcTarget.MasterClient);
+        /*PJS_GameManager.Instance.photonView.RPC("ProcessPlayerDeath", RpcTarget.MasterClient);*/
         // LivingEntity의 Die() 실행 (사망 적용)
         base.Die();
         dead = true;
@@ -126,8 +133,54 @@ public class PlayerHealth : LivingEntity
                 Debug.LogWarning("WoodMan을 씬에서 찾지 못함");
             }
         }
+        //죽은 사람이 마스터에게 요청
+        pv.RPC("SendDataToClient", RpcTarget.MasterClient,pv.Owner.UserId);
     }
- 
+    [PunRPC]
+    public void SendDataToClient(string userID)
+    {
+        PlayerSaveData data = SaveSystem.LoadPlayerData(userID);
+        string job = data.userJob;
+        string latestFlag = data.latestFlag;
+        pv.RPC("ReceiveAndDelayResurrect", pv.Owner, job, latestFlag);
+    }
+    [PunRPC]
+    public void ReceiveAndDelayResurrect(string job,string latestFlag)
+    {
+        if (!pv.IsMine) return;
+        if (!dead) return;
+        StartCoroutine(DelayedResurrection(resurrectionDelay,job,latestFlag));
+    }
+    private IEnumerator DelayedResurrection(float delay,string job,string latestFlag)
+    {   
+        Debug.Log("딜레이 부활 호출됨");
+        yield return new WaitForSeconds(delay);
+        if (!dead) yield break;
+        /*string userId = pv.Owner.UserId;
+        PlayerSaveData data = SaveSystem.LoadPlayerData(userId);*/
+
+       
+            
+            SaveFlag targetFlag = FindObjectsByType<SaveFlag>(default).FirstOrDefault(f => f.label == latestFlag);
+
+            if (targetFlag != null)
+            {
+                Transform spawn = targetFlag.SaveFlagGetSpawnPos(job);
+
+                if (pv.IsMine) // 위치 이동은 본인만
+                {
+                    CharacterController cc = GetComponent<CharacterController>();
+                    cc.enabled = false;
+                    transform.position = spawn.position;
+                    transform.rotation = spawn.rotation;
+                    cc.enabled = true;
+                    Debug.Log($"[Resurrection] 깃발 위치로 이동: {spawn.position}");
+                }
+            }
+            
+        
+        Resurrection();
+    }
 
     [PunRPC]
     public void DeadCamera()
@@ -135,6 +188,7 @@ public class PlayerHealth : LivingEntity
         if (pv.IsMine)
         {
             playerController.ActivateCamera();
+            
         }
     }
 

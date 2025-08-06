@@ -5368,6 +5368,7 @@ GameObject:
   - component: {fileID: 2313055031434233848}
   - component: {fileID: 3296681861811705785}
   - component: {fileID: 5352934568329687773}
+  - component: {fileID: 8998017240145108093}
   m_Layer: 0
   m_Name: Dead Camera
   m_TagString: Untagged
@@ -5507,6 +5508,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 200
   clampAngle: 90
+--- !u!114 &8998017240145108093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6448655303967065324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5dc92a8bb5004e4383bdd6469530aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  originalPos: {x: 0, y: 0, z: 0}
+  playerObj: {fileID: 7726197707958032316}
 --- !u!1 &6924281153379052187
 GameObject:
   m_ObjectHideFlags: 0
@@ -7226,12 +7242,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cfb8961d9d850e458131481f9c58dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 1000000
+  startingHealth: 40
   dead: 0
   current_health: 0
   pv: {fileID: 0}
   resurrectionEffect: {fileID: 7103072699600866445}
   HealingEffect: {fileID: 6643043933943809683}
+  resurrectionDelay: 6
+  myDeadCam: {fileID: 4280250511347773581}
 --- !u!114 &6089021596233277290
 MonoBehaviour:
   m_ObjectHideFlags: 0

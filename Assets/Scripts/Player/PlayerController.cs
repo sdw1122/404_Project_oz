@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using Photon.Pun;
 using Unity.Cinemachine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour
     }
 
     [PunRPC]
-    void SendMyDataToHost()
+    void SendMyDataToHost(string currentFlag, string currentScene)
     {
         if (!pv.IsMine) return;
 
@@ -71,11 +72,25 @@ public class PlayerController : MonoBehaviour
         {
             userId = PhotonNetwork.LocalPlayer.UserId,
             userJob = job,
-            position = transform.position,
+
+            latestFlag = currentFlag,
+            latestScene = currentScene,
+
             // 필요시 추가 데이터
         };
         GameObject gm = GameObject.Find("GameManager");
+        if (gm == null)
+        {
+            Debug.LogError("GameManager 오브젝트를 찾을 수 없습니다.");
+            return;
+        }
+
         PhotonView gmView = gm.GetComponent<PhotonView>();
+        if (gmView == null)
+        {
+            Debug.LogError("GameManager에 PhotonView가 없습니다.");
+            return;
+        }
         string json = JsonUtility.ToJson(myData);
         gmView.RPC("ReceivePlayerData", RpcTarget.MasterClient, json);
     }
