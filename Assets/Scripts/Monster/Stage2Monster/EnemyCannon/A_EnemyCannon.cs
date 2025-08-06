@@ -100,9 +100,11 @@ public class A_EnemyCannon : MonoBehaviour
                     aimAndFireCoroutine = null;
                     yield break;
                 }
-                Vector3 targetPosition = player.position + new Vector3(0, 0.7f, 0);
+                Vector3 targetPosition = player.position + new Vector3(0, 1.2f, 0);
+                Debug.Log("Target Position: " + targetPosition);
                 // [수정됨] 플레이어를 향해 상하좌우로 회전합니다.
-                Vector3 directionToPlayer = targetPosition - transform.position;
+                Vector3 directionToPlayer = targetPosition - firePoint.transform.position;
+                Debug.Log("directionToPlayer: " + directionToPlayer);
                 Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 
@@ -162,7 +164,16 @@ public class A_EnemyCannon : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
+
+        // --- ▼▼▼ 수정된 부분 ▼▼▼ ---
+        // transform.lossyScale은 부모 오브젝트의 스케일까지 모두 포함한 최종 스케일 값입니다.
+        // x, y, z 스케일 중 가장 큰 값을 기준으로 기즈모의 크기를 조절합니다.
+        // 이렇게 하면 비균등 스케일(Non-uniform scale)에도 대응할 수 있습니다.
+        float maxScale = Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z);
+
+        // 계산된 최종 스케일 값을 반지름(detectionRange)에 곱해줍니다.
+        Gizmos.DrawWireSphere(transform.position, detectionRange * maxScale);
+        // --- ▲▲▲ 수정된 부분 ▲▲▲ ---
     }
-    
+
 }

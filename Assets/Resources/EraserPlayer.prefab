@@ -6311,6 +6311,9 @@ MonoBehaviour:
   gravity: 20
   slideSpeed: 5
   job: 
+  knockbackEffect: {fileID: 0}
+  slowEffect: {fileID: 0}
+  jumpEffect: {fileID: 0}
 --- !u!114 &838222234075561870
 MonoBehaviour:
   m_ObjectHideFlags: 0
