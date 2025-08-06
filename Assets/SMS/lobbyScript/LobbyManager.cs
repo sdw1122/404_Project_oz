@@ -19,18 +19,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] TMP_InputField roomInput;
     [SerializeField] TMP_InputField joinInput;
     PhotonView lobbyView;
-
+    [SerializeField] GameObject flagButtonPrefab; 
+    [SerializeField] Transform flagListParent;   // 버튼 생성 위치
     string roomName;
     string joinName;
     // 메인 신 가서 직업 정보 저장을 위해 static
     public static class TempMemory
     {
         public static PlayerSaveData MySaveData = new PlayerSaveData();
+        public static string selectedFlagLabel = null;  //선택한 깃발 전달용
     }
     private Dictionary<int, GameObject> playerList = new Dictionary<int, GameObject>();
     public void Start()
-    {
+    {   
         lobbyView = GetComponent<PhotonView>();
+        Debug.Log($"[LobbyManager] PhotonView ID: {lobbyView.ViewID}, IsMine: {lobbyView.IsMine}");
         // 객체 유지를 위해 PlayerPrefs 에 랜덤한 UserId 저장, 플레이어 UserId에도 저장
         if (string.IsNullOrEmpty(PlayerPrefs.GetString("UserId")))
         {
@@ -50,6 +53,34 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         LoadingPanel.SetActive(true);
 
         LobbyPanel.SetActive(false);
+    }
+    [PunRPC]
+    public void SyncClickedFlag(string label)
+    {
+        TempMemory.selectedFlagLabel = label;
+    }
+    [PunRPC]
+    void RPC_ShowUnlockedFlags(string[] unlockedFlagArray)
+    {
+        Debug.Log("Show깃발호출됨");
+        // 기존 버튼 제거
+        foreach (Transform child in flagListParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // 깃발 데이터 로드 (Resources/flagData.json 사용)
+        FlagDataManager.Load();
+
+        // UI 생성
+        foreach (string label in unlockedFlagArray)
+        {
+            GameObject buttonObj = Instantiate(flagButtonPrefab, flagListParent);
+            FlagButtonHandler handler = buttonObj.GetComponent<FlagButtonHandler>();
+            handler.Initialize(label);
+        }
+
+        Debug.Log($"[LobbyManager] 깃발 {unlockedFlagArray.Length}개 UI 생성 완료");
     }
     public override void OnConnectedToMaster()
     {
@@ -76,6 +107,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             // CustomProperties에 복원
             ExitGames.Client.Photon.Hashtable jobProp = new ExitGames.Client.Photon.Hashtable();
             jobProp["userJob"] = savedData.userJob;
+            
             PhotonNetwork.LocalPlayer.SetCustomProperties(jobProp);
         }
         else
@@ -101,6 +133,24 @@ public class LobbyManager : MonoBehaviourPunCallbacks
                     eraserButton.gameObject.SetActive(false);
             }
         }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            string masterId = PhotonNetwork.LocalPlayer.UserId;
+            PlayerSaveData masterData = SaveSystem.LoadPlayerData(masterId);
+
+            if (masterData != null)
+            {
+                string[] unlocked = masterData.unlockedFlags?.ToArray() ?? new string[0];
+                Debug.Log("깃발: " + string.Join(", ", unlocked));
+                // 전체 클라이언트에게 RPC 호출
+                lobbyView.RPC("RPC_ShowUnlockedFlags", RpcTarget.All, new object[] { unlocked });
+            }
+            else
+            {
+                Debug.LogWarning("[LobbyManager] 마스터의 SaveData를 찾을 수 없습니다.");
+            }
+        }
+
     }
     public void Room_Create()
     {
@@ -160,6 +210,23 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         UpdatePlayerList();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            string masterId = PhotonNetwork.LocalPlayer.UserId;
+            PlayerSaveData masterData = SaveSystem.LoadPlayerData(masterId);
+
+            if (masterData != null)
+            {
+                string[] unlocked = masterData.unlockedFlags?.ToArray() ?? new string[0];
+
+                // 전체 클라이언트에게 RPC 호출
+                lobbyView.RPC("RPC_ShowUnlockedFlags", RpcTarget.All, new object[] { unlocked });
+            }
+            else
+            {
+                Debug.LogWarning("[LobbyManager] 마스터의 SaveData를 찾을 수 없습니다.");
+            }
+        }
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

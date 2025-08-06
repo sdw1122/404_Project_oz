@@ -176,6 +176,14 @@ MonoBehaviour:
   - OnAimingRPC
   - StopAimingRPC
   - StartAimingRPC
+  - SaveFlagRPC
+  - SaveFlagGetSpawnPos
+  - RPC_ShowUnlockedFlags
+  - setFlagLabelRPC
+  - SyncClickedFlag
+  - ReceiveDataFromMaster
+  - SendDataToClient
+  - ReceiveAndDelayResurrect
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
