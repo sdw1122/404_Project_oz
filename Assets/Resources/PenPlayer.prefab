@@ -5672,6 +5672,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6423666203348373026, guid: f197d6dd8c0771248a5a58092d5551f3, type: 3}
   m_PrefabInstance: {fileID: 724546542121837037}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &7117359575448171046 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7551388611195229131, guid: f197d6dd8c0771248a5a58092d5551f3, type: 3}
+  m_PrefabInstance: {fileID: 724546542121837037}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1069611884027864404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5732,6 +5737,11 @@ PrefabInstance:
 --- !u!4 &745138622021620906 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 328558227413381630, guid: 027b345240469404fa8cc9a10eee3b3f, type: 3}
+  m_PrefabInstance: {fileID: 1069611884027864404}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &3379980649632662256 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2319384772025575332, guid: 027b345240469404fa8cc9a10eee3b3f, type: 3}
   m_PrefabInstance: {fileID: 1069611884027864404}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1469883543178399927
@@ -7025,9 +7035,10 @@ MonoBehaviour:
   gravity: 20
   slideSpeed: 5
   job: 
-  knockbackEffect: {fileID: 0}
-  slowEffect: {fileID: 0}
+  knockbackEffect: {fileID: 3379980649632662256}
+  slowEffect: {fileID: 7117359575448171046}
   jumpEffect: {fileID: 0}
+  foot: {fileID: 1913262623197979271}
 --- !u!114 &6663367348026636100
 MonoBehaviour:
   m_ObjectHideFlags: 0

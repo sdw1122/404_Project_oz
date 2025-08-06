@@ -17,6 +17,8 @@ public class FireGolem : Enemy
     
     public bool isIce = false;
 
+    public ParticleSystem circleEffect;
+
     public override void Update()
     {
         base.Update();
@@ -238,6 +240,12 @@ public class FireGolem : Enemy
             armAttackCoolTime = 0f;
         }
     }
+
+    void PlayCircleEffect()
+    {
+        circleEffect.Play();
+    }
+
 
     [PunRPC]
     public void RPC_GolemAttack2()

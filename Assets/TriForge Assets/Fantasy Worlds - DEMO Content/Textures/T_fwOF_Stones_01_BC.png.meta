@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 104e55cc53eb1df4ab26e79542f0e6bf
+=======
 guid: d38676c645cab1a4bb95d901f8553110
+>>>>>>> origin/Stage02Boss
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

@@ -2222,6 +2222,7 @@ MonoBehaviour:
   groundAttackCoolTime: 3
   hitTime: 0
   isIce: 0
+  circleEffect: {fileID: 7431686246080094947}
 --- !u!114 &6457256188694104584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6228,5 +6229,10 @@ PrefabInstance:
 --- !u!4 &6816558229738295671 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4984980826245493072, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
+  m_PrefabInstance: {fileID: 1997190571486076967}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7431686246080094947 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8977316153704399556, guid: 0dc26b3e9f3f82a44b8fbfe7db66e902, type: 3}
   m_PrefabInstance: {fileID: 1997190571486076967}
   m_PrefabAsset: {fileID: 0}
