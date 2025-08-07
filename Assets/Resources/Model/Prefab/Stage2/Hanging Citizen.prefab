@@ -220,6 +220,37 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!1 &6477123169719142314
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5175214085739269065}
+  m_Layer: 8
+  m_Name: HealthBarPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5175214085739269065
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6477123169719142314}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.22, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4302636407987692471}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6544900332889464669
 GameObject:
   m_ObjectHideFlags: 0
@@ -8635,6 +8666,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8c29ad49f123b83489bbf73bce57946c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6596330883171154071}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8c29ad49f123b83489bbf73bce57946c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5175214085739269065}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8c29ad49f123b83489bbf73bce57946c, type: 3}
       insertIndex: -1
@@ -8806,14 +8840,19 @@ MonoBehaviour:
   DEF_Factor: 1
   isBinded: 0
   isFirstChase: 1
+  isAttacking: 0
+  isHit: 0
+  isRotatingToTarget: 0
+  angleToTarget: 0
   pv: {fileID: 0}
   chaseTarget: 0
-  healthBarPrefab: {fileID: 0}
-  healthBarPoint: {fileID: 0}
+  healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
+  healthBarPoint: {fileID: 5175214085739269065}
+  destroyDelay: 2
+  m_name: Confessionalist
   throwObj: {fileID: 4799392649775753017, guid: 924d3887ceeb23243910933950a84af7, type: 3}
   throwPoint: {fileID: 5364111270562082602}
   throwPower: 15
-  isThrowing: 0
 --- !u!114 &3880404597529465605
 MonoBehaviour:
   m_ObjectHideFlags: 0
