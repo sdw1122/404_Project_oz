@@ -51,7 +51,7 @@ public class InteractiveController : MonoBehaviour
 
         // 레이캐스트의 최대 거리를 defaultInteractRange 대신 maxDetectionDistance로 변경합니다.
         if (Physics.Raycast(ray, out RaycastHit hit, maxDetectionDistance, interactLayer))
-        {
+        {            
             InteractableBase interactable = hit.collider.GetComponent<InteractableBase>();
 
             if (interactable != null)
@@ -60,9 +60,9 @@ public class InteractiveController : MonoBehaviour
                 float effectiveRange = interactable.GetEffectiveRange(defaultInteractRange);
 
                 // 플레이어와 오브젝트 사이의 실제 거리가 유효 거리 이내이고,
-                // 상호작용이 가능한 상태인지 함께 체크합니다.
+                // 상호작용이 가능한 상태인지 함께 체크합니다.                
                 if (hit.distance <= effectiveRange && interactable.CanInteract(playerController))
-                {
+                {                    
                     currentInteractable = interactable;
                     if (interactUIObject != null) interactUIObject.SetActive(true);
                 }

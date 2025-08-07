@@ -26,8 +26,10 @@ public class CreateObject : InteractableBase
         // 이미 사용되었다면 아무것도 하지 않음
         if (isUsed || objectToSpawn == null) return;
 
+        Debug.Log("resource: " + resourcePath + "object : " + objectToSpawn.name);
         // 상호작용한 플레이어만 네트워크 오브젝트를 생성
         PhotonNetwork.Instantiate(resourcePath + objectToSpawn.name, spawnPoint.position, spawnPoint.rotation);
+        
 
         // 모든 클라이언트에게 이 생성기 오브젝트를 파괴하라고 요청
         pv.RPC("DestroyGenerator", RpcTarget.All);

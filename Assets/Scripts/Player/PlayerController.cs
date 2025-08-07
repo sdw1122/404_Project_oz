@@ -323,7 +323,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                HandleNormalMovement(worldDir);
+                HandleNormalMovement(worldDir, groundNormal);
             }
             isGrounded = controller.isGrounded;
 
@@ -489,10 +489,12 @@ public class PlayerController : MonoBehaviour
         pv.RPC("RPC_SetFloat", RpcTarget.Others, false);
     }
 
-    void HandleNormalMovement(Vector3 worldDir)
+    void HandleNormalMovement(Vector3 worldDir, Vector3 groundNormal)
     {
-        moveDirection.x = worldDir.x;
-        moveDirection.z = worldDir.z;
+        Vector3 projectedDir = Vector3.ProjectOnPlane(worldDir, groundNormal).normalized * worldDir.magnitude;
+
+        moveDirection.x = projectedDir.x;
+        moveDirection.z = projectedDir.z;
 
         if (controller.isGrounded)
         {
@@ -505,7 +507,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                moveDirection.y = -0.5f;
+                moveDirection.y = -5f;
                 animator.SetBool("Float", false);
                 pv.RPC("RPC_SetFloat", RpcTarget.Others, false);
             }
