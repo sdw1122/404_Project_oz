@@ -559,8 +559,8 @@ public class Hammer : MonoBehaviour
     /// </summary>
     public void DisableWeapon()
     {
-        if (weapon != null)
-            weapon.SetActive(false);
+       
+        weapon.SetActive(false);
         pv.RPC(nameof(RPC_DisableWeapon), RpcTarget.OthersBuffered);
     }
     [PunRPC]

@@ -1,13 +1,18 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.VFX;
 
 public class StrawKingRazor : MonoBehaviour
 {
     public Animator animator;
-    public ParticleSystem[] chargeEffect;
+    public ParticleSystem chargeEffect;
+    public VisualEffect blockedRazor;
+    public VisualEffect Razor;
+    public ParticleSystem shoutEffect;
+    public ParticleSystem attackEffect;
 
-    public float chargeTime = 4f;
+    public bool isBlock = false;
 
     private void Awake()
     {
@@ -18,17 +23,56 @@ public class StrawKingRazor : MonoBehaviour
     public void RazorCharge()
     {
         animator.speed = 0f;
-        foreach (ParticleSystem particleSystem in chargeEffect)
-        {
-            var CEmain = particleSystem.main;
-            CEmain.duration = chargeTime;
-            particleSystem.Play();
-        }
-        StartCoroutine(AfterCharge());
+        chargeEffect.Play();
+        StartCoroutine(StopAnimation(4.0f));
     }
-    IEnumerator AfterCharge()
+    IEnumerator StopAnimation(float stopTime)
     {
-        yield return new WaitForSeconds(chargeTime);
-        animator.speed = 1f;
+        yield return new WaitForSeconds(stopTime);
+        animator.speed = 1.0f;
+    }
+
+    public void RazorEffect()
+    {
+        animator.speed = 0f;
+        if (isBlock)
+        {
+            blockedRazor.Play();
+        }
+        else
+        {
+            Razor.Play();
+        }
+        StartCoroutine(BeamAfter(3.0f));
+
+    }
+    private IEnumerator BeamAfter(float duration)
+    {
+        float timer = 0.0f;
+        while (timer < duration)
+        {
+            Razor.transform.rotation = Quaternion.RotateTowards(Razor.transform.rotation, transform.rotation * Quaternion.Euler(0f, -20.0f, 0f), 14 * Time.deltaTime);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        animator.speed = 1.0f;
+        isBlock = false;
+        Razor.transform.rotation = transform.rotation * Quaternion.Euler(0f,20.0f,0f);
+    }
+
+    public void ShoutEffectPlay()
+    {
+        shoutEffect.Play();
+    }
+    public void ShoutEffectStop()
+    {
+        shoutEffect.Stop();
+    }
+
+    public void AttackEffectPlay()
+    {
+        animator.speed = 0f;
+        StartCoroutine(StopAnimation(2.0f));
+        attackEffect.Play();
     }
 }
