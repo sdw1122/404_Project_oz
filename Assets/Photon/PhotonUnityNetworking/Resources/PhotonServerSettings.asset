@@ -172,6 +172,24 @@ MonoBehaviour:
   - RPC_EndGroggy
   - RPC_PlayGetUpAnim
   - RPC_PlayStumbleAnim
+  - OffimingRPC
+  - OnAimingRPC
+  - StopAimingRPC
+  - StartAimingRPC
+  - RPC_DeactivateObstacle
+  - RPC_ActivateDevice
+  - RPC_RegisterInteraction
+  - RPC_ResetDevice
+  - RPC_DeactivateWall
+  - RPC_ToggleWall
+  - SaveFlagRPC
+  - SaveFlagGetSpawnPos
+  - RPC_ShowUnlockedFlags
+  - setFlagLabelRPC
+  - SyncClickedFlag
+  - ReceiveDataFromMaster
+  - SendDataToClient
+  - ReceiveAndDelayResurrect
   - RequestStageLoad
   DisableAutoOpenWizard: 1
   ShowSettings: 0

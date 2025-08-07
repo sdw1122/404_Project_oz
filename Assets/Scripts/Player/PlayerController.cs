@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using Photon.Pun;
 using Unity.Cinemachine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,7 +17,6 @@ public class PlayerController : MonoBehaviour
     public GameObject playerObj;
     public Camera mainCamera;
     public GameObject deadCamera;
-    public Transform foot;
     public float walkSpeed = 10f;
     public float runSpeed;
     public float mouseSensitivity = 0.5f;
@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem knockbackEffect;
     public ParticleSystem slowEffect;
     public GameObject jumpEffect;
+    public Transform foot;
     private GameObject jumpEffectins;
 
     [PunRPC]
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour
     }
 
     [PunRPC]
-    void SendMyDataToHost()
+    void SendMyDataToHost(string currentFlag, string currentScene)
     {
         if (!pv.IsMine) return;
 
@@ -71,11 +72,25 @@ public class PlayerController : MonoBehaviour
         {
             userId = PhotonNetwork.LocalPlayer.UserId,
             userJob = job,
-            position = transform.position,
+
+            latestFlag = currentFlag,
+            latestScene = currentScene,
+
             // 필요시 추가 데이터
         };
         GameObject gm = GameObject.Find("GameManager");
+        if (gm == null)
+        {
+            Debug.LogError("GameManager 오브젝트를 찾을 수 없습니다.");
+            return;
+        }
+
         PhotonView gmView = gm.GetComponent<PhotonView>();
+        if (gmView == null)
+        {
+            Debug.LogError("GameManager에 PhotonView가 없습니다.");
+            return;
+        }
         string json = JsonUtility.ToJson(myData);
         gmView.RPC("ReceivePlayerData", RpcTarget.MasterClient, json);
     }
@@ -218,15 +233,7 @@ public class PlayerController : MonoBehaviour
         if (context.performed)
         {
             healingRay.FireHealingRay();
-            animator.SetTrigger("Interactive");
-            pv.RPC("RPC_HealAnimation", RpcTarget.Others);
         }
-    }
-
-    [PunRPC]
-    void RPC_HealAnimation()
-    {
-        animator.SetTrigger("Interactive");
     }
     void Start()
     {
@@ -332,7 +339,9 @@ public class PlayerController : MonoBehaviour
         knockbackTimer = duration;
 
         isKnockbacked = true;
-        knockbackEffect.Play();
+
+     
+       
     }
     // 슬로우 함수
     [PunRPC]
@@ -347,7 +356,6 @@ public class PlayerController : MonoBehaviour
     }
     private IEnumerator slowRoutine(float amount,float duration)
     {
-        slowEffect.Play();
         float slowFactor = 1f - amount;
         moveSpeed = originalSpeed * (1f-amount);
         /*runSpeed =1.5f*originalSpeed * (1f - amount);*/
@@ -360,7 +368,6 @@ public class PlayerController : MonoBehaviour
         runSpeed = originalSpeed * 1.5f;
         slowCoroutine = null;
         Debug.Log("속도 복구 완료 :"+moveSpeed);
-        slowEffect.Stop();
     }
     //
     public void ResetMoveInput()
@@ -516,19 +523,19 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         Destroy(jumpEffectins);
     }
-    //public void SpawnDust()
-    //{
-    //    // 1) 위치 & 회전 결정
-    //    Vector3 pos = foot.position;
-    //    // 땅 노말을 따서 정렬하고 싶다면 Raycast로 hit.normal 사용 가능
-    //    Quaternion rot = Quaternion.LookRotation(Vector3.forward);
+    public void SpawnDust()
+    {
+        // 1) 위치 & 회전 결정
+        Vector3 pos = foot.position;
+        // 땅 노말을 따서 정렬하고 싶다면 Raycast로 hit.normal 사용 가능
+        Quaternion rot = Quaternion.LookRotation(Vector3.forward);
 
-    //    // 2) 풀에서 꺼내
-    //    var go = DustPool.Instance.GetDust(pos, rot);
+        // 2) 풀에서 꺼내
+        var go = DustPool.Instance.GetDust(pos, rot);
 
-    //    // 3) 재생 시간만큼 뒤에 반납
-    //    var ps = go.GetComponent<ParticleSystem>();
-    //    float dur = ps.main.duration + ps.main.startLifetime.constantMax;
-    //    DustPool.Instance.ReturnDust(go, dur);
-    //}
+        // 3) 재생 시간만큼 뒤에 반납
+        var ps = go.GetComponent<ParticleSystem>();
+        float dur = ps.main.duration + ps.main.startLifetime.constantMax;
+        DustPool.Instance.ReturnDust(go, dur);
+    }
 }

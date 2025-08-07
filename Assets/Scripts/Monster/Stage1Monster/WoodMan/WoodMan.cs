@@ -38,6 +38,10 @@ public class WoodMan : Enemy
     }*/
     [SerializeField] private WoodMan_State _currentState;
     [SerializeField] public WoodMan_Mode _currentMode;
+
+    [HideInInspector] // Inspector 창에서는 숨김
+    public float groggyRemainingTime = 0f;
+
     public override void Awake()
     {
         base.Awake();
@@ -210,16 +214,20 @@ public class WoodMan : Enemy
         isBinded = true;
         animator.SetTrigger("Groggy");
 
-        
-        yield return new WaitForSeconds(groggyTime);
+        // --- 타이머 로직 추가 ---
+        float timer = groggyTime;
+        while (timer > 0)
+        {
+            groggyRemainingTime = timer; // 남은 시간을 계속 업데이트
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+        groggyRemainingTime = 0; // 타이머 종료
+        // --- 타이머 로직 끝 ---
 
-       
         animator.SetTrigger("Awake");
-
-        
         yield return new WaitForSeconds(2.767f);
 
-        
         SetMode(WoodMan_Mode.Normal);
         isBinded = false;
     }
@@ -247,9 +255,21 @@ public class WoodMan : Enemy
     }
     void UpdateAggroTarget()
     {
-        GameObject target = aggroSystem.GetTopAggroTarget();
-        if (target != null)
-            targetEntity = target.GetComponent<LivingEntity>();
+        GameObject newTargetObject = aggroSystem.GetTopAggroTarget();
+
+        // 새로 찾은 타겟이 있고 (null이 아니고),
+        // 그 타겟이 현재 타겟과 다를 경우에만 동기화
+        if (newTargetObject != null)
+        {
+            LivingEntity newTargetEntity = newTargetObject.GetComponent<LivingEntity>();
+
+            // targetEntity가 아직 없거나, 새로 찾은 타겟과 다를 때만 RPC 호출
+            if (newTargetEntity != null && targetEntity != newTargetEntity)
+            {
+                // 부모(Enemy.cs)의 SetTarget RPC를 호출하여 모든 클라이언트의 타겟을 동기화
+                pv.RPC("SetTarget", RpcTarget.All, newTargetEntity.GetComponent<PhotonView>().ViewID);
+            }
+        }
     }
     private void OnTriggerEnter(Collider other)
     {

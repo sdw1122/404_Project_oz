@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1610184547681268219}
   - component: {fileID: 6749240903976159083}
   - component: {fileID: 2549586922089176199}
+  - component: {fileID: 4354006661305792636}
   m_Layer: 0
   m_Name: Dead Camera
   m_TagString: Untagged
@@ -152,6 +153,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 200
   clampAngle: 90
+--- !u!114 &4354006661305792636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2644813597406364153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5dc92a8bb5004e4383bdd6469530aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  originalPos: {x: 0, y: 0, z: 0}
+  playerObj: {fileID: 1100591750975983674}
 --- !u!1 &3360996309325310641
 GameObject:
   m_ObjectHideFlags: 0
@@ -6297,7 +6313,6 @@ MonoBehaviour:
   playerObj: {fileID: 1100591750975983674}
   mainCamera: {fileID: 9208752162825375673}
   deadCamera: {fileID: 2644813597406364153}
-  foot: {fileID: 3601988123414445552}
   walkSpeed: 10
   runSpeed: 15
   mouseSensitivity: 0.5
@@ -6314,7 +6329,8 @@ MonoBehaviour:
   job: 
   knockbackEffect: {fileID: 8055080864472481139}
   slowEffect: {fileID: 574614039159805082}
-  jumpEffect: {fileID: 2661852520061383647, guid: fca001ac3e2d0074ca6bcf31973982ff, type: 3}
+  jumpEffect: {fileID: 0}
+  foot: {fileID: 3601988123414445552}
 --- !u!114 &838222234075561870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6463,12 +6479,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cfb8961d9d850e458131481f9c58dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 10000
+  startingHealth: 40
   dead: 0
   current_health: 0
   pv: {fileID: 0}
   resurrectionEffect: {fileID: 8159535617303868081}
   HealingEffect: {fileID: 6862776429924905439}
+  resurrectionDelay: 6
+  myDeadCam: {fileID: 0}
 --- !u!114 &5215632007717805663
 MonoBehaviour:
   m_ObjectHideFlags: 0

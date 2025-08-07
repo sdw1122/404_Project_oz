@@ -59,8 +59,7 @@ public class TestControll : MonoBehaviour
         PlayerSaveData myData = new PlayerSaveData
         {
             userId = PhotonNetwork.LocalPlayer.UserId,
-            userJob = job,
-            position = transform.position,
+            userJob = job
             // 필요시 추가 데이터
         };
         GameObject gm = GameObject.Find("GameManager");

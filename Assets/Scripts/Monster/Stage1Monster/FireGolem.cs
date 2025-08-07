@@ -17,6 +17,8 @@ public class FireGolem : Enemy
     
     public bool isIce = false;
 
+    public ParticleSystem circleEffect;
+
     public override void Update()
     {
         base.Update();
@@ -144,6 +146,7 @@ public class FireGolem : Enemy
         enemyAnimator.SetFloat("Move", moveVal); // 실시간 즉시 반영
     }
 
+    
     public override void Attack()
     {
         if (dead) return;
@@ -159,7 +162,7 @@ public class FireGolem : Enemy
             // 애니메이션 필요     
             enemyAnimator.SetTrigger("Skill");
             pv.RPC("RPC_GolemSkill", RpcTarget.Others);
-            isAttacking = true;            
+            isAttacking = true;
         }
         else if (dist <= armAttackRange && armAttackCoolTime >= armAttackTime)
         {
@@ -172,7 +175,6 @@ public class FireGolem : Enemy
         {
             pv.RPC("RPC_SetNavMesh", RpcTarget.All, true);
         }
-
     }
 
     [PunRPC]
@@ -238,6 +240,12 @@ public class FireGolem : Enemy
             armAttackCoolTime = 0f;
         }
     }
+
+    void PlayCircleEffect()
+    {
+        circleEffect.Play();
+    }
+
 
     [PunRPC]
     public void RPC_GolemAttack2()

@@ -105,7 +105,6 @@ public class PlayerController1 : MonoBehaviour
         {
             userId = PhotonNetwork.LocalPlayer.UserId,
             userJob = job,
-            position = transform.position,
             // ���߿� ������ ������ �߰�
         };
         GameObject gm = GameObject.Find("GameManager");
