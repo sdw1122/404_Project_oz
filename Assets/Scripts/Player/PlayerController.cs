@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource jumpSound;
     public AudioClip jumpSoundClip;
 
+
     [PunRPC]
     public void SetJob(string _job)
     {
@@ -103,7 +104,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();        
         pv = GetComponent<PhotonView>();
         cineCam = GetComponentInChildren<CinemachineCamera>();
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();;
         
         runSpeed = 1.5f * walkSpeed;
         if (!pv.IsMine)

@@ -56,6 +56,7 @@ public class Hammer : MonoBehaviour
     //private Color charge2col = new Color(1f, 0.9f, 0.3f, 1f);
     //private Color charge3col = new Color(1f, 0.15f, 0.15f, 1f);
     private Color[] chargeColor = { new Color(1f, 1f, 1f, 0.5f), new Color(1f, 0.9f, 0.3f, 1f), new Color(1f, 0.15f, 0.15f, 1f) };
+    private DustPool DustPool;
 
     private void Awake()
     {
@@ -64,6 +65,7 @@ public class Hammer : MonoBehaviour
         controls = new InputSystem_Actions();
         animator = GetComponent<Animator>();
         pv = GetComponent<PhotonView>();
+        DustPool = GetComponent<DustPool>();
         attackLayerIndex = animator.GetLayerIndex("Upper Body");
     }
     public void setBind()
