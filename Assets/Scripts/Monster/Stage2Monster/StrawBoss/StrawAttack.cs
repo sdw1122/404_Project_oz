@@ -6,6 +6,7 @@ public class StrawAttack : MonoBehaviour
 {
     public LayerMask whatIsTarget;
     Animator animator;
+    PhotonView pv;
 
     private int state = 1;
     private float attackRange = 1000f;
@@ -20,6 +21,7 @@ public class StrawAttack : MonoBehaviour
     void Start()
     {        
         animator =  GetComponent<Animator>();
+        pv = GetComponent<PhotonView>();
     }
     private void Update()
     {
@@ -29,6 +31,7 @@ public class StrawAttack : MonoBehaviour
             if (attackTime >= attackCoolTime)
             {
                 Debug.Log("state: " + state);
+                pv.RPC("RPC_Attack", RpcTarget.All);
                 RPC_Attack();
             }
         }

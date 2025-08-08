@@ -192,6 +192,8 @@ MonoBehaviour:
   - ReceiveAndDelayResurrect
   - RequestStageLoad
   - RPC_Attack
+  - RPC_Boos2Charge
+  - RPC_DestroyWall
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

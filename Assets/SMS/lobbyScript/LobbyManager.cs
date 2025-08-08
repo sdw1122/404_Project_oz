@@ -211,7 +211,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if(PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("Stage2"); // Stage2으로 전환
+            PhotonNetwork.LoadLevel("Stage2 Boss"); // Stage2으로 전환
         }
     }
 
