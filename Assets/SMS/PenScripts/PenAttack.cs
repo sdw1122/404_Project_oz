@@ -6,6 +6,8 @@ public class PenAttack : MonoBehaviour
 {
     public GameObject penPlayer;
     public GameObject pen;
+    public AudioClip attackClip;
+    public AudioSource audioSource;
 
     Animator animator;
     [Header("스킬 정보")]
@@ -52,6 +54,7 @@ public class PenAttack : MonoBehaviour
     void Fire()
     {
         if (!pv.IsMine) return;
+        audioSource.PlayOneShot(attackClip);
         // 카메라 기준 마우스 방향 계산
         Ray ray = penCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;

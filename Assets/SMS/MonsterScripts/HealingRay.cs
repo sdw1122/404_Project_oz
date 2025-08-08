@@ -13,14 +13,20 @@ public class HealingRay : MonoBehaviour
     public Transform handTransform; // 광선이 발사될 시작 지점
     public LayerMask targetLayer;
     PhotonView pv;
+    public AudioClip healClip;
+    public AudioSource healSource;
     // 광선 효과 지속 시간
     public float lineDisplayDuration = 0.2f;
+
+    Animator animator;
+    public ParticleSystem healingEffect;
 
     private void Awake()
     {
         lineRenderer.enabled = false; // 처음에는 선을 비활성화
         lineRenderer.positionCount = 2;
         pv = GetComponent<PhotonView>();
+        animator = GetComponent<Animator>();
     }
     public void FireHealingRay()
     {
@@ -37,7 +43,9 @@ public class HealingRay : MonoBehaviour
         Vector3 rayDirection = ray.direction;
 
         Vector3 spawnPos = rayStartPoint + rayDirection * minDistance;
-
+        healSource.PlayOneShot(healClip);
+        animator.SetTrigger("Interactive");
+        healingEffect.Play();
 
         bool isHit = Physics.Raycast(spawnPos, rayDirection, out hit, rayLength, targetLayer);
 

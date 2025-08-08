@@ -18,6 +18,13 @@ public class Hammer : MonoBehaviour
     public float skill2_defF = 2f;
     public ParticleSystem ChargeEffect;
 
+    public AudioSource chargeSource;
+    public AudioClip chargeClip;
+    public AudioSource attackSource;
+    public AudioClip attackClip;
+    public AudioSource chargeAttackSource;
+    public AudioClip chargeAttackClip;
+
     private bool isAttackButtonPressed = false;
     private float attackDelay = 1.0f;
     private float attackTimer = 0f;
@@ -128,6 +135,7 @@ public class Hammer : MonoBehaviour
             }
             Skill1(skill1);
             animator.SetTrigger("Charge Attack");
+            chargeAttackSource.PlayOneShot(chargeAttackClip);
             pv.RPC("RPC_TriggerEraserChargeAttack", RpcTarget.Others);
             playerController.canMove = true;
             skill1CoolDownTimer = 0;
@@ -171,6 +179,7 @@ public class Hammer : MonoBehaviour
                 isCharge1 = true;
                 main.startColor = chargeColor[0];
                 ChargeEffect.Play();
+                chargeSource.PlayOneShot(chargeClip);
                 pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
             }
             if (skill1HoldTime >= 2 && !isCharge2)
@@ -178,6 +187,7 @@ public class Hammer : MonoBehaviour
                 isCharge2 = true;
                 main.startColor = chargeColor[1];
                 ChargeEffect.Play();
+                chargeSource.PlayOneShot(chargeClip);
                 pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
             }
             if (skill1HoldTime >= 3 && !isCharge3)
@@ -185,6 +195,7 @@ public class Hammer : MonoBehaviour
                 isCharge3 = true;
                 main.startColor = chargeColor[2];
                 ChargeEffect.Play();
+                chargeSource.PlayOneShot(chargeClip);
                 pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
             }
             playerController.canMove = false;
@@ -254,6 +265,7 @@ public class Hammer : MonoBehaviour
         // 애니메이션 필요        
         animator.SetLayerWeight(attackLayerIndex, 1f);
         animator.SetTrigger("Attack");
+        attackSource.PlayOneShot(attackClip);
         pv.RPC("RPC_TriggerEraserAttack", RpcTarget.Others);
 
         // 다음 공격 스텝으로 전환
