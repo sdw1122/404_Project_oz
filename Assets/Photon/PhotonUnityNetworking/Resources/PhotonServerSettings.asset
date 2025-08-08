@@ -28,7 +28,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: kr
+  DevRegion: 
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -190,6 +190,13 @@ MonoBehaviour:
   - ReceiveDataFromMaster
   - SendDataToClient
   - ReceiveAndDelayResurrect
+  - RPC_Activate
+  - TyrantRPC
+  - RPC_Deactivate
+  - FireWisdom
+  - RPC_UpdateWisdom
+  - TryFireWisdom
+  - SetMovingObj
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

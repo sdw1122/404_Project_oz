@@ -61,7 +61,7 @@ public class BindCircle : MonoBehaviour
 
             var targetEntity=other.GetComponent<LivingEntity>();
             target.setBind();
-            targetEntity.OnDamage(damage, transform.position, Vector3.zero);
+            if(targetEntity.gameObject.layer==playerLayer) targetEntity.OnDamage(damage, transform.position, Vector3.zero);
             Pen_Skill_1 pen = other.GetComponent<Pen_Skill_1>();
             if (pen != null)
             {
