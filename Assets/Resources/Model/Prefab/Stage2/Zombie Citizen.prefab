@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1450256916477016907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6854418736631934607}
+  m_Layer: 8
+  m_Name: HealthBarPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6854418736631934607
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450256916477016907}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.13, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1888282689588773709}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2083574938085696477
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,6 +278,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8ebf62046ad114b48a562a88b4bb2ea0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3776105316169080882}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8ebf62046ad114b48a562a88b4bb2ea0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6854418736631934607}
     - targetCorrespondingSourceObject: {fileID: 1852576806548013000, guid: 8ebf62046ad114b48a562a88b4bb2ea0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3039024806329020745}
@@ -407,10 +441,11 @@ MonoBehaviour:
   angleToTarget: 0
   pv: {fileID: 0}
   chaseTarget: 0
+  wisdomAmount: 50
   healthBarPrefab: {fileID: 0}
   healthBarPoint: {fileID: 0}
   destroyDelay: 2
-  m_name: 
+  m_name: Ascetic
 --- !u!114 &4149561954065366028
 MonoBehaviour:
   m_ObjectHideFlags: 0

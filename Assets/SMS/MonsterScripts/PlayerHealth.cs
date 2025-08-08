@@ -78,7 +78,7 @@ public class PlayerHealth : LivingEntity
 
             return; // 중계 역할 후 종료
         }
-
+       
         // --- 이 아래 코드는 실제 주인 클라이언트만 실행합니다. ---
         if (dead) return;
 

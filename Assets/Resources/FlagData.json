@@ -11,6 +11,10 @@
     {
       "label": "TestFlag_A",
       "scene": "MainScene"
+    },
+    {
+      "label": "Stage2 Boss_Flag",
+      "scene": "Stage2 Boss"
     }
   ]
 }

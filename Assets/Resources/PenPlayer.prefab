@@ -7987,7 +7987,7 @@ CharacterController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7726197707958032316}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a11771833a5835a45b39bf2583b22249, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -7998,8 +7998,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 0.3
-  m_Radius: 1
+  m_Height: 2
+  m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -8268,7 +8268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cfb8961d9d850e458131481f9c58dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 40
+  startingHealth: 100
   dead: 0
   current_health: 0
   pv: {fileID: 0}

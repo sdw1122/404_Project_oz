@@ -38,7 +38,7 @@
             straw_MagicArrow=GetComponent<Straw_MagicArrow>();
             straw_FireBall=GetComponent<Straw_FireBall>();
             straw_BindCircle=GetComponent<Straw_BindCircle>();
-            straw_Teleport=GetComponent<Straw_Teleport>();
+            TryGetComponent<Straw_Teleport>(out straw_Teleport);
             navMeshAgent.speed = speed;
             attackRange = straw_MagicArrow.range;
         }
@@ -53,7 +53,7 @@
         }
         public void OnDamaged()
         {
-        
+        if (straw_Teleport == null) return;
             straw_Teleport.ReduceTeleportCooldown();
         }
         public override void Attack()
@@ -225,7 +225,7 @@
             base.Update();
             if (!canAct||dead) return;
             if (isGroggy) return;
-            if (straw_Teleport.IsReady())
+            if (straw_Teleport!=null&&straw_Teleport.IsReady())
             {
                 pv.RPC("PerformTeleportRPC", RpcTarget.All);
                 return;

@@ -126,6 +126,7 @@ public class StrawDoll : Enemy
                 entity.OnDamage(damage, hitColliders[i].ClosestPoint(center), center - hitColliders[i].transform.position);
             }
         }
+        
         DieMotion();
     }
 
