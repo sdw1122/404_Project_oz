@@ -39,6 +39,9 @@ public abstract class Enemy : LivingEntity
 
     public PhotonView pv;
     public float chaseTarget;
+    int lastAttacker;
+    [Header("지혜 수치 설정")]
+    public int wisdomAmount;
 
     [Header("UI 설정")]
     [Tooltip("몬스터 머리 위에 생성될 체력 바")]
@@ -387,6 +390,11 @@ public abstract class Enemy : LivingEntity
         if (PhotonNetwork.IsMasterClient)
         {
             // 정해진 시간 후에 네트워크 상에서 오브젝트를 파괴합니다.
+            PhotonView attacker = PhotonView.Find(lastAttacker);
+            if(WisdomManager.Instance!=null&&attacker != null&&attacker.gameObject.layer==LayerMask.NameToLayer("Player"))
+            {
+                WisdomManager.Instance.AddWisdom(wisdomAmount);
+            }
             StartCoroutine(DestroyAfterDelay());
         }
     }
@@ -487,7 +495,7 @@ public abstract class Enemy : LivingEntity
     {
         if (!PhotonNetwork.IsMasterClient) return; // 마스터만 데미지 처리
         damage *= DEF_Factor;
-        
+        lastAttacker = attackerViewID;
         OnDamage(damage, hitPoint, hitNormal);
         GameObject attacker = PhotonView.Find(attackerViewID)?.gameObject;
         if (this is WoodMan woodman)

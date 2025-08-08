@@ -41,9 +41,6 @@ public class CreateObject : InteractableBase
         isUsed = true; // 다른 클라이언트에서 RPC가 약간 늦게 도착하더라도 중복 실행 방지
 
         // 마스터 클라이언트만 이 오브젝트를 파괴하도록 하여 충돌을 방지
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.Destroy(gameObject);
-        }
+        gameObject.SetActive(false);
     }
 }
