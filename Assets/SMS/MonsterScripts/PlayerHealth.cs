@@ -16,6 +16,9 @@ public class PlayerHealth : LivingEntity
     public ParticleSystem HealingEffect;
     public float resurrectionDelay = 25f;
     public Camera myDeadCam;
+
+    public AudioClip hitClip;
+    public AudioSource hitSource;
     private void Awake()
     {
         playerAnimator = GetComponent<Animator>();
@@ -90,6 +93,7 @@ public class PlayerHealth : LivingEntity
             GetComponent<Pen_Skill_1>()?.CancelCharging();
             GetComponent<Hammer>()?.CancelCharging();
             playerAnimator.SetTrigger("Hit");
+            hitSource.PlayOneShot(hitClip);
             pv.RPC("RPC_TriggerPlayerHit", RpcTarget.Others);
         }
 

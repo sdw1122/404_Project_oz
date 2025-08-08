@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6356438961120104147}
   - component: {fileID: 4947756128543123223}
   m_Layer: 0
-  m_Name: Sparks explode red
+  m_Name: ChargeAttack Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

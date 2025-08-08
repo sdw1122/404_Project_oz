@@ -17,6 +17,7 @@ public class Hammer : MonoBehaviour
     //스킬2 대지분쇄 def 조절량
     public float skill2_defF = 2f;
     public ParticleSystem ChargeEffect;
+    public ParticleSystem chAttackEffect;
 
     public AudioSource chargeSource;
     public AudioClip chargeClip;
@@ -143,6 +144,10 @@ public class Hammer : MonoBehaviour
         }
         
     }
+    public void ChargeAttackEffectPlay()
+    {
+        chAttackEffect.Play();
+    }
 
     [PunRPC]
     public void RPC_TriggerEraserCancelCharge()
@@ -173,11 +178,13 @@ public class Hammer : MonoBehaviour
         if (skill1Pressed)
         {
             var main = ChargeEffect.main;
+            var amain = chAttackEffect.main;
             skill1HoldTime += Time.deltaTime;
             if (skill1HoldTime >= 1 && !isCharge1)
             {
                 isCharge1 = true;
                 main.startColor = chargeColor[0];
+                amain.startColor = chargeColor[0];
                 ChargeEffect.Play();
                 chargeSource.PlayOneShot(chargeClip);
                 pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
@@ -186,6 +193,7 @@ public class Hammer : MonoBehaviour
             {
                 isCharge2 = true;
                 main.startColor = chargeColor[1];
+                amain.startColor = chargeColor[1];
                 ChargeEffect.Play();
                 chargeSource.PlayOneShot(chargeClip);
                 pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
@@ -194,6 +202,7 @@ public class Hammer : MonoBehaviour
             {
                 isCharge3 = true;
                 main.startColor = chargeColor[2];
+                amain.startColor = chargeColor[2];
                 ChargeEffect.Play();
                 chargeSource.PlayOneShot(chargeClip);
                 pv.RPC("RPC_ChargeEffect", RpcTarget.Others);

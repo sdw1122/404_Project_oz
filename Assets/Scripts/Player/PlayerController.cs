@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
     public GameObject jumpEffect;
     public Transform foot;
     private GameObject jumpEffectins;
+    public AudioSource jumpSound;
+    public AudioClip jumpSoundClip;
 
     [PunRPC]
     public void SetJob(string _job)
@@ -501,6 +503,7 @@ public class PlayerController : MonoBehaviour
                 moveDirection.y = jumpPower;
                 jumpBufferCounter = 0;
                 animator.SetBool("Float", true);
+                jumpSound.PlayOneShot(jumpSoundClip);
                 pv.RPC("RPC_SetFloat", RpcTarget.Others, true);
             }
             else
