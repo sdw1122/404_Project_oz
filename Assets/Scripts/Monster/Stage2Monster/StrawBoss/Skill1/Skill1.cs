@@ -8,7 +8,7 @@ public class Skill1 : MonoBehaviour
     PhotonView pv;
     StrawKingRazor razer;
 
-    [SerializeField] Vector3 boxOffset = new Vector3(0f, 60f, 40f);
+    Vector3 boxOffset = new Vector3(0f, 60f, 40f);
 
     public GameObject[] warning;    
     public float waitTime = 0f;
