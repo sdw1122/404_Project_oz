@@ -110,8 +110,10 @@ MonoBehaviour:
   customInteractRange: 0
   firePoint: {fileID: 8333724164213654171}
   cannonballPrefab: {fileID: 1185845331542759449, guid: 58b8ec266bd4b1142b086bf4e20cc852, type: 3}
+  animator: {fileID: 0}
   cannonDamage: 400
   cannonballSpeed: 20
+  isShot: 0
 --- !u!65 &8489184225382256022
 BoxCollider:
   m_ObjectHideFlags: 0

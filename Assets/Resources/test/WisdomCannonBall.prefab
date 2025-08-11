@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6376935586737588604}
   - component: {fileID: 5576407025265313632}
   - component: {fileID: 8432529845627445099}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: WisdomCannonBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}

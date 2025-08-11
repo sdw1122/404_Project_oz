@@ -426,7 +426,7 @@ public abstract class Enemy : LivingEntity
         if (enemyAnimator != null)
             enemyAnimator.enabled = false; // 애니메이션 포즈 고정
 
-        base.Die();
+        Die();
     }
 
     private void UpdateNearestTarget()

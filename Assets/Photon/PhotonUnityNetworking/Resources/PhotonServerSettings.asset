@@ -201,6 +201,11 @@ MonoBehaviour:
   - RPC_Attack
   - RPC_Boos2Charge
   - RPC_DestroyWall
+  - BossGroggy
+  - BossIsGroggy
+  - MakeRoad
+  - ReMakeRoad
+  - CannonReload
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
