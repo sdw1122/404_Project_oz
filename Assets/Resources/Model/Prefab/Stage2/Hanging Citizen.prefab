@@ -8846,6 +8846,7 @@ MonoBehaviour:
   angleToTarget: 0
   pv: {fileID: 0}
   chaseTarget: 0
+  wisdomAmount: 0
   healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
   healthBarPoint: {fileID: 5175214085739269065}
   destroyDelay: 2
