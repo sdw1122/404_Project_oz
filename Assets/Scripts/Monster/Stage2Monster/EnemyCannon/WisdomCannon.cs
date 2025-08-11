@@ -22,7 +22,6 @@ public class WisdomCannon : InteractableBase
     {
         pv.RPC("TryFireWisdom", RpcTarget.MasterClient);
     }
-
     [PunRPC]
     public void TryFireWisdom()
     {
@@ -50,12 +49,16 @@ public class WisdomCannon : InteractableBase
         {
             ecb.Initialize(cannonDamage);
             rb.AddForce(firePoint.forward * cannonballSpeed, ForceMode.VelocityChange);
-            isShot = true;            
-            Transform child = gameObject.transform.Find("Small_cannon");
-            StartCoroutine(RotateCannonSmoothly(child, 340f, 20f, 1.5f));
+            isShot = true;
+            pv.RPC("PlayRotateCannon", RpcTarget.All);
         }
     }
-
+    [PunRPC]
+    public void PlayRotateCannon()
+    {
+        Transform child = gameObject.transform.Find("Small_cannon");
+        StartCoroutine(RotateCannonSmoothly(child, 340f, 20f, 1.5f));
+    }
     public IEnumerator RotateCannonSmoothly(Transform cannon, float fromAngle, float toAngle, float duration)
     {
         float elapsed = 0f;
@@ -68,7 +71,6 @@ public class WisdomCannon : InteractableBase
             newEuler = startEuler;    // 기준점 매번 재설정(혹은 new Vector3(angle, startEuler.y, startEuler.z))
             newEuler.x = angle;
             cannon.localEulerAngles = newEuler;
-            Debug.Log($"코루틴 내부 euler.x:{newEuler.x} 실제:{cannon.localEulerAngles.x}");
             elapsed += Time.deltaTime;
             yield return null;
         }

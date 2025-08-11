@@ -7,7 +7,7 @@ public class BossGroggy : MonoBehaviour
     PhotonView pv;
     Animator animator;    
     public Transform[] roadTransform;
-    GameObject[] road = new GameObject[3];
+    public GameObject[] road = new GameObject[3];    
     public WisdomCannon[] cannon = new WisdomCannon[3];
 
     public int count = 0;
@@ -52,22 +52,18 @@ public class BossGroggy : MonoBehaviour
     {
         if (!PhotonNetwork.IsMasterClient) return;
         for (int i = 0; i < 3; i++)
-        {            
-            string roadName = "test/TestRoad";
-            Debug.Log(roadName);
-            Debug.Log("roadTransformpo[" + i + "]: " + roadTransform[i].position);
-            Debug.Log("roadTransformro[" + i + "]: " + roadTransform[i].rotation);
-            road[i] = PhotonNetwork.Instantiate(roadName, roadTransform[i].position, roadTransform[i].rotation);
-        }
+        {
+            road[i].transform.position = roadTransform[i].position;
+            road[i].transform.rotation = roadTransform[i].rotation;
+        }        
     }
 
     [PunRPC]
     public void ReMakeRoad()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
         for (int i = 0; i < 3; i++)
         {
-            road[i].SetActive(true);            
+            road[i].SetActive(true);          
         }
     }
 
@@ -92,28 +88,45 @@ public class BossGroggy : MonoBehaviour
     public void PauseShake()
     {
         animator.speed = 0f;
+        pv.RPC("DoingShake", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void DoingShake()
+    {
         StartCoroutine(DoShake(10, 0.2f));
     }
 
     IEnumerator DoShake(float shakeTime, float magnitude)
     {
         // 각각 흔들기
-        Platform testRoad = GameObject.Find("RealTestRoad(Clone)").GetComponent<Platform>();
-        testRoad.StartCoroutine(testRoad.Shake(shakeTime, magnitude));        
-        yield return new WaitForSeconds(shakeTime);
+        GameObject roadObj = GameObject.Find("RealTestRoad(Clone)");
+        Platform testRoad = null;
+        if (roadObj != null)
+        {
+            testRoad = roadObj.GetComponent<Platform>();
+        }
+        if (testRoad != null)
+        {
+            Coroutine shakeRoutine = testRoad.StartCoroutine(testRoad.Shake(shakeTime, magnitude));
+            yield return new WaitForSeconds(shakeTime);
+            if (shakeRoutine != null)
+                testRoad.StopCoroutine(shakeRoutine);
 
+            Collider col = testRoad.GetComponent<Collider>();
+            Rigidbody rb = testRoad.GetComponent<Rigidbody>();
+            if (rb != null) rb.isKinematic = false;
+            if (col != null) col.isTrigger = true;
+        }        
+        
         // 바닥 떨어짐
         for (int i = 0; i < 3; i++)
         {
-            road[i].SetActive(false);
+            pv.RPC("RoadReload", RpcTarget.All, i);
             pv.RPC("CannonReload", RpcTarget.All, i);
         }
 
         animator.speed = 1f;
-        Collider col = testRoad.GetComponent<Collider>();
-        Rigidbody rb = testRoad.GetComponent<Rigidbody>();
-        if (rb != null) rb.isKinematic = false;        
-        if (col != null) col.isTrigger = true;
     }
 
     [PunRPC]
@@ -122,5 +135,11 @@ public class BossGroggy : MonoBehaviour
         Transform child = cannon[i].transform.Find("Small_cannon");
         StartCoroutine(cannon[i].RotateCannonSmoothly(child, 20f, 340f, 1.5f));
         cannon[i].isShot = false;
+    }
+
+    [PunRPC]
+    public void RoadReload(int i)
+    {
+        road[i].SetActive(false);
     }
 }

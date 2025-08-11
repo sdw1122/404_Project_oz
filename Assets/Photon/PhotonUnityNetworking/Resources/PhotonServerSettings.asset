@@ -206,6 +206,10 @@ MonoBehaviour:
   - MakeRoad
   - ReMakeRoad
   - CannonReload
+  - PlayRotateCannon
+  - RoadReload
+  - DoingShake
+  - ItsTest
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
