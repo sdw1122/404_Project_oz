@@ -50,7 +50,6 @@ public class BossGroggy : MonoBehaviour
     [PunRPC]
     public void MakeRoad()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
         for (int i = 0; i < 3; i++)
         {
             road[i].transform.position = roadTransform[i].position;
