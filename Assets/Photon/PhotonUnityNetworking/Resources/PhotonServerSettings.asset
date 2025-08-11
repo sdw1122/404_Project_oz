@@ -204,6 +204,14 @@ MonoBehaviour:
   - RPC_Attack
   - RPC_Boos2Charge
   - RPC_DestroyWall
+  - StrawKing_Absorb
+  - RPC_Boss2Charge
+  - RPC_DropPlatforms
+  - RPC_ShowWarnings
+  - RPC_RestorePlatForms
+  - RPC_HideWarnings
+  - StartSkill
+  - StrawKing_Attack
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

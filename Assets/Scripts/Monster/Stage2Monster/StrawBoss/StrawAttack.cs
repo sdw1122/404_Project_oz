@@ -16,25 +16,22 @@ public class StrawAttack : MonoBehaviour
 
     private float slowAmount = 0.5f;
     private float slowTime = 3f;
-
+    float lastAttackTime;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {        
         animator =  GetComponent<Animator>();
         pv = GetComponent<PhotonView>();
     }
-    private void Update()
+    public bool IsReady()
     {
-        if (attackTime < attackCoolTime)
-        {
-            attackTime += Time.deltaTime;
-            if (attackTime >= attackCoolTime)
-            {
-                Debug.Log("state: " + state);
-                pv.RPC("RPC_Attack", RpcTarget.All);
-                RPC_Attack();
-            }
-        }
+        return Time.time >= lastAttackTime + attackCoolTime;
+    }
+    [PunRPC]
+    public void StrawKing_Attack()
+    {   
+        lastAttackTime = Time.time;
+        pv.RPC("RPC_Attack", RpcTarget.All);
     }
 
     public void Attack()
@@ -77,6 +74,7 @@ public class StrawAttack : MonoBehaviour
                     if (targetPv != null)
                     {
                         targetPv.RPC("RPC_ApplyMoveSpeedDecrease", RpcTarget.All, slowAmount, slowTime);
+                        lastAttackTime = Time.time;
                     }
                 }
             }
@@ -91,7 +89,7 @@ public class StrawAttack : MonoBehaviour
 
     public void AniEnd()
     {
-        attackTime = 0;
+        
         if (state == 1)
         {
             state = 2;
