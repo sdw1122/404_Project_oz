@@ -7,6 +7,8 @@ public class StrawAttack : MonoBehaviour
     public LayerMask whatIsTarget;
     Animator animator;
     PhotonView pv;
+    StrawKing_Poison poison;
+    Skill1 skill1;
 
     private int state = 1;
     private float attackRange = 1000f;
@@ -22,9 +24,12 @@ public class StrawAttack : MonoBehaviour
     {        
         animator =  GetComponent<Animator>();
         pv = GetComponent<PhotonView>();
+        poison = GetComponent<StrawKing_Poison>();
+        skill1 = GetComponent<Skill1>();
     }
     public bool IsReady()
     {
+        if (!poison.endAttack || !skill1.endAttack) return false;
         return Time.time >= lastAttackTime + attackCoolTime;
     }
     [PunRPC]

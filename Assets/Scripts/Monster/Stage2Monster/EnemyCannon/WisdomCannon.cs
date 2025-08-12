@@ -11,6 +11,7 @@ public class WisdomCannon : InteractableBase
     public float cannonballSpeed = 20f;
 
     public bool isShot = false;
+    public bool isSkill1 = false;
 
     protected override void Awake()
     {
@@ -25,10 +26,14 @@ public class WisdomCannon : InteractableBase
     [PunRPC]
     public void TryFireWisdom()
     {
-        if(WisdomManager.Instance.GetCurrentWisdom()>=WisdomManager.Instance.requiredWisdom && !isShot)
+        if(WisdomManager.Instance.GetCurrentWisdom()>=WisdomManager.Instance.requiredWisdom && !isShot && !isSkill1)
         {
             WisdomManager.Instance.UseWisdom(WisdomManager.Instance.requiredWisdom);
             pv.RPC(nameof(FireWisdom), RpcTarget.MasterClient);
+        }
+        else if (isSkill1)
+        {
+            Debug.Log("보스2 스킬 1");
         }
         else if (isShot)
         {

@@ -7,6 +7,7 @@ public class Skill1 : MonoBehaviour
     Animator animator;
     PhotonView pv;
     public StrawKingRazor razer;
+    public WisdomCannon[] cannons;
 
     Vector3 boxOffset = new Vector3(0f, 60f, 40f);
 
@@ -50,6 +51,10 @@ public class Skill1 : MonoBehaviour
         if (!PhotonNetwork.IsMasterClient) return;
 
         lastSkillTime = Time.time;
+        foreach (WisdomCannon cannon in cannons)
+        {
+            cannon.isSkill1 = true; // 대포 스크립트에서 상호작용 검사시 이 값 체크
+        }
         StartCoroutine(AbsorbSequence());
     }
     private IEnumerator AbsorbSequence()
@@ -300,7 +305,11 @@ public class Skill1 : MonoBehaviour
 
     public void EndAnimation()
     {
-        endAttack = true;        
+        endAttack = true;
+        foreach (WisdomCannon cannon in cannons)
+        {
+            cannon.isSkill1 = false; // 대포 스크립트에서 상호작용 검사시 이 값 체크
+        }
     }
 
     [PunRPC]
