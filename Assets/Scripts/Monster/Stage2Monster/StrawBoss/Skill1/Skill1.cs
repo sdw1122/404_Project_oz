@@ -6,7 +6,7 @@ public class Skill1 : MonoBehaviour
 {
     Animator animator;
     PhotonView pv;
-    StrawKingRazor razer;
+    public StrawKingRazor razer;
 
     Vector3 boxOffset = new Vector3(0f, 60f, 40f);
 
@@ -221,6 +221,7 @@ public class Skill1 : MonoBehaviour
         {
             // Shield 레이어의 오브젝트가 앞에 감지됨!
             Debug.Log("Shield 감지: " + hit.collider.gameObject.name);
+            Debug.Log("razer: " + (razer == null ? "null" : razer.ToString()));
             razer.isBlock = true;
             hasShield = true;
         }
@@ -299,7 +300,7 @@ public class Skill1 : MonoBehaviour
 
     public void EndAnimation()
     {
-        endAttack = true;
+        endAttack = true;        
     }
 
     [PunRPC]

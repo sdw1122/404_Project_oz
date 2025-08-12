@@ -35,6 +35,7 @@ public class StrawKingRazor : MonoBehaviour
     public void RazorEffect()
     {
         animator.speed = 0f;
+        Debug.Log("isBlock" + isBlock);
         if (isBlock)
         {
             blockedRazor.Play();
