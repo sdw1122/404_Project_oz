@@ -71,6 +71,7 @@ public class Hammer : MonoBehaviour
         if (!pv.IsMine || !canAttack || skill1Pressed) return;
         if (context.started)
         {
+            Debug.Log("눌리긴하냐");
             isAttackButtonPressed = true;
         }
         if (context.canceled)
@@ -210,9 +211,11 @@ public class Hammer : MonoBehaviour
         // 버튼을 누르고 있는 동안만 타이머 증가
         if (isAttackButtonPressed && playerController.IsGrounded())
         {
+            Debug.Log("실행이 되냐?");
             attackTimer += Time.deltaTime;
             if (attackTimer >= attackDelay)
             {
+                Debug.Log("공격 돼냐!");
                 Attack();
                 attackTimer = 0f;
             }

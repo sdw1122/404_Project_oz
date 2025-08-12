@@ -12873,6 +12873,7 @@ GameObject:
   - component: {fileID: 828000928633265993}
   - component: {fileID: 1653479065046695820}
   - component: {fileID: 4058774880079521363}
+  - component: {fileID: 6937860422895984415}
   - component: {fileID: 2129605562238910705}
   - component: {fileID: 8149917237064463831}
   m_Layer: 0
@@ -13045,6 +13046,7 @@ MonoBehaviour:
   endAttack: 0
   isReady: 0
   cooldown: 30
+  poison: {fileID: 0}
   hasShield: 0
 --- !u!114 &1653479065046695820
 MonoBehaviour:
@@ -13064,6 +13066,7 @@ MonoBehaviour:
   tik: 1.5
   duration: 10
   cooldown: 60
+  endAttack: 1
 --- !u!114 &4058774880079521363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13080,6 +13083,30 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &6937860422895984415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3258491212266816461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 788c50f0add3a8c48bf9df7b01d47963, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roadTransform: []
+  road:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  cannon:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  count: 0
+  isGroggy: 0
+  isFirst: 1
 --- !u!195 &2129605562238910705
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -29309,7 +29336,7 @@ PrefabInstance:
     - target: {fileID: 194571509055300036, guid: ad22c5a310c3f364192e07bd70b7888b, type: 3}
       propertyPath: groggy
       value: 
-      objectReference: {fileID: 1412038992627571877}
+      objectReference: {fileID: 6937860422895984415}
     - target: {fileID: 2700517730998976005, guid: ad22c5a310c3f364192e07bd70b7888b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

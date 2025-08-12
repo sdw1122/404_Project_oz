@@ -212,6 +212,13 @@ MonoBehaviour:
   - RPC_HideWarnings
   - StartSkill
   - StrawKing_Attack
+  - BossIsGroggy
+  - CannonReload
+  - DoingShake
+  - MakeRoad
+  - PlayRotateCannon
+  - ReMakeRoad
+  - RoadReload
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

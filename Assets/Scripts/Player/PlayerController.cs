@@ -301,7 +301,7 @@ public class PlayerController : MonoBehaviour
         if (jumpBufferCounter > 0)
             jumpBufferCounter -= Time.deltaTime;
 
-        
+        isGrounded = controller.isGrounded;
         
         // 바인드 상태가 아니면 움직임
         if (canMove)
