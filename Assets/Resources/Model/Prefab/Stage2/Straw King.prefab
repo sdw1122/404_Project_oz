@@ -13043,7 +13043,7 @@ MonoBehaviour:
   waitTime: 0
   attackTime: 0
   isShake: 0
-  endAttack: 0
+  endAttack: 1
   isReady: 0
   cooldown: 30
   poison: {fileID: 0}

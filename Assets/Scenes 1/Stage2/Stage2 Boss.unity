@@ -6369,8 +6369,12 @@ PrefabInstance:
       value: -0.0000039385377
       objectReference: {fileID: 0}
     - target: {fileID: 828000928633265993, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: endAttack
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 828000928633265993, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 828000928633265993, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: warning.Array.size
