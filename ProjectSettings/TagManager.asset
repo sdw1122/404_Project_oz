@@ -11,6 +11,7 @@ TagManager:
   - FireGolem
   - Lava
   - StrawMagician
+  - StrawKing
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,6 @@ TagManager:
   - Coolant
   - Shield
   - CannonBall
-  - 
   - 
   - 
   - 

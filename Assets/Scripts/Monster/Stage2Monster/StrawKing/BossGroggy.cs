@@ -126,6 +126,7 @@ public class BossGroggy : MonoBehaviour
         }
 
         animator.speed = 1f;
+        count = 0;
     }
 
     [PunRPC]

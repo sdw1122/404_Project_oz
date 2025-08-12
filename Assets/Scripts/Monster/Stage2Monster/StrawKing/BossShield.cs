@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using UnityEditor.Animations;
 
 public class BossShield : MonoBehaviour
 {
@@ -11,8 +12,16 @@ public class BossShield : MonoBehaviour
     {
         
     }
+    public void AddCount()
+    {
+        groggy.count++;
+        if (groggy.count == 3)
+        {
+            gameObject.SetActive(false);
+        }
+    }
     
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {        
         // 충돌한 오브젝트의 레이어 번호
         int hitLayer = collision.gameObject.layer;
@@ -24,26 +33,18 @@ public class BossShield : MonoBehaviour
             if (entity != null)
             {
                 // 충돌 위치 계산: 내 위치와 가장 가까운 상대 표면
-                Vector3 hitPoint = collision.collider.ClosestPoint(transform.position);
+                Vector3 hitPoint = collision.ClosestPoint(transform.position);
                 Vector3 hitNormal = (hitPoint - transform.position).normalized;
                 entity.OnDamage(10000f, hitPoint, hitNormal);
             }
         }
-        else if (hitLayer == LayerMask.NameToLayer("CannonBall"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("CannonBall"))
         {
-            if (groggy.count < 3)
-            {
-                groggy.count++;
-            }
-            else if (groggy.count == 3)
-            {
-                gameObject.SetActive(false);
-            }
+            return;
         }
         else
-        {
             Destroy(collision.gameObject);
-        }
+        
     }
 
 

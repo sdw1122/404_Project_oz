@@ -36,6 +36,7 @@ public class StrawAttack : MonoBehaviour
 
     public void Attack()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         if (state == 1)
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, whatIsTarget);
