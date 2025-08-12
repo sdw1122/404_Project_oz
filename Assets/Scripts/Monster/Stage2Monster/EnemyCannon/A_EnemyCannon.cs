@@ -10,7 +10,7 @@ public class A_EnemyCannon : MonoBehaviour
     public Transform firePoint; // 대포알이 발사될 위치
 
     [Header("감지 및 공격 설정")]
-    public float detectionRange = 20f; // 플레이어 감지 범위
+    [SerializeField]private float detectionRange; // 플레이어 감지 범위
     public float turnSpeed = 5f; // 대포의 회전 속도
     public float aimDuration = 5.5f; // 조준 시간 (초)
     public float fireDelay = 0.5f; // 조준 고정 후 발사까지의 딜레이 (초)

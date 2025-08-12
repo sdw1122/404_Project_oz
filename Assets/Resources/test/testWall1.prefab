@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5156661861943869788}
   - component: {fileID: 3345332717417539734}
   - component: {fileID: 7138016416759983408}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: testWall1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents: []
   sceneViewId: 0

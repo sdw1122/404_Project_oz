@@ -59,6 +59,10 @@ public class WisdomCannonBall : MonoBehaviour
                     enemyPv.RPC("RPC_ApplyDamage", RpcTarget.MasterClient, damage, hitPoint, hitNormal, 9998);
                     enemyPv.RPC("RPC_EnemyHit", RpcTarget.All);
                     enemyPv.RPC("RPC_PlayHitEffect", RpcTarget.All, hitPoint, hitNormal);
+                    if(hit.GetComponent<Skill1>() != null)
+                    {
+                        hit.GetComponent<Skill1>().SetHit();
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 using System.Collections;
-using System.Collections.Generic; // List 사용을 위해 추가
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MovingObj : MonoBehaviour
@@ -7,76 +8,77 @@ public class MovingObj : MonoBehaviour
     public Transform startPoint;
     public Transform endPoint;
     public float moveDuration = 5f;
+    public int roundTime = 2;
 
-    // --- 변수 추가 ---
-    private Vector3 lastPosition; // 이전 프레임의 발판 위치
-    private List<CharacterController> passengers = new List<CharacterController>(); // 발판 위의 플레이어 목록
+    // 이동량 파라미터
+    public Vector3 MoveDelta { get; private set; }
 
-    private void Start()
+    private Vector3 lastPosition;
+    private bool coroutineIsRunning = false;
+    private List<PlayerController> passengers = new List<PlayerController>();
+
+
+    private void FixedUpdate()
     {
-        // 시작 시 현재 위치를 기록
+        // 매 프레임마다 이동량 계산, 플레이어와의 update 주기 맞추기위해 FIxedUpdate
+        MoveDelta = transform.position - lastPosition;
         lastPosition = transform.position;
-        // 발판이 자동으로 움직이게 하려면 여기서 코루틴을 시작하세요.
-        StartCoroutine(MoveRoutine());
-    }
-
-    // LateUpdate는 모든 Update가 끝난 후 마지막에 호출되어 위치 동기화에 적합합니다.
-    private void LateUpdate()
-    {
-        // 이번 프레임에 발판이 얼마나 움직였는지 계산
-        Vector3 moveDelta = transform.position - lastPosition;
-
-        // 움직임이 있었다면
-        if (moveDelta != Vector3.zero)
+        for (int i = passengers.Count - 1; i >= 0; i--)
         {
-            // 발판 위의 모든 승객(플레이어)에게
-            foreach (CharacterController passenger in passengers)
+            if (passengers[i] == null || passengers[i].GetComponent<PlayerHealth>().dead==true)
             {
-                // 발판이 움직인 만큼 똑같이 플레이어를 움직여줍니다.
-                passenger.Move(moveDelta);
+                passengers.RemoveAt(i);
+                
             }
         }
-
-        // 다음 프레임을 위해 현재 위치를 다시 기록
-        lastPosition = transform.position;
     }
 
-    // 플레이어가 감지 영역에 들어왔을 때
+    // 플레이어가 올라타면 이동 시작
     private void OnTriggerEnter(Collider other)
     {
-        // CharacterController를 가진 오브젝트가 들어오면 승객 목록에 추가
-        if (other.TryGetComponent<CharacterController>(out CharacterController controller))
+        if (other.TryGetComponent<PlayerController>(out PlayerController controller))
         {
+            //승객 목록에 플레이어 추가
             if (!passengers.Contains(controller))
             {
                 passengers.Add(controller);
             }
+
+            // 코루틴 스타트
+            if (!coroutineIsRunning)
+            {
+                StartCoroutine(MoveRoutine());
+            }
         }
     }
-
-    // 플레이어가 감지 영역에서 나갔을 때
     private void OnTriggerExit(Collider other)
     {
-        // CharacterController를 가진 오브젝트가 나가면 승객 목록에서 제거
-        if (other.TryGetComponent<CharacterController>(out CharacterController controller))
+        if (other.TryGetComponent<PlayerController>(out PlayerController controller))
         {
+            // 플레이어 제거, 발판 이동량 계산 멈춤
             if (passengers.Contains(controller))
             {
+                controller.ClearPlatform();
                 passengers.Remove(controller);
             }
         }
     }
 
-    // 왕복 이동 코루틴 (이 부분은 그대로 사용하거나 필요에 맞게 수정)
+    // 왕복 이동
     private IEnumerator MoveRoutine()
     {
-        while (true)
+        coroutineIsRunning = true;
+        int time = roundTime;
+        while (time > 0)
         {
             yield return StartCoroutine(MoveTo(transform.position, endPoint.position));
             yield return StartCoroutine(MoveTo(transform.position, startPoint.position));
+            time--;
         }
+        gameObject.SetActive(false);
+        coroutineIsRunning = false;
     }
-
+    // 발판 이동
     private IEnumerator MoveTo(Vector3 start, Vector3 end)
     {
         float elapsedTime = 0f;
@@ -84,7 +86,7 @@ public class MovingObj : MonoBehaviour
         {
             transform.position = Vector3.Lerp(start, end, elapsedTime / moveDuration);
             elapsedTime += Time.deltaTime;
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
         transform.position = end;
     }

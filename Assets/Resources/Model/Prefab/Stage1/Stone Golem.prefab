@@ -376,7 +376,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
   healthBarPoint: {fileID: 212209846599559635}
   destroyDelay: 2
-  m_name: 
+  m_name: Stone Golem
   armAttackRange: 4
   groundAttackRange: 2
   armAttackCoolTime: 3

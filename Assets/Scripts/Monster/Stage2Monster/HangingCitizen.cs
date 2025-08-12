@@ -28,6 +28,7 @@ public class HangingCitizen : Enemy
 
             if (hasTarget)
             {
+                isRotatingToTarget = true;
                 float dist = Vector3.Distance(transform.position, targetEntity.transform.position);
                 if (dist <= attackRange && !isBinded)
                 {
@@ -39,6 +40,7 @@ public class HangingCitizen : Enemy
             }
             else
             {
+                isRotatingToTarget = false;
                 Collider[] colliders = Physics.OverlapSphere(transform.position, 20f, whatIsTarget);
                 for (int i = 0; i < colliders.Length; i++)
                 {
@@ -72,6 +74,9 @@ public class HangingCitizen : Enemy
     {
         if (isAttacking) return;
         isAttacking = true;
+        isRotatingToTarget = false;
+
+        
 
         if (targetEntity != null)
         {
@@ -135,5 +140,9 @@ public class HangingCitizen : Enemy
     public void EndThrow()
     {
         isAttacking = false;
+        if (hasTarget)
+        {
+            isRotatingToTarget = true;
+        }
     }
 }
