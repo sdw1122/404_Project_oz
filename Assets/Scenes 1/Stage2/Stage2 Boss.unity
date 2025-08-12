@@ -2759,6 +2759,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 28
       objectReference: {fileID: 0}
+    - target: {fileID: 5701398671579492436, guid: b1474d4040ff708428b1e042a18eda12, type: 3}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 1495483220}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4877,6 +4881,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5701398671579492436, guid: b1474d4040ff708428b1e042a18eda12, type: 3}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 714523704}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7126,7 +7134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1653479065046695820, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1653479065046695820, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: poisons.Array.size
@@ -9494,7 +9502,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4541750953746268915, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4544361844542195013, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11522,7 +11530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7409925373929331532, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7429581722175581387, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
