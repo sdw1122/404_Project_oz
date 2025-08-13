@@ -442,8 +442,8 @@ MonoBehaviour:
   pv: {fileID: 0}
   chaseTarget: 0
   wisdomAmount: 10
-  healthBarPrefab: {fileID: 0}
-  healthBarPoint: {fileID: 0}
+  healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
+  healthBarPoint: {fileID: 1888282689588773709}
   destroyDelay: 2
   m_name: Ascetic
 --- !u!114 &4149561954065366028

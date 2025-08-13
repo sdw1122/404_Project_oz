@@ -11,6 +11,7 @@ public class LivingEntity : MonoBehaviour, IDamageable, IPunObservable
     public float health { get; protected set; } // 현재 체력
     public bool dead = false;
     public event Action onDeath; // 사망시 발동할 이벤트
+    public bool HasDeathHandler => onDeath != null;
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -71,7 +72,7 @@ public class LivingEntity : MonoBehaviour, IDamageable, IPunObservable
     // 사망 처리
     public virtual void Die()
     {
-        Debug.Log("livingentity의 die 호출됨");
+        Debug.Log("livingentity의 die 호출됨");        
         // onDeath 이벤트에 등록된 메서드가 있다면 실행
         if (onDeath != null)
         {

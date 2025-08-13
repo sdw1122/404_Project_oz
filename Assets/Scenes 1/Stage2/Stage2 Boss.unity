@@ -1590,15 +1590,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0347397f5bc01f04883db96a1d318688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefabs:
-  - {fileID: 5144853623989596787, guid: 8c3e2018baedba44d93883c1e43c3f19, type: 3}
   wave:
   - enemyPrefab: {fileID: 5144853623989596787, guid: 8c3e2018baedba44d93883c1e43c3f19, type: 3}
-    count: 6
-  - enemyPrefab: {fileID: 1260822862546409975, guid: 7c2c15dcf0a4db140a32fdf9536f6824, type: 3}
-    count: 3
-  - enemyPrefab: {fileID: 3471031120575294734, guid: 591299b07e9c93d48ac35cc63eb6fc05, type: 3}
     count: 1
+  - enemyPrefab: {fileID: 1260822862546409975, guid: 7c2c15dcf0a4db140a32fdf9536f6824, type: 3}
+    count: 0
+  - enemyPrefab: {fileID: 3471031120575294734, guid: 591299b07e9c93d48ac35cc63eb6fc05, type: 3}
+    count: 0
   spawnPoints:
   - {fileID: 468789551}
   - {fileID: 357180986}
@@ -5816,6 +5814,7 @@ Transform:
   - {fileID: 468789551}
   - {fileID: 357180986}
   - {fileID: 700074438}
+  - {fileID: 1547620740}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1888756665

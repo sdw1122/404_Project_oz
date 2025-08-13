@@ -200,8 +200,8 @@ MonoBehaviour:
   pv: {fileID: 8304561853474447239}
   chaseTarget: 0
   wisdomAmount: 50
-  healthBarPrefab: {fileID: 0}
-  healthBarPoint: {fileID: 0}
+  healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
+  healthBarPoint: {fileID: 4278495260654909364}
   destroyDelay: 2
   m_name: "\uD5C8\uC218\uC544\uBE44 \uB9C8\uBC95\uC0AC"
   speed: 4
