@@ -11,6 +11,8 @@ TagManager:
   - FireGolem
   - Lava
   - StrawMagician
+  - StrawKing
+  - Road
   layers:
   - Default
   - TransparentFX
@@ -26,9 +28,8 @@ TagManager:
   - EnemyHead
   - Coolant
   - Shield
-  - 
-  - 
-  - 
+  - CannonBall
+  - ShockWave
   - 
   - 
   - 

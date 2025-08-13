@@ -325,7 +325,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1260822862546409975}
   m_Enabled: 1
-  m_AgentTypeID: -902729914
+  m_AgentTypeID: -629701670
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
@@ -431,7 +431,7 @@ MonoBehaviour:
   currentHealth: 0
   damage: 30
   Atk_Cooldown: 6
-  attackRange: 1.5
+  attackRange: 2
   DEF_Factor: 1
   isBinded: 0
   isFirstChase: 1
@@ -441,9 +441,9 @@ MonoBehaviour:
   angleToTarget: 0
   pv: {fileID: 0}
   chaseTarget: 0
-  wisdomAmount: 50
+  wisdomAmount: 10
   healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
-  healthBarPoint: {fileID: 6854418736631934607}
+  healthBarPoint: {fileID: 1888282689588773709}
   destroyDelay: 2
   m_name: Ascetic
 --- !u!114 &4149561954065366028

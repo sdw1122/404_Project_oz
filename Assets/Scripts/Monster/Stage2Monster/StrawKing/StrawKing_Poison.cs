@@ -15,7 +15,8 @@ public class StrawKing_Poison : MonoBehaviour
     public float duration = 10f;
     [Tooltip("스킬 전체의 쿨타임")]
     public float cooldown = 60f;
-
+    public bool endAttack = true;
+    Skill1 skill;
     // 내부 변수
     private float lastAttackTime; // 마지막으로 스킬을 사용한 시간
     private Coroutine skillCoroutine; // 실행 중인 스킬 코루틴을 저장
@@ -23,16 +24,20 @@ public class StrawKing_Poison : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        skill=GetComponent<Skill1>();
         lastAttackTime = -cooldown;
+        
     }
     public bool IsReady()
     {
+        if (!skill.endAttack) return false;
         return Time.time >= lastAttackTime + cooldown;
     }
     [PunRPC]
     public void TyrantRPC()
     {
         lastAttackTime = Time.time;
+        endAttack = false;
 
         // 공격 애니메이션 트리거 
         if (animator != null)
@@ -51,7 +56,7 @@ public class StrawKing_Poison : MonoBehaviour
         {
             StopCoroutine(skillCoroutine);
         }
-        skillCoroutine = StartCoroutine(PoisonCycleRoutine());
+        skillCoroutine = StartCoroutine(PoisonCycleRoutine());        
     }
     private IEnumerator PoisonCycleRoutine()
     {
@@ -74,5 +79,7 @@ public class StrawKing_Poison : MonoBehaviour
             // 다음 장판을 깔기 전까지 5초 대기
             yield return new WaitForSeconds(poisonInterval);
         }
+        endAttack = true;
+        lastAttackTime = Time.time;
     }
 }

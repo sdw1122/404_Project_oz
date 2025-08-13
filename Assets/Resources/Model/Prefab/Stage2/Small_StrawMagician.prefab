@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0abd64dec9ae0384f8dd3dd169456d6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  startingHealth: 400
   dead: 0
   whatIsTarget:
     serializedVersion: 2
@@ -187,9 +187,9 @@ MonoBehaviour:
   enemyAnimator: {fileID: 7890420973369486798}
   enemyRenderer: {fileID: 1734513082433498683}
   currentHealth: 0
-  damage: 20
-  Atk_Cooldown: 3
-  attackRange: 0
+  damage: 10
+  Atk_Cooldown: 4
+  attackRange: 10
   DEF_Factor: 1
   isBinded: 0
   isFirstChase: 1
@@ -199,9 +199,9 @@ MonoBehaviour:
   angleToTarget: 0
   pv: {fileID: 8304561853474447239}
   chaseTarget: 0
-  wisdomAmount: 100
-  healthBarPrefab: {fileID: 0}
-  healthBarPoint: {fileID: 0}
+  wisdomAmount: 50
+  healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
+  healthBarPoint: {fileID: 4278495260654909364}
   destroyDelay: 2
   m_name: "\uD5C8\uC218\uC544\uBE44 \uB9C8\uBC95\uC0AC"
   speed: 4
@@ -222,9 +222,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98de1cebd7682734da13543494c7da80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
-  cooldown: 3
-  range: 15
+  damage: 10
+  cooldown: 4
+  range: 10
   arrowSpeed: 60
   skillRangeYOffset: 1
   firePos: {fileID: 6455634769652430068}
@@ -240,9 +240,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c366df8e6665fc5488aaf94386d03594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 60
-  cooldown: 6
-  range: 15
+  damage: 20
+  cooldown: 5
+  range: 10
   arrowSpeed: 20
   skillRangeYOffset: 1
   lastAttackTime: 15
@@ -261,14 +261,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bindCircleCount: 6
   spawnRadius: 15
-  bindCircleDamage: 5
+  bindCircleDamage: 0
   bindCircleDuration: 3
   bindDuration: 3
   minDistanceBetweenCircles: 5
   minDistanceFromPlayers: 2
   spawnCenter: {fileID: 4278495260654909364}
   reduceTime: 3
-  cooldown: 8
+  cooldown: 10
 --- !u!114 &8304561853474447239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,7 +361,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3471031120575294734}
   m_Enabled: 1
-  m_AgentTypeID: -1923039037
+  m_AgentTypeID: 658490984
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
@@ -394,10 +394,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.22545707
-  m_Height: 1.872828
+  m_Radius: 0.2
+  m_Height: 1.8
   m_Direction: 1
-  m_Center: {x: -0.011361718, y: 0.87996936, z: 0}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!4 &4278495260654909364 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 44368ff6d17d1b641899ff32e0dbf875, type: 3}

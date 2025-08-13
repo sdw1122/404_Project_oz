@@ -362,8 +362,7 @@ public abstract class Enemy : LivingEntity
     // 사망 처리
     public override void Die()
     {
-        if (dead) return;
-        base.Die();
+        if (dead) return;        
         dead = true;
         
         //체력바 숨김
@@ -387,7 +386,7 @@ public abstract class Enemy : LivingEntity
         pv.RPC("RPC_Die", RpcTarget.Others);
         /*enemyAudioPlayer.PlayOneShot(deathSound);*/
 
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && !HasDeathHandler)
         {
             // 정해진 시간 후에 네트워크 상에서 오브젝트를 파괴합니다.
             PhotonView attacker = PhotonView.Find(lastAttacker);

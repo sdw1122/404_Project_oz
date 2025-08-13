@@ -154,7 +154,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5144853623989596787}
   m_Enabled: 1
-  m_AgentTypeID: -902729914
+  m_AgentTypeID: 65107623
   m_Radius: 0.5
   m_Speed: 5
   m_Acceleration: 8
@@ -254,7 +254,7 @@ MonoBehaviour:
   angleToTarget: 0
   pv: {fileID: 0}
   chaseTarget: 0
-  wisdomAmount: 0
+  wisdomAmount: 1
   healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
   healthBarPoint: {fileID: 5194326003192768952}
   destroyDelay: 2

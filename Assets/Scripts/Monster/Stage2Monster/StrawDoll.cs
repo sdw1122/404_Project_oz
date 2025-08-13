@@ -35,7 +35,7 @@ public class StrawDoll : Enemy
         if (!isAttacking)
         {
             Debug.Log("dead : " + dead);
-            Attacking();
+            DollAttacking();
             isAttacking = true;
         }
     }
@@ -53,10 +53,10 @@ public class StrawDoll : Enemy
             yield return new WaitForSeconds(interval); // 1초 대기
         }
 
-        Boom();
+        DollBoom();
     }
 
-    public void Attacking()
+    public void DollAttacking()
     {
         if (dead) return;
         if (targetEntity != null)
@@ -103,7 +103,7 @@ public class StrawDoll : Enemy
         }
     }
 
-    public void Boom()
+    public void DollBoom()
     {
         // 1. 중심(보통 transform.position)과 반경(공격 범위)을 정합니다.
         float aoeRadius = 5f; // 예시: 반지름 5
