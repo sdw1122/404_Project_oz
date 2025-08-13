@@ -5902,6 +5902,98 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &3692586747450472733
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3095012817546759448}
+  - component: {fileID: 2990966342465262998}
+  - component: {fileID: 3587345191042358745}
+  - component: {fileID: 6880420821954294701}
+  m_Layer: 6
+  m_Name: RespawnInteract
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3095012817546759448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3692586747450472733}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6949941865084275974}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2990966342465262998
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3692586747450472733}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.6090934, z: 1.8643196}
+  m_Center: {x: 0, y: 0.19545329, z: 0.22403777}
+--- !u!114 &3587345191042358745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3692586747450472733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082165b52aef48a498a5b66e500cbf5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionType: 2
+  customInteractRange: 0
+  playerHealth: {fileID: 4311164335986358036}
+--- !u!114 &6880420821954294701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3692586747450472733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4506894563561894530
 GameObject:
   m_ObjectHideFlags: 0
@@ -17314,6 +17406,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3801785641438653269, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
   m_PrefabInstance: {fileID: 4467188480446715513}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4921736633641568441 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8769389344223256256, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+  m_PrefabInstance: {fileID: 4467188480446715513}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5106299565252940240 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8873107383478142889, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
@@ -17385,6 +17488,11 @@ ParticleSystem:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7979345350424810643, guid: b18225ad4faed034bb0da5f32865a334, type: 3}
   m_PrefabInstance: {fileID: 5069392940309726522}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7613948562679206060 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6076633124516218581, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+  m_PrefabInstance: {fileID: 4467188480446715513}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5166595796393567959
 PrefabInstance:
@@ -17672,6 +17780,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5370451169444940561}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3095012817546759448}
     - targetCorrespondingSourceObject: {fileID: 1330755669629619180, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2686364444472161321}
@@ -18299,7 +18410,7 @@ MonoBehaviour:
   pv: {fileID: 0}
   resurrectionEffect: {fileID: 7103072699600866445}
   HealingEffect: {fileID: 6643043933943809683}
-  resurrectionDelay: 6
+  resurrectionDelay: 5
   myDeadCam: {fileID: 4280250511347773581}
   hitClip: {fileID: 8300000, guid: 64c9aab8691d7b64984359ef1d0df47b, type: 3}
   hitSource: {fileID: 134457779669073960}
@@ -18307,6 +18418,8 @@ MonoBehaviour:
   resurrectionClip: {fileID: 8300000, guid: 195b96f5481c9f64f8d494ada1ddc443, type: 3}
   HealSource: {fileID: 1586126806776088823}
   HealClip: {fileID: 8300000, guid: ffaead79bcff2d949a792debafac30d6, type: 3}
+  respawnUI: {fileID: 7613948562679206060}
+  respawnText: {fileID: 4921736633641568441}
 --- !u!114 &6089021596233277290
 MonoBehaviour:
   m_ObjectHideFlags: 0

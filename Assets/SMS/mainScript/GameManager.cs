@@ -1,10 +1,12 @@
 using Photon.Pun;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static LobbyManager;
 
 public class GameManager : MonoBehaviourPun
 {
+    public Transform defaultSpawnPoint;
     Vector3 spawnPos;
     PlayerSaveData savedData;
     string flagLabel;
@@ -69,15 +71,27 @@ public class GameManager : MonoBehaviourPun
                 prefabName = "Player"; // 예비 프리팹
                 break;
         }
+        Transform spawnTransform = null;
+
         // 로비에서 클릭한 깃발의 이름을 가져옴. 없으면 가장 최근 깃발
-        string flagToUse = TempMemory.selectedFlagLabel ?? savedData.latestFlag;
+        string flagToUse = TempMemory.selectedFlagLabel;
         Debug.Log("선택깃발 : "+TempMemory.selectedFlagLabel);
         SaveFlag targetFlag = FindObjectsByType<SaveFlag>(default).FirstOrDefault(flag => flag.label == flagToUse);
-        if(targetFlag!= null) 
+        if (targetFlag != null)
         {
-            spawnPos = targetFlag.SaveFlagGetSpawnPos(job).position; 
+            // 깃발이 있다면 깃발의 스폰 포인트를 사용
+            spawnTransform = targetFlag.SaveFlagGetSpawnPos(job);
         }
-        GameObject player = PhotonNetwork.Instantiate(prefabName, new Vector3(0f, 61f, 65f), Quaternion.identity);
+        else if (defaultSpawnPoint != null)
+        {
+            // 깃발이 없다면,GameManager에 설정된 기본 스폰 포인트를 사용
+            spawnTransform = defaultSpawnPoint;
+        }
+
+        
+        Vector3 spawnPosition = (spawnTransform != null) ? spawnTransform.position : Vector3.zero;
+        Quaternion spawnRotation = (spawnTransform != null) ? spawnTransform.rotation : Quaternion.identity;
+        GameObject player = PhotonNetwork.Instantiate(prefabName, spawnPosition, spawnRotation);
         player.name = userId;
         // 본인 것일 때만 job 세팅
         if (player.GetComponent<PhotonView>().IsMine)
