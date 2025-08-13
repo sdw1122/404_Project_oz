@@ -157,7 +157,7 @@ public class CooperativePurifier : InteractableBase, IPunObservable
                 .Count(p => Vector3.Distance(transform.position, p.transform.position) <= deactivationRange);
 
             // 4. 범위 안에 2명 이상 있으면 타이머를 진행시키고, 아니면 타이머를 되돌립니다.
-            if (playersInDeactivationZone >= 1)
+            if (playersInDeactivationZone >= 2)
             {
                 deactivationTimer += Time.deltaTime;
             }

@@ -521,7 +521,7 @@ public class PlayerController : MonoBehaviour
                 moveDirection.y = jumpPower;
                 jumpBufferCounter = 0;
                 animator.SetBool("Float", true);
-                jumpSound.PlayOneShot(jumpSoundClip);
+                //jumpSound.PlayOneShot(jumpSoundClip);
                 pv.RPC("RPC_SetFloat", RpcTarget.Others, true);
             }
             else
