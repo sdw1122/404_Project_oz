@@ -18,6 +18,10 @@ public class FireGolem : Enemy
     public bool isIce = false;
 
     public ParticleSystem circleEffect;
+    public AudioSource attackSource;
+    public AudioSource skillBeforeSource;
+    public AudioSource skillSource;
+    private AudioClip clip;
 
     public override void Update()
     {
@@ -369,5 +373,20 @@ public class FireGolem : Enemy
         {
             DEF_Factor = 5f;
         }
+    }
+    public void PlayAttackClip()
+    {
+        clip = attackSource.clip;
+        attackSource.PlayOneShot(clip);
+    }
+    public void PlaySkillBeforeClip()
+    {
+        clip = skillBeforeSource.clip;
+        skillBeforeSource.PlayOneShot(clip);
+    }
+    public void PlaySkillClip()
+    {
+        clip = skillSource.clip;
+        skillSource.PlayOneShot(clip);
     }
 }

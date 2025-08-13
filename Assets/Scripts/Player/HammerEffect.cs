@@ -22,15 +22,8 @@ public class HammerEffect : MonoBehaviour
         if (skill2Effect == null) return;
         skill2EffectInstance = Instantiate(skill2Effect, pos, rot);
         StartCoroutine(StopSkill2Effect());
-        pv.RPC(nameof(RPC_PlaySkill2Effect),RpcTarget.Others,pos,rot);
     }
 
-    [PunRPC]
-    void RPC_PlaySkill2Effect(Vector3 pos, Quaternion rot)
-    {
-        skill2EffectInstance = Instantiate(skill2Effect, pos, rot);
-        StartCoroutine(StopSkill2Effect());
-    }
 
     private IEnumerator StopSkill2Effect()
     {

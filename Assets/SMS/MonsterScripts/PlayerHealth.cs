@@ -16,6 +16,14 @@ public class PlayerHealth : LivingEntity
     public ParticleSystem HealingEffect;
     public float resurrectionDelay = 25f;
     public Camera myDeadCam;
+
+    public AudioClip hitClip;
+    public AudioSource hitSource;
+    public AudioSource resurrectionSource;
+    public AudioClip resurrectionClip;
+    public AudioSource HealSource;
+    public AudioClip HealClip;
+
     private void Awake()
     {
         playerAnimator = GetComponent<Animator>();
@@ -40,7 +48,8 @@ public class PlayerHealth : LivingEntity
     {
        
         base.Resurrection();
-        
+
+        resurrectionSource.PlayOneShot(resurrectionClip);
         resurrectionEffect.Play();
         pv.RPC("SetDeadState", RpcTarget.All, false);
         pv.RPC("RPC_TriggerPlayerResurrection", RpcTarget.All);
@@ -90,6 +99,7 @@ public class PlayerHealth : LivingEntity
             GetComponent<Pen_Skill_1>()?.CancelCharging();
             GetComponent<Hammer>()?.CancelCharging();
             playerAnimator.SetTrigger("Hit");
+            hitSource.PlayOneShot(hitClip);
             pv.RPC("RPC_TriggerPlayerHit", RpcTarget.Others);
         }
 
@@ -210,6 +220,8 @@ public class PlayerHealth : LivingEntity
         {
             health += healAmount;
             HealingEffect.Play();
+            HealSource.PlayOneShot(HealClip);
+            pv.RPC("RPC_HealEffectPlay", RpcTarget.Others);
             if (health > startingHealth)
             {
                 health = startingHealth;
@@ -218,6 +230,13 @@ public class PlayerHealth : LivingEntity
 
 
     }
+    [PunRPC] 
+    void RPC_HealEffectPlay()
+    {
+        HealingEffect.Play();
+        HealSource.PlayOneShot(HealClip);
+    }
+
     [PunRPC]
     void RPC_TriggerPlayerDie()
     {
@@ -248,6 +267,7 @@ public class PlayerHealth : LivingEntity
     {
 
         resurrectionEffect.Play();
+        resurrectionSource.PlayOneShot(resurrectionClip);
         playerAnimator.ResetTrigger("Die");
         playerAnimator.SetTrigger("Resurrection");
         // 조작활성화,체력 동기화
