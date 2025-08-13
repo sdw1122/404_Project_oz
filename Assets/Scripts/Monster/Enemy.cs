@@ -388,17 +388,6 @@ public abstract class Enemy : LivingEntity
         enemyAnimator.SetBool("Die", true);
         pv.RPC("RPC_Die", RpcTarget.Others);
         /*enemyAudioPlayer.PlayOneShot(deathSound);*/
-
-        if (PhotonNetwork.IsMasterClient && !HasDeathHandler)
-        {
-            // 정해진 시간 후에 네트워크 상에서 오브젝트를 파괴합니다.
-            PhotonView attacker = PhotonView.Find(lastAttacker);
-            if(WisdomManager.Instance!=null&&attacker != null&&attacker.gameObject.layer==LayerMask.NameToLayer("Player"))
-            {
-                WisdomManager.Instance.AddWisdom(wisdomAmount);
-            }
-            StartCoroutine(DestroyAfterDelay());
-        }
     }
 
     private IEnumerator DestroyAfterDelay()
@@ -427,6 +416,20 @@ public abstract class Enemy : LivingEntity
     {
         if (enemyAnimator != null)
             enemyAnimator.enabled = false; // 애니메이션 포즈 고정
+
+        Debug.Log("handler : " + HasDeathHandler);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 정해진 시간 후에 네트워크 상에서 오브젝트를 파괴합니다.
+            PhotonView attacker = PhotonView.Find(lastAttacker);
+            if (WisdomManager.Instance != null && attacker != null && attacker.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                WisdomManager.Instance.AddWisdom(wisdomAmount);
+            }
+            if (!HasDeathHandler)
+                StartCoroutine(DestroyAfterDelay());
+        }
 
         base.Die();
     }
