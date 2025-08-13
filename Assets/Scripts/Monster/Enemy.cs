@@ -17,6 +17,7 @@ public abstract class Enemy : LivingEntity
     public AudioSource hitSource;
     public AudioSource stepSource;
     public AudioSource dieSource;
+    public AudioSource hurtSource;
     private AudioClip enemyClip;
 
     public Animator enemyAnimator; // 애니메이터 컴포넌트
@@ -539,6 +540,11 @@ public abstract class Enemy : LivingEntity
     {
         enemyClip = hitSource.clip;
         hitSource.PlayOneShot(enemyClip);
+        if(hurtSource != null)
+        {
+            enemyClip = hurtSource.clip;
+            hurtSource.PlayOneShot(enemyClip);
+        }
     }
     public void PlayDieClip()
     {

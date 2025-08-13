@@ -192,14 +192,12 @@ public class WoodMan : Enemy
                 woodManRoar.SetDamage(originalDamage*2f);
                 break;
             case WoodMan_Mode.Overheat:
-                PlayBustClip();
                 DEF_Factor = 0.8f;
                 woodManAttack.SetDamage(originalDamage*1.25f);
                 woodManQuake.SetDamage(originalDamage*1.5f*1.25f);
                 woodManRoar.SetDamage(originalDamage *2f* 1.25f);
                 break;
             case WoodMan_Mode.Vulnerable:
-                PlaySteamClip();
                 DEF_Factor = 1.5f;
                 woodManAttack.SetDamage(originalDamage);
                 woodManQuake.SetDamage(originalDamage*1.5f);
@@ -283,11 +281,13 @@ public class WoodMan : Enemy
         if (other.gameObject.layer == LayerMask.NameToLayer("Lava") && _currentMode == WoodMan_Mode.Normal)
         {
             Debug.Log("[Woodman 상태 변화] Lava와 접촉하여 '과열(Overheat)' 상태로 전환!");
+            PlayBustClip();
             SetMode(WoodMan_Mode.Overheat);
         }
         // "Coolant" 레이어와 겹쳤고, 현재 상태가 "Overheat"일 때
         else if (other.gameObject.layer == LayerMask.NameToLayer("Coolant") && _currentMode == WoodMan_Mode.Overheat)
         {
+            PlaySteamClip();
             SetMode(WoodMan_Mode.Vulnerable);
         }
     }
