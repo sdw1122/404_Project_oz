@@ -357,6 +357,10 @@ MonoBehaviour:
   navMeshAgent: {fileID: 0}
   obstacle: {fileID: 0}
   hitEffect: {fileID: 8153873826789175073}
+  hitSource: {fileID: 0}
+  stepSource: {fileID: 0}
+  dieSource: {fileID: 0}
+  hurtSource: {fileID: 0}
   enemyAnimator: {fileID: 0}
   enemyRenderer: {fileID: 0}
   currentHealth: 0
