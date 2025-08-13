@@ -71,6 +71,7 @@ public class Hammer : MonoBehaviour
         if (!pv.IsMine || !canAttack || skill1Pressed) return;
         if (context.started)
         {
+            Debug.Log("눌리긴하냐");
             isAttackButtonPressed = true;
         }
         if (context.canceled)
@@ -210,9 +211,11 @@ public class Hammer : MonoBehaviour
         // 버튼을 누르고 있는 동안만 타이머 증가
         if (isAttackButtonPressed && playerController.IsGrounded())
         {
+            Debug.Log("실행이 되냐?");
             attackTimer += Time.deltaTime;
             if (attackTimer >= attackDelay)
             {
+                Debug.Log("공격 돼냐!");
                 Attack();
                 attackTimer = 0f;
             }
@@ -361,22 +364,22 @@ public class Hammer : MonoBehaviour
         float attackDamage = skill2;
 
         // 1. 전방 구 범위 내 적 감지
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, range, LayerMask.GetMask("Enemy"));
-
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, range, LayerMask.GetMask("Enemy", "ShockWave"));        
         foreach (var hit in hitColliders)
-        {
+        {            
             // 2. 플레이어 → 적 방향 벡터
-            Vector3 dirToTarget = (hit.transform.position - transform.position).normalized;
+            Vector3 targetPos = hit.ClosestPoint(transform.position);
+            Vector3 dirToTarget = (targetPos - transform.position).normalized;
             // 3. 전방 벡터와 각도 비교
             float dot = Vector3.Dot(transform.forward, dirToTarget);
             float theta = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
-            if (theta <= angle / 2f)
+            if (theta <= angle / 2f && hit.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 //4.부채꼴 안에 들어온 적에게만 데미지
                 Enemy enemy = hit.GetComponent<Enemy>();
                 if (enemy != null)
-                {
+                {                    
                     // 피격 위치와 방향 계산
                     Vector3 hitPoint = hit.ClosestPoint(transform.position);
                     Vector3 hitNormal = (hitPoint - transform.position).normalized;
@@ -400,6 +403,15 @@ public class Hammer : MonoBehaviour
                     }
                 }
                 Debug.Log("Skill2 맞음");
+            }
+            else if (theta <= angle / 2f && hit.gameObject.layer == LayerMask.NameToLayer("ShockWave"))
+            {
+                ShockWaveLever shock = hit.GetComponent<ShockWaveLever>();
+
+                if (shock != null)
+                {
+                    shock.StartShockWave();
+                }
             }
         }
     }

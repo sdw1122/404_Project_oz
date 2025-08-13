@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
     public Transform foot;
     private GameObject jumpEffectins;
 
+    private MovingObj currentPlatform;
     [PunRPC]
     public void SetJob(string _job)
     {
@@ -300,7 +301,7 @@ public class PlayerController : MonoBehaviour
         if (jumpBufferCounter > 0)
             jumpBufferCounter -= Time.deltaTime;
 
-        
+        isGrounded = controller.isGrounded;
         
         // 바인드 상태가 아니면 움직임
         if (canMove)
@@ -325,9 +326,32 @@ public class PlayerController : MonoBehaviour
             {
                 HandleNormalMovement(worldDir, groundNormal);
             }
-            isGrounded = controller.isGrounded;
+            Vector3 playerDisplacement = moveDirection * Time.fixedDeltaTime;
+            
+            // 발판의 이동 거리 가져옴
+            Vector3 platformDisplacement = Vector3.zero;
+            if (currentPlatform != null)
+            {
+                
+                platformDisplacement = currentPlatform.MoveDelta;
+            }
 
-            controller.Move(moveDirection * Time.deltaTime);
+            // 이동거리 합산
+            controller.Move(playerDisplacement + platformDisplacement);
+        }
+    }
+    public void ClearPlatform()
+    {
+        currentPlatform = null;
+    }
+    // 이동 발판에서 이동값 받아옴
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.normal.y > 0.9f)
+        {
+            
+            currentPlatform = hit.gameObject.GetComponent<MovingObj>();
+            
         }
     }
     // 넉백 함수
@@ -435,16 +459,7 @@ public class PlayerController : MonoBehaviour
         mainCamera.gameObject.SetActive(true);
     }
 
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if (hit.gameObject.CompareTag("Enemy"))
-        {
-            // 경사도·노멀 값 구해서
-            Vector3 slideDir = Vector3.ProjectOnPlane(Vector3.down, hit.normal).normalized;
-            controller.Move(slideDir * slideSpeed * Time.deltaTime);
-            // 또는 isGrounded 강제 해제 등
-        }
-    }
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))

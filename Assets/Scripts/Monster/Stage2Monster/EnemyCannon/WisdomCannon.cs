@@ -1,15 +1,22 @@
 using Photon.Pun;
 using UnityEngine;
+using System.Collections;
 
 public class WisdomCannon : InteractableBase
 {
     public Transform firePoint;
     public GameObject cannonballPrefab;
+    public Animator animator;
     public float cannonDamage=400f;
     public float cannonballSpeed = 20f;
+
+    public bool isShot = false;
+    public bool isSkill1 = false;
+
     protected override void Awake()
     {
         base.Awake();
+        animator = GetComponent<Animator>();
         
     }
     public override void Interact(PlayerController player)
@@ -19,10 +26,18 @@ public class WisdomCannon : InteractableBase
     [PunRPC]
     public void TryFireWisdom()
     {
-        if(WisdomManager.Instance.GetCurrentWisdom()>=WisdomManager.Instance.requiredWisdom)
+        if(WisdomManager.Instance.GetCurrentWisdom()>=WisdomManager.Instance.requiredWisdom && !isShot && !isSkill1)
         {
             WisdomManager.Instance.UseWisdom(WisdomManager.Instance.requiredWisdom);
             pv.RPC(nameof(FireWisdom), RpcTarget.MasterClient);
+        }
+        else if (isSkill1)
+        {
+            Debug.Log("보스2 스킬 1");
+        }
+        else if (isShot)
+        {
+            Debug.Log("이미 발사함");
         }
         else
         {
@@ -39,6 +54,32 @@ public class WisdomCannon : InteractableBase
         {
             ecb.Initialize(cannonDamage);
             rb.AddForce(firePoint.forward * cannonballSpeed, ForceMode.VelocityChange);
+            isShot = true;
+            pv.RPC("PlayRotateCannon", RpcTarget.All);
         }
+    }
+    [PunRPC]
+    public void PlayRotateCannon()
+    {
+        Transform child = gameObject.transform.Find("Small_cannon");
+        StartCoroutine(RotateCannonSmoothly(child, 340f, 20f, 1.5f));
+    }
+    public IEnumerator RotateCannonSmoothly(Transform cannon, float fromAngle, float toAngle, float duration)
+    {
+        float elapsed = 0f;
+        Vector3 startEuler = cannon.localEulerAngles;
+        Vector3 newEuler = startEuler;
+        while (elapsed < duration)
+        {            
+            float angle = Mathf.LerpAngle(fromAngle, toAngle, elapsed / duration);
+            newEuler = startEuler;    // 기준점 매번 재설정(혹은 new Vector3(angle, startEuler.y, startEuler.z))
+            newEuler.x = angle;
+            cannon.localEulerAngles = newEuler;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        newEuler = startEuler;
+        newEuler.x = toAngle;
+        cannon.localEulerAngles = newEuler;
     }
 }

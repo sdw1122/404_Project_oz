@@ -7,6 +7,8 @@ public class StrawAttack : MonoBehaviour
     public LayerMask whatIsTarget;
     Animator animator;
     PhotonView pv;
+    StrawKing_Poison poison;
+    Skill1 skill1;
 
     private int state = 1;
     private float attackRange = 1000f;
@@ -16,29 +18,30 @@ public class StrawAttack : MonoBehaviour
 
     private float slowAmount = 0.5f;
     private float slowTime = 3f;
-
+    float lastAttackTime;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {        
         animator =  GetComponent<Animator>();
         pv = GetComponent<PhotonView>();
+        poison = GetComponent<StrawKing_Poison>();
+        skill1 = GetComponent<Skill1>();
     }
-    private void Update()
+    public bool IsReady()
     {
-        if (attackTime < attackCoolTime)
-        {
-            attackTime += Time.deltaTime;
-            if (attackTime >= attackCoolTime)
-            {
-                Debug.Log("state: " + state);
-                pv.RPC("RPC_Attack", RpcTarget.All);
-                RPC_Attack();
-            }
-        }
+        if (!poison.endAttack || !skill1.endAttack) return false;
+        return Time.time >= lastAttackTime + attackCoolTime;
+    }
+    [PunRPC]
+    public void StrawKing_Attack()
+    {   
+        lastAttackTime = Time.time;
+        pv.RPC("RPC_Attack", RpcTarget.All);
     }
 
     public void Attack()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         if (state == 1)
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, whatIsTarget);
@@ -77,6 +80,7 @@ public class StrawAttack : MonoBehaviour
                     if (targetPv != null)
                     {
                         targetPv.RPC("RPC_ApplyMoveSpeedDecrease", RpcTarget.All, slowAmount, slowTime);
+                        lastAttackTime = Time.time;
                     }
                 }
             }
@@ -91,7 +95,7 @@ public class StrawAttack : MonoBehaviour
 
     public void AniEnd()
     {
-        attackTime = 0;
+        
         if (state == 1)
         {
             state = 2;
