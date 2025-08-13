@@ -1560,8 +1560,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs:
-  - {fileID: 3471031120575294734, guid: 591299b07e9c93d48ac35cc63eb6fc05, type: 3}
-  - {fileID: 1260822862546409975, guid: 7c2c15dcf0a4db140a32fdf9536f6824, type: 3}
   - {fileID: 5144853623989596787, guid: 8c3e2018baedba44d93883c1e43c3f19, type: 3}
   spawnPoints:
   - {fileID: 468789551}
@@ -4573,6 +4571,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c2c15dcf0a4db140a32fdf9536f6824, type: 3}
+--- !u!1 &1547620739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1547620740}
+  m_Layer: 0
+  m_Name: Monster2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1547620740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547620739}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -71.2, y: 40, z: -42.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1878171330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1557672777
 GameObject:
   m_ObjectHideFlags: 0
@@ -4587,7 +4616,7 @@ GameObject:
   - component: {fileID: 1557672780}
   - component: {fileID: 1557672779}
   - component: {fileID: 1557672778}
-  m_Layer: 6
+  m_Layer: 15
   m_Name: ShockWaveLever
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4628,6 +4657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63074d69898daba4a99578c27e740633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetMat: {fileID: 2100000, guid: 8c438d15f11d1dd43957c7f097cf5399, type: 2}
   platform: {fileID: 987983391}
   disableDuration: 20
   damage: 10
@@ -4677,7 +4707,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 8c438d15f11d1dd43957c7f097cf5399, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4721,37 +4751,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 354287228}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1547620739
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1547620740}
-  m_Layer: 0
-  m_Name: Monster2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1547620740
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1547620739}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -71.2, y: 40, z: -42.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1878171330}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1566771456
 GameObject:
@@ -5411,7 +5410,7 @@ GameObject:
   - component: {fileID: 1712173392}
   - component: {fileID: 1712173391}
   - component: {fileID: 1712173390}
-  m_Layer: 6
+  m_Layer: 15
   m_Name: ShockWaveLever (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5467,6 +5466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63074d69898daba4a99578c27e740633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetMat: {fileID: 2100000, guid: 24a4f4ff1c1b77e4ba6e150f495bd520, type: 2}
   platform: {fileID: 703387108}
   disableDuration: 20
   damage: 10
@@ -5516,7 +5516,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 24a4f4ff1c1b77e4ba6e150f495bd520, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6050,7 +6050,7 @@ GameObject:
   - component: {fileID: 2130854906}
   - component: {fileID: 2130854905}
   - component: {fileID: 2130854904}
-  m_Layer: 6
+  m_Layer: 15
   m_Name: ShockWaveLever (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6106,6 +6106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63074d69898daba4a99578c27e740633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetMat: {fileID: 2100000, guid: 10bfe93cc310e864eb0b95e7e624a1be, type: 2}
   platform: {fileID: 965621166}
   disableDuration: 20
   damage: 10
@@ -6155,7 +6156,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 10bfe93cc310e864eb0b95e7e624a1be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12624,6 +12625,10 @@ PrefabInstance:
     - target: {fileID: 7993890789446902073, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 64.736275
+      objectReference: {fileID: 0}
+    - target: {fileID: 8070472937806063287, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8102411084515202128, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

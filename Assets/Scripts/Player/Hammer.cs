@@ -364,7 +364,7 @@ public class Hammer : MonoBehaviour
         float attackDamage = skill2;
 
         // 1. 전방 구 범위 내 적 감지
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, range, LayerMask.GetMask("Enemy"));        
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, range, LayerMask.GetMask("Enemy", "ShockWave"));        
         foreach (var hit in hitColliders)
         {            
             // 2. 플레이어 → 적 방향 벡터
@@ -374,7 +374,7 @@ public class Hammer : MonoBehaviour
             float dot = Vector3.Dot(transform.forward, dirToTarget);
             float theta = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
-            if (theta <= angle / 2f)
+            if (theta <= angle / 2f && hit.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 //4.부채꼴 안에 들어온 적에게만 데미지
                 Enemy enemy = hit.GetComponent<Enemy>();
@@ -403,6 +403,15 @@ public class Hammer : MonoBehaviour
                     }
                 }
                 Debug.Log("Skill2 맞음");
+            }
+            else if (theta <= angle / 2f && hit.gameObject.layer == LayerMask.NameToLayer("ShockWave"))
+            {
+                ShockWaveLever shock = hit.GetComponent<ShockWaveLever>();
+
+                if (shock != null)
+                {
+                    shock.StartShockWave();
+                }
             }
         }
     }
