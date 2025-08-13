@@ -1,3 +1,4 @@
+using Mono.Cecil;
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
@@ -13,11 +14,13 @@ public abstract class Enemy : LivingEntity
     public NavMeshObstacle obstacle;
 
     public ParticleSystem hitEffect; // 피격 시 재생할 파티클 효과
-    /*public AudioClip deathSound; // 사망 시 재생할 소리
-    public AudioClip hitSound; // 피격 시 재생할 소리*/
+    public AudioSource hitSource;
+    public AudioSource stepSource;
+    public AudioSource dieSource;
+    public AudioSource hurtSource;
+    private AudioClip enemyClip;
 
     public Animator enemyAnimator; // 애니메이터 컴포넌트
-    /*private AudioSource enemyAudioPlayer; // 오디오 소스 컴포넌트*/
     public Renderer enemyRenderer; // 렌더러 컴포넌트
     private Rigidbody rb;        
     public abstract void Attack();
@@ -362,8 +365,7 @@ public abstract class Enemy : LivingEntity
     // 사망 처리
     public override void Die()
     {
-        if (dead) return;
-        base.Die();
+        if (dead) return;        
         dead = true;
         
         //체력바 숨김
@@ -387,7 +389,7 @@ public abstract class Enemy : LivingEntity
         pv.RPC("RPC_Die", RpcTarget.Others);
         /*enemyAudioPlayer.PlayOneShot(deathSound);*/
 
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && !HasDeathHandler)
         {
             // 정해진 시간 후에 네트워크 상에서 오브젝트를 파괴합니다.
             PhotonView attacker = PhotonView.Find(lastAttacker);
@@ -482,6 +484,7 @@ public abstract class Enemy : LivingEntity
             hitEffect.transform.position = hitPoint;
             hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
             hitEffect.Play();
+            PlayHitClip();
         }
 
         /*if (enemyAudioPlayer != null && hitSound != null)
@@ -531,5 +534,25 @@ public abstract class Enemy : LivingEntity
     public void RPC_SetDEF(float value)
     {
         DEF_Factor = value;
+    }
+    public void PlayHitClip()
+    {
+        enemyClip = hitSource.clip;
+        hitSource.PlayOneShot(enemyClip);
+        if(hurtSource != null)
+        {
+            enemyClip = hurtSource.clip;
+            hurtSource.PlayOneShot(enemyClip);
+        }
+    }
+    public void PlayDieClip()
+    {
+        enemyClip = dieSource.clip;
+        dieSource.PlayOneShot(enemyClip);
+    }
+    public void PlayStepClip()
+    {
+        enemyClip = stepSource.clip;
+        stepSource.PlayOneShot(enemyClip);
     }
 }

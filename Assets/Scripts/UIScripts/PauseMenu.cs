@@ -113,6 +113,14 @@ public class PauseMenu : MonoBehaviourPunCallbacks
 #endif
     }
 
+    public void LeaveStage()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("StageSelectScene");
+        }
+    }
+
     // OnLeftRoom 콜백은 이제 사용하지 않지만, 다른 곳에서 필요할 수 있으니 남겨둡니다.
     public override void OnLeftRoom()
     {

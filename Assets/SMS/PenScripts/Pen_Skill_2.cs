@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 public class Pen_Skill_2 : MonoBehaviour
 {
     public GameObject PenPlayer;
+    public AudioSource audioSource;
+    public AudioClip skill2Clip;
     Animator animator;
     [Header("스킬 정보")]
     public string Skill_ID = "Pen_Skill_2";
@@ -47,6 +49,7 @@ public class Pen_Skill_2 : MonoBehaviour
 
     void ThrowProjectile()
     {
+        audioSource.PlayOneShot(skill2Clip);
         Vector3 origin= new Vector3(firePoint.position.x, firePoint.position.y, firePoint.position.z);
         Vector3 dir = Camera.main.transform.forward;
         Vector3 spawnPos = origin + dir * 0.5f;

@@ -5,6 +5,8 @@ using Photon.Pun;
 public class InteractiveController : MonoBehaviour
 {
     public ParticleSystem interactEffect;
+    public AudioSource interactSource;
+    public AudioClip interactClip;
     [Header("플레이어 컴포넌트")]
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Camera playerCamera;
@@ -97,6 +99,7 @@ public class InteractiveController : MonoBehaviour
         {
             currentInteractable.Interact(playerController);
             interactEffect.Play();
+            interactSource.PlayOneShot(interactClip);
             animator.SetTrigger("Interactive");
             pv.RPC("RPC_Interactive", RpcTarget.Others);
         }

@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 [System.Serializable]
 public class SpawnGroup
@@ -63,9 +64,7 @@ public class StrawSpawner : MonoBehaviour
             enemyList.Add(enemy);
 
             enemy.onDeath += () => enemyList.Remove(enemy);
-
-            
-
+            enemy.onDeath += () => Destroy(enemy.gameObject);
         }
     }
 

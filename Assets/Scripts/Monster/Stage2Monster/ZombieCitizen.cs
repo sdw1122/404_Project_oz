@@ -2,7 +2,9 @@ using Photon.Pun;
 using UnityEngine;
 
 public class ZombieCitizen : Enemy
-{ 
+{
+    public AudioSource attackA;
+    public AudioSource attackB;
     public override void Attack()
     {
         if (targetEntity == null || dead) return;
@@ -32,7 +34,7 @@ public class ZombieCitizen : Enemy
         Vector3 citizenUp = transform.up;
 
         // 오프셋 (x: 오른쪽, y: 위, z: 전방)
-        Vector3 offset = new Vector3(0f, 1f, 0.4f); // 필요에 따라 값 조정
+        Vector3 offset = new Vector3(0f, 1f, 0.9f); // 필요에 따라 값 조정
 
         // 오프셋을 월드 좌표로 변환
         Vector3 worldOffset = citizenRight * offset.x + citizenUp * offset.y + citizenForward * offset.z;
@@ -40,7 +42,7 @@ public class ZombieCitizen : Enemy
         // 박스 중심 좌표
         Vector3 swingCenter = citizenPos + worldOffset;
 
-        Vector3 halfExtents = new Vector3(0.4f, 0.8f, 0.2f); // 필요에 따라 값 조정
+        Vector3 halfExtents = new Vector3(0.4f, 0.8f, 0.7f); // 필요에 따라 값 조정
         Quaternion orientation = transform.rotation;
         int layerMask = LayerMask.GetMask("Player");
 
@@ -82,7 +84,7 @@ public class ZombieCitizen : Enemy
             Vector3 golemUp = transform.up;
 
             // 오프셋 (x: 오른쪽, y: 위, z: 전방)
-            Vector3 offset = new Vector3(0f, 1f, 0.4f); // 필요에 따라 값 조정
+            Vector3 offset = new Vector3(0f, 1f, 0.9f); // 필요에 따라 값 조정
 
             // 오프셋을 월드 좌표로 변환
             Vector3 worldOffset = golemRight * offset.x + golemUp * offset.y + golemForward * offset.z;
@@ -91,7 +93,7 @@ public class ZombieCitizen : Enemy
             Vector3 swingCenter = golemPos + worldOffset;
 
             // 박스 크기와 회전
-            Vector3 boxHalfExtents = new Vector3(0.4f, 0.8f, 0.2f);
+            Vector3 boxHalfExtents = new Vector3(0.4f, 0.8f, 0.7f);
             Quaternion orientation = transform.rotation;
 
             // 기즈모 그리기
@@ -121,5 +123,15 @@ public class ZombieCitizen : Enemy
             obstacle.enabled = !active;
         }
         //rb.isKinematic = active;
+    }
+    public void PlayAttackAClip()
+    {
+        AudioClip clip = attackA.clip;
+        attackA.PlayOneShot(clip);
+    }
+    public void PlayAttackBClip()
+    {
+        AudioClip clip = attackB.clip;
+        attackB.PlayOneShot(clip);
     }
 }

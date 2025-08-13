@@ -6,7 +6,8 @@ public class HangingCitizen : Enemy
 {
     public GameObject throwObj;
     public Transform throwPoint;
-    public float throwPower = 15f;    
+    public float throwPower = 15f;
+    public AudioSource attack;
 
     public override IEnumerator UpdatePath()
     {
@@ -144,5 +145,11 @@ public class HangingCitizen : Enemy
         {
             isRotatingToTarget = true;
         }
+    }
+
+    public void PlayAttackClip()
+    {
+        AudioClip clip = attack.clip;
+        attack.PlayOneShot(clip);
     }
 }

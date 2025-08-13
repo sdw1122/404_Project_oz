@@ -199,11 +199,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void StageSelectScene()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("StageSelectScene");
+        }
+    }
+
     public void ProtoTypeScene()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("TutorialScene"); // 메인 씬으로 전환
+            PhotonNetwork.LoadLevel("MainScene"); // 메인 씬으로 전환
         }
     }
 

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class WoodManAttack : MonoBehaviour
 {
+    public AudioSource attackSource;
+    AudioClip clip;
     [Header("벌목 공격 설정")]
     public float meleeAttackRange = 2f; // 근접 공격 범위
     public static float meleeAttackDamage = 40f; 
@@ -153,5 +155,10 @@ public class WoodManAttack : MonoBehaviour
             Gizmos.DrawLine(previousPoint, currentPoint);
             previousPoint = currentPoint;
         }
+    }
+    public void PlayAttackClip()
+    {
+        clip = attackSource.clip;
+        attackSource.PlayOneShot(clip);
     }
 }

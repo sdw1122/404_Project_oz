@@ -55,6 +55,9 @@ public class PlayerController : MonoBehaviour
     public GameObject jumpEffect;
     public Transform foot;
     private GameObject jumpEffectins;
+    public AudioSource jumpSound;
+    public AudioClip jumpSoundClip;
+
 
     private MovingObj currentPlatform;
     [PunRPC]
@@ -102,7 +105,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();        
         pv = GetComponent<PhotonView>();
         cineCam = GetComponentInChildren<CinemachineCamera>();
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();;
         
         runSpeed = 1.5f * walkSpeed;
         if (!pv.IsMine)
@@ -518,6 +521,7 @@ public class PlayerController : MonoBehaviour
                 moveDirection.y = jumpPower;
                 jumpBufferCounter = 0;
                 animator.SetBool("Float", true);
+                //jumpSound.PlayOneShot(jumpSoundClip);
                 pv.RPC("RPC_SetFloat", RpcTarget.Others, true);
             }
             else

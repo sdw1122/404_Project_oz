@@ -2,13 +2,17 @@ using UnityEngine;
 using Photon.Pun;
 using System.Collections;
 using UnityEngine.Rendering;
+using Mono.Cecil;
 
 public class TinyRobot2 : Enemy
 {
     public GameObject throwObj;
     public Transform throwPoint;
     public float throwPower = 15f;
-    public float fleeDistance = 8f;    
+    public float fleeDistance = 8f;
+
+    public AudioSource attackSource;
+    private AudioClip clip;
 
     public override bool CanAct()
     {        
@@ -225,5 +229,10 @@ public class TinyRobot2 : Enemy
 
         navMeshAgent.enabled = true;        
         rb.isKinematic = true;
+    }
+    public void PlayAttackClip()
+    {
+        clip = attackSource.clip;
+        attackSource.PlayOneShot(clip);
     }
 }
