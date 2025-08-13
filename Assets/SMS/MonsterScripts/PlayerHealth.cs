@@ -1,9 +1,10 @@
 using Photon.Pun;
 using System.Collections;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static LobbyManager;
+
 
 public class PlayerHealth : LivingEntity
 {
@@ -14,8 +15,14 @@ public class PlayerHealth : LivingEntity
     private PlayerInput playerInput;
     public ParticleSystem resurrectionEffect;
     public ParticleSystem HealingEffect;
-    public float resurrectionDelay = 25f;
+    public float resurrectionDelay = 5f;
     public Camera myDeadCam;
+    bool isReadyToRes=false;
+    public GameObject respawnUI;
+    public TextMeshProUGUI respawnText;
+    Respawn respawn;
+    private string respawnJob;
+    private string respawnFlagLabel;
     private void Awake()
     {
         playerAnimator = GetComponent<Animator>();
@@ -23,8 +30,19 @@ public class PlayerHealth : LivingEntity
         current_health = startingHealth;
         pv = GetComponent<PhotonView>();
         playerInput = GetComponent<PlayerInput>();
+        respawn= GetComponentInChildren<Respawn>();
+        if (respawnUI != null) respawnUI.SetActive(false);
     }
+    private void Update()
+    {
+       
+        if (pv.IsMine && isReadyToRes && Input.GetKeyDown(KeyCode.T))
+        {
 
+            RespawnAtFlag();
+
+        }
+    }
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -35,12 +53,13 @@ public class PlayerHealth : LivingEntity
         base.RestoreHealth(newHealth);
         pv.RPC("RPC_TriggerPlayerHeal", RpcTarget.All, newHealth);
     }
-
+    [PunRPC]
     public override void Resurrection()
     {
-       
+        isReadyToRes = false;
+        if (respawnUI != null) respawnUI.SetActive(false);
         base.Resurrection();
-        
+        respawn.DeactiveCol();
         resurrectionEffect.Play();
         pv.RPC("SetDeadState", RpcTarget.All, false);
         pv.RPC("RPC_TriggerPlayerResurrection", RpcTarget.All);
@@ -106,7 +125,7 @@ public class PlayerHealth : LivingEntity
         base.Die();
         dead = true;
         Debug.Log(dead);
-
+        respawn.ActiveCol();
         // 사망 시 애니메이션 및 컴포넌트 비활성화는 모든 클라이언트에서 동기화
         pv.RPC("SetDeadState", RpcTarget.All, true);
         pv.RPC("RPC_TriggerPlayerDie", RpcTarget.All);
@@ -132,6 +151,7 @@ public class PlayerHealth : LivingEntity
             {
                 Debug.LogWarning("WoodMan을 씬에서 찾지 못함");
             }
+            if (respawnUI != null) respawnUI.SetActive(true);
         }
         //죽은 사람이 마스터에게 요청
         pv.RPC("SendDataToClient", RpcTarget.MasterClient,pv.Owner.UserId);
@@ -154,34 +174,62 @@ public class PlayerHealth : LivingEntity
     private IEnumerator DelayedResurrection(float delay,string job,string latestFlag)
     {   
         Debug.Log("딜레이 부활 호출됨");
-        yield return new WaitForSeconds(delay);
+        float timer = delay;
+        respawnJob = job;
+        respawnFlagLabel = latestFlag;
+        
+        while (timer > 0)
+        {
+            if (respawnText != null)
+            {
+                // 남은시간 표시
+                respawnText.text = $"Time To Respawn... {Mathf.CeilToInt(timer)}";
+            }
+            timer -= Time.deltaTime;
+            yield return null; // 다음 프레임까지 대기
+        }
+        
         if (!dead) yield break;
         /*string userId = pv.Owner.UserId;
         PlayerSaveData data = SaveSystem.LoadPlayerData(userId);*/
 
        
             
-            SaveFlag targetFlag = FindObjectsByType<SaveFlag>(default).FirstOrDefault(f => f.label == latestFlag);
-
-            if (targetFlag != null)
-            {
-                Transform spawn = targetFlag.SaveFlagGetSpawnPos(job);
-
-                if (pv.IsMine) // 위치 이동은 본인만
-                {
-                    CharacterController cc = GetComponent<CharacterController>();
-                    cc.enabled = false;
-                    transform.position = spawn.position;
-                    transform.rotation = spawn.rotation;
-                    cc.enabled = true;
-                    Debug.Log($"[Resurrection] 깃발 위치로 이동: {spawn.position}");
-                }
-            }
             
-        
+
+
+        if (pv.IsMine)
+        {
+            isReadyToRes = true;
+            if (respawnText != null)
+            {
+                respawnText.text = "Press T To Respawn";
+            }
+            // 부활 안내 UI를 켭니다.
+            if (respawnUI != null) respawnUI.SetActive(true);
+            Debug.Log("부활 준비 완료. 키 입력을 기다립니다.");
+        }
+    }
+    public void RespawnAtFlag()
+    {
+        SaveFlag targetFlag = FindObjectsByType<SaveFlag>(default).FirstOrDefault(f => f.label == respawnFlagLabel);
+
+        if (targetFlag != null)
+        {
+            Transform spawn = targetFlag.SaveFlagGetSpawnPos(respawnJob);
+
+            if (pv.IsMine) // 위치 이동은 본인만
+            {
+                CharacterController cc = GetComponent<CharacterController>();
+                cc.enabled = false;
+                transform.position = spawn.position;
+                transform.rotation = spawn.rotation;
+                cc.enabled = true;
+                Debug.Log($"[Resurrection] 깃발 위치로 이동: {spawn.position}");
+            }
+        }
         Resurrection();
     }
-
     [PunRPC]
     public void DeadCamera()
     {

@@ -33,10 +33,10 @@ public class StrawSpawner : MonoBehaviour
         isSpawning = true;
         Debug.Log("새로운 웨이브를 시작합니다.");
 
-        // waveComposition에 정의된 순서대로 그룹을 순회
+        // wave 순서대로 생성하자.
         foreach (SpawnGroup group in wave)
         {
-            // 각 그룹에 정의된 수량(count)만큼 몬스터 생성
+            // count 만큼 생성
             for (int i = 0; i < group.count; i++)
             {
                 CreateEnemy(group.enemyPrefab);
