@@ -9,10 +9,10 @@ public class ImpactMissile : MonoBehaviour
     float slowAmount;
     public float duration=5f;
     Rigidbody rb;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-   
     }
     public void Initialize(float dmg,float spd,float sDu,float sAm)
     {
@@ -48,11 +48,6 @@ public class ImpactMissile : MonoBehaviour
                     PhotonNetwork.Destroy(this.gameObject);
                 }
             }
-
         }
-        
     }
-
-
-
 }

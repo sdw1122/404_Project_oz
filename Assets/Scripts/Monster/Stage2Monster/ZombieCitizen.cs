@@ -2,7 +2,9 @@ using Photon.Pun;
 using UnityEngine;
 
 public class ZombieCitizen : Enemy
-{ 
+{
+    public AudioSource attackA;
+    public AudioSource attackB;
     public override void Attack()
     {
         if (targetEntity == null || dead) return;
@@ -121,5 +123,15 @@ public class ZombieCitizen : Enemy
             obstacle.enabled = !active;
         }
         //rb.isKinematic = active;
+    }
+    public void PlayAttackAClip()
+    {
+        AudioClip clip = attackA.clip;
+        attackA.PlayOneShot(clip);
+    }
+    public void PlayAttackBClip()
+    {
+        AudioClip clip = attackB.clip;
+        attackB.PlayOneShot(clip);
     }
 }

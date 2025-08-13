@@ -17,6 +17,8 @@ public class WoodManRoar : MonoBehaviour
     private Animator animator; 
     private WoodMan woodMan;
     private float _lastSkillTime;
+
+    public AudioSource roar;
     private void Awake()
     {
         animator= GetComponent<Animator>();
@@ -104,5 +106,10 @@ public class WoodManRoar : MonoBehaviour
             Gizmos.color = Color.cyan;
             Gizmos.DrawLine(transform.position, transform.position + transform.forward * knockbackForce * 0.1f);
         }*/
+    }
+    public void PlayRoarClip()
+    {
+        AudioClip clip = roar.clip;
+        roar.PlayOneShot(clip);
     }
 }

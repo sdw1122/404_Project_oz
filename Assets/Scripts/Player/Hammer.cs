@@ -17,6 +17,15 @@ public class Hammer : MonoBehaviour
     //스킬2 대지분쇄 def 조절량
     public float skill2_defF = 2f;
     public ParticleSystem ChargeEffect;
+    public ParticleSystem chAttackEffect;
+    public ParticleSystem bindEffect;
+
+    public AudioSource chargeSource;
+    public AudioClip chargeClip;
+    public AudioSource attackSource;
+    public AudioClip attackClip;
+    public AudioSource chargeAttackSource;
+    public AudioClip chargeAttackClip;
 
     private bool isAttackButtonPressed = false;
     private float attackDelay = 1.0f;
@@ -48,6 +57,7 @@ public class Hammer : MonoBehaviour
     //private Color charge2col = new Color(1f, 0.9f, 0.3f, 1f);
     //private Color charge3col = new Color(1f, 0.15f, 0.15f, 1f);
     private Color[] chargeColor = { new Color(1f, 1f, 1f, 0.5f), new Color(1f, 0.9f, 0.3f, 1f), new Color(1f, 0.15f, 0.15f, 1f) };
+    private DustPool DustPool;
 
     private void Awake()
     {
@@ -56,15 +66,30 @@ public class Hammer : MonoBehaviour
         controls = new InputSystem_Actions();
         animator = GetComponent<Animator>();
         pv = GetComponent<PhotonView>();
+        DustPool = GetComponent<DustPool>();
         attackLayerIndex = animator.GetLayerIndex("Upper Body");
     }
     public void setBind()
     {
+        bindEffect.Play();
+        pv.RPC("RPC_BindEffectPlay", RpcTarget.Others);
         canAttack = false;
     }
     public void freeBind()
     {
+        bindEffect.Stop();
+        pv.RPC("RPC_BindEffectStop", RpcTarget.Others);
         canAttack = true;
+    }
+    [PunRPC]
+    void RPC_BindEffectPlay()
+    {
+        bindEffect.Play();
+    }
+    [PunRPC]
+    void RPC_BindEffectStop()
+    {
+        bindEffect.Stop();
     }
     public void OnAttack(InputAction.CallbackContext context)
     {
@@ -129,12 +154,17 @@ public class Hammer : MonoBehaviour
             }
             Skill1(skill1);
             animator.SetTrigger("Charge Attack");
+            chargeAttackSource.PlayOneShot(chargeAttackClip);
             pv.RPC("RPC_TriggerEraserChargeAttack", RpcTarget.Others);
             playerController.canMove = true;
             skill1CoolDownTimer = 0;
             skill1HoldTime = 0;
         }
         
+    }
+    public void ChargeAttackEffectPlay()
+    {
+        chAttackEffect.Play();
     }
 
     [PunRPC]
@@ -166,27 +196,34 @@ public class Hammer : MonoBehaviour
         if (skill1Pressed)
         {
             var main = ChargeEffect.main;
+            var amain = chAttackEffect.main;
             skill1HoldTime += Time.deltaTime;
             if (skill1HoldTime >= 1 && !isCharge1)
             {
                 isCharge1 = true;
                 main.startColor = chargeColor[0];
+                amain.startColor = chargeColor[0];
                 ChargeEffect.Play();
-                pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
+                chargeSource.PlayOneShot(chargeClip);
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others, 0);
             }
             if (skill1HoldTime >= 2 && !isCharge2)
             {
                 isCharge2 = true;
                 main.startColor = chargeColor[1];
+                amain.startColor = chargeColor[1];
                 ChargeEffect.Play();
-                pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
+                chargeSource.PlayOneShot(chargeClip);
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others, 1);
             }
             if (skill1HoldTime >= 3 && !isCharge3)
             {
                 isCharge3 = true;
                 main.startColor = chargeColor[2];
+                amain.startColor = chargeColor[2];
                 ChargeEffect.Play();
-                pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
+                chargeSource.PlayOneShot(chargeClip);
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others, 2);
             }
             playerController.canMove = false;
             playerController.ResetMoveInput();
@@ -234,8 +271,10 @@ public class Hammer : MonoBehaviour
     }
 
     [PunRPC]
-    void RPC_ChargeEffect()
+    void RPC_ChargeEffect(int level)
     {
+        var main = ChargeEffect.main;
+        main.startColor = chargeColor[level];
         ChargeEffect.Play();
     }
 
@@ -257,6 +296,7 @@ public class Hammer : MonoBehaviour
         // 애니메이션 필요        
         animator.SetLayerWeight(attackLayerIndex, 1f);
         animator.SetTrigger("Attack");
+        attackSource.PlayOneShot(attackClip);
         pv.RPC("RPC_TriggerEraserAttack", RpcTarget.Others);
 
         // 다음 공격 스텝으로 전환

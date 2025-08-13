@@ -18,6 +18,8 @@ public class WoodManEarthQuake : MonoBehaviour
     private WoodMan woodMan; // WoodMan 스크립트 참조
     private float lastSkillTime; // 마지막 스킬 사용 시간 (네트워크 동기화 필요)
 
+    public AudioSource landing;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -138,5 +140,11 @@ public class WoodManEarthQuake : MonoBehaviour
             Gizmos.color = Color.cyan;
             Gizmos.DrawLine(transform.position, transform.position + transform.forward * knockbackForce * 0.1f);
         }*/
+    }
+
+    public void PlayLandingClip()
+    {
+        AudioClip clip = landing.clip;
+        landing.PlayOneShot(clip);
     }
 }
