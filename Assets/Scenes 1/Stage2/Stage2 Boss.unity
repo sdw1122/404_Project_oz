@@ -960,8 +960,7 @@ Transform:
   m_LocalPosition: {x: -44.347233, y: 24.693481, z: -36.373356}
   m_LocalScale: {x: 80, y: 10, z: -60}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 791578966}
+  m_Children: []
   m_Father: {fileID: 244943026}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &322374130
@@ -2026,8 +2025,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 80, y: 10, z: -60}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6365236186485407870}
+  m_Children: []
   m_Father: {fileID: 244943026}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &699192931
@@ -3478,8 +3476,7 @@ Transform:
   m_LocalPosition: {x: -156.93053, y: 23.99348, z: -36.37335}
   m_LocalScale: {x: 80, y: 10, z: -60}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 665455360}
+  m_Children: []
   m_Father: {fileID: 244943026}
   m_LocalEulerAnglesHint: {x: 0, y: -120, z: 0}
 --- !u!64 &1139708813
@@ -5464,7 +5461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1878171330
 Transform:
   m_ObjectHideFlags: 0
@@ -12335,7 +12332,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8070472937806063287, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8070472937806063287, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: DEF_Factor
@@ -12664,6 +12661,10 @@ PrefabInstance:
     - target: {fileID: 8404739449334434309, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.0000013201227
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452277191054086408, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8452277191054086408, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: sceneViewId
