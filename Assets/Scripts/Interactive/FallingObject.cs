@@ -7,7 +7,7 @@ public class FallingObject : InteractableBase
     [Header("물리 설정")]
     [Tooltip("이 객체의 Rigidbody 컴포넌트입니다.")]
     [SerializeField] private Rigidbody rb;
-    [Tooltip("낙하 시 충돌한 대상에게 입힐 데미지입니다.")]
+    [Tooltip("낙하 시 충돌한 대상에게 입힐 기본 데미지입니다.")]
     [SerializeField] private float damageOnImpact = 50f;
 
     private bool hasFallen = false; // 이미 떨어졌는지 확인하는 플래그
@@ -82,9 +82,16 @@ public class FallingObject : InteractableBase
     /// </summary>
     private void OnCollisionEnter(Collision collision)
     {
-        // 아직 떨어지지 않았거나, 땅(Ground)에 부딪힌 경우에는 데미지를 주지 않음
-        if (!hasFallen || collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        // 마스터 클라이언트가 아니거나, 이미 떨어진 상태가 아니면 로직을 실행하지 않습니다.
+        if (!PhotonNetwork.IsMasterClient || !hasFallen)
         {
+            return;
+        }
+
+        // 땅(Ground)에 부딪힌 경우, 피해를 주지 않고 자신만 파괴합니다.
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            PhotonNetwork.Destroy(gameObject);
             return;
         }
 
@@ -94,15 +101,28 @@ public class FallingObject : InteractableBase
         // LivingEntity가 있고, 아직 죽지 않았다면 데미지 처리
         if (targetEntity != null && !targetEntity.dead)
         {
-            // 데미지 처리는 마스터 클라이언트가 담당하여 일관성을 유지
-            if (PhotonNetwork.IsMasterClient)
+            // 허수아비 마법사인지 확인
+            StrawMagician strawMagician = targetEntity.GetComponent<StrawMagician>();
+            if (strawMagician != null)
             {
-                // LivingEntity의 OnDamage는 이미 RPC이므로, 해당 PhotonView를 통해 직접 호출합니다.
-                targetEntity.OnDamage(damageOnImpact, collision.contacts[0].point, collision.contacts[0].normal);
+                // 1. 허수아비 마법사에게 그로기 RPC를 호출합니다.
+                PhotonView enemyPv = strawMagician.GetComponent<PhotonView>();
+                if (enemyPv != null)
+                {
+                    enemyPv.RPC("RPC_StrawGroggy", RpcTarget.All);
+                }
 
-                // 데미지를 한 번 준 후에는 오브젝트를 네트워크에서 파괴하여 중복 피해를 방지합니다.
-                //PhotonNetwork.Destroy(gameObject);
+                // 2. 지정된 데미지(30)를 적용합니다.
+                targetEntity.OnDamage(30f, collision.contacts[0].point, collision.contacts[0].normal);
+            }
+            else // 그 외 다른 LivingEntity와 충돌했을 경우
+            {
+                // 기존 damageOnImpact 변수를 사용하여 데미지를 줍니다.
+                targetEntity.OnDamage(damageOnImpact, collision.contacts[0].point, collision.contacts[0].normal);
             }
         }
+
+        // 어떤 대상과 충돌했든, 충돌 후에는 이 오브젝트를 네트워크에서 파괴합니다.
+        PhotonNetwork.Destroy(gameObject);
     }
 }

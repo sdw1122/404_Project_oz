@@ -199,6 +199,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void StageSelectScene()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("StageSelectScene");
+        }
+    }
+
     public void ProtoTypeScene()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -207,13 +215,23 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void Stage2Scene()
+    public void Stage2BossScene()
     {
         if(PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel("Stage2 Boss"); // Stage2으로 전환
         }
     }
+
+    public void Stage2Scene()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Stage2"); // Stage2으로 전환
+        }
+    }
+
+
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
