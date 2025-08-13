@@ -364,8 +364,9 @@ public abstract class Enemy : LivingEntity
 
     // 사망 처리
     public override void Die()
-    {
+    {   
         if (dead) return;        
+        
         dead = true;
         
         //체력바 숨김

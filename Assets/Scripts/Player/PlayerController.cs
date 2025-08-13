@@ -66,7 +66,14 @@ public class PlayerController : MonoBehaviour
         job = _job;
         Debug.Log($"[PlayerController] Job 설정됨: {job}");
     }
-
+    public void ActiveController()
+    {
+        controller.enabled = true;
+    }
+    public void DeactiveController()
+    {
+        controller.enabled = false;
+    }
     [PunRPC]
     void SendMyDataToHost(string currentFlag, string currentScene)
     {
