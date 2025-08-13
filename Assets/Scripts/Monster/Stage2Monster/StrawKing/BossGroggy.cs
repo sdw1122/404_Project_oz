@@ -5,7 +5,7 @@ using System.Collections;
 public class BossGroggy : MonoBehaviour
 {
     PhotonView pv;
-    Animator animator;    
+    Animator animator;
     public Transform[] roadTransform;
     public GameObject[] road = new GameObject[3];    
     public WisdomCannon[] cannon = new WisdomCannon[3];
@@ -20,7 +20,7 @@ public class BossGroggy : MonoBehaviour
     void Start()
     {
         pv = GetComponent<PhotonView>();
-        animator = GetComponent<Animator>();              
+        animator = GetComponent<Animator>();        
     }
 
     // Update is called once per frame
@@ -127,6 +127,11 @@ public class BossGroggy : MonoBehaviour
 
         animator.speed = 1f;
         count = 0;
+        isGroggy = false;
+        Transform child = gameObject.transform.Find("BossShield");
+        Debug.Log("shield: " + child.name);
+        if (child != null)
+            child.gameObject.SetActive(true);
     }
 
     [PunRPC]

@@ -49,7 +49,7 @@ public class Skill1 : MonoBehaviour
     public void StartSkill()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-
+        endAttack = false;
         lastSkillTime = Time.time;
         foreach (WisdomCannon cannon in cannons)
         {
@@ -80,8 +80,7 @@ public class Skill1 : MonoBehaviour
         yield return new WaitForSeconds(10f);
 
         // 마스터-> 모두 : 경고 해제
-        pv.RPC(nameof(RPC_HideWarnings), RpcTarget.All, indexA, indexB);
-        endAttack = false;
+        pv.RPC(nameof(RPC_HideWarnings), RpcTarget.All, indexA, indexB);        
         // 모두 : 차징 애니매이션
         pv.RPC(nameof(RPC_Boss2Charge), RpcTarget.All);
         yield return new WaitUntil(() => endAttack == true);
@@ -89,8 +88,7 @@ public class Skill1 : MonoBehaviour
         if (endAttack) 
         {
             pv.RPC(nameof(RPC_RestorePlatForms), RpcTarget.All, indexA, indexB, indexC);
-            pv.RPC("RPC_DestroyWall", RpcTarget.MasterClient);
-            endAttack = false;
+            pv.RPC("RPC_DestroyWall", RpcTarget.MasterClient);            
         }
     }
     [PunRPC]

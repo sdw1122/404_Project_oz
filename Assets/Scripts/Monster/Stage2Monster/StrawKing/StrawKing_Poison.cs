@@ -37,6 +37,7 @@ public class StrawKing_Poison : MonoBehaviour
     public void TyrantRPC()
     {
         lastAttackTime = Time.time;
+        endAttack = false;
 
         // 공격 애니메이션 트리거 
         if (animator != null)
@@ -55,8 +56,7 @@ public class StrawKing_Poison : MonoBehaviour
         {
             StopCoroutine(skillCoroutine);
         }
-        skillCoroutine = StartCoroutine(PoisonCycleRoutine());
-        endAttack = false;
+        skillCoroutine = StartCoroutine(PoisonCycleRoutine());        
     }
     private IEnumerator PoisonCycleRoutine()
     {

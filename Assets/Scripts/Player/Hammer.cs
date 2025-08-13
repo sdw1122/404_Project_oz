@@ -364,12 +364,12 @@ public class Hammer : MonoBehaviour
         float attackDamage = skill2;
 
         // 1. 전방 구 범위 내 적 감지
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, range, LayerMask.GetMask("Enemy"));
-
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, range, LayerMask.GetMask("Enemy"));        
         foreach (var hit in hitColliders)
-        {
+        {            
             // 2. 플레이어 → 적 방향 벡터
-            Vector3 dirToTarget = (hit.transform.position - transform.position).normalized;
+            Vector3 targetPos = hit.ClosestPoint(transform.position);
+            Vector3 dirToTarget = (targetPos - transform.position).normalized;
             // 3. 전방 벡터와 각도 비교
             float dot = Vector3.Dot(transform.forward, dirToTarget);
             float theta = Mathf.Acos(dot) * Mathf.Rad2Deg;
@@ -379,7 +379,7 @@ public class Hammer : MonoBehaviour
                 //4.부채꼴 안에 들어온 적에게만 데미지
                 Enemy enemy = hit.GetComponent<Enemy>();
                 if (enemy != null)
-                {
+                {                    
                     // 피격 위치와 방향 계산
                     Vector3 hitPoint = hit.ClosestPoint(transform.position);
                     Vector3 hitNormal = (hitPoint - transform.position).normalized;

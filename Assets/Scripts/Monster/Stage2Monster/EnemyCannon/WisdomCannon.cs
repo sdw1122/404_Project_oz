@@ -70,8 +70,7 @@ public class WisdomCannon : InteractableBase
         Vector3 startEuler = cannon.localEulerAngles;
         Vector3 newEuler = startEuler;
         while (elapsed < duration)
-        {
-            Debug.Log("되냐?");
+        {            
             float angle = Mathf.LerpAngle(fromAngle, toAngle, elapsed / duration);
             newEuler = startEuler;    // 기준점 매번 재설정(혹은 new Vector3(angle, startEuler.y, startEuler.z))
             newEuler.x = angle;
