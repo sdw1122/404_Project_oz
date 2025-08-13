@@ -199,6 +199,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void StageSelectScene()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("StageSelectScene");
+        }
+    }
+
     public void ProtoTypeScene()
     {
         if (PhotonNetwork.IsMasterClient)
