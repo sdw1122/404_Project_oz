@@ -10,9 +10,12 @@ public class Straw_FireBall : MonoBehaviour
     public float skillRangeYOffset = 1f; // 반경 y축
     public float lastAttackTime;
     public Transform firePos;
+    public GameObject fireEffect;
     Animator animator;
     StrawMagician strawMagician;
     Vector3 directionToTarget;
+    FireBall fireBall;
+    GameObject fireIns;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -44,6 +47,9 @@ public class Straw_FireBall : MonoBehaviour
         // 공격 애니메이션 트리거 
         if (animator != null)
         {
+            fireIns = Instantiate(fireEffect, fireEffect.transform);
+            ParticleSystem ps = fireIns.GetComponent<ParticleSystem>();
+            ps.Play();
             animator.SetTrigger("FireBall");
         }
 
@@ -70,16 +76,11 @@ public class Straw_FireBall : MonoBehaviour
     {
         if (!PhotonNetwork.IsMasterClient) return;
         GameObject magicArrow = PhotonNetwork.Instantiate("test/" + "Straw_FireBall", firePos.position, Quaternion.LookRotation(directionToTarget));
-        FireBall fireBall=magicArrow.GetComponent<FireBall>();
-        
+        fireBall = magicArrow.GetComponent<FireBall>();
         if (fireBall != null)
         {
-
+            fireIns.transform.SetParent(fireBall.transform, false);
             fireBall.Initialize(damage, arrowSpeed);
-            
-
         }
-
     }
-    
 }

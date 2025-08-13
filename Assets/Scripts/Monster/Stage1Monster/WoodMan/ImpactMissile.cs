@@ -9,10 +9,13 @@ public class ImpactMissile : MonoBehaviour
     float slowAmount;
     public float duration=5f;
     Rigidbody rb;
+
+    public AudioSource impact;
+    private AudioClip clip;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-   
+        clip = impact.clip;
     }
     public void Initialize(float dmg,float spd,float sDu,float sAm)
     {
@@ -34,6 +37,7 @@ public class ImpactMissile : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        AudioSource.PlayClipAtPoint(clip, transform.position);
         LivingEntity hitEntity=other.GetComponent<LivingEntity>();
         if(hitEntity != null&&hitEntity.gameObject.layer== LayerMask.NameToLayer("Player"))
         {

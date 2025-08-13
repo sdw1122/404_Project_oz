@@ -7,17 +7,23 @@ public class Pen_Skill_1 : MonoBehaviour
 {
     public GameObject PenPlayer;
     public GameObject bow;
+
     public GameObject missile1;
     public GameObject missile2;
     public GameObject missile3;
+
     public ParticleSystem ChargeEffect;
+    public ParticleSystem bindEffect;
+
     public AudioSource audioSource;
     public AudioSource shotSource;
     public AudioClip audioClip;
     public AudioClip shotClip;
+
     private bool didChargeLevel1, didChargeLevel2, didChargeLevel3;
     Rigidbody rb;
     Animator animator;
+
     [Header("스킬 정보")]
     public string Skill_ID = "Pen_Skill_1";
     public string Skill_Name = "대궁";
@@ -28,6 +34,7 @@ public class Pen_Skill_1 : MonoBehaviour
     public static float ChargeDamage_3 = PenAttack.Damage * 8;
     public float Cooldown = 1.0f;
     public float Charge_Levels = 3.0f;
+
     [Header("세부 정보")]
     public float charged_Pen_Speed = 10.0f;
     public float chargeTime = 0.0f;
@@ -68,6 +75,7 @@ public class Pen_Skill_1 : MonoBehaviour
     }
     public void setBind()
     {
+        bindEffect.Play();
         CancelCharging();
         canCharge = false;
         PenAttack.isAttack = false;
@@ -75,7 +83,7 @@ public class Pen_Skill_1 : MonoBehaviour
     }
     public void freeBind()
     {
-        
+        bindEffect.Stop();
         canCharge = true;
         PenAttack.isAttack = true;
         Pen_Skill_2.isThrow = true;
@@ -247,19 +255,19 @@ public class Pen_Skill_1 : MonoBehaviour
         {
             main.startColor = chargeColors[0];
             ChargeEffect.Play();
-            pv.RPC("RPC_PlayChargeLevelEffect",RpcTarget.Others);
+            pv.RPC("RPC_PlayChargeLevelEffect",RpcTarget.Others, 0);
         }
         else if (chargeLevel == 2)
         {
             main.startColor = chargeColors[1];
             ChargeEffect.Play();
-            pv.RPC("RPC_PlayChargeLevelEffect", RpcTarget.Others);
+            pv.RPC("RPC_PlayChargeLevelEffect", RpcTarget.Others, 1);
         }
         else if (chargeLevel == 3)
         {
             main.startColor= chargeColors[2];
             ChargeEffect.Play();
-            pv.RPC("RPC_PlayChargeLevelEffect", RpcTarget.Others);
+            pv.RPC("RPC_PlayChargeLevelEffect", RpcTarget.Others, 2);
         }
     }
     void BowDisable()
@@ -307,8 +315,10 @@ public class Pen_Skill_1 : MonoBehaviour
         missile3.SetActive(false);
     }
     [PunRPC]
-    void RPC_PlayChargeLevelEffect()
+    void RPC_PlayChargeLevelEffect(int level)
     {
+        var main = ChargeEffect.main;
+        main.startColor = chargeColors[level];
         ChargeEffect.Play();
     }
     [PunRPC]

@@ -18,6 +18,7 @@ public class Hammer : MonoBehaviour
     public float skill2_defF = 2f;
     public ParticleSystem ChargeEffect;
     public ParticleSystem chAttackEffect;
+    public ParticleSystem bindEffect;
 
     public AudioSource chargeSource;
     public AudioClip chargeClip;
@@ -70,11 +71,25 @@ public class Hammer : MonoBehaviour
     }
     public void setBind()
     {
+        bindEffect.Play();
+        pv.RPC("RPC_BindEffectPlay", RpcTarget.Others);
         canAttack = false;
     }
     public void freeBind()
     {
+        bindEffect.Stop();
+        pv.RPC("RPC_BindEffectStop", RpcTarget.Others);
         canAttack = true;
+    }
+    [PunRPC]
+    void RPC_BindEffectPlay()
+    {
+        bindEffect.Play();
+    }
+    [PunRPC]
+    void RPC_BindEffectStop()
+    {
+        bindEffect.Stop();
     }
     public void OnAttack(InputAction.CallbackContext context)
     {
@@ -189,7 +204,7 @@ public class Hammer : MonoBehaviour
                 amain.startColor = chargeColor[0];
                 ChargeEffect.Play();
                 chargeSource.PlayOneShot(chargeClip);
-                pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others, 0);
             }
             if (skill1HoldTime >= 2 && !isCharge2)
             {
@@ -198,7 +213,7 @@ public class Hammer : MonoBehaviour
                 amain.startColor = chargeColor[1];
                 ChargeEffect.Play();
                 chargeSource.PlayOneShot(chargeClip);
-                pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others, 1);
             }
             if (skill1HoldTime >= 3 && !isCharge3)
             {
@@ -207,7 +222,7 @@ public class Hammer : MonoBehaviour
                 amain.startColor = chargeColor[2];
                 ChargeEffect.Play();
                 chargeSource.PlayOneShot(chargeClip);
-                pv.RPC("RPC_ChargeEffect", RpcTarget.Others);
+                pv.RPC("RPC_ChargeEffect", RpcTarget.Others, 2);
             }
             playerController.canMove = false;
             playerController.ResetMoveInput();
@@ -253,8 +268,10 @@ public class Hammer : MonoBehaviour
     }
 
     [PunRPC]
-    void RPC_ChargeEffect()
+    void RPC_ChargeEffect(int level)
     {
+        var main = ChargeEffect.main;
+        main.startColor = chargeColor[level];
         ChargeEffect.Play();
     }
 

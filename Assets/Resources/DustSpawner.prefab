@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dustPrefab: {fileID: 1758473627833946668, guid: 5c9f6fe2bbbb7eb43a13585143d89063, type: 3}
-  initialCount: 10
+  initialCount: 20

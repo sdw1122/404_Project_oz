@@ -22,6 +22,10 @@ public class WoodMan : Enemy
     public float minChaseDistance=0.5f;
     Rigidbody woodmanRb;    
     Animator animator;
+
+    public AudioSource fireBust;
+    public AudioSource steam;
+
     public enum WoodMan_State 
     {
         
@@ -188,12 +192,14 @@ public class WoodMan : Enemy
                 woodManRoar.SetDamage(originalDamage*2f);
                 break;
             case WoodMan_Mode.Overheat:
+                PlayBustClip();
                 DEF_Factor = 0.8f;
                 woodManAttack.SetDamage(originalDamage*1.25f);
                 woodManQuake.SetDamage(originalDamage*1.5f*1.25f);
                 woodManRoar.SetDamage(originalDamage *2f* 1.25f);
                 break;
             case WoodMan_Mode.Vulnerable:
+                PlaySteamClip();
                 DEF_Factor = 1.5f;
                 woodManAttack.SetDamage(originalDamage);
                 woodManQuake.SetDamage(originalDamage*1.5f);
@@ -284,5 +290,15 @@ public class WoodMan : Enemy
         {
             SetMode(WoodMan_Mode.Vulnerable);
         }
+    }
+    private void PlayBustClip()
+    {
+        AudioClip clip = fireBust.clip;
+        fireBust.PlayOneShot(clip);
+    }
+    private void PlaySteamClip()
+    {
+        AudioClip clip = steam.clip;
+        steam.PlayOneShot(clip);
     }
 }
