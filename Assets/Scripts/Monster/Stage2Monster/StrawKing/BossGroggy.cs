@@ -99,24 +99,22 @@ public class BossGroggy : MonoBehaviour
     IEnumerator DoShake(float shakeTime, float magnitude)
     {
         // 각각 흔들기
-        GameObject roadObj = GameObject.Find("RealTestRoad(Clone)");
-        Platform testRoad = null;
-        if (roadObj != null)
+        GameObject[] roadObjs = GameObject.FindGameObjectsWithTag("Road");
+        foreach (GameObject roadObj in roadObjs)
         {
-            testRoad = roadObj.GetComponent<Platform>();
-        }
-        if (testRoad != null)
-        {
-            Coroutine shakeRoutine = testRoad.StartCoroutine(testRoad.Shake(shakeTime, magnitude));
-            yield return new WaitForSeconds(shakeTime);
-            if (shakeRoutine != null)
-                testRoad.StopCoroutine(shakeRoutine);
-
-            Collider col = testRoad.GetComponent<Collider>();
-            Rigidbody rb = testRoad.GetComponent<Rigidbody>();
-            if (rb != null) rb.isKinematic = false;
-            if (col != null) col.isTrigger = true;
-        }        
+            Platform testRoad = roadObj.GetComponent<Platform>();
+            if (testRoad != null)
+            {
+                Coroutine shakeRoutine = testRoad.StartCoroutine(testRoad.Shake(shakeTime, magnitude));
+                yield return new WaitForSeconds(shakeTime);
+                if (shakeRoutine != null)
+                    testRoad.StopCoroutine(shakeRoutine);
+                Collider col = testRoad.GetComponent<Collider>();
+                Rigidbody rb = testRoad.GetComponent<Rigidbody>();
+                if (rb != null) rb.isKinematic = false;
+                if (col != null) col.isTrigger = true;
+            }
+        }    
         
         // 바닥 떨어짐
         for (int i = 0; i < 3; i++)

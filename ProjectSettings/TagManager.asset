@@ -12,6 +12,7 @@ TagManager:
   - Lava
   - StrawMagician
   - StrawKing
+  - Road
   layers:
   - Default
   - TransparentFX
