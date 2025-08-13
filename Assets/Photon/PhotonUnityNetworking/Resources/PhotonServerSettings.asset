@@ -227,6 +227,9 @@ MonoBehaviour:
   - DeactiveCol2
   - ActiveColRPC
   - Resurrection
+  - RPC_BindEffectPlay
+  - RPC_BindEffectStop
+  - RPC_HealEffectPlay
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
