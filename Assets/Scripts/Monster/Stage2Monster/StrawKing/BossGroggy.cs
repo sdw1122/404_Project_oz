@@ -138,6 +138,9 @@ public class BossGroggy : MonoBehaviour
         Transform child = cannon[i].transform.Find("Small_cannon");
         StartCoroutine(cannon[i].RotateCannonSmoothly(child, 20f, 340f, 1.5f));
         cannon[i].isShot = false;
+
+        Transform childShield = cannon[i].transform.Find("CannonShield");
+        childShield.gameObject.SetActive(true);
     }
 
     [PunRPC]

@@ -174,7 +174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &10117457
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -495,7 +495,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &121924432
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4532,7 +4532,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1566771457
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5459,7 +5459,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1878171330
 Transform:
   m_ObjectHideFlags: 0
@@ -8302,7 +8302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2354527477129374351, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2371522626792495405, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9046,7 +9046,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3258491212266816461, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3258491212266816461, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_TagString
@@ -9646,7 +9646,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4107671602272496260, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4110907147282314962, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12330,7 +12330,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8070472937806063287, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8070472937806063287, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: DEF_Factor
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8102411084515202128, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

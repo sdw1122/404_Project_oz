@@ -49,24 +49,25 @@ public class StrawKing : Enemy
     {
         if (!PhotonNetwork.IsMasterClient) return;
         navMeshAgent.isStopped = true;  // 허수아비왕은 움직이지 않는다.
-        base.Update();
-        /*navMeshAgent.isStopped = true;*/
+        base.Update();        
         distanceToTarget = Vector3.Distance(transform.position, targetEntity.transform.position);
         Vector3 dir = targetEntity.transform.position - transform.position;
         dir.y = 0f;
         dir.Normalize();
         Quaternion lookRotation = Quaternion.LookRotation(dir);
-        if(skill1.IsReady())
+        if (skill1.IsReady())
         {
-            currentState= StrawKing_State.Absorb;
+            currentState = StrawKing_State.Absorb;
             Attack();
             return;
-        }else if(poison.IsReady())
+        }
+        else if (poison.IsReady())
         {
             currentState = StrawKing_State.Tyrant;
             Attack();
             return;
-        }else if (strawAttack.IsReady())
+        }
+        else if (strawAttack.IsReady())
         {
             currentState = StrawKing_State.Attack;
             Attack();
