@@ -431,7 +431,7 @@ MonoBehaviour:
   currentHealth: 0
   damage: 30
   Atk_Cooldown: 6
-  attackRange: 1.5
+  attackRange: 2
   DEF_Factor: 1
   isBinded: 0
   isFirstChase: 1
