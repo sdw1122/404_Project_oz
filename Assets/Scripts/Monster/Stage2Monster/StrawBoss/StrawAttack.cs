@@ -1,6 +1,8 @@
 using Photon.Pun;
 using System.Security.Principal;
 using UnityEngine;
+using System.Collections;
+
 
 public class StrawAttack : MonoBehaviour
 {
@@ -19,6 +21,8 @@ public class StrawAttack : MonoBehaviour
     private float slowAmount = 0.5f;
     private float slowTime = 3f;
     float lastAttackTime;
+
+    public ParticleSystem attackEffect;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {        
@@ -102,5 +106,16 @@ public class StrawAttack : MonoBehaviour
         {
             state = 1;
         }
+    }
+    public void AttackEffectPlay()
+    {
+        animator.speed = 0f;
+        StartCoroutine(StopAnimation(2.0f));
+        attackEffect.Play();
+    }
+    IEnumerator StopAnimation(float stopTime)
+    {
+        yield return new WaitForSeconds(stopTime);
+        animator.speed = 1.0f;
     }
 }

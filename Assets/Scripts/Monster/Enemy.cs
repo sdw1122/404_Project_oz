@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using Photon.Pun;
+using System.Collections;
+
 
 public abstract class Enemy : LivingEntity
 {
@@ -540,9 +543,12 @@ public abstract class Enemy : LivingEntity
     }
     public void PlayHitClip()
     {
-        enemyClip = hitSource.clip;
-        hitSource.PlayOneShot(enemyClip);
-        if (hurtSource != null)
+        if (hitSource != null)
+        {
+            enemyClip = hitSource.clip;
+            hitSource.PlayOneShot(enemyClip);
+        }
+        if(hurtSource != null)
         {
             enemyClip = hurtSource.clip;
             hurtSource.PlayOneShot(enemyClip);
@@ -550,12 +556,18 @@ public abstract class Enemy : LivingEntity
     }
     public void PlayDieClip()
     {
-        enemyClip = dieSource.clip;
-        dieSource.PlayOneShot(enemyClip);
+        if (dieSource != null)
+        {
+            enemyClip = dieSource.clip;
+            dieSource.PlayOneShot(enemyClip);
+        }
     }
     public void PlayStepClip()
     {
-        enemyClip = stepSource.clip;
-        stepSource.PlayOneShot(enemyClip);
+        if (stepSource != null)
+        {
+            enemyClip = stepSource.clip;
+            stepSource.PlayOneShot(enemyClip);
+        }
     }
 }

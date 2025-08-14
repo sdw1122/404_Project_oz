@@ -3,7 +3,8 @@ using Photon.Pun;
 
 public class BossShield : MonoBehaviour
 {
-    public BossGroggy groggy;   
+    public BossGroggy groggy;
+    public GameObject Shield;
 
     public int cannonCount = 0;
 
