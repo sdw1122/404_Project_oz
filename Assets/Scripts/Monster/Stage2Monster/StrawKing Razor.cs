@@ -10,7 +10,7 @@ public class StrawKingRazor : MonoBehaviour
     public VisualEffect blockedRazor;
     public VisualEffect Razor;
     public ParticleSystem shoutEffect;
-    public ParticleSystem attackEffect;
+    //public ParticleSystem attackEffect;
 
     public bool isBlock = false;
 
@@ -74,6 +74,6 @@ public class StrawKingRazor : MonoBehaviour
     {
         animator.speed = 0f;
         StartCoroutine(StopAnimation(2.0f));
-        attackEffect.Play();
+        //attackEffect.Play();
     }
 }

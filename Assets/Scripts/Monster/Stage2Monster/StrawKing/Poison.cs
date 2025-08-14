@@ -70,6 +70,7 @@ public class Poison : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var target = other.GetComponent<LivingEntity>();
+        Debug.Log("target : " + target);
         if (target != null)
         {
                 
@@ -80,7 +81,7 @@ public class Poison : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        var target = other.GetComponent<LivingEntity>();
+        var target = other.GetComponent<LivingEntity>();        
         if (target != null)
         {
             targetsInCircle.Remove(target);

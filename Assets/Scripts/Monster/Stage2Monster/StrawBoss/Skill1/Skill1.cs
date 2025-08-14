@@ -41,14 +41,14 @@ public class Skill1 : MonoBehaviour
     }
     public bool IsReady()
     {
-        if (!isHit||!poison.endAttack) return false;
+        if (!poison.endAttack) return false;
         return Time.time >= lastSkillTime + cooldown;
     }
 
     [PunRPC]
     public void StartSkill()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
+        if (!isHit && !PhotonNetwork.IsMasterClient) return;
         endAttack = false;
         lastSkillTime = Time.time;
         foreach (WisdomCannon cannon in cannons)
@@ -313,7 +313,7 @@ public class Skill1 : MonoBehaviour
     [PunRPC]
     public IEnumerator RPC_DestroyWall()
     {
-        GameObject wall = GameObject.Find("testWall1(Clone)");
+        GameObject wall = GameObject.Find("Shield_03(Clone)");
         if (wall != null)
         {
             PhotonView wallView = wall.GetComponent<PhotonView>();

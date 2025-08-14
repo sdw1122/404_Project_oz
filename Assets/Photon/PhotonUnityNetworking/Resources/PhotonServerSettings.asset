@@ -230,6 +230,9 @@ MonoBehaviour:
   - RPC_BindEffectPlay
   - RPC_BindEffectStop
   - RPC_HealEffectPlay
+  - LoadNextScene_RPC
+  - AdvanceDialogue
+  - NextDialogue
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

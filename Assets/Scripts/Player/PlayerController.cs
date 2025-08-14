@@ -57,9 +57,10 @@ public class PlayerController : MonoBehaviour
     private GameObject jumpEffectins;
     public AudioSource jumpSound;
     public AudioClip jumpSoundClip;
-
+    PlayerInput playerInput;
 
     private MovingObj currentPlatform;
+    
     [PunRPC]
     public void SetJob(string _job)
     {
@@ -68,10 +69,12 @@ public class PlayerController : MonoBehaviour
     }
     public void ActiveController()
     {
+        playerInput.enabled = true;
         controller.enabled = true;
     }
     public void DeactiveController()
-    {
+    {   
+        playerInput.enabled = false;
         controller.enabled = false;
     }
     [PunRPC]
@@ -113,7 +116,7 @@ public class PlayerController : MonoBehaviour
         pv = GetComponent<PhotonView>();
         cineCam = GetComponentInChildren<CinemachineCamera>();
         animator = GetComponent<Animator>();;
-        
+        playerInput = pv.GetComponent<PlayerInput>();
         runSpeed = 1.5f * walkSpeed;
         if (!pv.IsMine)
         {
@@ -125,10 +128,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
         EnemyHealthBarController.LocalPlayerCamera = playerCamera;
-        healingRay =GetComponent<HealingRay>();
-       
-        
-        
+        healingRay =GetComponent<HealingRay>();        
+
+
+
         playerObj = this.gameObject;
         /*mainCamera = transform.Find("Main Camera").GetComponent<Camera>();*/
         deadCamera = transform.Find("Dead Camera")?.gameObject;
@@ -263,16 +266,25 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         controller = GetComponent<CharacterController>();
-    }
-    
-    private void Update()
-    {
 
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (DialogueManager.IsDialogueActive)
+        {
+            if (playerInput.enabled)
+                playerInput.enabled = false; // 입력 차단
+
+            return;
+        }
+        else
+        {
+            if (!playerInput.enabled)
+                playerInput.enabled = true; // 입력 활성화
+        }
+
         if (!pv.IsMine) return;
         // 카메라 회전은 무조건 실행
         float mouseX = lookInput.x * mouseSensitivity;
@@ -549,19 +561,19 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         Destroy(jumpEffectins);
     }
-    public void SpawnDust()
-    {
-        // 1) 위치 & 회전 결정
-        Vector3 pos = foot.position;
-        // 땅 노말을 따서 정렬하고 싶다면 Raycast로 hit.normal 사용 가능
-        Quaternion rot = Quaternion.LookRotation(Vector3.forward);
+    //public void SpawnDust()
+    //{
+    //    // 1) 위치 & 회전 결정
+    //    Vector3 pos = foot.position;
+    //    // 땅 노말을 따서 정렬하고 싶다면 Raycast로 hit.normal 사용 가능
+    //    Quaternion rot = Quaternion.LookRotation(Vector3.forward);
 
-        // 2) 풀에서 꺼내
-        var go = DustPool.Instance.GetDust(pos, rot);
+    //    // 2) 풀에서 꺼내
+    //    var go = dustPool.GetDust(pos, rot);
 
-        // 3) 재생 시간만큼 뒤에 반납
-        var ps = go.GetComponent<ParticleSystem>();
-        float dur = ps.main.duration + ps.main.startLifetime.constantMax;
-        DustPool.Instance.ReturnDust(go, dur);
-    }
+    //    // 3) 재생 시간만큼 뒤에 반납
+    //    var ps = go.GetComponent<ParticleSystem>();
+    //    float dur = ps.main.duration + ps.main.startLifetime.constantMax;
+    //    DustPool.Instance.ReturnDust(go, dur);
+    //}
 }

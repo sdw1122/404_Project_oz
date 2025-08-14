@@ -48,8 +48,7 @@ public class StrawAttack : MonoBehaviour
             Debug.Log("1감지된 콜라이더 수: " + hitColliders.Length);
             Debug.Log(whatIsTarget.value);
             foreach (var hit in hitColliders)
-            {
-                Debug.Log("아");
+            {                
                 if (hit.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
                     Debug.Log("공격");
@@ -71,8 +70,7 @@ public class StrawAttack : MonoBehaviour
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, whatIsTarget);
             Debug.Log("감지된 콜라이더 수: " + hitColliders.Length);
             foreach (var hit in hitColliders)
-            {
-                Debug.Log("어");
+            {                
                 if (hit.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
                     Debug.Log("슬로우");                    
