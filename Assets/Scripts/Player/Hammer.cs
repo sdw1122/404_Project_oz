@@ -58,7 +58,7 @@ public class Hammer : MonoBehaviour
     //private Color charge3col = new Color(1f, 0.15f, 0.15f, 1f);
     private Color[] chargeColor = { new Color(1f, 1f, 1f, 0.5f), new Color(1f, 0.9f, 0.3f, 1f), new Color(1f, 0.15f, 0.15f, 1f) };
     private DustPool DustPool;
-
+    CoolDown_UI coolUI;
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
@@ -68,6 +68,7 @@ public class Hammer : MonoBehaviour
         pv = GetComponent<PhotonView>();
         DustPool = GetComponent<DustPool>();
         attackLayerIndex = animator.GetLayerIndex("Upper Body");
+        coolUI=GetComponentInChildren<CoolDown_UI>();
     }
     public void setBind()
     {
@@ -110,7 +111,7 @@ public class Hammer : MonoBehaviour
      
         if (context.started && skill1CoolDownTimer >= 10f && playerController.IsGrounded())
         {
-          
+            
             skill1Pressed = true;
             playerController.isCharge = true;
             animator.SetTrigger("Charge");
@@ -128,8 +129,9 @@ public class Hammer : MonoBehaviour
             if (skill1HoldTime < 1)
             {
                 skill1 = 0;
-                skill1CoolDownTimer = 5f;
+                skill1CoolDownTimer = 0f;
                 skill1HoldTime = 0f;
+                coolUI.StartCooldown1();
                 Debug.Log("0charging");
                 animator.SetTrigger("CancelCharge");
                 pv.RPC("RPC_TriggerEraserCancelCharge", RpcTarget.Others);
@@ -159,6 +161,7 @@ public class Hammer : MonoBehaviour
             playerController.canMove = true;
             skill1CoolDownTimer = 0;
             skill1HoldTime = 0;
+            coolUI.StartCooldown1();
         }
         
     }
@@ -178,6 +181,7 @@ public class Hammer : MonoBehaviour
         if (!pv.IsMine || !canAttack || skill1Pressed) return;
         if (context.performed && skill2CoolDownTimer >= skill2CoolDown && playerController.IsGrounded())
         {
+            coolUI.StartCooldown2();
             Debug.Log("UsingSkill2");
             animator.SetTrigger("Big Attack");
             pv.RPC("RPC_TriggerEraserBigAttack", RpcTarget.Others);

@@ -45,6 +45,7 @@ public class HealingRay : MonoBehaviour
         Vector3 spawnPos = rayStartPoint + rayDirection * minDistance;
         healSource.PlayOneShot(healClip);
         animator.SetTrigger("Interactive");
+        pv.RPC(nameof(HealAnime), RpcTarget.Others);
         healingEffect.Play();
 
         bool isHit = Physics.Raycast(spawnPos, rayDirection, out hit, rayLength, targetLayer);
@@ -73,6 +74,11 @@ public class HealingRay : MonoBehaviour
         }
         pv.RPC("RPC_ShowHealingRay", RpcTarget.All, spawnPos, rayEndPoint);
         
+    }
+    [PunRPC]
+    public void HealAnime()
+    {
+        animator.SetTrigger("Interactive");
     }
     [PunRPC]
     void RPC_ShowHealingRay(Vector3 startPoint, Vector3 endPoint)

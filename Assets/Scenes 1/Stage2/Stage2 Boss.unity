@@ -6954,6 +6954,42 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 828000928633265993, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: cooldown
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 828000928633265993, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: endAttack
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 828000928633265993, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 828000928633265993, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: cannon.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 828000928633265993, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: cannons.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 828000928633265993, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: warning.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 828000928633265993, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: 'cannon.Array.data[0]'
+      value: 
+      objectReference: {fileID: 618048528}
+    - target: {fileID: 828000928633265993, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: 'cannon.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1233887025}
+    - target: {fileID: 828000928633265993, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: 'cannon.Array.data[2]'
+      value: 
+      objectReference: {fileID: 904881723}
+    - target: {fileID: 828000928633265993, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: 'cannons.Array.data[0]'
       value: 
       objectReference: {fileID: 618048528}
