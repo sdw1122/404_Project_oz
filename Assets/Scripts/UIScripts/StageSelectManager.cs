@@ -26,8 +26,6 @@ public class StageSelectManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject waitingForMasterClientText;
 
 
-
-
     void Start()
     {
         // 씬에 들어왔을 때 UI 상태를 업데이트합니다.

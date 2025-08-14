@@ -3450,7 +3450,7 @@ MonoBehaviour:
   roomInput: {fileID: 630644029}
   joinInput: {fileID: 1083205344}
   flagButtonPrefab: {fileID: 8606702253809902499, guid: e7030443dcb148e4e870ce7a8280ce42, type: 3}
-  flagListParent: {fileID: 0}
+  flagListParent: {fileID: 1051581639}
 --- !u!114 &1601767732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5502,6 +5502,7 @@ PrefabInstance:
     - {fileID: 353399512803797048, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
     - {fileID: 352711673037923416, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
     - {fileID: 352684057832054124, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
+    - {fileID: 352860444287884944, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 356149429523558998, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
       insertIndex: -1

@@ -259,7 +259,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac4c0a8327957a44934b9b855afba89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedLives: {fileID: 0}
+  sharedLives: {fileID: 1886726315}
+  GameOverUI: {fileID: 1886726316}
   gameConversations:
   - conversationName: GameStart
     dialogueLines:
@@ -1189,6 +1190,22 @@ MonoBehaviour:
 --- !u!1 &1886726314 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2731877532834590319, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
+  m_PrefabInstance: {fileID: 1886726310}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1886726315 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9011853185602470264, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
+  m_PrefabInstance: {fileID: 1886726310}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 428b5c40bd38e8a44a9b4a4fd7f05950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1886726316 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7569325818712464446, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
   m_PrefabInstance: {fileID: 1886726310}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1955025022
