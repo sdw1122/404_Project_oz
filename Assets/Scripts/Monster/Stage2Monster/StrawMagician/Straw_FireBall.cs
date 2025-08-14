@@ -79,7 +79,7 @@ public class Straw_FireBall : MonoBehaviour
         fireBall = magicArrow.GetComponent<FireBall>();
         if (fireBall != null)
         {
-            fireIns.transform.SetParent(fireBall.transform, false);
+            /*fireIns.transform.SetParent(fireBall.transform, false);*/
             fireBall.Initialize(damage, arrowSpeed);
         }
     }

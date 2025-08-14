@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
     private GameObject jumpEffectins;
     public AudioSource jumpSound;
     public AudioClip jumpSoundClip;
-
+    PlayerInput playerInput;
 
     private MovingObj currentPlatform;
     [PunRPC]
@@ -68,10 +68,12 @@ public class PlayerController : MonoBehaviour
     }
     public void ActiveController()
     {
+        playerInput.enabled = true;
         controller.enabled = true;
     }
     public void DeactiveController()
-    {
+    {   
+        playerInput.enabled = false;
         controller.enabled = false;
     }
     [PunRPC]
@@ -113,7 +115,7 @@ public class PlayerController : MonoBehaviour
         pv = GetComponent<PhotonView>();
         cineCam = GetComponentInChildren<CinemachineCamera>();
         animator = GetComponent<Animator>();;
-        
+        playerInput = pv.GetComponent<PlayerInput>();
         runSpeed = 1.5f * walkSpeed;
         if (!pv.IsMine)
         {
