@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: aef73f76d7adf34438a298a31bfb26e4
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 257450
+  packageName: Low Poly Stylized Medieval Weapon Pack
+  packageVersion: 1.0
+  assetPath: Assets/Medieval Weapon Pack/Shaders/URP/URP_MaskMap_DoubleSided.shadergraph
+  uploadId: 652200

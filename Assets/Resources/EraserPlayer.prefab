@@ -16892,6 +16892,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1d4523ff8667a434d997ed083cd395b7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7505315150737077908}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1d4523ff8667a434d997ed083cd395b7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4269027919892422870}
   m_SourcePrefab: {fileID: 100100000, guid: 1d4523ff8667a434d997ed083cd395b7, type: 3}
 --- !u!4 &292108290800110208 stripped
 Transform:
@@ -17321,7 +17324,7 @@ MonoBehaviour:
   job: 
   knockbackEffect: {fileID: 8055080864472481139}
   slowEffect: {fileID: 574614039159805082}
-  jumpEffect: {fileID: 0}
+  jumpEffect: {fileID: 2661852520061383647, guid: fca001ac3e2d0074ca6bcf31973982ff, type: 3}
   foot: {fileID: 3601988123414445552}
   jumpSound: {fileID: 4311051598691865048}
   jumpSoundClip: {fileID: 8300000, guid: 0a95a194b93d0ba4e87536bd32be5054, type: 3}
@@ -17538,6 +17541,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skill2Effect: {fileID: 1288942277512556538, guid: 22e338ea832f251409d0579901cf4737, type: 3}
   effectDistance: 2
+--- !u!114 &4269027919892422870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100591750975983674}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 128a75702fa871248938df8a79dbc3ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dustPrefab: {fileID: 1541352577665823825, guid: 3535ca9d47f2b634e8d624b4b50de4b8, type: 3}
+  initialCount: 10
 --- !u!4 &1887803493213852323 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 1d4523ff8667a434d997ed083cd395b7, type: 3}

@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
     private GameObject jumpEffectins;
     public AudioSource jumpSound;
     public AudioClip jumpSoundClip;
+    //DustPool dustPool;
 
 
     private MovingObj currentPlatform;
@@ -106,6 +107,7 @@ public class PlayerController : MonoBehaviour
         pv = GetComponent<PhotonView>();
         cineCam = GetComponentInChildren<CinemachineCamera>();
         animator = GetComponent<Animator>();;
+        //dustPool = GetComponentInChildren<DustPool>();
         
         runSpeed = 1.5f * walkSpeed;
         if (!pv.IsMine)
@@ -542,19 +544,19 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         Destroy(jumpEffectins);
     }
-    public void SpawnDust()
-    {
-        // 1) 위치 & 회전 결정
-        Vector3 pos = foot.position;
-        // 땅 노말을 따서 정렬하고 싶다면 Raycast로 hit.normal 사용 가능
-        Quaternion rot = Quaternion.LookRotation(Vector3.forward);
+    //public void SpawnDust()
+    //{
+    //    // 1) 위치 & 회전 결정
+    //    Vector3 pos = foot.position;
+    //    // 땅 노말을 따서 정렬하고 싶다면 Raycast로 hit.normal 사용 가능
+    //    Quaternion rot = Quaternion.LookRotation(Vector3.forward);
 
-        // 2) 풀에서 꺼내
-        var go = DustPool.Instance.GetDust(pos, rot);
+    //    // 2) 풀에서 꺼내
+    //    var go = dustPool.GetDust(pos, rot);
 
-        // 3) 재생 시간만큼 뒤에 반납
-        var ps = go.GetComponent<ParticleSystem>();
-        float dur = ps.main.duration + ps.main.startLifetime.constantMax;
-        DustPool.Instance.ReturnDust(go, dur);
-    }
+    //    // 3) 재생 시간만큼 뒤에 반납
+    //    var ps = go.GetComponent<ParticleSystem>();
+    //    float dur = ps.main.duration + ps.main.startLifetime.constantMax;
+    //    DustPool.Instance.ReturnDust(go, dur);
+    //}
 }
