@@ -16,10 +16,30 @@ public class StageSelectManager : MonoBehaviourPunCallbacks
     [Tooltip("tutorial 버튼")]
     [SerializeField] private Button tutorialButton;
 
+    [Tooltip("tutorial 버튼")]
+    [SerializeField] private Button stage1BossButton;
+
+    [Tooltip("tutorial 버튼")]
+    [SerializeField] private Button stage2BossButton;
+
+    [Tooltip("마스터 클라이언트를 기다리는중")]
+    [SerializeField] private GameObject waitingForMasterClientText;
+
+
+
+
     void Start()
     {
         // 씬에 들어왔을 때 UI 상태를 업데이트합니다.
-        UpdateButtonsForMasterClient();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            waitingForMasterClientText.SetActive(false);
+        }
+        else
+        {
+            waitingForMasterClientText.SetActive(true);
+        }
+        //UpdateButtonsForMasterClient();
     }
 
     /// <summary>
@@ -39,6 +59,8 @@ public class StageSelectManager : MonoBehaviourPunCallbacks
         if (stage1Button != null) stage1Button.interactable = isMaster;
         if (stage2Button != null) stage2Button.interactable = isMaster;
         if (tutorialButton != null) tutorialButton.interactable = isMaster;
+        if (stage1BossButton != null) stage1BossButton.interactable = isMaster;
+        if (stage2BossButton != null) stage2BossButton.interactable = isMaster;
     }
 
     // --- 버튼 OnClick() 이벤트에 연결할 함수들 ---
@@ -77,6 +99,24 @@ public class StageSelectManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("로비로 돌아갑니다...");
             PhotonNetwork.LoadLevel("Lobby"); // 로비 씬의 이름
+        }
+    }
+
+    public void LoadStage1Boss()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("Stage 1 보스를 로드합니다...");
+            PhotonNetwork.LoadLevel("Stage1Boss"); // Stage1Boss 씬의 이름
+        }
+    }
+
+    public void LoadStage2Boss()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("Stage 2 보스를 로드합니다...");
+            PhotonNetwork.LoadLevel("Stage2 Boss"); // Stage2Boss 씬의 이름
         }
     }
 }

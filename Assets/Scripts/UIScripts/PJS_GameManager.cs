@@ -2,7 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
-using Photon.Pun; // Photon.Pun 네임스페이스 추가
+using Photon.Pun;
+using UnityEditor.Rendering; // Photon.Pun 네임스페이스 추가
 
 // 여러 대화 묶음을 관리하기 위한 클래스
 [System.Serializable]
@@ -21,6 +22,8 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
     [Header("UI 및 게임 상태")]
     public SharedLives sharedLives;
     //public CoolDown_UI coolDown_UI;
+    public GameObject GameOverUI; // 게임 오버 UI 패널
+
 
     [Header("대화 목록")]
     public List<GameConversation> gameConversations;
@@ -36,41 +39,10 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
         {
             Destroy(gameObject);
         }
-    }
 
-    public void Update()
-    {
-        // 아래 테스트 코드는 마스터 클라이언트에서만 실행되도록 하는 것이 좋습니다.
-        if (PhotonNetwork.IsMasterClient)
+        if(GameOverUI != null)
         {
-            // 숫자 '1' 키를 누르면 "Dialogue1" 대화 시작
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                Debug.Log("pressed K");
-                TriggerDialogue("Dialogue1");
-            }
-
-            // 숫자 '2' 키를 누르면 "Dialogue2" 대화 시작
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                Debug.Log("pressed 2");
-                TriggerDialogue("Dialogue2");
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            // 로컬 플레이어의 게임 오브젝트를 찾습니다.
-            // GameManager.cs에서 플레이어 오브젝트의 이름이 userId로 설정됩니다.
-            GameObject playerObject = GameObject.Find(PhotonNetwork.LocalPlayer.UserId);
-            if (playerObject != null)
-            {
-                PlayerHealth playerHealth = playerObject.GetComponent<PlayerHealth>();
-                // 플레이어가 죽어있으면 부활시킵니다.
-                if (playerHealth != null && playerHealth.dead)
-                {
-                    playerHealth.Resurrection();
-                }
-            }
+            GameOverUI.SetActive(false); // 게임 오버 UI를 비활성화
         }
     }
 
@@ -109,7 +81,12 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
     void GameOver()
     {
         Debug.Log("게임 오버!");
-        // 여기에 게임 오버 관련 로직 추가 (예: 결과창 표시, 레벨 재시작 등)
-        // Time.timeScale = 0f; // 필요하다면 여기서 게임을 멈출 수 있습니다.
+        Cursor.lockState = CursorLockMode.None; // 커서 잠금 해제
+        Cursor.visible = true; // 커서 보이기
+        if (GameOverUI != null)
+        {
+            GameOverUI.SetActive(true); // 게임 오버 UI 활성화
+        }
+        Time.timeScale = 0f; // 게임 일시 정지
     }
 }
