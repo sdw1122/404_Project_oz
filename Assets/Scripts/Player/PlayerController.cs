@@ -388,12 +388,14 @@ public class PlayerController : MonoBehaviour
         /*runSpeed =1.5f*originalSpeed * (1f - amount);*/
         walkSpeed =originalSpeed * (1f-amount);
         runSpeed =originalSpeed * (1f-amount);
+        slowEffect.Play();
         Debug.Log("속도 감소 완료 :"+ moveSpeed);
         yield return new WaitForSeconds(duration);
         moveSpeed = originalSpeed;
         walkSpeed = originalSpeed;
         runSpeed = originalSpeed * 1.5f;
         slowCoroutine = null;
+        slowEffect.Stop();
         Debug.Log("속도 복구 완료 :"+moveSpeed);
     }
     //

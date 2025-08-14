@@ -10,7 +10,6 @@ public class StrawKingRazor : MonoBehaviour
     public VisualEffect blockedRazor;
     public VisualEffect Razor;
     public ParticleSystem shoutEffect;
-    public ParticleSystem attackEffect;
 
     public bool isBlock = false;
 
@@ -52,7 +51,7 @@ public class StrawKingRazor : MonoBehaviour
         float timer = 0.0f;
         while (timer < duration)
         {
-            Razor.transform.rotation = Quaternion.RotateTowards(Razor.transform.rotation, transform.rotation * Quaternion.Euler(0f, -20.0f, 0f), 14 * Time.deltaTime);
+            Razor.transform.rotation = Quaternion.RotateTowards(Razor.transform.rotation, transform.rotation * Quaternion.Euler(0f, -20.0f, 0f), 12.7f * Time.deltaTime);
             timer += Time.deltaTime;
             yield return null;
         }
@@ -68,12 +67,5 @@ public class StrawKingRazor : MonoBehaviour
     public void ShoutEffectStop()
     {
         shoutEffect.Stop();
-    }
-
-    public void AttackEffectPlay()
-    {
-        animator.speed = 0f;
-        StartCoroutine(StopAnimation(2.0f));
-        attackEffect.Play();
     }
 }

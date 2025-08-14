@@ -16,10 +16,12 @@ public class Straw_FireBall : MonoBehaviour
     Vector3 directionToTarget;
     FireBall fireBall;
     GameObject fireIns;
+    PhotonView photonView;
     private void Awake()
     {
         animator = GetComponent<Animator>();
         strawMagician = GetComponent<StrawMagician>();
+        photonView = GetComponent<PhotonView>();
     }
     public bool IsReady()
     {
@@ -48,6 +50,7 @@ public class Straw_FireBall : MonoBehaviour
         if (animator != null)
         {
             fireIns = Instantiate(fireEffect, fireEffect.transform);
+            Destroy( fireIns, 10.0f );
             ParticleSystem ps = fireIns.GetComponent<ParticleSystem>();
             ps.Play();
             animator.SetTrigger("FireBall");
@@ -74,13 +77,25 @@ public class Straw_FireBall : MonoBehaviour
     }
     public void FireFireBall()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
+        if (!photonView.IsMine) return;
         GameObject magicArrow = PhotonNetwork.Instantiate("test/" + "Straw_FireBall", firePos.position, Quaternion.LookRotation(directionToTarget));
         fireBall = magicArrow.GetComponent<FireBall>();
-        if (fireBall != null)
+        PhotonView magicArrowPhotonView = magicArrow.GetComponent<PhotonView>();
+        if (fireBall != null && magicArrowPhotonView != null)
         {
-            fireIns.transform.SetParent(fireBall.transform, false);
+            photonView.RPC("RPC_SetParent",RpcTarget.All,magicArrowPhotonView.ViewID);
             fireBall.Initialize(damage, arrowSpeed);
+        }
+    }
+    [PunRPC]
+    private void RPC_SetParent(int magicArrowViewID)
+    {
+        PhotonView magicArrowPhotonView = PhotonView.Find(magicArrowViewID);
+
+        if (magicArrowPhotonView != null && fireIns != null)
+        {
+            fireIns.transform.SetParent(magicArrowPhotonView.transform, false);
+            fireIns.transform.localPosition = Vector3.zero;
         }
     }
 }
