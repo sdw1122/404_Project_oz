@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
 
     private MovingObj currentPlatform;
+    
     [PunRPC]
     public void SetJob(string _job)
     {
@@ -127,10 +128,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
         EnemyHealthBarController.LocalPlayerCamera = playerCamera;
-        healingRay =GetComponent<HealingRay>();
-       
-        
-        
+        healingRay =GetComponent<HealingRay>();        
+
+
+
         playerObj = this.gameObject;
         /*mainCamera = transform.Find("Main Camera").GetComponent<Camera>();*/
         deadCamera = transform.Find("Dead Camera")?.gameObject;
@@ -265,16 +266,25 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         controller = GetComponent<CharacterController>();
-    }
-    
-    private void Update()
-    {
 
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (DialogueManager.IsDialogueActive)
+        {
+            if (playerInput.enabled)
+                playerInput.enabled = false; // 입력 차단
+
+            return;
+        }
+        else
+        {
+            if (!playerInput.enabled)
+                playerInput.enabled = true; // 입력 활성화
+        }
+
         if (!pv.IsMine) return;
         // 카메라 회전은 무조건 실행
         float mouseX = lookInput.x * mouseSensitivity;

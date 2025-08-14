@@ -19,9 +19,10 @@ public struct DialogueLine
 public class DialogueManager : MonoBehaviourPunCallbacks
 {
     public static DialogueManager Instance;
+    PhotonView pv;
 
     [Header("UI 요소")]
-    public GameObject dialoguePanel;
+    public GameObject dialoguePanel;    
     public Image characterImage;
     public TextMeshProUGUI speakerNameText;
     public TextMeshProUGUI dialogueText;
@@ -32,6 +33,8 @@ public class DialogueManager : MonoBehaviourPunCallbacks
     private Queue<DialogueLine> dialogueQueue;
     private bool isTyping = false;
     private string currentFullSentence;
+
+    public static bool IsDialogueActive { get; private set; } = false;
 
     void Awake()
     {
@@ -44,6 +47,7 @@ public class DialogueManager : MonoBehaviourPunCallbacks
             Destroy(gameObject);
         }
         dialogueQueue = new Queue<DialogueLine>();
+        pv = GetComponent<PhotonView>();                
     }
 
     void Start()
@@ -53,11 +57,11 @@ public class DialogueManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        if (PauseMenu.IsPaused) return;
         // 이제 마스터 클라이언트가 아니어도, 모든 클라이언트가 각자 자신의 클릭 입력을 처리합니다.
         if (dialoguePanel.activeSelf && Input.GetMouseButtonDown(0))
         {
-            // RPC 호출 대신, 로컬 함수를 직접 호출하여 대화를 진행시킵니다.
-            AdvanceDialogue();
+            pv.RPC("AdvanceDialogue", RpcTarget.All);
         }
     }
 
@@ -75,7 +79,8 @@ public class DialogueManager : MonoBehaviourPunCallbacks
 
         // Time.timeScale = 0f; // 게임 시간을 멈추는 코드를 제거합니다.
 
-        dialoguePanel.SetActive(true);
+        dialoguePanel.SetActive(true);        
+        IsDialogueActive = true;
         dialogueQueue.Clear();
 
         foreach (DialogueLine line in conversationToStart.dialogueLines)
@@ -86,11 +91,18 @@ public class DialogueManager : MonoBehaviourPunCallbacks
         DisplayNextLine();
     }
 
+    [PunRPC]
+    public void NextDialogue()
+    {
+
+    }
+
     // RPC가 아닌 일반 로컬 함수로 변경합니다.
-    private void EndDialogue()
+    public virtual void EndDialogue()
     {
         // Time.timeScale = 1f; // 게임 시간을 되돌리는 코드를 제거합니다.
         dialoguePanel.SetActive(false);
+        IsDialogueActive = false;        
         Debug.Log("대화가 종료되었습니다.");
     }
 
@@ -133,8 +145,9 @@ public class DialogueManager : MonoBehaviourPunCallbacks
         isTyping = false;
     }
 
+    [PunRPC]
     // RPC가 아닌, 각 클라이언트가 로컬에서 호출하는 일반 함수로 변경합니다.
-    private void AdvanceDialogue()
+    public void AdvanceDialogue()
     {
         // 기존 AdvanceDialogue_RPC의 로직을 그대로 가져옵니다.
         if (isTyping)

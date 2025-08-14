@@ -48,7 +48,7 @@ public class Skill1 : MonoBehaviour
     [PunRPC]
     public void StartSkill()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
+        if (!isHit && !PhotonNetwork.IsMasterClient) return;
         endAttack = false;
         lastSkillTime = Time.time;
         foreach (WisdomCannon cannon in cannons)
