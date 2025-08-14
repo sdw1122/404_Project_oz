@@ -12971,13 +12971,17 @@ MonoBehaviour:
   navMeshAgent: {fileID: 2129605562238910705}
   obstacle: {fileID: 0}
   hitEffect: {fileID: 0}
+  hitSource: {fileID: 0}
+  stepSource: {fileID: 0}
+  dieSource: {fileID: 0}
+  hurtSource: {fileID: 0}
   enemyAnimator: {fileID: 6793743041817731682}
   enemyRenderer: {fileID: 8925967103314192057}
   currentHealth: 0
   damage: 0
   Atk_Cooldown: 0
   attackRange: 0
-  DEF_Factor: 0
+  DEF_Factor: 1
   isBinded: 0
   isFirstChase: 1
   isAttacking: 0
@@ -13009,7 +13013,6 @@ MonoBehaviour:
   blockedRazor: {fileID: 2354527477129374348}
   Razor: {fileID: 4107671602272496263}
   shoutEffect: {fileID: 875512862127738677}
-  attackEffect: {fileID: 0}
   isBlock: 0
 --- !u!114 &4541750953746268915
 MonoBehaviour:
@@ -13026,7 +13029,8 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
-  attackCoolTime: 5
+  attackDamage: 10
+  attackCoolTime: 10
 --- !u!114 &828000928633265993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13039,13 +13043,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398eb9076ea1fef4c89ed7ce46452d8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  razer: {fileID: 0}
+  cannons: []
   warning: []
   waitTime: 0
   attackTime: 0
   isShake: 0
   endAttack: 1
   isReady: 0
-  cooldown: 30
+  cooldown: 60
   poison: {fileID: 0}
   hasShield: 0
 --- !u!114 &1653479065046695820
@@ -13065,7 +13071,7 @@ MonoBehaviour:
   damage: 20
   tik: 1.5
   duration: 10
-  cooldown: 60
+  cooldown: 70
   endAttack: 1
 --- !u!114 &4058774880079521363
 MonoBehaviour:
