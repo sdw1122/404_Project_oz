@@ -19,7 +19,7 @@ public struct DialogueLine
 public class DialogueManager : MonoBehaviourPunCallbacks
 {
     public static DialogueManager Instance;
-    PhotonView pv;
+    public PhotonView pv;
 
     [Header("UI 요소")]
     public GameObject dialoguePanel;    
@@ -36,6 +36,8 @@ public class DialogueManager : MonoBehaviourPunCallbacks
 
     public static bool IsDialogueActive { get; private set; } = false;
 
+    protected string currentConversationName;
+
     void Awake()
     {
         if (Instance == null)
@@ -48,11 +50,6 @@ public class DialogueManager : MonoBehaviourPunCallbacks
         }
         dialogueQueue = new Queue<DialogueLine>();
         pv = GetComponent<PhotonView>();                
-    }
-
-    void Start()
-    {
-        dialoguePanel.SetActive(false);
     }
 
     void Update()
@@ -69,6 +66,8 @@ public class DialogueManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void StartDialogue_RPC(string conversationName)
     {
+        currentConversationName = conversationName;
+
         GameConversation conversationToStart = PJS_GameManager.Instance.gameConversations.FirstOrDefault(c => c.conversationName == conversationName);
 
         if (conversationToStart == null)
@@ -78,7 +77,7 @@ public class DialogueManager : MonoBehaviourPunCallbacks
         }
 
         // Time.timeScale = 0f; // 게임 시간을 멈추는 코드를 제거합니다.
-
+        Debug.Log("dialogue : " + dialoguePanel);
         dialoguePanel.SetActive(true);        
         IsDialogueActive = true;
         dialogueQueue.Clear();
@@ -107,9 +106,9 @@ public class DialogueManager : MonoBehaviourPunCallbacks
     }
 
     public void DisplayNextLine()
-    {
+    {        
         if (dialogueQueue.Count == 0)
-        {
+        {            
             // 모든 클라이언트에게 종료 신호를 보내는 대신, 로컬에서 대화를 종료 처리합니다.
             EndDialogue();
             return;
