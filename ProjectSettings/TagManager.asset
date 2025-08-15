@@ -7,6 +7,12 @@ TagManager:
   - Bullet
   - Enemy
   - Ground
+  - StoneGolem
+  - FireGolem
+  - Lava
+  - StrawMagician
+  - StrawKing
+  - Road
   layers:
   - Default
   - TransparentFX
@@ -17,14 +23,14 @@ TagManager:
   - Interact
   - Player
   - Enemy
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Lava
+  - Ground
+  - EnemyHead
+  - Coolant
+  - Shield
+  - CannonBall
+  - ShockWave
+  - Dialogue
   - 
   - 
   - 

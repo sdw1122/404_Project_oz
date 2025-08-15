@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e5f65eac6a074d74daa8dbf45e059f1a
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 263656
+  packageName: Medieval Church and Monastery Kit
+  packageVersion: 1.1
+  assetPath: Assets/CreaturePub/Church_Monastery/Shaders/CP_Lit_Foliage.shader
+  uploadId: 623234

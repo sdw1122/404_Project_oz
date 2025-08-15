@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1f387a0a21864f04d87c785dd00a469f
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 257450
+  packageName: Low Poly Stylized Medieval Weapon Pack
+  packageVersion: 1.0
+  assetPath: Assets/Medieval Weapon Pack/Shaders/BRP/BRP_MaskMap_DoubleSided.shader
+  uploadId: 652200

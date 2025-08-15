@@ -18,10 +18,5 @@ public class PenAnimeControll : MonoBehaviour
 
         
         animator.SetFloat("Move", speed);
-     
-
-
-
     }
-    
 }

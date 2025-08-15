@@ -4,7 +4,11 @@ using UnityEngine.InputSystem;
 
 public class PenAttack : MonoBehaviour
 {
-    public GameObject PenPlayer;
+    public GameObject penPlayer;
+    public GameObject pen;
+    public AudioClip attackClip;
+    public AudioSource audioSource;
+
     Animator animator;
     [Header("스킬 정보")]
     public string Skill_ID = "Pen_Attack";
@@ -18,15 +22,19 @@ public class PenAttack : MonoBehaviour
     public Transform firePoint;
     public float fireRate = 1.0f;
     public float MissileSpeed = 10.0f;
-
+    public Camera penCamera;
     public static bool isAttack = true;
     private float lastFireTime;
     PhotonView pv;
     private void Awake()
     {
+        animator = penPlayer.GetComponent<Animator>();
         pv = GetComponent<PhotonView>();
+        animator = penPlayer.GetComponent<Animator>();
+        if (!pv.IsMine) return;
         Debug.Log("firePoint: " + firePoint);
-        animator=PenPlayer.GetComponent<Animator>();
+        
+        
     }
     private void Update()
     {
@@ -44,10 +52,11 @@ public class PenAttack : MonoBehaviour
     }
 
     void Fire()
-    {   
-        
+    {
+        if (!pv.IsMine) return;
+        audioSource.PlayOneShot(attackClip);
         // 카메라 기준 마우스 방향 계산
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = penCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         Vector3 targetPoint;
 
@@ -55,23 +64,43 @@ public class PenAttack : MonoBehaviour
             targetPoint = hit.point;
         else
             targetPoint = ray.GetPoint(100f);
-            
-        Vector3 rayOrigin = Camera.main.transform.position;
-        Vector3 rayDir = Camera.main.transform.forward;
+
+        Vector3 rayOrigin = new Vector3(firePoint.position.x,firePoint.position.y,firePoint.position.z);
+        Vector3 rayDir = penCamera.transform.forward;
         
         Vector3 spawnPos = rayOrigin + rayDir * 0.5f; // 카메라 앞 0.5m 지점
         Quaternion rotation = Quaternion.LookRotation(rayDir);
-        rotation *= Quaternion.Euler(90, 0, 0);
-        GameObject missile = PhotonNetwork.Instantiate("Pen_Attack_Missile", spawnPos, rotation);
+        rotation *= Quaternion.Euler(-90f, 0, 0);
+        GameObject missile = PhotonNetwork.Instantiate("test/" + "Pen_Attack_Missile", spawnPos, rotation);
         missile.GetComponent<Rigidbody>().linearVelocity = rayDir * MissileSpeed;
-        animator.SetTrigger("Attack");
+        missile.GetComponent<PenMissile>().ownerViewID = PhotonView.Get(this).ViewID;
 
-        pv.RPC("RPC_TriggerPenAttack", RpcTarget.Others);
+        pv.RPC("RPC_TriggerPenAttack", RpcTarget.All);
     }
     [PunRPC]
-    void RPC_TriggerPenAttack()
+    public void RPC_TriggerPenAttack()
     {
+      
         animator.SetTrigger("Attack");
     }
-
+    public void PenEnable()
+    {
+        pen.SetActive(true);
+        pv.RPC("RPC_PenEnable",RpcTarget.Others);
+    }
+    public void PenDisable()
+    {
+        pen.SetActive(false);
+        pv.RPC("RPC_PenDisable", RpcTarget.Others);
+    }
+    [PunRPC]
+    public void RPC_PenEnable()
+    {
+        pen.SetActive(true);
+    }
+    [PunRPC]
+    public void RPC_PenDisable()
+    {
+        pen.SetActive(false);
+    }
 }

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3c58cc74467bfea47b588bfd61d39ad1
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 211406
+  packageName: Enemy Golem
+  packageVersion: 1.0.0
+  assetPath: Assets/Lil Pupinduy/Character/Enemy Golem/Materials/Ice_Golem_Material.mat
+  uploadId: 618694

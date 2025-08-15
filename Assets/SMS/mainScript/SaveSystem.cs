@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -6,7 +7,9 @@ public class PlayerSaveData
 {
     public string userId;
     public string userJob;
-    public Vector3 position;
+    public string latestFlag;
+    public string latestScene;
+    public List<string> unlockedFlags = new List<string>();
 }
 
 public static class SaveSystem
@@ -22,21 +25,21 @@ public static class SaveSystem
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(path, json);
 
-        Debug.Log($" ÀúÀåµÊ: {path}");
+        Debug.Log($" ì €ì¥ë¨: {path}");
     }*/
     public static void SavePlayerData(PlayerSaveData data)
     {
         string json = JsonUtility.ToJson(data, true); // pretty print
         string path = GetFilePath(data.userId);
         File.WriteAllText(path, json);
-        Debug.Log($"[SaveSystem] ÀúÀå ¿Ï·á ¡æ {path}");
+        Debug.Log($"[SaveSystem] ì €ì¥ ì™„ë£Œ â†’ {path}");
     }
     /* public static Vector3? LoadPlayerPosition(string P_UserId)
      {
          string path = GetFilePath(P_UserId);
          if (!File.Exists(path))
          {
-             Debug.LogWarning($" ÀúÀåµÈ À§Ä¡ ¾øÀ½: {path}");
+             Debug.LogWarning($" ì €ì¥ëœ ìœ„ì¹˜ ì—†ìŒ: {path}");
              return null;
          }
 
@@ -51,12 +54,12 @@ public static class SaveSystem
         {
             string json = File.ReadAllText(path);
             PlayerSaveData data = JsonUtility.FromJson<PlayerSaveData>(json);
-            Debug.Log($"[SaveSystem] ºÒ·¯¿À±â ¿Ï·á ¡æ {path}");
+            Debug.Log($"[SaveSystem] ë¶ˆëŸ¬ì˜¤ê¸° ì™„ë£Œ â†’ {path}");
             return data;
         }
         else
         {
-            Debug.LogWarning($"[SaveSystem] ÀúÀå ÆÄÀÏ ¾øÀ½ ¡æ {path}");
+            Debug.LogWarning($"[SaveSystem] ì €ì¥ íŒŒì¼ ì—†ìŒ â†’ {path}");
             return null;
         }
     }

@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 public class Pen_Skill_2 : MonoBehaviour
 {
     public GameObject PenPlayer;
+    public AudioSource audioSource;
+    public AudioClip skill2Clip;
     Animator animator;
     [Header("스킬 정보")]
     public string Skill_ID = "Pen_Skill_2";
@@ -15,16 +17,19 @@ public class Pen_Skill_2 : MonoBehaviour
     public float Cooldown = 1.0f;
     public float Charge_Levels = 1.0f;
     [Header("세부 정보")]
+    public Transform firePoint;
     public float tik = 0.5f;
     float lastFireTime;
     float throwForce=15.0f;
-
+    CoolDown_UI cool;
     public static bool isThrow=true;
     PhotonView pv;
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
         animator = PenPlayer.GetComponent<Animator>();
+        cool=GetComponentInChildren<CoolDown_UI>();
+        lastFireTime = -100f;
     }
     private void Update()
     {
@@ -38,6 +43,7 @@ public class Pen_Skill_2 : MonoBehaviour
         {
             if (context.started && Time.time - lastFireTime > Cooldown)
             {
+                cool.StartCooldown1();
                 lastFireTime = Time.time;
                 ThrowProjectile();
             }
@@ -46,19 +52,24 @@ public class Pen_Skill_2 : MonoBehaviour
 
     void ThrowProjectile()
     {
-        Vector3 spawnPos = Camera.main.transform.position + Camera.main.transform.forward * 0.5f;
+        audioSource.PlayOneShot(skill2Clip);
+        Vector3 origin= new Vector3(firePoint.position.x, firePoint.position.y, firePoint.position.z);
+        Vector3 dir = Camera.main.transform.forward;
+        Vector3 spawnPos = origin + dir * 0.5f;
         Quaternion rot = Quaternion.identity;
-        GameObject obj = PhotonNetwork.Instantiate("Pen_Skill2_Projectile", spawnPos, rot);
-        obj.GetComponent<Skill2Projectile>().Initialize(Damage,tik);
-        animator.SetTrigger("Attack");
-        pv.RPC("RPC_TriggerPenAttack", RpcTarget.Others);
+        GameObject obj = PhotonNetwork.Instantiate("test/" + "Pen_Skill2_Projectile", spawnPos, rot);
+        obj.GetComponent<Skill2Projectile>().Initialize(Damage,tik, PhotonView.Get(this).ViewID);
+       
+        pv.RPC("RPC_TriggerPenAttack1", RpcTarget.All);
         Rigidbody rb = obj.GetComponent<Rigidbody>();
         Vector3 throwDir = Camera.main.transform.forward;
         rb.linearVelocity = throwDir * throwForce;
+        
     }
     [PunRPC]
-    void RPC_TriggerPenAttack()
+    void RPC_TriggerPenAttack1()
     {
+        Debug.Log(animator);
         animator.SetTrigger("Attack");
     }
 }
