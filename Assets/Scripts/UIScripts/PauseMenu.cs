@@ -37,8 +37,12 @@ public class PauseMenu : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        if(PJS_GameManager.isGameOver) return;
+
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
+            
+
             if (!isPlayerFound)
             {
                 FindLocalPlayer();

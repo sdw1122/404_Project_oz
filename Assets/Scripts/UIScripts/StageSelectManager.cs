@@ -28,6 +28,10 @@ public class StageSelectManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+
+        Cursor.visible = true;
+
         // 씬에 들어왔을 때 UI 상태를 업데이트합니다.
         if (PhotonNetwork.IsMasterClient)
         {
