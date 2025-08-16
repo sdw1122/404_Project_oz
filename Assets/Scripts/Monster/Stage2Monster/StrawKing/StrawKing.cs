@@ -1,7 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
-
+using System.Linq;
 public class StrawKing : Enemy
 {
     StrawKing_Poison poison;
