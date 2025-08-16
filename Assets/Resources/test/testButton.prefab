@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4753031026197557140}
   - component: {fileID: 8991301482923288924}
   - component: {fileID: 9103791862605446374}
-  - component: {fileID: 5701398671579492436}
   - component: {fileID: 3000148855770162659}
+  - component: {fileID: 5819718763723449500}
   m_Layer: 6
   m_Name: testButton
   m_TagString: Untagged
@@ -110,22 +110,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5701398671579492436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2566489896864688147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31ee233f27701b242a52d99adb927886, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactionType: 2
-  customInteractRange: 0
-  objectToSpawn: {fileID: 4095432028956679436, guid: db14231f0148efc48b134e335384d214, type: 3}
-  spawnPoint: {fileID: 0}
 --- !u!114 &3000148855770162659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,3 +132,19 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &5819718763723449500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2566489896864688147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 552d8d5f971cec444b87dc4ca709fb0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionType: 2
+  customInteractRange: 0
+  objectToSpawn: {fileID: 4095432028956679436, guid: db14231f0148efc48b134e335384d214, type: 3}
+  spawnPoint: {fileID: 0}

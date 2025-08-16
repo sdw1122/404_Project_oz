@@ -9,21 +9,20 @@ public class StrawAttack : MonoBehaviour
     PhotonView pv;
     StrawKing_Poison poison;
     Skill1 skill1;
-    private StrawKing strawKing;
+
     private int state = 1;
     private float attackRange = 1000f;
     public float attackDamage = 10f;
     public float attackCoolTime = 10f;
     private float attackTime = 5f;
-    bool isAttacking = false;
-
+    StrawKing strawKing;
     private float slowAmount = 0.5f;
     private float slowTime = 3f;
     float lastAttackTime;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {        
-        animator =  GetComponent<Animator>();
+    {
+        animator = GetComponent<Animator>();
         pv = GetComponent<PhotonView>();
         poison = GetComponent<StrawKing_Poison>();
         skill1 = GetComponent<Skill1>();
@@ -31,16 +30,17 @@ public class StrawAttack : MonoBehaviour
     }
     public bool IsReady()
     {
-        if (!poison.endAttack || !skill1.endAttack||isAttacking) return false;
+        if (!poison.endAttack || !skill1.endAttack) return false;
         return Time.time >= lastAttackTime + attackCoolTime;
     }
     [PunRPC]
     public void StrawKing_Attack()
-    {
-        Debug.Log("허수아비왕 공격 호출됨");
+    {   if(Time.time >= lastAttackTime + attackCoolTime)
+        {
+            lastAttackTime = Time.time;
+            pv.RPC("RPC_Attack", RpcTarget.All);
+        }
         
-        isAttacking = true;
-        pv.RPC("RPC_Attack", RpcTarget.All);
     }
 
     public void Attack()
@@ -53,7 +53,6 @@ public class StrawAttack : MonoBehaviour
             Debug.Log(whatIsTarget.value);
             foreach (var hit in hitColliders)
             {
-                Debug.Log("아");
                 if (hit.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
                     Debug.Log("공격");
@@ -66,7 +65,8 @@ public class StrawAttack : MonoBehaviour
                     Vector3 damageHitNormal = (damageHitPoint - transform.position).normalized;
 
                     targetLivingEntity.OnDamage(attackDamage, damageHitPoint, damageHitNormal);
-                    
+                    strawKing.SetIdle();
+
                 }
             }
         }
@@ -76,20 +76,19 @@ public class StrawAttack : MonoBehaviour
             Debug.Log("감지된 콜라이더 수: " + hitColliders.Length);
             foreach (var hit in hitColliders)
             {
-                Debug.Log("어");
                 if (hit.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
-                    Debug.Log("슬로우");                    
+                    Debug.Log("슬로우");
                     PhotonView targetPv = hit.GetComponent<PhotonView>();
                     if (targetPv != null)
                     {
                         targetPv.RPC("RPC_ApplyMoveSpeedDecrease", RpcTarget.All, slowAmount, slowTime);
-                        
+                        lastAttackTime = Time.time;
+                        strawKing.SetIdle();
                     }
                 }
             }
         }
-        
     }
 
     [PunRPC]
@@ -100,10 +99,7 @@ public class StrawAttack : MonoBehaviour
 
     public void AniEnd()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-        
-        isAttacking = false;
-        lastAttackTime = Time.time;
+
         if (state == 1)
         {
             state = 2;
@@ -111,10 +107,6 @@ public class StrawAttack : MonoBehaviour
         else if (state == 2)
         {
             state = 1;
-        }
-        if (strawKing != null)
-        {
-            strawKing.setIdle();
         }
     }
 }
