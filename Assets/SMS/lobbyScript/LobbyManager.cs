@@ -190,6 +190,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LoadLevel("StartStory"); // 메인 씬으로 전환
         }
     }
+    public void Stage1()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Stage1"); // 메인 씬으로 전환
+        }
+    }
+    public void Tutorial()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Tutorial"); // 메인 씬으로 전환
+        }
+    }
 
     public void BossRoom()
     {
