@@ -26,6 +26,8 @@ public class WeakFoothold : InteractableBase
     private Coroutine breakCoroutine;
     private Renderer objectRenderer;
 
+    public ParticleSystem ps;
+
     protected override void Awake()
     {
         base.Awake(); // 부모의 Awake 실행 (PhotonView 초기화)
@@ -122,6 +124,8 @@ public class WeakFoothold : InteractableBase
 
         // 영구적인 물리 발판으로 전환
         objectCollider.isTrigger = false;
+        
+        if(ps != null) ps.Play();
 
         // 머티리얼 변경
         if (objectRenderer != null && reinforcedMaterial != null)
