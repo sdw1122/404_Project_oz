@@ -19,8 +19,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] TMP_InputField roomInput;
     [SerializeField] TMP_InputField joinInput;
     PhotonView lobbyView;
-    [SerializeField] GameObject flagButtonPrefab; 
+    [SerializeField] GameObject flagButtonPrefab;
     [SerializeField] Transform flagListParent;   // 버튼 생성 위치
+
+    // --- 추가된 변수 ---
+    [Header("직업 선택 UI")]
+    [SerializeField] Image p1JobImage; // 플레이어 1의 직업 이미지 UI
+    [SerializeField] Image p2JobImage; // 플레이어 2의 직업 이미지 UI
+    [SerializeField] Sprite penSprite;    // '펜' 직업 스프라이트
+    [SerializeField] Sprite eraserSprite; // '지우개' 직업 스프라이트
+    // --- 추가된 변수 ---
+
     string roomName;
     string joinName;
     // 메인 신 가서 직업 정보 저장을 위해 static
@@ -31,7 +40,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     private Dictionary<int, GameObject> playerList = new Dictionary<int, GameObject>();
     public void Start()
-    {   
+    {
         lobbyView = GetComponent<PhotonView>();
         Debug.Log($"[LobbyManager] PhotonView ID: {lobbyView.ViewID}, IsMine: {lobbyView.IsMine}");
         // 객체 유지를 위해 PlayerPrefs 에 랜덤한 UserId 저장, 플레이어 UserId에도 저장
@@ -107,7 +116,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             // CustomProperties에 복원
             ExitGames.Client.Photon.Hashtable jobProp = new ExitGames.Client.Photon.Hashtable();
             jobProp["userJob"] = savedData.userJob;
-            
+
             PhotonNetwork.LocalPlayer.SetCustomProperties(jobProp);
         }
         else
@@ -231,7 +240,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void Stage2BossScene()
     {
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel("Stage2 Boss"); // Stage2으로 전환
         }
@@ -273,20 +282,53 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         UpdatePlayerList();
     }
+
+    // --- 수정된 함수 ---
     public void UpdatePlayerList()
     {
         Player[] players = PhotonNetwork.PlayerList;
 
-        // 두 개 슬롯 초기화
-        p1Text.text = "";
-        p2Text.text = "";
+        // Player 1 UI 업데이트
+        UpdatePlayerSlotUI(players.Length > 0 ? players[0] : null, p1Text, p1JobImage);
 
-        if (players.Length > 0)
-            p1Text.text = !string.IsNullOrEmpty(players[0].UserId) ? players[0].UserId : "Player 1";
-
-        if (players.Length > 1)
-            p2Text.text = !string.IsNullOrEmpty(players[1].UserId) ? players[1].UserId : "Player 2";
+        // Player 2 UI 업데이트
+        UpdatePlayerSlotUI(players.Length > 1 ? players[1] : null, p2Text, p2JobImage);
     }
+
+    // --- 새로 추가된 함수 ---
+    void UpdatePlayerSlotUI(Player player, TextMeshProUGUI playerText, Image jobImage)
+    {
+        // 플레이어가 슬롯에 없으면 UI를 비웁니다.
+        if (player == null)
+        {
+            playerText.text = "Waiting...";
+            jobImage.gameObject.SetActive(false);
+            return;
+        }
+
+        // 플레이어 이름(ID) 표시
+        playerText.text = !string.IsNullOrEmpty(player.UserId) ? player.UserId : "Player";
+
+        // 플레이어의 직업 속성을 확인하고 이미지를 설정합니다.
+        if (player.CustomProperties.TryGetValue("userJob", out object job))
+        {
+            jobImage.gameObject.SetActive(true);
+            if (job.ToString() == "pen")
+            {
+                jobImage.sprite = penSprite;
+            }
+            else if (job.ToString() == "eraser")
+            {
+                jobImage.sprite = eraserSprite;
+            }
+        }
+        else
+        {
+            // 직업이 선택되지 않았으면 이미지를 숨깁니다.
+            jobImage.gameObject.SetActive(false);
+        }
+    }
+
 
     public void ChooseJob_Pen()
     {
@@ -314,12 +356,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
+        // 직업 속성이 변경될 때마다 모든 플레이어의 UI를 업데이트합니다.
         if (changedProps.ContainsKey("userJob"))
         {
-            string chosenJob = changedProps["userJob"].ToString();
-            Debug.Log($"{targetPlayer.UserId} chose {chosenJob}");
+            UpdatePlayerList();
 
-            // 그 직업 버튼을 비활성화
+            // 다른 플레이어가 선택한 직업 버튼을 비활성화합니다.
+            string chosenJob = changedProps["userJob"].ToString();
             if (chosenJob == "pen")
             {
                 penButton.interactable = false;

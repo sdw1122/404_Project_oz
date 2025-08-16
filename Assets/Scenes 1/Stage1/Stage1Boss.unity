@@ -543,6 +543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sharedLives: {fileID: 667212250}
+  GameOverUI: {fileID: 173249016}
   gameConversations:
   - conversationName: GameStart
     dialogueLines:
@@ -984,6 +985,11 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!1 &173249016 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7569325818712464446, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
+  m_PrefabInstance: {fileID: 667212245}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &190366272
 GameObject:
   m_ObjectHideFlags: 0
@@ -8544,6 +8550,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1824954499}
   - {fileID: 1730533892}
   - {fileID: 314390066}
   - {fileID: 1124930658}
@@ -8562,6 +8569,5 @@ SceneRoots:
   - {fileID: 1455343959}
   - {fileID: 1648062739}
   - {fileID: 1673110134}
-  - {fileID: 1824954499}
   - {fileID: 2022196278}
   - {fileID: 2065921780}

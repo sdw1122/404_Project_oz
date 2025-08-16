@@ -550,9 +550,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7495487919930981947, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
       propertyPath: m_text
-      value: 'Tin Man, The Heartless Automaton
-
-'
+      value: "\uAC10\uC815\uC5C6\uB294 \uC790\uB3D9\uC778\uD615, \uC591\uCCA0 \uB098\uBB34\uAFBC"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7495487919930981947, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: d7e3977bc3ea13341a82d440944c6de6, type: 2}
+    - target: {fileID: 7495487919930981947, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 1400570758910197726, guid: d7e3977bc3ea13341a82d440944c6de6, type: 2}
+    - target: {fileID: 7495487919930981947, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8612559166642013319, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
       propertyPath: m_AnchorMax.x

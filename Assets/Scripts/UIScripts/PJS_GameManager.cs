@@ -21,6 +21,8 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
     [Header("UI 및 게임 상태")]
     public SharedLives sharedLives;
     //public CoolDown_UI coolDown_UI;
+    private bool isGameOver = false; // 게임 오버 상태를 나타내는 변수
+    public GameObject GameOverUI;
 
     [Header("대화 목록")]
     public List<GameConversation> gameConversations;
@@ -38,9 +40,18 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void Update()
+    void Update()
     {
-
+        // 게임오버 상태이고, G키가 눌렸을 때
+        if (isGameOver && Input.GetKeyDown(KeyCode.G))
+        {
+            // 방장(마스터 클라이언트)만 씬을 로드할 수 있음
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.Log("StageSelectScene으로 돌아갑니다...");
+                PhotonNetwork.LoadLevel("StageSelectScene");
+            }
+        }
     }
 
     // 이름을 기반으로 원하는 대화를 시작시키는 함수
@@ -78,7 +89,10 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
     void GameOver()
     {
         Debug.Log("게임 오버!");
-        // 여기에 게임 오버 관련 로직 추가 (예: 결과창 표시, 레벨 재시작 등)
-        // Time.timeScale = 0f; // 필요하다면 여기서 게임을 멈출 수 있습니다.
+        if (GameOverUI != null)
+        {
+            GameOverUI.SetActive(true); // 게임 오버 UI 활성화
+        }
+        isGameOver = true;
     }
 }
