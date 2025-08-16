@@ -1,0 +1,223 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5838149668562491376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1653769560549432003}
+  - component: {fileID: 5163631649474395250}
+  - component: {fileID: 389787381854502627}
+  m_Layer: 0
+  m_Name: PJS_GameManager 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1653769560549432003
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5838149668562491376}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.96635, y: -16, z: -64.9196}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5163631649474395250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5838149668562491376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dac4c0a8327957a44934b9b855afba89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedLives: {fileID: 0}
+  gameConversations:
+  - conversationName: GameStart
+    dialogueLines:
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uC5EC\uAE30\uB294 \uC5B4\uB514\uC9C0..?"
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uD5C8\uC218\uC544\uBE44\uB77C\uBA74 \uB4E4\uD310\uC774 \uC544\uB2CC\uAC00?"
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+    - speakerName: "\uC548\uB0B4\uC6D0"
+      dialogueText: "\uC9C0\uAE08 \uD5C8\uC218\uC544\uBE44\uB294 \uB108\uD76C\uAC00
+        \uC544\uB294 \uD5C8\uC218\uC544\uBE44\uAC00 \uC544\uB2C8\uC57C."
+      characterSprite: {fileID: -1051507491, guid: 4cced280e0c32314a9aa02717bef8a23, type: 3}
+    - speakerName: "\uC548\uB0B4\uC6D0"
+      dialogueText: "\uC9C0\uC2DD\uC744 \uAC08\uB9DD\uD55C \uB098\uBA38\uC9C0 \uC9C0\uC2DD\uC774
+        \uAC00\uB4DD\uD55C \uACF3\uC744 \uC810\uB839\uD574\uBC84\uB838\uC5B4."
+      characterSprite: {fileID: -1051507491, guid: 4cced280e0c32314a9aa02717bef8a23, type: 3}
+    - speakerName: "\uC548\uB0B4\uC6D0"
+      dialogueText: "\uC6D0\uB798\uB294 \uC9C0\uC2DD\uC774 \uAC00\uB4DD\uD588\uB358
+        \uC5D0\uBA54\uB784\uB4DC \uC2DC\uD2F0\uC778\uB370 \uC9C0\uAE08 \uBCF4\uB2E4\uC2DC\uD53C
+        \uC774\uB807\uAC8C \uB42C\uC9C0."
+      characterSprite: {fileID: -1051507491, guid: 4cced280e0c32314a9aa02717bef8a23, type: 3}
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uADF8\uB7EC\uBA74 \uC5D0\uBA54\uB784\uB4DC \uC131\uC73C\uB85C
+        \uAC00\uBA74 \uB418\uB098\uC694?"
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+    - speakerName: "\uC548\uB0B4\uC6D0"
+      dialogueText: "\uC5B4. \uADF8\uB7F0\uB370 \uC131\uC73C\uB85C \uAC00\uB824\uBA74
+        \uB9C8\uC744\uC744 \uC9C0\uB098\uAC00\uC57C\uD558\uB294\uB370,"
+      characterSprite: {fileID: -1051507491, guid: 4cced280e0c32314a9aa02717bef8a23, type: 3}
+    - speakerName: "\uC548\uB0B4\uC6D0"
+      dialogueText: "\uC9C0\uB098\uAC00\uAE30\uAC00 \uC27D\uC9C0\uB294 \uC54A\uC744\uAC70\uC57C."
+      characterSprite: {fileID: -1051507491, guid: 4cced280e0c32314a9aa02717bef8a23, type: 3}
+    - speakerName: "\uC548\uB0B4\uC6D0"
+      dialogueText: "\uC5B4\uB5BB\uAC8C\uB4E0 \uC131\uAE4C\uC9C0 \uAC00\uBD10."
+      characterSprite: {fileID: -1051507491, guid: 4cced280e0c32314a9aa02717bef8a23, type: 3}
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uD798\uB4E0\uAC70\uB294 \uB2E4 \uC6B0\uB9AC\uC5D0\uAC8C \uC2DC\uD0A8\uB2E4\uB2C8\uAE4C."
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uC5F4\uC2EC\uD788 \uD55C\uBC88 \uAC00\uBCF4\uC8E0!"
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+  - conversationName: First
+    dialogueLines:
+    - speakerName: "\uC548\uB0B4\uC778"
+      dialogueText: "\uC55E\uCABD\uC5D0 \uBB54\uAC00 \uC774\uC0C1\uD55C\uAC8C \uC788\uB294\uB370"
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+    - speakerName: "\uC548\uB0B4\uC6D0"
+      dialogueText: "\uADF8\uAC83 \uBA3C\uC800 \uC5C6\uC560\uC57C.. \uD560\uAC70..\u3145..
+        \uAC00..\u314C..\u3147..."
+      characterSprite: {fileID: -1051507491, guid: 4cced280e0c32314a9aa02717bef8a23, type: 3}
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uC798 \uC548\uB4E4\uB824\uC694. \uBB50\uB77C\uACE0\uC694?"
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+    - speakerName: "\uC548\uB0B4\uC6D0"
+      dialogueText: "\uC544..\u314D.. \u3147..\u3154.."
+      characterSprite: {fileID: -1051507491, guid: 4cced280e0c32314a9aa02717bef8a23, type: 3}
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uBB34\uC804\uC774 \uC798 \uC548\uB3FC\uC694"
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+    - speakerName: "\uD5C8\uC218\uC544\uBE44"
+      dialogueText: "\uB0B4 \uB9C8\uC744\uC5D0 \uC628\uAC78 \uD658\uC601\uD55C\uB2E4."
+      characterSprite: {fileID: 1957425000, guid: 7d33b27836a71134486d5cb72f5a264d, type: 3}
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uB10C \uB204\uAD6C\uC57C?"
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+    - speakerName: "\uD5C8\uC218\uC544\uBE44"
+      dialogueText: "\uB108\uD76C\uC57C\uB9D0\uB85C \uC774 \uB9C8\uC744\uC5D0 \uD568\uBD80\uB85C
+        \uB4E4\uC5B4\uC654\uC73C\uBA74\uC11C \uADF8\uB7EC\uBA74 \uC548\uB3FC\uC9C0."
+      characterSprite: {fileID: 1957425000, guid: 7d33b27836a71134486d5cb72f5a264d, type: 3}
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uC800\uD770 \uD5C8\uC218\uC544\uBE44\uB97C \uB9CC\uB098\uB7EC\uC654\uC5B4\uC694!"
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+    - speakerName: "\uD5C8\uC218\uC544\uBE44"
+      dialogueText: "\uB098\uB97C \uB9CC\uB098\uB7EC\uC654\uB2E4\uACE0?"
+      characterSprite: {fileID: 1957425000, guid: 7d33b27836a71134486d5cb72f5a264d, type: 3}
+    - speakerName: "\uD5C8\uC218\uC544\uBE44"
+      dialogueText: "\uC5B4\uB514 \uB098\uB97C \uB9CC\uB0A0 \uC218 \uC788\uC744\uC9C0..."
+      characterSprite: {fileID: 1957425000, guid: 7d33b27836a71134486d5cb72f5a264d, type: 3}
+    - speakerName: "\uD5C8\uC218\uC544\uBE44"
+      dialogueText: "\uADF8\uB7EC\uBA74 \uC774 \uC131\uC5D0\uC11C \uB108\uD76C\uB97C
+        \uAE30\uB2E4\uB9AC\uC9C0.."
+      characterSprite: {fileID: 1957425000, guid: 7d33b27836a71134486d5cb72f5a264d, type: 3}
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uC7A0\uAE50\uB9CC!"
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uC9C0\uAE08 \uBB34\uC804\uB3C4 \uC548\uB418\uB294\uB370 \uAD1C\uCC2E\uC744\uAE4C\uC694?"
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uC5B4\uCA54 \uC218 \uC5C6\uC5B4. \uC6B0\uB9AC\uB07C\uB9AC \uD574\uBD10\uC57C\uC9C0."
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+  - conversationName: Second
+    dialogueLines:
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uB9C8\uC744 \uC8FC\uBBFC\uB4E4\uC774 \uB2E4 \uC774\uC0C1\uD574\uC84C\uC5B4\uC694.."
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uADF8\uB7EC\uAC8C. \uB2E4\uB4E4 \uD5C8\uC218\uC544\uBE44\uCC98\uB7FC
+        \uBCC0\uD588\uB294\uB370."
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uC800\uD76C\uB3C4 \uC5EC\uAE30 \uC788\uB2E4\uAC00 \uD5C8\uC218\uC544\uBE44\uAC00
+        \uB418\uB294\uAC70 \uC544\uB2C8\uC5D0\uC694?"
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uC6B0\uB9AC\uB294 \uC774 \uB3D9\uD654\uC18D \uC874\uC7AC\uAC00
+        \uC544\uB2C8\uC5B4\uC11C \uAD1C\uCC2E\uC744\uAC70\uC57C."
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uADF8\uB9AC\uACE0 \uBC29\uAE08 \uC788\uC5C8\uB358 \uC800 \uCD08\uB85D\uC0C9
+        \uC218\uC815\uB4E4\uC744 \uBA3C\uC800 \uC5C6\uC560\uC57C\uD560 \uAC83 \uAC19\uB124."
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uADF8 \uACC4\uC18D \uBAAC\uC2A4\uD130 \uB098\uC624\uB358 \uC218\uC815\uC774\uC694?"
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uC8FC\uBCC0\uC5D0\uC11C \uACC4\uC18D \uC5D0\uB108\uC9C0\uB97C
+        \uC8FC\uC785\uD558\uB2C8\uAE4C \uC5C6\uC5B4\uC9C0\uB358\uB370."
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uACC4\uC18D \uC5C6\uC560\uBA74\uC11C \uC131\uAE4C\uC9C0 \uAC00\uBCF4\uC790."
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+  - conversationName: GoBoss
+    dialogueLines:
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uD6C4.. \uACA8\uC6B0 \uB2E4 \uC7A1\uC558\uB124."
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uC774\uC81C \uC774\uCABD\uC73C\uB85C \uAC00\uBA74 \uBC14\uB85C
+        \uC131\uC77C \uAC83 \uAC19\uC740\uB370."
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uC55E\uCABD\uC5D0 \uAE38\uC774 \uC5F4\uB838\uC5B4\uC694!"
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uC800\uAE30\uB85C \uAC00\uBA74 \uC131\uC73C\uB85C \uAC08 \uC218
+        \uC788\uC744 \uAC83 \uAC19\uC544\uC694!"
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uC800\uAE30\uB85C \uAC00\uBA74 \uC544\uB9C8 \uADF8 \uD5C8\uC218\uC544\uBE44\uAC00
+        \uC788\uACA0\uC9C0."
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uC774\uBC88\uC5D0\uB3C4 \uC6D0\uB798\uC758 \uD5C8\uC218\uC544\uBE44\uB791
+        \uB9CE\uC774 \uB2E4\uB978 \uAC83 \uAC19\uC73C\uB2C8"
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+    - speakerName: "\uC720\uC9C4"
+      dialogueText: "\uC870\uC2EC\uD558\uBA74\uC11C \uAC00\uC790."
+      characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
+    - speakerName: "\uD074\uB808\uC5B4"
+      dialogueText: "\uB124!"
+      characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+--- !u!114 &389787381854502627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5838149668562491376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
