@@ -55,7 +55,8 @@ public class StrawKing : Enemy
         if (!PhotonNetwork.IsMasterClient) return;
         navMeshAgent.isStopped = true;  // 허수아비왕은 움직이지 않는다.
         base.Update();
-        
+        if (targetEntity == null) return;
+        Debug.Log("targetEntity : " + targetEntity);
         
         if (skill1.IsReady())
         {

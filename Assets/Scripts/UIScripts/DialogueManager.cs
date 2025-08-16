@@ -38,6 +38,8 @@ public class DialogueManager : MonoBehaviourPunCallbacks
 
     protected string currentConversationName;
 
+    private List<GameObject> playerLayerObjects = new List<GameObject>();
+
     void Awake()
     {
         if (Instance == null)
@@ -78,10 +80,10 @@ public class DialogueManager : MonoBehaviourPunCallbacks
 
         // Time.timeScale = 0f; // 게임 시간을 멈추는 코드를 제거합니다.
         Debug.Log("dialogue : " + dialoguePanel);
-        dialoguePanel.SetActive(true);        
-        IsDialogueActive = true;
-        pv.RPC("SetPauseState", RpcTarget.All, true);
+        dialoguePanel.SetActive(true);
+        IsDialogueActive = true;        
         dialogueQueue.Clear();
+        pv.RPC("ChangePlayerLayerToDefault", RpcTarget.All);
 
         foreach (DialogueLine line in conversationToStart.dialogueLines)
         {
@@ -103,7 +105,7 @@ public class DialogueManager : MonoBehaviourPunCallbacks
         // Time.timeScale = 1f; // 게임 시간을 되돌리는 코드를 제거합니다.
         dialoguePanel.SetActive(false);
         IsDialogueActive = false;
-        pv.RPC("SetPauseState", RpcTarget.All, false);
+        pv.RPC("RestorePlayerLayer", RpcTarget.All);
         Debug.Log("대화가 종료되었습니다.");
     }
 
@@ -162,9 +164,31 @@ public class DialogueManager : MonoBehaviourPunCallbacks
             DisplayNextLine();
         }
     }
+
     [PunRPC]
-    public void SetPauseState(bool pause)
+    public void ChangePlayerLayerToDefault()
     {
-        Time.timeScale = pause ? 0f : 1f;
+        playerLayerObjects.Clear();
+        Debug.Log("레이어바꾸기 실행");
+
+        // 모든 게임오브젝트를 가져옴
+        GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
+        foreach (var go in allPlayers)
+        {
+            playerLayerObjects.Add(go);
+            go.layer = LayerMask.NameToLayer("Default");
+        }
+    }
+    [PunRPC]
+    // 나중에 다시 Player 레이어로 복구
+    public void RestorePlayerLayer()
+    {
+        foreach (var go in playerLayerObjects)
+        {
+            if (go != null) // 오브젝트가 파괴된 경우 방지
+                go.layer = LayerMask.NameToLayer("Player");
+        }
+
+        playerLayerObjects.Clear(); // 더이상 필요 없으니 비움
     }
 }
