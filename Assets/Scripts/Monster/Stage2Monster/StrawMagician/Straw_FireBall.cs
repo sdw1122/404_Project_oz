@@ -49,7 +49,7 @@ public class Straw_FireBall : MonoBehaviour
         {
             fireIns = Instantiate(fireEffect, fireEffect.transform);
             ParticleSystem ps = fireIns.GetComponent<ParticleSystem>();
-            ps.Play();
+            //ps.Play();
             animator.SetTrigger("FireBall");
         }
 
@@ -79,7 +79,7 @@ public class Straw_FireBall : MonoBehaviour
         fireBall = magicArrow.GetComponent<FireBall>();
         if (fireBall != null)
         {
-            fireIns.transform.SetParent(fireBall.transform, false);
+            /*fireIns.transform.SetParent(fireBall.transform, false);*/
             fireBall.Initialize(damage, arrowSpeed);
         }
     }

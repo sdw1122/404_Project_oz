@@ -40,38 +40,7 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
 
     public void Update()
     {
-        // 아래 테스트 코드는 마스터 클라이언트에서만 실행되도록 하는 것이 좋습니다.
-        if (PhotonNetwork.IsMasterClient)
-        {
-            // 숫자 '1' 키를 누르면 "Dialogue1" 대화 시작
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                Debug.Log("pressed K");
-                TriggerDialogue("Dialogue1");
-            }
 
-            // 숫자 '2' 키를 누르면 "Dialogue2" 대화 시작
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                Debug.Log("pressed 2");
-                TriggerDialogue("Dialogue2");
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            // 로컬 플레이어의 게임 오브젝트를 찾습니다.
-            // GameManager.cs에서 플레이어 오브젝트의 이름이 userId로 설정됩니다.
-            GameObject playerObject = GameObject.Find(PhotonNetwork.LocalPlayer.UserId);
-            if (playerObject != null)
-            {
-                PlayerHealth playerHealth = playerObject.GetComponent<PlayerHealth>();
-                // 플레이어가 죽어있으면 부활시킵니다.
-                if (playerHealth != null && playerHealth.dead)
-                {
-                    playerHealth.Resurrection();
-                }
-            }
-        }
     }
 
     // 이름을 기반으로 원하는 대화를 시작시키는 함수

@@ -294,6 +294,10 @@ MonoBehaviour:
   navMeshAgent: {fileID: 1121428918423500711}
   obstacle: {fileID: 0}
   hitEffect: {fileID: 0}
+  hitSource: {fileID: 0}
+  stepSource: {fileID: 0}
+  dieSource: {fileID: 0}
+  hurtSource: {fileID: 0}
   enemyAnimator: {fileID: 7890420973369486798}
   enemyRenderer: {fileID: 1734513082433498683}
   currentHealth: 0
@@ -313,7 +317,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
   healthBarPoint: {fileID: 4278495260654909364}
   destroyDelay: 2
-  m_name: "\uD5C8\uC218\uC544\uBE44 \uB9C8\uBC95\uC0AC"
+  m_name: Small_StrawMagician
   speed: 4
   canAct: 1
   groggyTime: 3

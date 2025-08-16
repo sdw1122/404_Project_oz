@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class GoStage1 : InteractableBase
 {
+    public string setStage;
     protected override void Awake()
     {
         base.Awake();
+        
     }
 
     public override void Interact(PlayerController player)
@@ -29,7 +31,7 @@ public class GoStage1 : InteractableBase
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("Stage1"); // 메인 씬으로 전환
+            PhotonNetwork.LoadLevel(setStage); // 메인 씬으로 전환
         }
     }
 }

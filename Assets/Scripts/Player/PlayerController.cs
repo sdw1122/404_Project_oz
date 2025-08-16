@@ -57,17 +57,26 @@ public class PlayerController : MonoBehaviour
     private GameObject jumpEffectins;
     public AudioSource jumpSound;
     public AudioClip jumpSoundClip;
-    //DustPool dustPool;
-
+    PlayerInput playerInput;
 
     private MovingObj currentPlatform;
+    
     [PunRPC]
     public void SetJob(string _job)
     {
         job = _job;
         Debug.Log($"[PlayerController] Job 설정됨: {job}");
     }
-
+    public void ActiveController()
+    {
+        playerInput.enabled = true;
+        controller.enabled = true;
+    }
+    public void DeactiveController()
+    {   
+        playerInput.enabled = false;
+        controller.enabled = false;
+    }
     [PunRPC]
     void SendMyDataToHost(string currentFlag, string currentScene)
     {
@@ -107,8 +116,7 @@ public class PlayerController : MonoBehaviour
         pv = GetComponent<PhotonView>();
         cineCam = GetComponentInChildren<CinemachineCamera>();
         animator = GetComponent<Animator>();;
-        //dustPool = GetComponentInChildren<DustPool>();
-        
+        playerInput = pv.GetComponent<PlayerInput>();
         runSpeed = 1.5f * walkSpeed;
         if (!pv.IsMine)
         {
@@ -120,10 +128,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
         EnemyHealthBarController.LocalPlayerCamera = playerCamera;
-        healingRay =GetComponent<HealingRay>();
-       
-        
-        
+        healingRay =GetComponent<HealingRay>();        
+
+
+
         playerObj = this.gameObject;
         /*mainCamera = transform.Find("Main Camera").GetComponent<Camera>();*/
         deadCamera = transform.Find("Dead Camera")?.gameObject;
@@ -258,16 +266,25 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         controller = GetComponent<CharacterController>();
-    }
-    
-    private void Update()
-    {
 
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (DialogueManager.IsDialogueActive)
+        {
+            if (playerInput.enabled)
+                playerInput.enabled = false; // 입력 차단
+
+            return;
+        }
+        else
+        {
+            if (!playerInput.enabled)
+                playerInput.enabled = true; // 입력 활성화
+        }
+
         if (!pv.IsMine) return;
         // 카메라 회전은 무조건 실행
         float mouseX = lookInput.x * mouseSensitivity;

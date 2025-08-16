@@ -233,6 +233,11 @@ public class CooperativePurifier : InteractableBase, IPunObservable
         if (activationVisual != null) activationVisual.SetActive(false);
         if (purifierUICanvas != null) purifierUICanvas.SetActive(false);
 
+        if (objectToDestroy != null)
+        {
+            objectToDestroy.SetActive(false);
+        }
+
         if (PhotonNetwork.IsMasterClient)
         {
             // --- [수정] 완료 시에도 소환된 몬스터는 정리해주는 것이 깔끔함 ---
@@ -249,10 +254,7 @@ public class CooperativePurifier : InteractableBase, IPunObservable
             {
                 PurifierManager.Instance.GetComponent<PhotonView>().RPC("NotifyPurifierCompleted", RpcTarget.MasterClient);
             }
-            if (objectToDestroy != null)
-            {
-                objectToDestroy.SetActive(false);
-            }
+            
             StopAllCoroutines();
         }
         gameObject.SetActive(false);
