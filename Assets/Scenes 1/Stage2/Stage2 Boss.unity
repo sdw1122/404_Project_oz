@@ -1004,7 +1004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcb358d23a6e9da46b7862662b1de5b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultSpawnPoint: {fileID: 0}
+  defaultSpawnPoint: {fileID: 520846873}
 --- !u!1 &301743360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,7 +1394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &389370453
 Transform:
   m_ObjectHideFlags: 0
@@ -1931,6 +1931,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00e632f5c3d373749908309ae215b29c, type: 3}
+--- !u!4 &520846873 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4446680998265652846, guid: 00e632f5c3d373749908309ae215b29c, type: 3}
+  m_PrefabInstance: {fileID: 520846872}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &554363825
 GameObject:
   m_ObjectHideFlags: 0
@@ -4292,11 +4297,11 @@ MonoBehaviour:
       dialogueText: "\uC774\uC81C \uC5B4\uB5BB\uAC8C \uD558\uC8E0?"
       characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
     - speakerName: "\uC720\uC9C4"
-      dialogueText: "\uC77C\uB2E8 \uBB34\uB825\uD654\uB97C \uC2DC\uCF1C\uC57C\uD560
+      dialogueText: "\uC774\uBC88\uC5D0\uB3C4 \uBB34\uB825\uD654\uB97C \uC2DC\uCF1C\uC57C\uD560
         \uAC83 \uAC19\uC544."
       characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
     - speakerName: "\uC720\uC9C4"
-      dialogueText: "\uC815\uC2E0 \uB611\uBC14\uB85C \uCC28\uB824!"
+      dialogueText: "\uAC00\uBCF4\uC790!"
       characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
   - conversationName: BossEnd
     dialogueLines:
