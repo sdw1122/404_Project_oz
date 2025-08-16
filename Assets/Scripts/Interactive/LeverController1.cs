@@ -18,6 +18,8 @@ public class LeverController1 : InteractableBase
 
     private const int IGNORE_INTERACTION_LAYER = 2;
 
+    public ParticleSystem ps;
+
     public override void Interact(PlayerController player)
     {
         // 이미 활성화된 레버라면 아무것도 하지 않음
@@ -49,6 +51,7 @@ public class LeverController1 : InteractableBase
             // ▼▼▼ [추가] 레버를 '사용됨' 상태로 잠급니다. ▼▼▼
             hasBeenActivated = true;
             gameObject.layer = IGNORE_INTERACTION_LAYER;
+            if(ps != null)ps.Play();
 
             // ----- [수정됨] 마스터 클라이언트만 아래 로직을 실행하도록 변경 -----
             if (PhotonNetwork.IsMasterClient)

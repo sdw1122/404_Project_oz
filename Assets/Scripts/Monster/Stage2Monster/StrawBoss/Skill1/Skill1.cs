@@ -88,7 +88,8 @@ public class Skill1 : MonoBehaviour
         if (endAttack) 
         {
             pv.RPC(nameof(RPC_RestorePlatForms), RpcTarget.All, indexA, indexB, indexC);
-            pv.RPC("RPC_DestroyWall", RpcTarget.MasterClient);            
+            pv.RPC("RPC_DestroyWall", RpcTarget.MasterClient);
+            
         }
     }
     [PunRPC]
@@ -304,6 +305,7 @@ public class Skill1 : MonoBehaviour
     public void EndAnimation()
     {
         endAttack = true;
+        
         foreach (WisdomCannon cannon in cannons)
         {
             cannon.isSkill1 = false; // 대포 스크립트에서 상호작용 검사시 이 값 체크

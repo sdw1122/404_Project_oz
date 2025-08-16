@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7456594487703129491}
   - component: {fileID: 5147231833539987453}
   - component: {fileID: 7518718144679952413}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -234.8, y: 45.2}
+  m_AnchoredPosition: {x: -234.5, y: 45.2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5147231833539987453
@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7780721881172900259}
   - component: {fileID: 134457779669073960}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 5660586814607367857}
   - component: {fileID: 3564582670124333975}
   - component: {fileID: 5510435351578541033}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -46.3, y: 4}
+  m_AnchoredPosition: {x: -46.3, y: 45.6}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3564582670124333975
@@ -289,7 +289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2206534125425667969}
   - component: {fileID: 303647177427999518}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Heal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,7 +449,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3977803137078185567}
   - component: {fileID: 1223140452281301491}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: ChargeShot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -661,7 +661,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2448529962881762671}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!114 &1272739457832642472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,7 +747,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1913262623197979271}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -780,7 +780,7 @@ GameObject:
   - component: {fileID: 4767210770363368433}
   - component: {fileID: 4711434908803479349}
   - component: {fileID: 8008646636207635544}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charge Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5806,7 +5806,7 @@ GameObject:
   - component: {fileID: 2990966342465262998}
   - component: {fileID: 3587345191042358745}
   - component: {fileID: 6880420821954294701}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RespawnInteract
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5896,7 +5896,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5325044593255905627}
   - component: {fileID: 678768830749734683}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6025,7 +6025,7 @@ GameObject:
   m_Component:
   - component: {fileID: 467580622167494788}
   - component: {fileID: 3872635304858788233}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11060,7 +11060,7 @@ GameObject:
   m_Component:
   - component: {fileID: 892874371071114902}
   - component: {fileID: 8256324376285180014}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Skill2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16220,7 +16220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dc92a8bb5004e4383bdd6469530aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 4070861217413269704}
   originalPos: {x: 0, y: 0, z: 0}
   playerObj: {fileID: 7726197707958032316}
 --- !u!1 &6924281153379052187
@@ -16296,7 +16296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5365154141151934373}
   - component: {fileID: 1586126806776088823}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Healed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16425,7 +16425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3334365490688846885}
   - component: {fileID: 1954874943545125905}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Resurrection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16553,7 +16553,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5370451169444940561}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: AudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16594,7 +16594,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6044316133911504397}
   - component: {fileID: 3559040759762845650}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17446,6 +17446,26 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 4de89369e72802f45a73887e30dee51b, type: 3}
+    - target: {fileID: 284530344222584330, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 593142379287802332, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 593142379287802332, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 593142379287802332, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 593142379287802332, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 602445138470757027, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_SizeDelta.y
       value: 50
@@ -17458,6 +17478,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 604867145235528729, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 715044687204901933, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -17465,6 +17489,22 @@ PrefabInstance:
     - target: {fileID: 892242200119504156, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_Name
       value: UI_for_player
+      objectReference: {fileID: 0}
+    - target: {fileID: 892242200119504156, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 987995884473094304, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569876788388653231, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2174040857077660102, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2710952605197845617, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_Color.b
@@ -17478,6 +17518,66 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2898475870842865592, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3223701520851915246, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3223701520851915246, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3223701520851915246, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3223701520851915246, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 3435862305867879672, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3456967962490266859, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713394947747129479, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737566295416783792, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3779552206264105370, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3801785641438653269, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5364432068035183841, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: cooldownTime1
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5471387527545891786, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012315033068209218, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6076633124516218581, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6470634253397566033, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -17485,6 +17585,14 @@ PrefabInstance:
     - target: {fileID: 6487505620612747275, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_SizeDelta.y
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879044181638632754, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7025344734806709475, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7426671031678332176, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_Sprite
@@ -17578,7 +17686,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8644119943830274830, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
     m_RemovedGameObjects:
     - {fileID: 2733509918970504620, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
     m_AddedGameObjects:
@@ -17916,7 +18025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       propertyPath: m_IsActive
@@ -18368,6 +18477,7 @@ MonoBehaviour:
   runSpeed: 15
   mouseSensitivity: 0.4
   knockbackGravity: 5
+  healCooldown: 5
   isGrounded: 0
   isCharge: 0
   canMove: 1
@@ -18553,7 +18663,7 @@ MonoBehaviour:
   Skill_Description: "\uD798\uC744 \uBAA8\uC544 \uAC15\uB825\uD55C \uB9C8\uBC95 \uD654\uC0B4\uC744
     \uBC1C\uC0AC\uD569\uB2C8\uB2E4."
   Skill_Type: Charge
-  Cooldown: 1
+  Cooldown: 8
   Charge_Levels: 3
   charged_Pen_Speed: 150
   chargeTime: 0
@@ -18582,7 +18692,7 @@ MonoBehaviour:
     \uB9C8\uBC95\uC9C4\uC744 \uC0DD\uC131\uD569\uB2C8\uB2E4."
   Skill_Type: AreaOfEffect
   Damage: 10
-  Cooldown: 1
+  Cooldown: 15
   Charge_Levels: 1
   firePoint: {fileID: 5400129489395142459}
   tik: 0.5

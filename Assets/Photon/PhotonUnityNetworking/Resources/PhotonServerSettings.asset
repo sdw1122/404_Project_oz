@@ -233,7 +233,11 @@ MonoBehaviour:
   - LoadNextScene_RPC
   - AdvanceDialogue
   - NextDialogue
+  - RPC_SetParent
+  - HealAnime
   - SetPauseState
+  - ChangePlayerLayerToDefault
+  - RestorePlayerLayer
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

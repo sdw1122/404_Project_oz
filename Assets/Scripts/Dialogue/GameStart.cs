@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using System.Collections;
 
 // InteractableBase를 상속받아 대화 트리거 기능을 구현합니다.
 public class GameStart : MonoBehaviour
@@ -13,19 +14,24 @@ public class GameStart : MonoBehaviour
     [SerializeField] private bool isOneTimeUse = true;
 
     // 대화가 이미 실행되었는지 여부를 모든 클라이언트가 공유하기 위한 변수입니다.
-    private bool hasBeenUsed = false;
+    private bool hasBeenUsed = false;    
 
     private void Start()
     {
         pv = GetComponent<PhotonView>();
         // 자동 실행 조건(예: 자동실행 옵션 여부 등)을 필요에 따라 추가
+        StartCoroutine(StartDialogueWithDelay(0.1f));
+    }
+    IEnumerator StartDialogueWithDelay(float delaySeconds)
+    {
+        yield return new WaitForSeconds(delaySeconds);
         TriggerDialogueIfMaster();
     }
 
     private void TriggerDialogueIfMaster()
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        if (isOneTimeUse && hasBeenUsed) return;
+        if (isOneTimeUse && hasBeenUsed) return;        
 
         pv.RPC("RequestDialogueStart_RPC", RpcTarget.MasterClient);
     }

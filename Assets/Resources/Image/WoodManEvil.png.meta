@@ -116,7 +116,7 @@ TextureImporter:
         x: 0
         y: 0
         width: 875
-        height: 1278
+        height: 1280
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,8 +125,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df82dcd8a79e49546bb08846fac3885e
-      internalID: -774948590
+      spriteID: 500c66de612093245950c098238a8d81
+      internalID: -35065644
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: a23980e4a379857418e64a2ac07c4963
+    spriteID: 578a5b50c16279d4c971a0a3d1549cf1
     internalID: 0
     vertices: []
     indices: 
@@ -145,7 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      WoodManEvil_0: -774948590
+      WoodManEvil_0: -35065644
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -79,6 +79,7 @@ public class ObstacleByMonster : MonoBehaviour
         {
             // *** 핵심 변경점 2: 직접 비활성화하는 대신 RPC 호출 ***
             // 마스터 클라이언트는 장애물을 직접 끄는 대신, 모든 클라이언트에게 끄라는 "명령"을 내립니다.
+            DialogueManager.Instance.pv.RPC("StartDialogue_RPC", RpcTarget.All, "GoBoss");
             pv.RPC("RPC_DeactivateObstacle", RpcTarget.AllBuffered);
         }
     }
