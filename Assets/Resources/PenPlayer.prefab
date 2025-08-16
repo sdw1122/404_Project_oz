@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7456594487703129491}
   - component: {fileID: 5147231833539987453}
   - component: {fileID: 7518718144679952413}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7780721881172900259}
   - component: {fileID: 134457779669073960}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 5660586814607367857}
   - component: {fileID: 3564582670124333975}
   - component: {fileID: 5510435351578541033}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2206534125425667969}
   - component: {fileID: 303647177427999518}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Heal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,7 +449,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3977803137078185567}
   - component: {fileID: 1223140452281301491}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: ChargeShot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -747,7 +747,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1913262623197979271}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -780,7 +780,7 @@ GameObject:
   - component: {fileID: 4767210770363368433}
   - component: {fileID: 4711434908803479349}
   - component: {fileID: 8008646636207635544}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charge Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5806,7 +5806,7 @@ GameObject:
   - component: {fileID: 2990966342465262998}
   - component: {fileID: 3587345191042358745}
   - component: {fileID: 6880420821954294701}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RespawnInteract
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5896,7 +5896,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5325044593255905627}
   - component: {fileID: 678768830749734683}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6025,7 +6025,7 @@ GameObject:
   m_Component:
   - component: {fileID: 467580622167494788}
   - component: {fileID: 3872635304858788233}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11060,7 +11060,7 @@ GameObject:
   m_Component:
   - component: {fileID: 892874371071114902}
   - component: {fileID: 8256324376285180014}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Skill2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16296,7 +16296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5365154141151934373}
   - component: {fileID: 1586126806776088823}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Healed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16425,7 +16425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3334365490688846885}
   - component: {fileID: 1954874943545125905}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Resurrection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16553,7 +16553,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5370451169444940561}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: AudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16594,7 +16594,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6044316133911504397}
   - component: {fileID: 3559040759762845650}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Charge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17446,6 +17446,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 4de89369e72802f45a73887e30dee51b, type: 3}
+    - target: {fileID: 284530344222584330, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 593142379287802332, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_fontColor.b
       value: 1
@@ -17474,6 +17478,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 604867145235528729, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 715044687204901933, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -17481,6 +17489,22 @@ PrefabInstance:
     - target: {fileID: 892242200119504156, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_Name
       value: UI_for_player
+      objectReference: {fileID: 0}
+    - target: {fileID: 892242200119504156, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 987995884473094304, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569876788388653231, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2174040857077660102, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2710952605197845617, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_Color.b
@@ -17493,6 +17517,10 @@ PrefabInstance:
     - target: {fileID: 2710952605197845617, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898475870842865592, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3223701520851915246, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_fontColor.b
@@ -17510,9 +17538,45 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 3435862305867879672, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3456967962490266859, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713394947747129479, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3737566295416783792, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3779552206264105370, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3801785641438653269, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5364432068035183841, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: cooldownTime1
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5471387527545891786, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012315033068209218, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6076633124516218581, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6470634253397566033, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_Sprite
@@ -17521,6 +17585,14 @@ PrefabInstance:
     - target: {fileID: 6487505620612747275, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_SizeDelta.y
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879044181638632754, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7025344734806709475, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7426671031678332176, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: m_Sprite
@@ -17953,7 +18025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ee422ab45a3665d4fa4309cf2a970fbb, type: 3}
       propertyPath: m_IsActive
