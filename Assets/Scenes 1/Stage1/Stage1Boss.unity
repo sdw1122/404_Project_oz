@@ -4738,7 +4738,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   woodmanBoss: {fileID: 314390067}
   monsterSpawner: {fileID: 770729558}
-  spawnInterval: 5
+  spawnInterval: 15
   bossUIPrefab: {fileID: 6379489212672145613, guid: cdbdc13ae0e369b44a62170f4157bffd, type: 3}
 --- !u!4 &1390527194
 Transform:
@@ -8296,6 +8296,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1862296179}
   - {fileID: 573778471}
   - {fileID: 2065921780}
   - {fileID: 1673110134}
@@ -8311,7 +8312,6 @@ SceneRoots:
   - {fileID: 770729559}
   - {fileID: 314390066}
   - {fileID: 199226846}
-  - {fileID: 1862296179}
   - {fileID: 1648062739}
   - {fileID: 101034963}
   - {fileID: 1730533892}
