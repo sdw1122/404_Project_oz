@@ -25,7 +25,7 @@ public class StrawKing_Poison : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         skill=GetComponent<Skill1>();
-        lastAttackTime = -cooldown;
+        
         
     }
     public bool IsReady()
