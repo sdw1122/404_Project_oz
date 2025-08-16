@@ -21,7 +21,7 @@ public class Skill1 : MonoBehaviour
     public float cooldown = 30f; // 스킬 쿨타임
     private float lastSkillTime; // 마지막 사용 시간
     public StrawKing_Poison poison;
-    StrawKing strawKing;
+
     Platform floorA, floorB, floorC;
     Rigidbody rbA, rbB;
     Collider colA, colB;
@@ -34,14 +34,11 @@ public class Skill1 : MonoBehaviour
         pv = GetComponent<PhotonView>();      
         razer = GetComponent<StrawKingRazor>();
         poison=GetComponent<StrawKing_Poison>();
-        strawKing=GetComponent<StrawKing>();
-        lastSkillTime = -100f;
     }
     public void SetHit()
     {
         isHit = true;
     }
-    
     public bool IsReady()
     {
         if (!poison.endAttack) return false;
@@ -91,8 +88,7 @@ public class Skill1 : MonoBehaviour
         if (endAttack) 
         {
             pv.RPC(nameof(RPC_RestorePlatForms), RpcTarget.All, indexA, indexB, indexC);
-            pv.RPC("RPC_DestroyWall", RpcTarget.MasterClient);
-            strawKing.setIdle();
+            pv.RPC("RPC_DestroyWall", RpcTarget.MasterClient);            
         }
     }
     [PunRPC]
@@ -308,7 +304,6 @@ public class Skill1 : MonoBehaviour
     public void EndAnimation()
     {
         endAttack = true;
-        strawKing.setIdle();
         foreach (WisdomCannon cannon in cannons)
         {
             cannon.isSkill1 = false; // 대포 스크립트에서 상호작용 검사시 이 값 체크

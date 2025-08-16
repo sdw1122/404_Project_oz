@@ -3,7 +3,6 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine.Rendering;
 
-
 public class TinyRobot2 : Enemy
 {
     public GameObject throwObj;

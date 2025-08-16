@@ -1,9 +1,8 @@
-using Photon.Pun;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.Rendering; // Photon.Pun 네임스페이스 추가
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using System.Linq;
+using Photon.Pun; // Photon.Pun 네임스페이스 추가
 
 // 여러 대화 묶음을 관리하기 위한 클래스
 [System.Serializable]
@@ -17,13 +16,11 @@ public class GameConversation
 public class PJS_GameManager : MonoBehaviourPunCallbacks
 {
     public static PJS_GameManager Instance;
-    public static bool isGameOver = false;
+    public static bool IsGamePaused = false; // 이 변수는 이제 Time.timeScale로 대체됩니다.
 
     [Header("UI 및 게임 상태")]
     public SharedLives sharedLives;
     //public CoolDown_UI coolDown_UI;
-    public GameObject GameOverUI; // 게임 오버 UI 패널
-
 
     [Header("대화 목록")]
     public List<GameConversation> gameConversations;
@@ -39,25 +36,11 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
         {
             Destroy(gameObject);
         }
-
-        if(GameOverUI != null)
-        {
-            GameOverUI.SetActive(false); // 게임 오버 UI를 비활성화
-        }
     }
 
-    void Update()
+    public void Update()
     {
-        // 게임오버 상태이고, G키가 눌렸을 때
-        if (isGameOver && Input.GetKeyDown(KeyCode.G))
-        {
-            // 방장(마스터 클라이언트)만 씬을 로드할 수 있음
-            if (PhotonNetwork.IsMasterClient)
-            {
-                Debug.Log("StageSelectScene으로 돌아갑니다...");
-                PhotonNetwork.LoadLevel("StageSelectScene");
-            }
-        }
+
     }
 
     // 이름을 기반으로 원하는 대화를 시작시키는 함수
@@ -95,10 +78,7 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
     void GameOver()
     {
         Debug.Log("게임 오버!");
-        if (GameOverUI != null)
-        {
-            GameOverUI.SetActive(true); // 게임 오버 UI 활성화
-        }
-        isGameOver = true;
+        // 여기에 게임 오버 관련 로직 추가 (예: 결과창 표시, 레벨 재시작 등)
+        // Time.timeScale = 0f; // 필요하다면 여기서 게임을 멈출 수 있습니다.
     }
 }

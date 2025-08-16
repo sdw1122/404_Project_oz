@@ -47,7 +47,6 @@ public class Pen_Skill_1 : MonoBehaviour
     public Transform firePoint;
     PlayerController playerController;
     PhotonView pv;
-    CoolDown_UI cool;
     private Color[] chargeColors = { new Color(1f, 1f, 1f, 0.5f), new Color(0f, 1f, 0.79f, 0.5f), new Color(0f, 0.46f, 1f, 1f) };
     private void Awake()
     {
@@ -55,8 +54,6 @@ public class Pen_Skill_1 : MonoBehaviour
         animator = PenPlayer.GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
         rb = PenPlayer.GetComponent<Rigidbody>();
-        cool=GetComponentInChildren<CoolDown_UI>();
-        lastFireTime = -100f;
     }
     public void CancelCharging()
     {
@@ -132,42 +129,30 @@ public class Pen_Skill_1 : MonoBehaviour
     public void OnSkill1(InputAction.CallbackContext context)
     {
         Debug.Log(canCharge);
-        
-        
-            if (!pv.IsMine) return;
-            if (!canCharge) return;
-            if (context.started)
-            {
-                 if (Time.time - lastFireTime > Cooldown)
-            {
-                
-                playerController.isCharge = true;
-                isSkill1Pressed = true;
-                BowEnable();
-            }
-                
-            }
-            else if (context.canceled)
-            {
-                isSkill1Pressed = false;
-                playerController.isCharge = false;
+        if (!pv.IsMine) return;
+        if (!canCharge) return;
+        if (context.started)
+        {
+            playerController.isCharge = true;
+            isSkill1Pressed = true;
+            BowEnable();
+        }
+        else if (context.canceled)
+        {
+            isSkill1Pressed = false;
+            playerController.isCharge = false;
 
-                if (isCharging)
-                {
-                    FinishChargingAndFire();
-                lastFireTime = Time.time;
-                cool.StartCooldown2();
+            if (isCharging)
+            {
+                FinishChargingAndFire();
             }
-            }
-        
-
-        
+        }
     }
     private void StartCharging()
     {
         isCharging = true;
         chargeTime = 0f;
-        
+        lastFireTime = Time.time;
         playerController.ResetSpeed();
         playerController.canMove = false;
         PenAttack.isAttack = false;

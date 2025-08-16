@@ -1,8 +1,6 @@
 using Photon.Pun;
 using System.Security.Principal;
 using UnityEngine;
-using System.Collections;
-
 
 public class StrawAttack : MonoBehaviour
 {
@@ -11,19 +9,16 @@ public class StrawAttack : MonoBehaviour
     PhotonView pv;
     StrawKing_Poison poison;
     Skill1 skill1;
-    private StrawKing strawKing;
+
     private int state = 1;
     private float attackRange = 1000f;
-    public float attackDamage = 10f;
-    public float attackCoolTime = 10f;
+    private float attackDamage = 30f;
+    public float attackCoolTime = 5f;
     private float attackTime = 5f;
-    bool isAttacking = false;
 
     private float slowAmount = 0.5f;
     private float slowTime = 3f;
     float lastAttackTime;
-
-    public ParticleSystem attackEffect;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {        
@@ -31,19 +26,16 @@ public class StrawAttack : MonoBehaviour
         pv = GetComponent<PhotonView>();
         poison = GetComponent<StrawKing_Poison>();
         skill1 = GetComponent<Skill1>();
-        strawKing=GetComponent<StrawKing>();
     }
     public bool IsReady()
     {
-        if (!poison.endAttack || !skill1.endAttack||isAttacking) return false;
+        if (!poison.endAttack || !skill1.endAttack) return false;
         return Time.time >= lastAttackTime + attackCoolTime;
     }
     [PunRPC]
     public void StrawKing_Attack()
-    {
-        Debug.Log("허수아비왕 공격 호출됨");
-        
-        isAttacking = true;
+    {   
+        lastAttackTime = Time.time;
         pv.RPC("RPC_Attack", RpcTarget.All);
     }
 
@@ -69,7 +61,7 @@ public class StrawAttack : MonoBehaviour
                     Vector3 damageHitNormal = (damageHitPoint - transform.position).normalized;
 
                     targetLivingEntity.OnDamage(attackDamage, damageHitPoint, damageHitNormal);
-                    
+
                 }
             }
         }
@@ -86,12 +78,11 @@ public class StrawAttack : MonoBehaviour
                     if (targetPv != null)
                     {
                         targetPv.RPC("RPC_ApplyMoveSpeedDecrease", RpcTarget.All, slowAmount, slowTime);
-                        
+                        lastAttackTime = Time.time;
                     }
                 }
             }
         }
-        
     }
 
     [PunRPC]
@@ -102,10 +93,7 @@ public class StrawAttack : MonoBehaviour
 
     public void AniEnd()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
         
-        isAttacking = false;
-        lastAttackTime = Time.time;
         if (state == 1)
         {
             state = 2;
@@ -114,20 +102,5 @@ public class StrawAttack : MonoBehaviour
         {
             state = 1;
         }
-        if (strawKing != null)
-        {
-            strawKing.setIdle();
-        }
-    }
-    public void AttackEffectPlay()
-    {
-        animator.speed = 0f;
-        StartCoroutine(StopAnimation(2.0f));
-        attackEffect.Play();
-    }
-    IEnumerator StopAnimation(float stopTime)
-    {
-        yield return new WaitForSeconds(stopTime);
-        animator.speed = 1.0f;
     }
 }

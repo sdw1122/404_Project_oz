@@ -135,12 +135,6 @@ public class PlayerHealth : LivingEntity
         // LivingEntity의 Die() 실행 (사망 적용)
         base.Die();
         dead = true;
-
-        if (PJS_GameManager.Instance != null)
-        {
-            PJS_GameManager.Instance.photonView.RPC("ProcessPlayerDeath", RpcTarget.MasterClient);
-        }
-
         Debug.Log(dead);
         respawn.ActiveCol();
         // 사망 시 애니메이션 및 컴포넌트 비활성화는 모든 클라이언트에서 동기화

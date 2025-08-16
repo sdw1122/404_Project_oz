@@ -80,6 +80,7 @@ public class DialogueManager : MonoBehaviourPunCallbacks
         Debug.Log("dialogue : " + dialoguePanel);
         dialoguePanel.SetActive(true);        
         IsDialogueActive = true;
+        pv.RPC("SetPauseState", RpcTarget.All, true);
         dialogueQueue.Clear();
 
         foreach (DialogueLine line in conversationToStart.dialogueLines)
@@ -101,7 +102,8 @@ public class DialogueManager : MonoBehaviourPunCallbacks
     {
         // Time.timeScale = 1f; // 게임 시간을 되돌리는 코드를 제거합니다.
         dialoguePanel.SetActive(false);
-        IsDialogueActive = false;        
+        IsDialogueActive = false;
+        pv.RPC("SetPauseState", RpcTarget.All, false);
         Debug.Log("대화가 종료되었습니다.");
     }
 
@@ -159,5 +161,10 @@ public class DialogueManager : MonoBehaviourPunCallbacks
         {
             DisplayNextLine();
         }
+    }
+    [PunRPC]
+    public void SetPauseState(bool pause)
+    {
+        Time.timeScale = pause ? 0f : 1f;
     }
 }

@@ -235,6 +235,7 @@ MonoBehaviour:
   - NextDialogue
   - RPC_SetParent
   - HealAnime
+  - SetPauseState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

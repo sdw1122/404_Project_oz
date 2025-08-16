@@ -10,7 +10,7 @@ public class CoolDown_UI : MonoBehaviour
     public Image skillIcon1;
     public Image cooldownOverlay1;
     public TextMeshProUGUI cooldownText1;
-    public float cooldownTime1;
+    public float cooldownTime1 = 5.0f;
 
     private float remainingCooldown1;
     public bool isCooldown1 = false;
@@ -19,7 +19,7 @@ public class CoolDown_UI : MonoBehaviour
     public Image skillIcon2;
     public Image cooldownOverlay2;
     public TextMeshProUGUI cooldownText2;
-    public float cooldownTime2;
+    public float cooldownTime2 = 8.0f;
 
     private float remainingCooldown2;
     private bool isCooldown2 = false;
@@ -54,16 +54,16 @@ public class CoolDown_UI : MonoBehaviour
         {
             return;
         }
-        /*if(Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.R))
         {
             // 테스트용: 스킬 1 쿨타임 시작
             StartCooldown1();
         }
-        if(Input.GetKeyDown(KeyCode.R))
+        if(Input.GetKeyDown(KeyCode.Q))
         {
             // 테스트용: 스킬 2 쿨타임 시작
             StartCooldown2();
-        }*/
+        }
 
         // ... (기존 Update 로직은 그대로 유지) ...
         // 스킬 1 쿨타임 처리
@@ -108,7 +108,6 @@ public class CoolDown_UI : MonoBehaviour
     {
         if (isCooldown1) return;
         isCooldown1 = true;
-        Debug.Log("스킬2 쿨타임" + cooldownTime1);
         remainingCooldown1 = cooldownTime1;
 
         if (cooldownText1 != null)
@@ -153,7 +152,6 @@ public class CoolDown_UI : MonoBehaviour
     {
         if (isCooldown2) return;
         isCooldown2 = true;
-        Debug.Log("스킬2 쿨타임" + cooldownTime2);
         remainingCooldown2 = cooldownTime2;
 
         if (cooldownText2 != null)

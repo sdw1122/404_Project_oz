@@ -29,15 +29,15 @@ public class Straw_Teleport : MonoBehaviour
     [PunRPC]
     public void PerformTeleportRPC()
     {
-        SpawnBeTel();
-        StartCoroutine(DelayTelSpawn());
         if (PhotonNetwork.IsMasterClient)
         {
             lastTeleportTime = Time.time; 
             isDamaged = false; // 새 텔레포트 주기 시작
             Debug.Log($"[Straw_Teleport] 마스터: 텔레포트 쿨타임 초기화");
+            SpawnBeTel();
             TeleportToRandomPoint();
             strawMagician.targetEntity = null;
+            StartCoroutine(DelayTelSpawn());
         }
     }
     public void TeleportToRandomPoint()
@@ -103,7 +103,7 @@ public class Straw_Teleport : MonoBehaviour
     }
     private IEnumerator DelayTelSpawn()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         SpawnAfTel();
     } 
 }

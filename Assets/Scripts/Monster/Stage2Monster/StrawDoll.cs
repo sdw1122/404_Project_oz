@@ -8,9 +8,6 @@ public class StrawDoll : Enemy
     public float jumpUpPower = 5f;
     
     public bool Atk = true;
-
-    GameObject isPool;
-
     public override void Attack()
     {
         if (Atk)
@@ -111,7 +108,6 @@ public class StrawDoll : Enemy
         // 1. 중심(보통 transform.position)과 반경(공격 범위)을 정합니다.
         float aoeRadius = 5f; // 예시: 반지름 5
         Vector3 center = transform.position;
-        GetExpEffect();
 
         // 2. Physics.OverlapSphere로 범위 내 콜라이더를 모두 찾기
         Collider[] hitColliders = Physics.OverlapSphere(center, aoeRadius, whatIsTarget);
@@ -119,8 +115,8 @@ public class StrawDoll : Enemy
         for (int i = 0; i < hitColliders.Length; i++)
         {
             // 3. 자신을 공격 대상에서 제외(예: 본인 자신 체크)
-            //if (hitColliders[i].gameObject == gameObject)
-            //    continue;
+            if (hitColliders[i].gameObject == gameObject)
+                continue;
 
             // 4. LivingEntity 등 원하는 컴포넌트만 판정
             LivingEntity entity = hitColliders[i].GetComponent<LivingEntity>();
@@ -135,19 +131,11 @@ public class StrawDoll : Enemy
     }
 
     [PunRPC]
+
     public void RPC_SetNavMesh(bool active)
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         navMeshAgent.enabled = active;
         rb.isKinematic = active;
-    }
-    public void GetExpEffect()
-    {
-        isPool = GameObject.Find("StrawExplosionPool");
-        if (isPool != null)
-        {
-            Vector3 pos = transform.position;
-            var go = StrawExplosionPool.instance.GetExp(pos);
-        }
     }
 }
