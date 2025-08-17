@@ -3,8 +3,12 @@ using Photon.Pun;
 
 // InteractableBase를 상속받아 대화 트리거 기능을 구현합니다.
 public class BossEnd : DialogueManager
+<<<<<<< HEAD
 {
     PhotonView pv;
+=======
+{    
+>>>>>>> origin/ver_0.92
     [Header("대화 설정")]
     [Tooltip("PJS_GameManager에 설정된 대화의 이름(conversationName)을 입력하세요.")]
     [SerializeField] private string conversationNameToTrigger;
@@ -18,7 +22,11 @@ public class BossEnd : DialogueManager
 
     public void Start()
     {
+<<<<<<< HEAD
         pv = GetComponent<PhotonView>();
+=======
+        
+>>>>>>> origin/ver_0.92
     }
 
     public void TriggerDialogueIfMaster()

@@ -13058,7 +13058,7 @@ MonoBehaviour:
   isShake: 0
   endAttack: 1
   isReady: 0
-  cooldown: 30
+  cooldown: 60
   poison: {fileID: 0}
   hasShield: 0
 --- !u!114 &1653479065046695820
@@ -13081,7 +13081,7 @@ MonoBehaviour:
   damage: 20
   tik: 1.5
   duration: 10
-  cooldown: 60
+  cooldown: 70
   endAttack: 1
 --- !u!114 &4058774880079521363
 MonoBehaviour:

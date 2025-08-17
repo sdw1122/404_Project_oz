@@ -3,9 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
-using Photon.Pun;
-using System.Collections;
-
 
 public abstract class Enemy : LivingEntity
 {
@@ -59,6 +56,8 @@ public abstract class Enemy : LivingEntity
     private float lastKnownHealth;
     [SerializeField] private float destroyDelay = 2.0f; // 시체 유지 시간
     public string m_name;
+
+    public bool hasDeathHandler;
 
     // 추적할 대상이 존재하는지 알려주는 프로퍼티
     public bool hasTarget
@@ -420,7 +419,7 @@ public abstract class Enemy : LivingEntity
         if (enemyAnimator != null)
             enemyAnimator.enabled = false; // 애니메이션 포즈 고정
 
-        Debug.Log("handler : " + HasDeathHandler);
+        Debug.Log("handler : " + hasDeathHandler);
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -430,9 +429,11 @@ public abstract class Enemy : LivingEntity
             {
                 WisdomManager.Instance.AddWisdom(wisdomAmount);
             }
-            if (!HasDeathHandler)
+            if (!hasDeathHandler||gameObject.CompareTag("StrawMagician"))
                 StartCoroutine(DestroyAfterDelay());
         }
+        if (!hasDeathHandler)
+            StartCoroutine(DestroyAfterDelay());
 
         base.Die();
     }
@@ -543,12 +544,9 @@ public abstract class Enemy : LivingEntity
     }
     public void PlayHitClip()
     {
-        if (hitSource != null)
-        {
-            enemyClip = hitSource.clip;
-            hitSource.PlayOneShot(enemyClip);
-        }
-        if(hurtSource != null)
+        enemyClip = hitSource.clip;
+        hitSource.PlayOneShot(enemyClip);
+        if (hurtSource != null)
         {
             enemyClip = hurtSource.clip;
             hurtSource.PlayOneShot(enemyClip);
@@ -556,18 +554,18 @@ public abstract class Enemy : LivingEntity
     }
     public void PlayDieClip()
     {
-        if (dieSource != null)
-        {
-            enemyClip = dieSource.clip;
-            dieSource.PlayOneShot(enemyClip);
-        }
+        enemyClip = dieSource.clip;
+        dieSource.PlayOneShot(enemyClip);
     }
     public void PlayStepClip()
     {
-        if (stepSource != null)
-        {
-            enemyClip = stepSource.clip;
-            stepSource.PlayOneShot(enemyClip);
-        }
+        enemyClip = stepSource.clip;
+        stepSource.PlayOneShot(enemyClip);
+    }
+
+    [PunRPC]
+    public void HasOnDeath(bool value)
+    {
+        hasDeathHandler = value; // bool 필드 따로 관리
     }
 }

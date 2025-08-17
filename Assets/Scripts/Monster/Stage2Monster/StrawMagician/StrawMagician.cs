@@ -40,11 +40,13 @@ public class StrawMagician : Enemy
         TryGetComponent<Straw_Teleport>(out straw_Teleport);
         navMeshAgent.speed = speed;
         attackRange = straw_MagicArrow.range;
+        
     }
 
     private IEnumerator DelayedAction(float delay)
     {
         yield return new WaitForSeconds(delay);
+        if (dead) yield break;
         canAct = true;
         navMeshAgent.isStopped = false;
         navMeshAgent.updateRotation = true;
@@ -254,5 +256,11 @@ public class StrawMagician : Enemy
             return;
         }
     }
+    public override void Die()
+    {
+        StopAllCoroutines();
 
+        
+        base.Die();
+    }
 }

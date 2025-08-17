@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
     public float knockbackGravity = 10f;
     private Vector3 knockbackVelocity = Vector3.zero;
     private float knockbackTimer = 0f;
-
+    public float healCooldown = 5f;
+    private float lastHealTime;
     private Vector2 moveInput;
     private Vector2 lookInput;
     private float xRotation = 0f;
@@ -58,7 +59,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource jumpSound;
     public AudioClip jumpSoundClip;
     PlayerInput playerInput;
-
+    
     private MovingObj currentPlatform;
     
     [PunRPC]
@@ -246,7 +247,14 @@ public class PlayerController : MonoBehaviour
     {   if (!pv.IsMine) return;
         if (context.performed)
         {
-            healingRay.FireHealingRay();
+            if (Time.time >= lastHealTime + healCooldown)
+            {
+                
+                healingRay.FireHealingRay();
+
+                
+                lastHealTime = Time.time;
+            }
         }
     }
     void Start()
@@ -407,14 +415,12 @@ public class PlayerController : MonoBehaviour
         /*runSpeed =1.5f*originalSpeed * (1f - amount);*/
         walkSpeed =originalSpeed * (1f-amount);
         runSpeed =originalSpeed * (1f-amount);
-        slowEffect.Play();
         Debug.Log("속도 감소 완료 :"+ moveSpeed);
         yield return new WaitForSeconds(duration);
         moveSpeed = originalSpeed;
         walkSpeed = originalSpeed;
         runSpeed = originalSpeed * 1.5f;
         slowCoroutine = null;
-        slowEffect.Stop();
         Debug.Log("속도 복구 완료 :"+moveSpeed);
     }
     //

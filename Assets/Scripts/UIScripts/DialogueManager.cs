@@ -19,7 +19,7 @@ public struct DialogueLine
 public class DialogueManager : MonoBehaviourPunCallbacks
 {
     public static DialogueManager Instance;
-    PhotonView pv;
+    public PhotonView pv;
 
     [Header("UI 요소")]
     public GameObject dialoguePanel;    
@@ -36,6 +36,10 @@ public class DialogueManager : MonoBehaviourPunCallbacks
 
     public static bool IsDialogueActive { get; private set; } = false;
 
+    protected string currentConversationName;
+
+    private List<GameObject> playerLayerObjects = new List<GameObject>();
+
     void Awake()
     {
         if (Instance == null)
@@ -48,11 +52,6 @@ public class DialogueManager : MonoBehaviourPunCallbacks
         }
         dialogueQueue = new Queue<DialogueLine>();
         pv = GetComponent<PhotonView>();                
-    }
-
-    void Start()
-    {
-        dialoguePanel.SetActive(false);
     }
 
     void Update()
@@ -69,6 +68,8 @@ public class DialogueManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void StartDialogue_RPC(string conversationName)
     {
+        currentConversationName = conversationName;
+
         GameConversation conversationToStart = PJS_GameManager.Instance.gameConversations.FirstOrDefault(c => c.conversationName == conversationName);
 
         if (conversationToStart == null)
@@ -78,10 +79,11 @@ public class DialogueManager : MonoBehaviourPunCallbacks
         }
 
         // Time.timeScale = 0f; // 게임 시간을 멈추는 코드를 제거합니다.
-
-        dialoguePanel.SetActive(true);        
-        IsDialogueActive = true;
+        Debug.Log("dialogue : " + dialoguePanel);
+        dialoguePanel.SetActive(true);
+        IsDialogueActive = true;        
         dialogueQueue.Clear();
+        pv.RPC("ChangePlayerLayerToDefault", RpcTarget.All);
 
         foreach (DialogueLine line in conversationToStart.dialogueLines)
         {
@@ -102,14 +104,15 @@ public class DialogueManager : MonoBehaviourPunCallbacks
     {
         // Time.timeScale = 1f; // 게임 시간을 되돌리는 코드를 제거합니다.
         dialoguePanel.SetActive(false);
-        IsDialogueActive = false;        
+        IsDialogueActive = false;
+        pv.RPC("RestorePlayerLayer", RpcTarget.All);
         Debug.Log("대화가 종료되었습니다.");
     }
 
     public void DisplayNextLine()
-    {
+    {        
         if (dialogueQueue.Count == 0)
-        {
+        {            
             // 모든 클라이언트에게 종료 신호를 보내는 대신, 로컬에서 대화를 종료 처리합니다.
             EndDialogue();
             return;
@@ -160,5 +163,32 @@ public class DialogueManager : MonoBehaviourPunCallbacks
         {
             DisplayNextLine();
         }
+    }
+
+    [PunRPC]
+    public void ChangePlayerLayerToDefault()
+    {
+        playerLayerObjects.Clear();
+        Debug.Log("레이어바꾸기 실행");
+
+        // 모든 게임오브젝트를 가져옴
+        GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
+        foreach (var go in allPlayers)
+        {
+            playerLayerObjects.Add(go);
+            go.layer = LayerMask.NameToLayer("Default");
+        }
+    }
+    [PunRPC]
+    // 나중에 다시 Player 레이어로 복구
+    public void RestorePlayerLayer()
+    {
+        foreach (var go in playerLayerObjects)
+        {
+            if (go != null) // 오브젝트가 파괴된 경우 방지
+                go.layer = LayerMask.NameToLayer("Player");
+        }
+
+        playerLayerObjects.Clear(); // 더이상 필요 없으니 비움
     }
 }

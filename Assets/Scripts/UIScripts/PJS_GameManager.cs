@@ -2,8 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
-using Photon.Pun;
-using UnityEditor.Rendering; // Photon.Pun 네임스페이스 추가
+using Photon.Pun; // Photon.Pun 네임스페이스 추가
 
 // 여러 대화 묶음을 관리하기 위한 클래스
 [System.Serializable]
@@ -22,8 +21,8 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
     [Header("UI 및 게임 상태")]
     public SharedLives sharedLives;
     //public CoolDown_UI coolDown_UI;
-    public GameObject GameOverUI; // 게임 오버 UI 패널
-
+    private bool isGameOver = false; // 게임 오버 상태를 나타내는 변수
+    public GameObject GameOverUI;
 
     [Header("대화 목록")]
     public List<GameConversation> gameConversations;
@@ -39,10 +38,19 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
         {
             Destroy(gameObject);
         }
+    }
 
-        if(GameOverUI != null)
+    void Update()
+    {
+        // 게임오버 상태이고, G키가 눌렸을 때
+        if (isGameOver && Input.GetKeyDown(KeyCode.G))
         {
-            GameOverUI.SetActive(false); // 게임 오버 UI를 비활성화
+            // 방장(마스터 클라이언트)만 씬을 로드할 수 있음
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.Log("StageSelectScene으로 돌아갑니다...");
+                PhotonNetwork.LoadLevel("StageSelectScene");
+            }
         }
     }
 
@@ -81,12 +89,10 @@ public class PJS_GameManager : MonoBehaviourPunCallbacks
     void GameOver()
     {
         Debug.Log("게임 오버!");
-        Cursor.lockState = CursorLockMode.None; // 커서 잠금 해제
-        Cursor.visible = true; // 커서 보이기
         if (GameOverUI != null)
         {
             GameOverUI.SetActive(true); // 게임 오버 UI 활성화
         }
-        Time.timeScale = 0f; // 게임 일시 정지
+        isGameOver = true;
     }
 }
