@@ -57,6 +57,8 @@ public abstract class Enemy : LivingEntity
     [SerializeField] private float destroyDelay = 2.0f; // 시체 유지 시간
     public string m_name;
 
+    public bool hasDeathHandler;
+
     // 추적할 대상이 존재하는지 알려주는 프로퍼티
     public bool hasTarget
     {
@@ -417,7 +419,7 @@ public abstract class Enemy : LivingEntity
         if (enemyAnimator != null)
             enemyAnimator.enabled = false; // 애니메이션 포즈 고정
 
-        Debug.Log("handler : " + HasDeathHandler);
+        Debug.Log("handler : " + hasDeathHandler);
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -427,9 +429,9 @@ public abstract class Enemy : LivingEntity
             {
                 WisdomManager.Instance.AddWisdom(wisdomAmount);
             }
-            if (!HasDeathHandler)
-                StartCoroutine(DestroyAfterDelay());
         }
+        if (!hasDeathHandler)
+            StartCoroutine(DestroyAfterDelay());
 
         base.Die();
     }
@@ -557,5 +559,11 @@ public abstract class Enemy : LivingEntity
     {
         enemyClip = stepSource.clip;
         stepSource.PlayOneShot(enemyClip);
+    }
+
+    [PunRPC]
+    public void HasOnDeath(bool value)
+    {
+        hasDeathHandler = value; // bool 필드 따로 관리
     }
 }

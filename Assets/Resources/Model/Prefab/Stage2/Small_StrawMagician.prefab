@@ -352,6 +352,7 @@ MonoBehaviour:
   healthBarPoint: {fileID: 4434076943737565148}
   destroyDelay: 2
   m_name: Small_StrawMagician
+  hasDeathHandler: 0
   speed: 4
   canAct: 1
   groggyTime: 3

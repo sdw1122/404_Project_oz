@@ -11,8 +11,6 @@ public class LivingEntity : MonoBehaviour, IDamageable, IPunObservable
     public float health { get; protected set; } // 현재 체력
     public bool dead = false;
     public event Action onDeath; // 사망시 발동할 이벤트
-    public bool HasDeathHandler => onDeath != null;
-
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         // 데이터를 보내는 측일 경우 (주인 또는 마스터 클라이언트)
@@ -79,5 +77,4 @@ public class LivingEntity : MonoBehaviour, IDamageable, IPunObservable
             onDeath();
         }
     }
-    
 }

@@ -516,6 +516,7 @@ MonoBehaviour:
   healthBarPoint: {fileID: 5194326003192768952}
   destroyDelay: 2
   m_name: Expiator
+  hasDeathHandler: 0
   jumpPower: 10
   jumpUpPower: 5
   Atk: 1
