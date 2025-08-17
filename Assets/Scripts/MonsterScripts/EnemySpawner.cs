@@ -5,6 +5,7 @@ using Photon.Pun;
 
 public class EnemySpawner : MonoBehaviour
 {
+    PhotonView pv;
     public List<GameObject> enemyPrefabs; // 몬스터 프리팹 리스트    
     public Transform[] spawnPoints;
     public string resourcePath = "Model/Prefab/Stage1/";    
@@ -12,6 +13,10 @@ public class EnemySpawner : MonoBehaviour
     private List<Enemy> enemyList = new List<Enemy>();
     private int wave;
 
+    private void Start()
+    {
+        pv = GetComponent<PhotonView>();
+    }
     private void Update()
     {
         if (!PhotonNetwork.IsMasterClient) return;
@@ -61,6 +66,7 @@ public class EnemySpawner : MonoBehaviour
             enemyList.Add(enemy);
             enemy.onDeath += () => enemyList.Remove(enemy);
             enemy.onDeath += () => PhotonNetwork.Destroy(enemy.gameObject);
+            pv.RPC("HasOnDeath", RpcTarget.All, true);
         }        
     }
     
