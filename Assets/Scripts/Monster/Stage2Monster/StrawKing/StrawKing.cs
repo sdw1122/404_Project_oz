@@ -16,7 +16,7 @@ public class StrawKing : Enemy
         currentState = StrawKing_State.Idle;
         strawAttack = GetComponent<StrawAttack>();
     }
-    public void SetIdle() 
+    public void SetIdle()
     {
         currentState = StrawKing_State.Idle;
     }
@@ -37,11 +37,11 @@ public class StrawKing : Enemy
         {
             case StrawKing_State.Attack:
                 pv.RPC("StrawKing_Attack", RpcTarget.MasterClient);
-                
+
                 break;
             case StrawKing_State.Absorb:
                 pv.RPC("StartSkill", RpcTarget.MasterClient);
-                
+
                 break;
             case StrawKing_State.Tyrant:
                 pv.RPC("TyrantRPC", RpcTarget.All);
@@ -59,9 +59,8 @@ public class StrawKing : Enemy
         if (!PhotonNetwork.IsMasterClient) return;
         navMeshAgent.isStopped = true;  // 허수아비왕은 움직이지 않는다.
         base.Update();
-        if (targetEntity == null) return;
-        Debug.Log("targetEntity : " + targetEntity);
-        
+
+
         if (skill1.IsReady())
         {
             currentState = StrawKing_State.Absorb;
@@ -115,7 +114,7 @@ public class StrawKing : Enemy
                     }
                     break;
                 }
-               
+
                 else if (targetEntity == null || targetEntity.dead)
                 {
                     Collider[] colliders = Physics.OverlapSphere(transform.position, 200f, whatIsTarget);
@@ -148,3 +147,4 @@ public class StrawKing : Enemy
         }
     }
 }
+
