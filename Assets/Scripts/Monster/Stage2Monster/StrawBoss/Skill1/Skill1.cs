@@ -34,6 +34,8 @@ public class Skill1 : MonoBehaviour
         pv = GetComponent<PhotonView>();      
         razer = GetComponent<StrawKingRazor>();
         poison=GetComponent<StrawKing_Poison>();
+        strawKing=GetComponent<StrawKing>();
+        lastSkillTime = -cooldown;
     }
     public void SetHit()
     {
@@ -41,7 +43,7 @@ public class Skill1 : MonoBehaviour
     }
     public bool IsReady()
     {
-        if (!poison.endAttack) return false;
+        if (!poison.endAttack||!isHit) return false;
         return Time.time >= lastSkillTime + cooldown;
     }
 
@@ -49,6 +51,8 @@ public class Skill1 : MonoBehaviour
     public void StartSkill()
     {
         if (!isHit && !PhotonNetwork.IsMasterClient) return;
+        if (Time.time < lastSkillTime + cooldown) return;
+        strawKing.SetAbsorb();
         endAttack = false;
         lastSkillTime = Time.time;
         foreach (WisdomCannon cannon in cannons)
@@ -310,6 +314,7 @@ public class Skill1 : MonoBehaviour
         {
             cannon.isSkill1 = false; // 대포 스크립트에서 상호작용 검사시 이 값 체크
         }
+        strawKing.SetIdle();
     }
 
     [PunRPC]

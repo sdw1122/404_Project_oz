@@ -2199,6 +2199,9 @@ MonoBehaviour:
   stage1Button: {fileID: 924570581}
   stage2Button: {fileID: 696138307}
   tutorialButton: {fileID: 1055537208}
+  stage1BossButton: {fileID: 654758019}
+  stage2BossButton: {fileID: 2112832717}
+  waitingForMasterClientText: {fileID: 745694416}
 --- !u!4 &1652804826
 Transform:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class WisdomManager : MonoBehaviour
     public int requiredWisdom = 100; 
 
     private PhotonView pv;
-    public int currentWisdom = 0;
+    public int currentWisdom = 100;
     private void Awake()
     {
         if (Instance == null)
