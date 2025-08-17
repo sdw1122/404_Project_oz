@@ -1771,7 +1771,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3409697527030605058, guid: 52635194ca69f56429c264da7223b122, type: 3}
       propertyPath: m_name
-      value: Tin Man, The Heartless Automaton
+      value: "\uAC10\uC815\uC5C6\uB294 \uC790\uB3D9\uC778\uD615, \uC591\uCCA0\uB098\uBB34\uAFBC"
       objectReference: {fileID: 0}
     - target: {fileID: 3409697527030605058, guid: 52635194ca69f56429c264da7223b122, type: 3}
       propertyPath: destroyDelay
@@ -1779,7 +1779,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3409697527030605058, guid: 52635194ca69f56429c264da7223b122, type: 3}
       propertyPath: startingHealth
-      value: 10
+      value: 3000
       objectReference: {fileID: 0}
     - target: {fileID: 6200139975135232384, guid: 52635194ca69f56429c264da7223b122, type: 3}
       propertyPath: dialogueText
