@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 // MonoBehaviourPunCallbacks를 상속받습니다.
 public class PauseMenu : MonoBehaviourPunCallbacks
-{
-    public static bool IsPaused = false;
+{    
+    public static bool IsPaused { get; private set; }
 
     [Tooltip("Hierarchy에 있는 PauseMenuPanel을 연결하세요.")]
     public GameObject pauseMenuUI;

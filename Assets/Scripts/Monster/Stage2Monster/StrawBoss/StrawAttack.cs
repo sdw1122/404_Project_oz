@@ -12,7 +12,7 @@ public class StrawAttack : MonoBehaviour
 
     private int state = 1;
     private float attackRange = 1000f;
-    public float attackDamage = 10f;
+    private float attackDamage = 10f;
     public float attackCoolTime = 10f;
     private float attackTime = 5f;
     StrawKing strawKing;

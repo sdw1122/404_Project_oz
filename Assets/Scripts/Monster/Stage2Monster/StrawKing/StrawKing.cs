@@ -1,8 +1,7 @@
 using Photon.Pun;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
-
+using System.Linq;
 public class StrawKing : Enemy
 {
     StrawKing_Poison poison;
@@ -21,6 +20,10 @@ public class StrawKing : Enemy
     {
         currentState = StrawKing_State.Idle;
     }
+    public void SetAbsorb()
+    {
+        currentState = StrawKing_State.Absorb;
+    }
     public enum StrawKing_State
     {
 
@@ -38,7 +41,7 @@ public class StrawKing : Enemy
                 break;
             case StrawKing_State.Absorb:
                 pv.RPC("StartSkill", RpcTarget.MasterClient);
-                currentState = StrawKing_State.Idle;
+                
                 break;
             case StrawKing_State.Tyrant:
                 pv.RPC("TyrantRPC", RpcTarget.All);
@@ -76,24 +79,28 @@ public class StrawKing : Enemy
             Attack();
             return;
         }
-        Vector3 dir = targetEntity.transform.position - transform.position;
-        dir.y = 0f;
-        if (dir != Vector3.zero)
+        if (currentState != StrawKing_State.Absorb)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+            Vector3 dir = targetEntity.transform.position - transform.position;
+            dir.y = 0f;
+            if (dir != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(dir);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+            }
         }
 
     }
     public override IEnumerator UpdatePath()
     {
+        // 살아 있는 동안 무한 루프
         while (!dead)
         {
             if (PhotonNetwork.IsMasterClient)
             {
                 targetSwitchTimer += 0.25f;
 
-                // 1. 10초마다 다른 플레이어로 타겟 변경
+                //10초마다 다른 플레이어로 타겟 변경
                 if (targetSwitchTimer >= 10f)
                 {
                     targetSwitchTimer = 0f;
@@ -105,8 +112,9 @@ public class StrawKing : Enemy
                         targetEntity = otherPlayer;
                         pv.RPC("SetTarget", RpcTarget.Others, otherPlayer.GetComponent<PhotonView>().ViewID);
                     }
+                    break;
                 }
-                // 2. 현재 타겟이 없거나 죽었을 경우, 가장 가까운 적 탐색
+               
                 else if (targetEntity == null || targetEntity.dead)
                 {
                     Collider[] colliders = Physics.OverlapSphere(transform.position, 200f, whatIsTarget);
@@ -134,7 +142,7 @@ public class StrawKing : Enemy
                     }
                 }
             }
-
+            // 0.25초 주기로 처리 반복
             yield return new WaitForSeconds(0.25f);
         }
     }

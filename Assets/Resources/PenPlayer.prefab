@@ -238,7 +238,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -46.3, y: 45.2}
+  m_AnchoredPosition: {x: -46.3, y: 45.6}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3564582670124333975
@@ -661,7 +661,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2448529962881762671}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!114 &1272739457832642472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16220,7 +16220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dc92a8bb5004e4383bdd6469530aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 4070861217413269704}
   originalPos: {x: 0, y: 0, z: 0}
   playerObj: {fileID: 7726197707958032316}
 --- !u!1 &6924281153379052187
@@ -18405,6 +18405,7 @@ MonoBehaviour:
   runSpeed: 15
   mouseSensitivity: 0.4
   knockbackGravity: 5
+  healCooldown: 5
   isGrounded: 0
   isCharge: 0
   canMove: 1

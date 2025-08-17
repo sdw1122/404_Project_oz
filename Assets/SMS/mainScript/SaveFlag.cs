@@ -8,6 +8,8 @@ public class SaveFlag : InteractableBase
     public string sceneName;
     public Transform penSpawnPos;
     public Transform eraserSpawnPos;
+
+    public ParticleSystem ps;
     protected override void Awake()
     {
         base.Awake();
@@ -26,6 +28,7 @@ public class SaveFlag : InteractableBase
         if (pv != null && pv.IsMine && PhotonNetwork.IsMasterClient)
         {
             Debug.Log("SaveFlag 작동 - 저장 요청 시작");
+            if(ps != null) ps.Play();
 
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject player in players)

@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     
     private MovingObj currentPlatform;
+    
     [PunRPC]
     public void SetJob(string _job)
     {
@@ -128,10 +129,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
         EnemyHealthBarController.LocalPlayerCamera = playerCamera;
-        healingRay =GetComponent<HealingRay>();
-       
-        
-        
+        healingRay =GetComponent<HealingRay>();        
+
+
+
         playerObj = this.gameObject;
         /*mainCamera = transform.Find("Main Camera").GetComponent<Camera>();*/
         deadCamera = transform.Find("Dead Camera")?.gameObject;
@@ -273,16 +274,25 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         controller = GetComponent<CharacterController>();
-    }
-    
-    private void Update()
-    {
 
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (DialogueManager.IsDialogueActive)
+        {
+            if (playerInput.enabled)
+                playerInput.enabled = false; // 입력 차단
+
+            return;
+        }
+        else
+        {
+            if (!playerInput.enabled)
+                playerInput.enabled = true; // 입력 활성화
+        }
+
         if (!pv.IsMine) return;
         // 카메라 회전은 무조건 실행
         float mouseX = lookInput.x * mouseSensitivity;
@@ -322,18 +332,15 @@ public class PlayerController : MonoBehaviour
             jumpBufferCounter -= Time.deltaTime;
 
         isGrounded = controller.isGrounded;
-
+        
         // 바인드 상태가 아니면 움직임
-        Vector3 inputDir = Vector3.zero;
-        if (canMove && !isCharge)
+        if (canMove)
         {
-            inputDir = new Vector3(moveInput.x, 0, moveInput.y);
-        }
-        if (jumpBufferCounter > 0)
+            if (jumpBufferCounter > 0)
                 jumpBufferCounter -= Time.deltaTime;
             // 1. 입력처리 & 이동벡터 산출
             // 로컬좌표 기준(forward/right)으로 방향 벡터 생성
-            
+            Vector3 inputDir = new Vector3(moveInput.x, 0, moveInput.y);
             inputDir = Vector3.ClampMagnitude(inputDir, 1f);
             Vector3 worldDir = transform.TransformDirection(inputDir) * moveSpeed;
 
@@ -361,7 +368,7 @@ public class PlayerController : MonoBehaviour
 
             // 이동거리 합산
             controller.Move(playerDisplacement + platformDisplacement);
-        
+        }
     }
     public void ClearPlatform()
     {
@@ -562,19 +569,19 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         Destroy(jumpEffectins);
     }
-    public void SpawnDust()
-    {
-        // 1) 위치 & 회전 결정
-        Vector3 pos = foot.position;
-        // 땅 노말을 따서 정렬하고 싶다면 Raycast로 hit.normal 사용 가능
-        Quaternion rot = Quaternion.LookRotation(Vector3.forward);
+    //public void SpawnDust()
+    //{
+    //    // 1) 위치 & 회전 결정
+    //    Vector3 pos = foot.position;
+    //    // 땅 노말을 따서 정렬하고 싶다면 Raycast로 hit.normal 사용 가능
+    //    Quaternion rot = Quaternion.LookRotation(Vector3.forward);
 
-        // 2) 풀에서 꺼내
-        var go = DustPool.Instance.GetDust(pos, rot);
+    //    // 2) 풀에서 꺼내
+    //    var go = dustPool.GetDust(pos, rot);
 
-        // 3) 재생 시간만큼 뒤에 반납
-        var ps = go.GetComponent<ParticleSystem>();
-        float dur = ps.main.duration + ps.main.startLifetime.constantMax;
-        DustPool.Instance.ReturnDust(go, dur);
-    }
+    //    // 3) 재생 시간만큼 뒤에 반납
+    //    var ps = go.GetComponent<ParticleSystem>();
+    //    float dur = ps.main.duration + ps.main.startLifetime.constantMax;
+    //    DustPool.Instance.ReturnDust(go, dur);
+    //}
 }

@@ -230,7 +230,12 @@ MonoBehaviour:
   - RPC_BindEffectPlay
   - RPC_BindEffectStop
   - RPC_HealEffectPlay
+  - LoadNextScene_RPC
+  - AdvanceDialogue
+  - NextDialogue
+  - RPC_SetParent
   - HealAnime
+  - SetPauseState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
