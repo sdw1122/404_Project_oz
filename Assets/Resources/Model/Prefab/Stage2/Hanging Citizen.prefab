@@ -9354,7 +9354,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3530217002221484301}
   m_Enabled: 0
-  m_AgentTypeID: -1923039037
+  m_AgentTypeID: -749502095
   m_Radius: 0.5
   m_Speed: 0
   m_Acceleration: 8
@@ -9404,7 +9404,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.3
-  m_Height: 3.2
+  m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: -0.6, z: 0}
 --- !u!54 &-6903907730951661704
@@ -9479,6 +9479,7 @@ MonoBehaviour:
   healthBarPoint: {fileID: 5175214085739269065}
   destroyDelay: 2
   m_name: Confessionalist
+  hasDeathHandler: 0
   throwObj: {fileID: 4799392649775753017, guid: d035d45dadddd8c479c2fa52239bcc0f, type: 3}
   throwPoint: {fileID: 5364111270562082602}
   throwPower: 15

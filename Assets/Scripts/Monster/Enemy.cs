@@ -429,6 +429,8 @@ public abstract class Enemy : LivingEntity
             {
                 WisdomManager.Instance.AddWisdom(wisdomAmount);
             }
+            if (!hasDeathHandler||gameObject.CompareTag("StrawMagician"))
+                StartCoroutine(DestroyAfterDelay());
         }
         if (!hasDeathHandler)
             StartCoroutine(DestroyAfterDelay());

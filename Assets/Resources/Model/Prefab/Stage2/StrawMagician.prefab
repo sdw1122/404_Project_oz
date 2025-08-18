@@ -311,6 +311,10 @@ MonoBehaviour:
   navMeshAgent: {fileID: 1121428918423500711}
   obstacle: {fileID: 0}
   hitEffect: {fileID: 3340878645353245585}
+  hitSource: {fileID: 0}
+  stepSource: {fileID: 0}
+  dieSource: {fileID: 0}
+  hurtSource: {fileID: 0}
   enemyAnimator: {fileID: 7890420973369486798}
   enemyRenderer: {fileID: 1734513082433498683}
   currentHealth: 0
@@ -331,6 +335,7 @@ MonoBehaviour:
   healthBarPoint: {fileID: 4641567383118003856}
   destroyDelay: 2
   m_name: ScareCrow Wizard
+  hasDeathHandler: 0
   speed: 4
   canAct: 1
   groggyTime: 3
@@ -508,7 +513,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3471031120575294734}
   m_Enabled: 1
-  m_AgentTypeID: -1923039037
+  m_AgentTypeID: 1135425739
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
@@ -541,8 +546,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.22545707
-  m_Height: 1.872828
+  m_Radius: 0.2
+  m_Height: 1.8
   m_Direction: 1
   m_Center: {x: -0.011361718, y: 0.87996936, z: 0}
 --- !u!4 &4278495260654909364 stripped

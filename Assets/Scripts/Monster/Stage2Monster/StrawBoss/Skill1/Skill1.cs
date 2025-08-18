@@ -11,9 +11,9 @@ public class Skill1 : MonoBehaviour
 
     Vector3 boxOffset = new Vector3(0f, 60f, 40f);
 
-    public GameObject[] warning;    
+    public GameObject[] warning;
     public float waitTime = 0f;
-    public float attackTime = 0f;    
+    public float attackTime = 0f;
     public bool isShake = false;
     public bool endAttack = true;
     public bool isReady = false;
@@ -21,19 +21,21 @@ public class Skill1 : MonoBehaviour
     public float cooldown = 30f; // 스킬 쿨타임
     private float lastSkillTime; // 마지막 사용 시간
     public StrawKing_Poison poison;
-
+    StrawKing strawKing;
     Platform floorA, floorB, floorC;
     Rigidbody rbA, rbB;
     Collider colA, colB;
     private int countA, countB, countC;
     public bool hasShield = false;
-    bool isHit=false;
+    bool isHit = false;
     private void Start()
     {
         animator = GetComponent<Animator>();
-        pv = GetComponent<PhotonView>();      
+        pv = GetComponent<PhotonView>();
         razer = GetComponent<StrawKingRazor>();
-        poison=GetComponent<StrawKing_Poison>();
+        poison = GetComponent<StrawKing_Poison>();
+        strawKing = GetComponent<StrawKing>();
+        lastSkillTime = -cooldown;
     }
     public void SetHit()
     {
@@ -41,7 +43,7 @@ public class Skill1 : MonoBehaviour
     }
     public bool IsReady()
     {
-        if (!poison.endAttack) return false;
+        if (!poison.endAttack || !isHit) return false;
         return Time.time >= lastSkillTime + cooldown;
     }
 
@@ -49,6 +51,8 @@ public class Skill1 : MonoBehaviour
     public void StartSkill()
     {
         if (!isHit && !PhotonNetwork.IsMasterClient) return;
+        if (Time.time < lastSkillTime + cooldown) return;
+        strawKing.SetAbsorb();
         endAttack = false;
         lastSkillTime = Time.time;
         foreach (WisdomCannon cannon in cannons)
@@ -71,25 +75,25 @@ public class Skill1 : MonoBehaviour
         // 마스터-> 모두 : 플랫폼 경고 표시
         pv.RPC(nameof(RPC_ShowWarnings), RpcTarget.All, indexA, indexB, indexC);
 
-        
+
 
         // 마스터-> 모두 : 플랫폼 흔들림 및 낙하
-        pv.RPC(nameof(RPC_DropPlatforms), RpcTarget.All, indexA, indexB,indexC);
+        pv.RPC(nameof(RPC_DropPlatforms), RpcTarget.All, indexA, indexB, indexC);
 
         // 경고 표시,10초간 흔들림
         yield return new WaitForSeconds(10f);
 
         // 마스터-> 모두 : 경고 해제
-        pv.RPC(nameof(RPC_HideWarnings), RpcTarget.All, indexA, indexB);        
+        pv.RPC(nameof(RPC_HideWarnings), RpcTarget.All, indexA, indexB);
         // 모두 : 차징 애니매이션
         pv.RPC(nameof(RPC_Boss2Charge), RpcTarget.All);
         yield return new WaitUntil(() => endAttack == true);
         // 발판 복구
-        if (endAttack) 
+        if (endAttack)
         {
             pv.RPC(nameof(RPC_RestorePlatForms), RpcTarget.All, indexA, indexB, indexC);
             pv.RPC("RPC_DestroyWall", RpcTarget.MasterClient);
-            
+
         }
     }
     [PunRPC]
@@ -107,7 +111,7 @@ public class Skill1 : MonoBehaviour
         }
     }
     [PunRPC]
-    private void RPC_DropPlatforms(int indexA, int indexB,int indexC)
+    private void RPC_DropPlatforms(int indexA, int indexB, int indexC)
     {
         Platform floorA = GameObject.Find(platform[indexA]).GetComponent<Platform>();
         Platform floorB = GameObject.Find(platform[indexB]).GetComponent<Platform>();
@@ -138,7 +142,7 @@ public class Skill1 : MonoBehaviour
         if (rb != null) rb.isKinematic = false;
     }
     [PunRPC]
-    private void RPC_RestorePlatForms(int indexA,int indexB,int indexC)
+    private void RPC_RestorePlatForms(int indexA, int indexB, int indexC)
     {
         Platform floorA = GameObject.Find(platform[indexA]).GetComponent<Platform>();
         Platform floorB = GameObject.Find(platform[indexB]).GetComponent<Platform>();
@@ -164,7 +168,7 @@ public class Skill1 : MonoBehaviour
         lastSkillTime = Time.time;
 
     }
-    
+
 
     [PunRPC]
     public void RPC_Boss2Charge()
@@ -242,8 +246,8 @@ public class Skill1 : MonoBehaviour
         foreach (Collider col in hits)
         {
             LivingEntity entity = col.GetComponent<LivingEntity>();
-            if (entity != null && !hasShield&&this.GetComponent<LivingEntity>()!=entity)
-            {   
+            if (entity != null && !hasShield && this.GetComponent<LivingEntity>() != entity)
+            {
                 // 충돌 위치 계산: 내 위치와 가장 가까운 상대 표면
                 Vector3 hitPoint = col.ClosestPoint(transform.position);
                 Vector3 hitNormal = (hitPoint - transform.position).normalized;
@@ -255,7 +259,7 @@ public class Skill1 : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         // OverlapBox와 같은 값
-        Vector3 boxCenter = transform.position    + transform.right * boxOffset.x + transform.up * boxOffset.y + transform.forward * boxOffset.z;
+        Vector3 boxCenter = transform.position + transform.right * boxOffset.x + transform.up * boxOffset.y + transform.forward * boxOffset.z;
         Vector3 boxSize = new Vector3(80f, 50f, 120f);
 
         // 기즈모 색상 및 회전값 적용
@@ -305,17 +309,18 @@ public class Skill1 : MonoBehaviour
     public void EndAnimation()
     {
         endAttack = true;
-        
+
         foreach (WisdomCannon cannon in cannons)
         {
             cannon.isSkill1 = false; // 대포 스크립트에서 상호작용 검사시 이 값 체크
         }
+        strawKing.SetIdle();
     }
 
     [PunRPC]
     public IEnumerator RPC_DestroyWall()
     {
-        GameObject wall = GameObject.Find("Shield_03(Clone)");
+        GameObject wall = GameObject.Find("testWall1(Clone)");
         if (wall != null)
         {
             PhotonView wallView = wall.GetComponent<PhotonView>();
@@ -324,10 +329,10 @@ public class Skill1 : MonoBehaviour
                 // 소유권 이전
                 wallView.RequestOwnership();
 
-               // 이전 대기
+                // 이전 대기
                 yield return new WaitForSeconds(0.5f);
 
-               
+
                 PhotonNetwork.Destroy(wall);
             }
         }

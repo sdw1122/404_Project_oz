@@ -12,8 +12,8 @@ public class StrawAttack : MonoBehaviour
 
     private int state = 1;
     private float attackRange = 1000f;
-    private float attackDamage = 30f;
-    public float attackCoolTime = 5f;
+    private float attackDamage = 10f;
+    public float attackCoolTime = 10f;
     private float attackTime = 5f;
     StrawKing strawKing;
     private float slowAmount = 0.5f;
@@ -26,6 +26,7 @@ public class StrawAttack : MonoBehaviour
         pv = GetComponent<PhotonView>();
         poison = GetComponent<StrawKing_Poison>();
         skill1 = GetComponent<Skill1>();
+        strawKing = GetComponent<StrawKing>();
     }
     public bool IsReady()
     {
