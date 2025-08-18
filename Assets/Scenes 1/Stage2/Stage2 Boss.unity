@@ -2713,9 +2713,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5789127034089586775, guid: 00e632f5c3d373749908309ae215b29c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.91
+      objectReference: {fileID: 0}
     - target: {fileID: 6602342324588260271, guid: 00e632f5c3d373749908309ae215b29c, type: 3}
       propertyPath: sceneViewId
       value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 6615622104874055211, guid: 00e632f5c3d373749908309ae215b29c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.56
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3001,6 +3009,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5822108294916357692, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: f8c05451a24dbfc49932203e392543ce, type: 3}
+    - target: {fileID: 5822108294916357692, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f8c05451a24dbfc49932203e392543ce, type: 3}
     - target: {fileID: 6800722490008353190, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
       propertyPath: sceneViewId
       value: 17
@@ -3939,6 +3955,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5822108294916357692, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: f8c05451a24dbfc49932203e392543ce, type: 3}
+    - target: {fileID: 5822108294916357692, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f8c05451a24dbfc49932203e392543ce, type: 3}
     - target: {fileID: 6800722490008353190, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
       propertyPath: sceneViewId
       value: 13
@@ -5367,6 +5391,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5822108294916357692, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: f8c05451a24dbfc49932203e392543ce, type: 3}
+    - target: {fileID: 5822108294916357692, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f8c05451a24dbfc49932203e392543ce, type: 3}
     - target: {fileID: 6800722490008353190, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
       propertyPath: sceneViewId
       value: 12
@@ -8497,6 +8529,10 @@ PrefabInstance:
     - target: {fileID: 1295555583290115867, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 138.72182
+      objectReference: {fileID: 0}
+    - target: {fileID: 1333845605040703701, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: m_Volume
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1445145099406757387, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
