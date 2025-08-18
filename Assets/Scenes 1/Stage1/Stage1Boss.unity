@@ -565,17 +565,17 @@ MonoBehaviour:
       characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
     - speakerName: "\uC591\uCCA0\uB098\uBB34\uAFBC"
       dialogueText: "\uC73C\uD750\uD750..."
-      characterSprite: {fileID: -774948590, guid: 70786724fc31ee84080330ae8c808327, type: 3}
+      characterSprite: {fileID: -35065644, guid: 70786724fc31ee84080330ae8c808327, type: 3}
     - speakerName: "\uD074\uB808\uC5B4"
       dialogueText: "\uC800\uAE30.. \uAD1C\uCC2E\uC73C\uC138\uC694?"
       characterSprite: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
     - speakerName: "\uC591\uCCA0\uB098\uBB34\uAFBC"
       dialogueText: "\uC0C8\uB85C\uC6B4 \uAC10\uC815\uB4E4\uC774\uAD6C\uB098.."
-      characterSprite: {fileID: -774948590, guid: 70786724fc31ee84080330ae8c808327, type: 3}
+      characterSprite: {fileID: -35065644, guid: 70786724fc31ee84080330ae8c808327, type: 3}
     - speakerName: "\uC591\uCCA0\uB098\uBB34\uAFBC"
       dialogueText: "\uC774\uB9AC\uC640\uC11C \uB0B4 \uAC10\uC815\uC758 \uC77C\uBD80\uAC00
         \uB418\uB77C!!"
-      characterSprite: {fileID: -774948590, guid: 70786724fc31ee84080330ae8c808327, type: 3}
+      characterSprite: {fileID: -35065644, guid: 70786724fc31ee84080330ae8c808327, type: 3}
     - speakerName: "\uC720\uC9C4"
       dialogueText: "\uB3C4\uB300\uCCB4 \uC65C \uC800\uB7EC\uB294\uAC70\uC9C0?"
       characterSprite: {fileID: -1822150316, guid: 892f9e613987b84429ccd867fd3d09db, type: 3}
@@ -2367,6 +2367,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -322
       objectReference: {fileID: 0}
+    - target: {fileID: 294130023758006909, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4894
+      objectReference: {fileID: 0}
+    - target: {fileID: 294130023758006909, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 34.6
+      objectReference: {fileID: 0}
     - target: {fileID: 654561284360254830, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
       propertyPath: m_Name
       value: UI_for_common
@@ -2381,7 +2389,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 939737257202124437, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.2
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1224029040369632902, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
       propertyPath: m_text
@@ -2413,7 +2421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2731877532834590319, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5121624110904774610, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
       propertyPath: m_Color.b
@@ -2438,6 +2446,10 @@ PrefabInstance:
     - target: {fileID: 6751565984983993200, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
       propertyPath: m_text
       value: "\uD074\uB808\uC5B4"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751565984983993200, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
+      propertyPath: m_margin.z
+      value: -70.15486
       objectReference: {fileID: 0}
     - target: {fileID: 6751565984983993200, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
       propertyPath: m_fontAsset
@@ -2557,6 +2569,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7999909738874310778, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
       propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8250990185672043299, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8894333252224414129, guid: ca5bcf56065586444a317b8b3b46541b, type: 3}
