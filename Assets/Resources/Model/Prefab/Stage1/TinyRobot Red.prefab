@@ -1808,7 +1808,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
   healthBarPoint: {fileID: 7854848161686391839}
   destroyDelay: 2
-  m_name: Iron Man Mark 42
+  m_name: Red Tin Can
   hasDeathHandler: 0
   throwObj: {fileID: 4799392649775753017, guid: 924d3887ceeb23243910933950a84af7, type: 3}
   throwPoint: {fileID: 5009277148290514229}

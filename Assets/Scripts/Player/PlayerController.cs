@@ -422,6 +422,7 @@ public class PlayerController : MonoBehaviour
         moveSpeed = originalSpeed;
         walkSpeed = originalSpeed;
         runSpeed = originalSpeed * 1.5f;
+        slowEffect.Stop();
         slowCoroutine = null;
         Debug.Log("속도 복구 완료 :"+moveSpeed);
     }

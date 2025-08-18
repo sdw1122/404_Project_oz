@@ -45,7 +45,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: f85a24bab281ca54184e7d9699c97326, type: 3}
   m_Resource: {fileID: 8300000, guid: f85a24bab281ca54184e7d9699c97326, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -174,7 +174,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 853a2601ef5d0c8469ddf93515056dc9, type: 3}
   m_Resource: {fileID: 8300000, guid: 853a2601ef5d0c8469ddf93515056dc9, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -303,7 +303,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 6b613281889f39e4fb3d1948e8b43f8f, type: 3}
   m_Resource: {fileID: 8300000, guid: 6b613281889f39e4fb3d1948e8b43f8f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.7
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -752,7 +752,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 1e3a3e3737d2ba641b7582ee046b0252, type: 3}
   m_Resource: {fileID: 8300000, guid: 1e3a3e3737d2ba641b7582ee046b0252, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1010,7 +1010,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 77f8b2cbc72141a41993f346933051c1, type: 3}
   m_Resource: {fileID: 8300000, guid: 77f8b2cbc72141a41993f346933051c1, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1738,6 +1738,7 @@ MonoBehaviour:
   healthBarPoint: {fileID: 0}
   destroyDelay: 2
   m_name: "\uAC08\uB9DD\uD558\uB294 \uC591\uCCA0 \uB098\uBB34\uAFBC"
+  hasDeathHandler: 0
   currentTarget: {fileID: 0}
   groggyTime: 8
   speed: 6

@@ -4326,7 +4326,6 @@ GameObject:
   - component: {fileID: 1601767730}
   - component: {fileID: 1601767731}
   - component: {fileID: 1601767732}
-  - component: {fileID: 1601767733}
   m_Layer: 0
   m_Name: LobbyManager
   m_TagString: Untagged
@@ -4399,14 +4398,6 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!81 &1601767733
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1601767727}
-  m_Enabled: 1
 --- !u!1 &1607670775 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 352696004450694496, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}

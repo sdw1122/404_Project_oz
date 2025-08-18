@@ -2949,6 +2949,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3284698940124979307, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
+      propertyPath: interactionType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4150336839538220760, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.0625426
@@ -6186,9 +6190,9 @@ GameObject:
   - component: {fileID: 1557672783}
   - component: {fileID: 1557672782}
   - component: {fileID: 1557672781}
-  - component: {fileID: 1557672780}
   - component: {fileID: 1557672779}
   - component: {fileID: 1557672778}
+  - component: {fileID: 1557672784}
   m_Layer: 15
   m_Name: ShockWaveLever
   m_TagString: Untagged
@@ -6234,29 +6238,6 @@ MonoBehaviour:
   platform: {fileID: 987983391}
   disableDuration: 20
   damage: 10
---- !u!136 &1557672780
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1557672777}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1557672781
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6325,6 +6306,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 354287228}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1557672784
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557672777}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.09749689, y: 0.16446435, z: 0.09749689}
+  m_Center: {x: 0, y: 0.08223218, z: 0}
 --- !u!1001 &1568357757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6860,9 +6862,9 @@ GameObject:
   - component: {fileID: 1712173389}
   - component: {fileID: 1712173394}
   - component: {fileID: 1712173393}
-  - component: {fileID: 1712173392}
   - component: {fileID: 1712173391}
   - component: {fileID: 1712173390}
+  - component: {fileID: 1712173395}
   m_Layer: 15
   m_Name: ShockWaveLever (2)
   m_TagString: Untagged
@@ -6923,29 +6925,6 @@ MonoBehaviour:
   platform: {fileID: 703387108}
   disableDuration: 20
   damage: 10
---- !u!136 &1712173392
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1712173388}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1712173393
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6999,6 +6978,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712173388}
   m_Mesh: {fileID: -7129883143843014466, guid: c8d4d7992498e6943b15f04a0b5acb6b, type: 3}
+--- !u!65 &1712173395
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712173388}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.09749689, y: 0.16446435, z: 0.09749689}
+  m_Center: {x: 0, y: 0.08223218, z: 0}
 --- !u!1 &1783026493
 GameObject:
   m_ObjectHideFlags: 0
@@ -7493,9 +7493,9 @@ GameObject:
   - component: {fileID: 2130854903}
   - component: {fileID: 2130854908}
   - component: {fileID: 2130854907}
-  - component: {fileID: 2130854906}
   - component: {fileID: 2130854905}
   - component: {fileID: 2130854904}
+  - component: {fileID: 2130854909}
   m_Layer: 15
   m_Name: ShockWaveLever (1)
   m_TagString: Untagged
@@ -7556,29 +7556,6 @@ MonoBehaviour:
   platform: {fileID: 965621166}
   disableDuration: 20
   damage: 10
---- !u!136 &2130854906
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2130854902}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2130854907
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7632,6 +7609,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130854902}
   m_Mesh: {fileID: -7129883143843014466, guid: c8d4d7992498e6943b15f04a0b5acb6b, type: 3}
+--- !u!65 &2130854909
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130854902}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.09749689, y: 0.16446435, z: 0.09749689}
+  m_Center: {x: 0, y: 0.08223218, z: 0}
 --- !u!114 &264874446042978796
 MonoBehaviour:
   m_ObjectHideFlags: 0
