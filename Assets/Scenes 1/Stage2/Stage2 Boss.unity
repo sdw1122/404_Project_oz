@@ -9037,6 +9037,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -3.6610966
       objectReference: {fileID: 0}
+    - target: {fileID: 4541750953746268915, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: attackCoolTime
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4607309920189059778, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -4.645e-42
