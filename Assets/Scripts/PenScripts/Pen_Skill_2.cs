@@ -21,13 +21,14 @@ public class Pen_Skill_2 : MonoBehaviour
     public float tik = 0.5f;
     float lastFireTime;
     float throwForce=15.0f;
-
+    CoolDown_UI coolDown;
     public static bool isThrow=true;
     PhotonView pv;
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
         animator = PenPlayer.GetComponent<Animator>();
+        coolDown=GetComponentInChildren<CoolDown_UI>();
     }
     private void Update()
     {
@@ -42,6 +43,7 @@ public class Pen_Skill_2 : MonoBehaviour
             if (context.started && Time.time - lastFireTime > Cooldown)
             {
                 lastFireTime = Time.time;
+                coolDown.StartCooldown2();
                 ThrowProjectile();
             }
         }

@@ -2388,6 +2388,7 @@ MonoBehaviour:
   healthBarPoint: {fileID: 5131407860868086003}
   destroyDelay: 2
   m_name: Fire Golem
+  hasDeathHandler: 0
   armAttackRange: 4
   groundAttackRange: 2
   armAttackCoolTime: 0.01

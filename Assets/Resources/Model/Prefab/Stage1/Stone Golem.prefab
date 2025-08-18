@@ -383,6 +383,7 @@ MonoBehaviour:
   healthBarPoint: {fileID: 212209846599559635}
   destroyDelay: 2
   m_name: Stone Golem
+  hasDeathHandler: 0
   armAttackRange: 4
   groundAttackRange: 2
   armAttackCoolTime: 3
