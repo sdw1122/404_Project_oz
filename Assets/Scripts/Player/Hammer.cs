@@ -298,9 +298,8 @@ public class Hammer : MonoBehaviour
 
         // 애니메이션 필요        
         animator.SetLayerWeight(attackLayerIndex, 1f);
-        animator.SetTrigger("Attack");
-        attackSource.PlayOneShot(attackClip);
-        pv.RPC("RPC_TriggerEraserAttack", RpcTarget.Others);
+                attackSource.PlayOneShot(attackClip);
+        pv.RPC("RPC_TriggerEraserAttack", RpcTarget.All);
 
         // 다음 공격 스텝으로 전환
         attackStep = (attackStep == 1) ? 2 : 1;
@@ -462,6 +461,11 @@ public class Hammer : MonoBehaviour
     // 정해진 애니메이션 타이밍에 호출
     public void ApplyAttack()
     {
+        if (!pv.IsMine)
+        {
+            return;
+        }
+
         DealDamageInSwing();
     }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using static SlimUI.ModernMenu.UISettingsManager;
 
 public class Platform : MonoBehaviour
 {
@@ -21,5 +22,21 @@ public class Platform : MonoBehaviour
         }
         transform.position = originalPos;
     }
+    public void SetEnemyFall()
+    {
+        Collider[] collider = Physics.OverlapSphere(transform.position, 50f, 1 << LayerMask.NameToLayer("Enemy"));
+        foreach(var hit in collider)
+        {
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+        }
+    }
+    private void OnDrawGizmosSelected()
+    {
+       
+        Gizmos.color = new Color(1f, 0f, 0f, 0.5f);
 
+        
+        Gizmos.DrawWireSphere(transform.position, 50f);
+    }
 }

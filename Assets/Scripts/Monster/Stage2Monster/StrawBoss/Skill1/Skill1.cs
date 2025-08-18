@@ -138,6 +138,7 @@ public class Skill1 : MonoBehaviour
         //떨어뜨리기
         Collider col = floor.GetComponent<Collider>();
         Rigidbody rb = floor.GetComponent<Rigidbody>();
+        floor.SetEnemyFall();
         if (col != null) col.isTrigger = true;
         if (rb != null) rb.isKinematic = false;
     }
