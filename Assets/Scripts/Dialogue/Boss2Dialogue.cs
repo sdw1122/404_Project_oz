@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-using UnityEngine;
-
-public class Boss2Dialogue : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-=======
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -42,6 +26,5 @@ public class Boss2Dialogue : DialogueManager
         {
             Debug.LogError("PJS_GameManager의 인스턴스를 찾을 수 없습니다!");
         }
->>>>>>> origin/ver_0.92
     }
 }

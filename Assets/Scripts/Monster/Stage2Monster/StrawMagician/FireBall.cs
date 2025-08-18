@@ -11,6 +11,7 @@ public class FireBall : MonoBehaviour
     public float explosionRadius = 3f;
     Rigidbody rb;
     StrawMagician strawMagician;
+    public AudioClip clip;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -35,7 +36,7 @@ public class FireBall : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (!PhotonNetwork.IsMasterClient) return;
-
+        AudioSource.PlayClipAtPoint(clip, transform.position);
         // 폭발 이펙트 생성
         PhotonNetwork.Instantiate("test/ExplosionEffect", transform.position, Quaternion.identity);
 

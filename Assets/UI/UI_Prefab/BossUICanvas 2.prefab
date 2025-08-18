@@ -1,7 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
-<<<<<<< HEAD
-=======
 --- !u!1 &929227297885468806
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +239,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
->>>>>>> origin/ver_0.92
 --- !u!1 &4184323578007029789
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,11 +273,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-<<<<<<< HEAD
-  m_AnchoredPosition: {x: 628.6, y: 71.5}
-=======
   m_AnchoredPosition: {x: 715.5, y: 71.5}
->>>>>>> origin/ver_0.92
   m_SizeDelta: {x: 129.4222, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &58800897637917053
@@ -311,17 +304,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-<<<<<<< HEAD
-  m_text: 'Wisdom:'
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-=======
   m_text: "\uC9C0\uD61C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d7e3977bc3ea13341a82d440944c6de6, type: 2}
   m_sharedMaterial: {fileID: 1400570758910197726, guid: d7e3977bc3ea13341a82d440944c6de6, type: 2}
->>>>>>> origin/ver_0.92
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -389,8 +375,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
-<<<<<<< HEAD
-=======
 --- !u!1 &5120209777350260716
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +411,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.0005569458, y: 0}
   m_SizeDelta: {x: 0.00097656, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
->>>>>>> origin/ver_0.92
 --- !u!1 &6379489212672145613
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,16 +549,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65e1a67c91244644d805a25a120f1c29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  bossNameText: {fileID: 1801469596949629317}
-  healthSlider: {fileID: 5562232227854279732}
-  targetNameText: {fileID: 0}
-  wisdomSlider: {fileID: 0}
-=======
   healthSlider: {fileID: 5562232227854279732}
   targetNameText: {fileID: 0}
   wisdomSlider: {fileID: 6478710339935787017}
->>>>>>> origin/ver_0.92
   wisdomText: {fileID: 4544939910454734465}
   groggyPanel: {fileID: 6567287135742973295}
   groggyTimerText: {fileID: 918959352965843694}
@@ -855,9 +831,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7495487919930981947, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
       propertyPath: m_text
-<<<<<<< HEAD
-      value: ScareCrow Lord, the Wisdomless
-=======
       value: "\uBB34\uC9C0\uD55C \uB4E4\uD310\uC758 \uAD70\uC8FC, \uD5C8\uC218\uC544\uBE44"
       objectReference: {fileID: 0}
     - target: {fileID: 7495487919930981947, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
@@ -871,7 +844,6 @@ PrefabInstance:
     - target: {fileID: 7495487919930981947, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
->>>>>>> origin/ver_0.92
       objectReference: {fileID: 0}
     - target: {fileID: 8612559166642013319, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
       propertyPath: m_AnchorMax.x
@@ -892,27 +864,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5848912241867376537, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7591793261446208045}
-<<<<<<< HEAD
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
---- !u!114 &1801469596949629317 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7495487919930981947, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
-  m_PrefabInstance: {fileID: 8143996320146716606}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-=======
     - targetCorrespondingSourceObject: {fileID: 5848912241867376537, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8522394068747091754}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}
->>>>>>> origin/ver_0.92
 --- !u!224 &2319014268661313575 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5848912241867376537, guid: 102bbd93bed9fb34fb92a4364b6c3fe2, type: 3}

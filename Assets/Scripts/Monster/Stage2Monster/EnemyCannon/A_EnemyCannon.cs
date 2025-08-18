@@ -29,6 +29,7 @@ public class A_EnemyCannon : MonoBehaviour
     public int fireAmount = 3;
     Animator animator;
     PhotonView pv;
+    public AudioSource fireSource;
     void Start()
     {
         aimLine = GetComponent<LineRenderer>();
@@ -142,6 +143,7 @@ public class A_EnemyCannon : MonoBehaviour
                         Rigidbody rb = cannonball.GetComponent<Rigidbody>();
                         if (rb != null)
                         {
+                            PlayFireClip();
                             ecb.Initialize(cannonDamage);
                             rb.AddForce(firePoint.forward * cannonballSpeed, ForceMode.VelocityChange);
                         }
@@ -175,5 +177,10 @@ public class A_EnemyCannon : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectionRange * maxScale);
         // --- ▲▲▲ 수정된 부분 ▲▲▲ ---
     }
-
+    public void PlayFireClip()
+    {
+        if (fireSource == null) return;
+        AudioClip clip = fireSource.clip;
+        fireSource.PlayOneShot(clip);
+    }
 }

@@ -212,6 +212,7 @@ MonoBehaviour:
   damage: 0
   duration: 5
   explosionRadius: 1
+  clip: {fileID: 8300000, guid: f8c05451a24dbfc49932203e392543ce, type: 3}
 --- !u!1001 &3740654614049710842
 PrefabInstance:
   m_ObjectHideFlags: 0
