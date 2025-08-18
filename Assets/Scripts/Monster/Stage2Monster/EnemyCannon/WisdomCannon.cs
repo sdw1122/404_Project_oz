@@ -13,6 +13,8 @@ public class WisdomCannon : InteractableBase
     public bool isShot = false;
     public bool isSkill1 = false;
 
+    public AudioSource fireSource;
+
     protected override void Awake()
     {
         base.Awake();
@@ -52,6 +54,7 @@ public class WisdomCannon : InteractableBase
         Rigidbody rb = cannonball.GetComponent<Rigidbody>();
         if (rb != null)
         {
+            PlayFireClip();
             ecb.Initialize(cannonDamage);
             rb.AddForce(firePoint.forward * cannonballSpeed, ForceMode.VelocityChange);
             isShot = true;
@@ -81,5 +84,11 @@ public class WisdomCannon : InteractableBase
         newEuler = startEuler;
         newEuler.x = toAngle;
         cannon.localEulerAngles = newEuler;
+    }
+    void PlayFireClip()
+    {
+        if (fireSource == null) return;
+        AudioClip clip = fireSource.clip;
+        fireSource.PlayOneShot(clip);
     }
 }

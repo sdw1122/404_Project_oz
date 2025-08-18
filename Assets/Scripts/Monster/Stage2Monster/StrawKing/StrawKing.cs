@@ -155,9 +155,9 @@ public class StrawKing : Enemy
     }
     public void PlayCanonClip()
     {
-        if (hitSource == null) return;
-        AudioClip clip = hitSource.clip;
-        hitSource.PlayOneShot(clip);
+        if (hit == null) return;
+        AudioClip clip = hit.clip;
+        hit.PlayOneShot(clip);
     }
     public void PlayAttackClip()
     {

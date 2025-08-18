@@ -21,6 +21,7 @@ public class Straw_FireBall : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         strawMagician = GetComponent<StrawMagician>();
+        photonView = GetComponent<PhotonView>();
     }
     public bool IsReady()
     {
@@ -76,6 +77,7 @@ public class Straw_FireBall : MonoBehaviour
     public void FireFireBall()
     {
         if (!PhotonNetwork.IsMasterClient) return;
+        Debug.Log("파이어볼 생성 시도, 속도: " + arrowSpeed);
         GameObject magicArrow = PhotonNetwork.Instantiate("test/" + "Straw_FireBall", firePos.position, Quaternion.LookRotation(directionToTarget));
         fireBall = magicArrow.GetComponent<FireBall>();
         if (fireBall != null)
@@ -83,6 +85,7 @@ public class Straw_FireBall : MonoBehaviour
             PhotonView magicArrowPhotonView = magicArrow.GetComponent<PhotonView>();
             if (magicArrowPhotonView != null)
             {
+                Debug.Log("파이어볼 이동 시도");
                 photonView.RPC("ParentFireEffect", RpcTarget.All, magicArrowPhotonView.ViewID);
             }
             fireBall.Initialize(damage, arrowSpeed);
@@ -94,6 +97,7 @@ public class Straw_FireBall : MonoBehaviour
         PhotonView magicArrowPhotonView = PhotonView.Find(magicArrowViewID);
         if (magicArrowPhotonView != null && fireIns != null)
         {
+            Debug.Log("파이어볼 이동");
             fireIns.transform.SetParent(magicArrowPhotonView.transform, false);
         }
     }
