@@ -3865,6 +3865,10 @@ PrefabInstance:
       propertyPath: interactionType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5819718763723449500, guid: b1474d4040ff708428b1e042a18eda12, type: 3}
+      propertyPath: interactionType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8991301482923288924, guid: b1474d4040ff708428b1e042a18eda12, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -6432,6 +6436,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2497345936861566064, guid: e650e8deb8eb2b54dbb9fb51312eee1d, type: 3}
     - target: {fileID: 5701398671579492436, guid: b1474d4040ff708428b1e042a18eda12, type: 3}
+      propertyPath: interactionType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819718763723449500, guid: b1474d4040ff708428b1e042a18eda12, type: 3}
       propertyPath: interactionType
       value: 0
       objectReference: {fileID: 0}
@@ -9348,7 +9356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4165461416602464151, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4178272859433648234, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9525,6 +9533,10 @@ PrefabInstance:
     - target: {fileID: 4540217681359060221, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -3.6610966
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541750953746268915, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
+      propertyPath: attackCoolTime
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4607309920189059778, guid: 3bf6c5d03543894448e4e3689746897b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11619,6 +11631,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2497345936861566064, guid: e650e8deb8eb2b54dbb9fb51312eee1d, type: 3}
     - target: {fileID: 5701398671579492436, guid: b1474d4040ff708428b1e042a18eda12, type: 3}
+      propertyPath: interactionType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5819718763723449500, guid: b1474d4040ff708428b1e042a18eda12, type: 3}
       propertyPath: interactionType
       value: 0
       objectReference: {fileID: 0}
