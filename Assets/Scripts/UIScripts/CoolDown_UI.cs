@@ -54,7 +54,7 @@ public class CoolDown_UI : MonoBehaviour
         {
             return;
         }
-        if(Input.GetKeyDown(KeyCode.R))
+        /*if(Input.GetKeyDown(KeyCode.R))
         {
             // 테스트용: 스킬 1 쿨타임 시작
             StartCooldown1();
@@ -63,7 +63,7 @@ public class CoolDown_UI : MonoBehaviour
         {
             // 테스트용: 스킬 2 쿨타임 시작
             StartCooldown2();
-        }
+        }*/
 
         // ... (기존 Update 로직은 그대로 유지) ...
         // 스킬 1 쿨타임 처리

@@ -11,7 +11,7 @@ public class Hammer : MonoBehaviour
     private PlayerHealth playerHealth;
     Animator animator;
     PhotonView pv;
-
+    CoolDown_UI coolDown;
     public GameObject weapon;
     public float damage = 40f;
     //스킬2 대지분쇄 def 조절량
@@ -61,6 +61,7 @@ public class Hammer : MonoBehaviour
 
     private void Awake()
     {
+        coolDown = GetComponentInChildren<CoolDown_UI>();
         playerController = GetComponent<PlayerController>();
         playerHealth = GetComponent<PlayerHealth>();
         controls = new InputSystem_Actions();
@@ -128,7 +129,7 @@ public class Hammer : MonoBehaviour
             if (skill1HoldTime < 1)
             {
                 skill1 = 0;
-                skill1CoolDownTimer = 5f;
+                skill1CoolDownTimer = 0f;
                 skill1HoldTime = 0f;
                 Debug.Log("0charging");
                 animator.SetTrigger("CancelCharge");
@@ -159,6 +160,7 @@ public class Hammer : MonoBehaviour
             playerController.canMove = true;
             skill1CoolDownTimer = 0;
             skill1HoldTime = 0;
+            coolDown.StartCooldown1();
         }
         
     }
@@ -182,6 +184,7 @@ public class Hammer : MonoBehaviour
             animator.SetTrigger("Big Attack");
             pv.RPC("RPC_TriggerEraserBigAttack", RpcTarget.Others);
             skill2CoolDownTimer = 0f;
+            coolDown.StartCooldown2();
         }
     }
 
