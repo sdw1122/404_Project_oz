@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Straw_FireBall : MonoBehaviour
 {
+    PhotonView photonView;
     public float damage = 60.0f;
     public float cooldown = 6.0f;
     public float range = 15.0f;
@@ -79,8 +80,21 @@ public class Straw_FireBall : MonoBehaviour
         fireBall = magicArrow.GetComponent<FireBall>();
         if (fireBall != null)
         {
-            /*fireIns.transform.SetParent(fireBall.transform, false);*/
+            PhotonView magicArrowPhotonView = magicArrow.GetComponent<PhotonView>();
+            if (magicArrowPhotonView != null)
+            {
+                photonView.RPC("ParentFireEffect", RpcTarget.All, magicArrowPhotonView.ViewID);
+            }
             fireBall.Initialize(damage, arrowSpeed);
+        }
+    }
+    [PunRPC]
+    void ParentFireEffect(int magicArrowViewID)
+    {
+        PhotonView magicArrowPhotonView = PhotonView.Find(magicArrowViewID);
+        if (magicArrowPhotonView != null && fireIns != null)
+        {
+            fireIns.transform.SetParent(magicArrowPhotonView.transform, false);
         }
     }
 }

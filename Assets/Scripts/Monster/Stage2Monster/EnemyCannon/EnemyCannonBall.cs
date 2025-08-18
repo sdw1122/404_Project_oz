@@ -9,6 +9,7 @@ public class EnemyCannonBall : MonoBehaviour
     public float explosionRadius = 3f;
     Rigidbody rb;
     StrawMagician strawMagician;
+    public AudioClip clip;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -36,6 +37,7 @@ public class EnemyCannonBall : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            AudioSource.PlayClipAtPoint(clip, transform.position);
             // 폭발 이펙트 생성
             PhotonNetwork.Instantiate("test/ExplosionEffect", transform.position, Quaternion.identity);
 

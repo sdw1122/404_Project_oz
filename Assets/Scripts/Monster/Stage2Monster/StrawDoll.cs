@@ -6,7 +6,7 @@ public class StrawDoll : Enemy
 {
     public float jumpPower = 10f;
     public float jumpUpPower = 5f;
-    
+    public AudioSource jumpSource;
     public bool Atk = true;
     public override void Attack()
     {
@@ -74,6 +74,7 @@ public class StrawDoll : Enemy
     [PunRPC]
     public void RPC_PlayJumpAttack()
     {
+        PlayJumpClip();
         enemyAnimator.SetTrigger("Attack");
     }
 
@@ -111,7 +112,7 @@ public class StrawDoll : Enemy
 
         // 2. Physics.OverlapSphere로 범위 내 콜라이더를 모두 찾기
         Collider[] hitColliders = Physics.OverlapSphere(center, aoeRadius, whatIsTarget);
-
+        GetEXP();
         for (int i = 0; i < hitColliders.Length; i++)
         {
             // 3. 자신을 공격 대상에서 제외(예: 본인 자신 체크)
@@ -137,5 +138,16 @@ public class StrawDoll : Enemy
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         navMeshAgent.enabled = active;
         rb.isKinematic = active;
+    }
+    private void GetEXP()
+    {
+        Vector3 pos = transform.position;
+        var go = StrawExplosionPool.instance.GetExp(pos);
+    }
+    public void PlayJumpClip()
+    {
+        if (jumpSource == null) return;
+        AudioClip clip = jumpSource.clip;
+        jumpSource.PlayOneShot(clip);
     }
 }
