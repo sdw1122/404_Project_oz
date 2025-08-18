@@ -100,17 +100,17 @@ public class BossUIController : MonoBehaviour
             PlayerController targetPlayer = targetBoss.targetEntity.GetComponent<PlayerController>();
             if (targetPlayer != null)
             {
-                targetNameText.text = "Target: " + targetPlayer.job;
+                targetNameText.text = "갈망: " + targetPlayer.job;
             }
             else
             {
                 // 포톤 정보가 없는 타겟일 경우 (예: NPC)
-                targetNameText.text = "Target: " + targetBoss.targetEntity.name;
+                targetNameText.text = "갈망: " + targetBoss.targetEntity.name;
             }
         }
         else
         {
-            targetNameText.text = "None";
+            targetNameText.text = "";
         }
     }
     // ▲▲▲ [추가된 함수] ▲▲▲

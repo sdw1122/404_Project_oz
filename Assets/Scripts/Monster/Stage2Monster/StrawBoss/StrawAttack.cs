@@ -26,7 +26,7 @@ public class StrawAttack : MonoBehaviour
         pv = GetComponent<PhotonView>();
         poison = GetComponent<StrawKing_Poison>();
         skill1 = GetComponent<Skill1>();
-        strawKing=GetComponent<StrawKing>();
+        strawKing = GetComponent<StrawKing>();
     }
     public bool IsReady()
     {

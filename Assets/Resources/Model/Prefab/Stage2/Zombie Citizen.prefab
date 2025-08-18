@@ -1267,6 +1267,7 @@ MonoBehaviour:
   healthBarPoint: {fileID: 6854418736631934607}
   destroyDelay: 2
   m_name: Ascetic
+  hasDeathHandler: 0
   attackA: {fileID: 3431309942584475624}
   attackB: {fileID: 8498292992722390612}
 --- !u!114 &4149561954065366028

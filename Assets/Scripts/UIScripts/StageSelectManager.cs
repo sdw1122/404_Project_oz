@@ -62,6 +62,24 @@ public class StageSelectManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void LoadStage1Bosss()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("Stage 1 보스전을 로드합니다...");
+            PhotonNetwork.LoadLevel("Stage1Boss"); // Stage1Boss 씬의 이름
+        }
+    }
+
+    public void LoadStage2Bosss()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("Stage 2 보스전을 로드합니다...");
+            PhotonNetwork.LoadLevel("Stage2 Boss"); // Stage2Boss 씬의 이름
+        }
+    }
+
     public void LoadTutorial()
     {
         if(PhotonNetwork.IsMasterClient)
@@ -77,6 +95,15 @@ public class StageSelectManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("로비로 돌아갑니다...");
             PhotonNetwork.LoadLevel("Lobby"); // 로비 씬의 이름
+        }
+    }
+
+    public void StartStory()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("스토리를 시작합니다...");
+            PhotonNetwork.LoadLevel("StartStory"); // 스토리 씬의 이름
         }
     }
 }
