@@ -7223,9 +7223,21 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 2973588009374989885, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -69760931014144829, guid: 761f086b8ea3d3b498c848051eb930a8, type: 3}
     - target: {fileID: 3120714051926659117, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
       propertyPath: sceneViewId
       value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281513125903158423, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
+      propertyPath: m_Size.y
+      value: 1.6601689
+      objectReference: {fileID: 0}
+    - target: {fileID: 3281513125903158423, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
+      propertyPath: m_Center.y
+      value: 0.33008412
       objectReference: {fileID: 0}
     - target: {fileID: 4347934318381418040, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
       propertyPath: m_Materials.Array.size
@@ -7334,12 +7346,13 @@ PrefabInstance:
     - target: {fileID: 9190112137181228175, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: c9179c0efd8a9bb40b331fc87f641123, type: 2}
+      objectReference: {fileID: -876546973899608171, guid: b577f298967fd1c4a8a4936f6373a3de, type: 3}
     m_RemovedComponents:
     - {fileID: 8799092827824531254, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
     - {fileID: 6331714155276304610, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
     - {fileID: 5963583992873333082, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4994299657616170579, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 9029276869599584116, guid: cdac0cd763469d74b9c27221d2ba27b3, type: 3}
       insertIndex: -1
