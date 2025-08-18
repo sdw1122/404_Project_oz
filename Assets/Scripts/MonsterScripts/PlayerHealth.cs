@@ -131,7 +131,7 @@ public class PlayerHealth : LivingEntity
 
     public override void Die()
     {
-        /*PJS_GameManager.Instance.photonView.RPC("ProcessPlayerDeath", RpcTarget.MasterClient);*/
+        PJS_GameManager.Instance.photonView.RPC("ProcessPlayerDeath", RpcTarget.MasterClient);
         // LivingEntity의 Die() 실행 (사망 적용)
         base.Die();
         dead = true;
