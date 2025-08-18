@@ -2945,6 +2945,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 987983387}
     m_Modifications:
+    - target: {fileID: 980254102932530956, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
+      propertyPath: cannonDamage
+      value: 5600
+      objectReference: {fileID: 0}
     - target: {fileID: 2881836760853966812, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
       propertyPath: m_Name
       value: WisdomCannon
@@ -3899,6 +3903,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 703387102}
     m_Modifications:
+    - target: {fileID: 980254102932530956, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
+      propertyPath: cannonDamage
+      value: 5600
+      objectReference: {fileID: 0}
     - target: {fileID: 2881836760853966812, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
       propertyPath: m_Name
       value: WisdomCannon (2)
@@ -5335,6 +5343,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 965621160}
     m_Modifications:
+    - target: {fileID: 980254102932530956, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
+      propertyPath: cannonDamage
+      value: 5600
+      objectReference: {fileID: 0}
     - target: {fileID: 2881836760853966812, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
       propertyPath: m_Name
       value: WisdomCannon (1)

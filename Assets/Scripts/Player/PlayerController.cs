@@ -68,16 +68,16 @@ public class PlayerController : MonoBehaviour
         job = _job;
         Debug.Log($"[PlayerController] Job 설정됨: {job}");
     }
-    public void ActiveController()
-    {
-        playerInput.enabled = true;
-        controller.enabled = true;
-    }
-    public void DeactiveController()
-    {   
-        playerInput.enabled = false;
-        controller.enabled = false;
-    }
+    //public void ActiveController()
+    //{
+    //    playerInput.enabled = true;
+    //    controller.enabled = true;
+    //}
+    //public void DeactiveController()
+    //{   
+    //    playerInput.enabled = false;
+    //    controller.enabled = false;
+    //}
     [PunRPC]
     void SendMyDataToHost(string currentFlag, string currentScene)
     {
