@@ -23,7 +23,7 @@ public class Pen_Skill_1 : MonoBehaviour
     private bool didChargeLevel1, didChargeLevel2, didChargeLevel3;
     Rigidbody rb;
     Animator animator;
-
+    CoolDown_UI coolDown;
     [Header("스킬 정보")]
     public string Skill_ID = "Pen_Skill_1";
     public string Skill_Name = "대궁";
@@ -54,6 +54,7 @@ public class Pen_Skill_1 : MonoBehaviour
         animator = PenPlayer.GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
         rb = PenPlayer.GetComponent<Rigidbody>();
+        coolDown=GetComponentInChildren<CoolDown_UI>();
     }
     public void CancelCharging()
     {
@@ -152,7 +153,7 @@ public class Pen_Skill_1 : MonoBehaviour
     {
         isCharging = true;
         chargeTime = 0f;
-        lastFireTime = Time.time;
+       
         playerController.ResetSpeed();
         playerController.canMove = false;
         PenAttack.isAttack = false;
@@ -191,6 +192,8 @@ public class Pen_Skill_1 : MonoBehaviour
         PenAttack.isAttack = true;
         PlayerController1.isMove = true;
         Pen_Skill_2.isThrow = true;
+        lastFireTime = Time.time;
+        coolDown.StartCooldown1();
 
     }
     int GetChargeLevel(float ratio)
