@@ -77,14 +77,14 @@ public class MagicCircle : MonoBehaviour
             }
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        var target = other.GetComponent<LivingEntity>();
-        if (target != null)
-        {
-            targetsInCircle.Remove(target);
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    var target = other.GetComponent<LivingEntity>();
+    //    if (target != null)
+    //    {
+    //        targetsInCircle.Remove(target);
+    //    }
+    //}
 
     private void OnDestroy()
     {
