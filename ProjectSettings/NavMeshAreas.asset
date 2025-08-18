@@ -69,7 +69,7 @@ NavMeshProjectSettings:
     cost: 1
   - name: 
     cost: 1
-  m_LastAgentTypeID: -629701670
+  m_LastAgentTypeID: 1135425739
   m_Settings:
   - serializedVersion: 3
     agentTypeID: 0
@@ -183,7 +183,61 @@ NavMeshProjectSettings:
     agentTypeID: -629701670
     agentRadius: 0.3
     agentHeight: 1.7
-    agentSlope: 45
+    agentSlope: 30
+    agentClimb: 0.4
+    ledgeDropHeight: 0
+    maxJumpAcrossDistance: 0
+    minRegionArea: 2
+    manualCellSize: 0
+    cellSize: 0.16666667
+    manualTileSize: 0
+    tileSize: 256
+    buildHeightMesh: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
+    debug:
+      m_Flags: 0
+  - serializedVersion: 3
+    agentTypeID: -749502095
+    agentRadius: 0.3
+    agentHeight: 2
+    agentSlope: 60
+    agentClimb: 0.4
+    ledgeDropHeight: 0
+    maxJumpAcrossDistance: 0
+    minRegionArea: 2
+    manualCellSize: 0
+    cellSize: 0.16666667
+    manualTileSize: 0
+    tileSize: 256
+    buildHeightMesh: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
+    debug:
+      m_Flags: 0
+  - serializedVersion: 3
+    agentTypeID: -515339236
+    agentRadius: 1.2
+    agentHeight: 5.4
+    agentSlope: 26
+    agentClimb: 0.4
+    ledgeDropHeight: 0
+    maxJumpAcrossDistance: 0
+    minRegionArea: 2
+    manualCellSize: 0
+    cellSize: 0.16666667
+    manualTileSize: 0
+    tileSize: 256
+    buildHeightMesh: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
+    debug:
+      m_Flags: 0
+  - serializedVersion: 3
+    agentTypeID: 1135425739
+    agentRadius: 0.6
+    agentHeight: 5.4
+    agentSlope: 30
     agentClimb: 0.4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
@@ -205,3 +259,6 @@ NavMeshProjectSettings:
   - strawMagicianSmall
   - StrawDoll
   - ZombieCitizen
+  - HangingCitizen
+  - StrawKnight
+  - StrawMagician
