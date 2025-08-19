@@ -26,7 +26,7 @@ public class EndingScene : MonoBehaviourPunCallbacks
         // 새로운 위치 적용
         targetRect.anchoredPosition = pos;
         
-        if (targetRect.anchoredPosition.y >= 700f && !goMain)
+        if (targetRect.anchoredPosition.y >= 800f && !goMain)
         {
             Debug.Log("targetRect : " + targetRect.anchoredPosition.y);
             goMain = true;
