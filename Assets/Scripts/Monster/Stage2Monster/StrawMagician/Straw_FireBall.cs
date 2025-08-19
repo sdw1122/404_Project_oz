@@ -49,10 +49,14 @@ public class Straw_FireBall : MonoBehaviour
         // 공격 애니메이션 트리거 
         if (animator != null)
         {
-            fireIns = Instantiate(fireEffect, fireEffect.transform);
-            ParticleSystem ps = fireIns.GetComponent<ParticleSystem>();
-            ps.Play();
+            if (fireIns == null)
+            {
+                fireIns = Instantiate(fireEffect, fireEffect.transform);
+                ParticleSystem ps = fireIns.GetComponent<ParticleSystem>();
+                ps.Play();
+            }
             animator.SetTrigger("FireBall");
+            
         }
 
         // 데미지를 주는건 마스터만

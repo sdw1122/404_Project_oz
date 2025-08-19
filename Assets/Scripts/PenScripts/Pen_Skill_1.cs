@@ -218,6 +218,13 @@ public class Pen_Skill_1 : MonoBehaviour
             3 => "Pen_3Charged_missile",
             _ => "Pen_1Charged_missile"
         };
+        string effectPath = chargeLevel switch
+        {
+            1 => "Pen_Missile_Effect1",
+            2 => "Pen_Missile_Effect2",
+            3 => "Pen_Missile_Effect3",
+            _ => "Pen_Missile_Effect1"
+        };
         float speed = charged_Pen_Speed + 5f * chargeLevel;
         // 카메라 기준 마우스 방향 계산
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -237,9 +244,11 @@ public class Pen_Skill_1 : MonoBehaviour
         //rotation *= Quaternion.Euler(90, 0, 0);
         ArrowDisable();
         GameObject missile = PhotonNetwork.Instantiate("test/"+missilePath, spawnPos, rotation);
+        GameObject effect = PhotonNetwork.Instantiate("test/"+effectPath, spawnPos, rotation);
         missile.transform.localScale = new Vector3(100.0f, 100.0f, 76.0f);
         missile.GetComponent<ChargedPenMissile>().Initialize(damage);
         missile.GetComponent<Rigidbody>().linearVelocity = rayDir * speed;
+        effect.GetComponent<Rigidbody>().linearVelocity = rayDir * speed;
         missile.GetComponent<ChargedPenMissile>().ownerViewID = PhotonView.Get(this).ViewID;
         animator.SetTrigger("ChargeAttack");
         pv.RPC("RPC_TriggerChargeAttack", RpcTarget.Others);
