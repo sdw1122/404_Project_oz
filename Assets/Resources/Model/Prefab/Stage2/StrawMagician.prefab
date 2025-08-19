@@ -994,7 +994,7 @@ MonoBehaviour:
   targetEntity: {fileID: 0}
   navMeshAgent: {fileID: 1121428918423500711}
   obstacle: {fileID: 0}
-  hitEffect: {fileID: 3340878645353245585}
+  hitEffect: {fileID: 0}
   hitSource: {fileID: 0}
   stepSource: {fileID: 0}
   dieSource: {fileID: 2699373689154623126}
@@ -1356,10 +1356,5 @@ PrefabInstance:
 --- !u!4 &784319798820388299 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9094896269969779576, guid: fbb6859c6f10a8640922a3e2052efbac, type: 3}
-  m_PrefabInstance: {fileID: 8418909179333072563}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &3340878645353245585 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6523699520211762466, guid: fbb6859c6f10a8640922a3e2052efbac, type: 3}
   m_PrefabInstance: {fileID: 8418909179333072563}
   m_PrefabAsset: {fileID: 0}

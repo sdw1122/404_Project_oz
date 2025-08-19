@@ -1879,7 +1879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5163631649474395250, guid: 5b0a5aacca7a8314f8a6c503a465791e, type: 3}
       propertyPath: gameConversations.Array.data[1].dialogueLines.Array.data[19].speakerName
-      value: "\uD074\uB808\uC5B4"
+      value: "\uC6D0\uD749"
       objectReference: {fileID: 0}
     - target: {fileID: 5163631649474395250, guid: 5b0a5aacca7a8314f8a6c503a465791e, type: 3}
       propertyPath: gameConversations.Array.data[1].dialogueLines.Array.data[1].dialogueText
@@ -2072,7 +2072,7 @@ PrefabInstance:
     - target: {fileID: 5163631649474395250, guid: 5b0a5aacca7a8314f8a6c503a465791e, type: 3}
       propertyPath: gameConversations.Array.data[1].dialogueLines.Array.data[19].characterSprite
       value: 
-      objectReference: {fileID: 1552396750, guid: d18bc7d6a23c38a4f8b09f1e0b47b650, type: 3}
+      objectReference: {fileID: -1304474961, guid: eda1cfef8f2ad724284e7801ec1306cc, type: 3}
     - target: {fileID: 5838149668562491376, guid: 5b0a5aacca7a8314f8a6c503a465791e, type: 3}
       propertyPath: m_Name
       value: PJS_GameManager 1

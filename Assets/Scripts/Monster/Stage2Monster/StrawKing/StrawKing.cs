@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 public class StrawKing : Enemy
 {
     StrawKing_Poison poison;
@@ -26,6 +27,10 @@ public class StrawKing : Enemy
     public void SetIdle()
     {
         currentState = StrawKing_State.Idle;
+    }
+    public void GoEnd()
+    {
+        PhotonNetwork.LoadLevel("EndingScene");
     }
     public void SetAbsorb()
     {
