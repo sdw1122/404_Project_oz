@@ -180,16 +180,16 @@ MonoBehaviour:
     volume: 0.1
   - name: Tutorial
     clip: {fileID: 8300000, guid: b137b26ff0085c54986438f1c1d231ca, type: 3}
-    volume: 0.1
+    volume: 0.2
   - name: Stage1
     clip: {fileID: 8300000, guid: b137b26ff0085c54986438f1c1d231ca, type: 3}
-    volume: 0.1
+    volume: 0.15
   - name: Stage1 Boss
     clip: {fileID: 8300000, guid: b137b26ff0085c54986438f1c1d231ca, type: 3}
-    volume: 0.1
+    volume: 0.05
   - name: Stage2
     clip: {fileID: 8300000, guid: 8691aa66a2d27954e89dfae534e26d6e, type: 3}
-    volume: 0.1
+    volume: 0.05
   - name: Stage2 Boss
     clip: {fileID: 8300000, guid: 2362dc003768f4647885fabe33fc6d1e, type: 3}
     volume: 0.1
