@@ -10971,7 +10971,7 @@ GameObject:
   - component: {fileID: 2499879299025411722}
   - component: {fileID: 8747160446782572400}
   - component: {fileID: 9156400671631281257}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RespawnInteract
   m_TagString: Untagged
   m_Icon: {fileID: 0}
