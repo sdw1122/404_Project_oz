@@ -9,6 +9,15 @@ public class HangingCitizen : Enemy
     public float throwPower = 15f;
     public AudioSource attack;
 
+    public override void Awake()
+    {
+        base.Awake();
+        if (navMeshAgent != null)
+            navMeshAgent.enabled = false;
+        if (obstacle != null)
+            obstacle.enabled = true;
+    }
+
     public override IEnumerator UpdatePath()
     {
         // 살아 있는 동안 무한 루프
@@ -16,8 +25,7 @@ public class HangingCitizen : Enemy
         {
             if (navMeshAgent.enabled)
             {
-                navMeshAgent.enabled = false;
-                obstacle.enabled = true;
+                pv.RPC("NavMesh", RpcTarget.All);
             }            
 
             // 추적 로직은 마스터에서만 실행시켜 둘의 Enemy의 움직임을 동기화함.
@@ -90,9 +98,10 @@ public class HangingCitizen : Enemy
     }
 
     [PunRPC]
-
-    public void RPC_HangingAttack()
+    public void RPC_HangingAttack(Quaternion lookRotation)
     {
+        // 필요하면 회전 적용:
+        transform.rotation = lookRotation;
         enemyAnimator.SetTrigger("Attack");
     }
 
@@ -151,5 +160,12 @@ public class HangingCitizen : Enemy
     {
         AudioClip clip = attack.clip;
         attack.PlayOneShot(clip);
+    }
+
+    [PunRPC]
+    public void NavMesh()
+    {
+        navMeshAgent.enabled = false;
+        obstacle.enabled = true;
     }
 }

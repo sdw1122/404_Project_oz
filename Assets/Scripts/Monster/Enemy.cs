@@ -134,7 +134,10 @@ public abstract class Enemy : LivingEntity
             // 네트워크 위치 동기화 완료 후 워프
             navMeshAgent.Warp(transform.position);
         }
-        navMeshAgent.enabled = true; // 위치 맞춘 뒤 에이전트 켜기
+        if (!(this is HangingCitizen))
+        {
+            navMeshAgent.enabled = true;
+        }
         Debug.Log("Enemy Awake pv = " + (pv != null ? pv.ViewID.ToString() : "NULL"));
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
         if (PhotonNetwork.IsMasterClient)
