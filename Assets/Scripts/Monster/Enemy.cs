@@ -385,8 +385,8 @@ public abstract class Enemy : LivingEntity
         if (navMeshAgent != null)
         {
             navMeshAgent.enabled = false;            
-        }    
-        
+        }
+        gameObject.layer = LayerMask.NameToLayer("Default");
         enemyAnimator.SetBool("Die", true);
         pv.RPC("RPC_Die", RpcTarget.Others);
         /*enemyAudioPlayer.PlayOneShot(deathSound);*/

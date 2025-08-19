@@ -17564,6 +17564,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5364432068035183841, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
       propertyPath: cooldownTime1
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5364432068035183841, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
+      propertyPath: cooldownTime2
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5471387527545891786, guid: 505c599c0c70309468ddbabbf51b62fe, type: 3}
