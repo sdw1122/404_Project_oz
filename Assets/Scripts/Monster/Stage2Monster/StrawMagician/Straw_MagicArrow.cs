@@ -12,6 +12,10 @@ public class Straw_MagicArrow : MonoBehaviour
     public Transform firePos;
     Animator animator;
     StrawMagician strawMagician;
+    public AudioSource attackSource;
+    public AudioSource castSource;
+    public AudioSource strumbleSource;
+    public AudioSource castASource;
     Vector3 directionToTarget;
     private void Awake()
     {
@@ -97,5 +101,29 @@ public class Straw_MagicArrow : MonoBehaviour
             Gizmos.color = Color.cyan;
             Gizmos.DrawLine(transform.position, transform.position + transform.forward * knockbackForce * 0.1f);
         }*/
+    }
+    public void PlayAttackClip()
+    {
+        if (attackSource == null) return;
+        AudioClip clip = attackSource.clip;
+        attackSource.PlayOneShot(clip);
+    }
+    public void PlayCastClip()
+    {
+        if(castSource == null) return;
+        AudioClip clip = castSource.clip;
+        castSource.PlayOneShot(clip);
+    }
+    public void PlayCastAClip()
+    {
+        if (castASource == null) return;
+        AudioClip clip = castASource.clip;
+        castASource.PlayOneShot(clip);
+    }
+    public void PlayStrumbleClip()
+    {
+        if(strumbleSource == null) return;
+        AudioClip clip = strumbleSource.clip;
+        strumbleSource.PlayOneShot(clip);
     }
 }

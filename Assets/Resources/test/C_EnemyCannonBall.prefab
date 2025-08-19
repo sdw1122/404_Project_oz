@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 3788105887465138014}
   - component: {fileID: 6376935586737588604}
   - component: {fileID: 5576407025265313632}
-  - component: {fileID: 2068454376194243278}
   - component: {fileID: 8736012121954557077}
   m_Layer: 0
   m_Name: C_EnemyCannonBall
@@ -198,20 +197,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &2068454376194243278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1185845331542759449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c83045095533f84ab3a8dc5c7714eb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  duration: 5
-  explosionRadius: 3
 --- !u!114 &8736012121954557077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +212,7 @@ MonoBehaviour:
   damage: 0
   duration: 5
   explosionRadius: 3
+  clip: {fileID: 8300000, guid: 749158b4e187cbd47b1ec9a4a094ede3, type: 3}
 --- !u!1001 &3329567461968492525
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -245,6 +245,20 @@ MonoBehaviour:
   - ChangePlayerLayerToDefault
   - RestorePlayerLayer
   - HasOnDeath
+  - HealAnime
+  - SetPauseState
+  - LoadNextScene_RPC
+  - AdvanceDialogue
+  - NextDialogue
+  - RPC_SetParent
+  - HealAnime
+  - SetPauseState
+  - ChangePlayerLayerToDefault
+  - RestorePlayerLayer
+  - HasOnDeath
+  - ParentFireEffect
+  - FallDownTeleport
+  - SendDataClient
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

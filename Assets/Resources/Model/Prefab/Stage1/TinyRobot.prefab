@@ -1202,7 +1202,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 2413225650995802240, guid: 15bb06186afc99e46b16590c996d95cb, type: 3}
   healthBarPoint: {fileID: 4193435563598517957}
   destroyDelay: 2
-  m_name: Im Iron Man
+  m_name: Tin Can
   hasDeathHandler: 0
   transformView: {fileID: 0}
   rigidbodyView: {fileID: 0}

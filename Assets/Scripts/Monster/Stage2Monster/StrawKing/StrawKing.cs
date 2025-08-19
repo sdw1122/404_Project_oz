@@ -8,6 +8,13 @@ public class StrawKing : Enemy
     Skill1 skill1;
     StrawAttack strawAttack;
     private float targetSwitchTimer = 0f;
+    public AudioSource attackSource;
+    public AudioSource laughSource;
+    public AudioSource chargeSource;
+    public AudioSource hit;
+    public AudioSource groggySource;
+    public AudioSource razorSource;
+    public AudioSource shoutSource;
     public override void Awake()
     {
         base.Awake();
@@ -145,6 +152,48 @@ public class StrawKing : Enemy
             // 0.25초 주기로 처리 반복
             yield return new WaitForSeconds(0.25f);
         }
+    }
+    public void PlayCanonClip()
+    {
+        if (hit == null) return;
+        AudioClip clip = hit.clip;
+        hit.PlayOneShot(clip);
+    }
+    public void PlayAttackClip()
+    {
+        if(attackSource == null) return;
+        AudioClip clip = attackSource.clip;
+        attackSource.PlayOneShot(clip);
+    }
+    public void PlayLaughClip()
+    {
+        if(laughSource == null) return;
+        AudioClip clip = laughSource.clip;
+        laughSource.PlayOneShot(clip);
+    }
+    public void PlayGroggyClip()
+    {
+        if(groggySource == null) return;
+        AudioClip clip = groggySource.clip;
+        groggySource.PlayOneShot(clip);
+    }
+    public void PlayChargeClip()
+    {
+        if(chargeSource == null) return;
+        AudioClip clip = chargeSource.clip;
+        chargeSource.PlayOneShot(clip);
+    }
+    public void PlayRazorClip()
+    {
+        if(razorSource == null) return;
+        AudioClip clip = razorSource.clip;
+        razorSource.PlayOneShot(clip);
+    }
+    public void PlayShoutClip()
+    {
+        if(shoutSource == null) return;
+        AudioClip clip = shoutSource.clip;
+        shoutSource.PlayOneShot(clip);
     }
 }
 

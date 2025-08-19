@@ -17032,9 +17032,6 @@ PrefabInstance:
       addedObject: {fileID: 6770862620471186634}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1d4523ff8667a434d997ed083cd395b7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -1002699380792937073}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1d4523ff8667a434d997ed083cd395b7, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1625446192328619549}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1d4523ff8667a434d997ed083cd395b7, type: 3}
       insertIndex: -1
@@ -17044,7 +17041,7 @@ PrefabInstance:
       addedObject: {fileID: 7505315150737077908}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1d4523ff8667a434d997ed083cd395b7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4269027919892422870}
+      addedObject: {fileID: 9128893747671003334}
   m_SourcePrefab: {fileID: 100100000, guid: 1d4523ff8667a434d997ed083cd395b7, type: 3}
 --- !u!4 &292108290800110208 stripped
 Transform:
@@ -17551,8 +17548,8 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6770862620471186634}
-  - {fileID: -1002699380792937073}
   - {fileID: 1625446192328619549}
+  - {fileID: 9128893747671003334}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -17609,22 +17606,6 @@ MonoBehaviour:
     LayerIndex: 0
   - SynchronizeType: 0
     LayerIndex: 1
---- !u!114 &-1002699380792937073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1100591750975983674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!114 &1625446192328619549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17637,7 +17618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cfb8961d9d850e458131481f9c58dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 5000
+  startingHealth: 200
   dead: 0
   current_health: 0
   pv: {fileID: 0}
@@ -17692,20 +17673,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skill2Effect: {fileID: 1288942277512556538, guid: 22e338ea832f251409d0579901cf4737, type: 3}
   effectDistance: 2
---- !u!114 &4269027919892422870
+--- !u!114 &9128893747671003334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1100591750975983674}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 128a75702fa871248938df8a79dbc3ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dustPrefab: {fileID: 1541352577665823825, guid: 3535ca9d47f2b634e8d624b4b50de4b8, type: 3}
-  initialCount: 10
+  m_PositionModel:
+    SynchronizeEnabled: 1
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 4
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 5
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!4 &1887803493213852323 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 1d4523ff8667a434d997ed083cd395b7, type: 3}
