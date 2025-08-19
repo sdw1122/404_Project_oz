@@ -131,7 +131,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 1e837bef67adea64bad3f02cbc644a2b, type: 3}
   m_Resource: {fileID: 8300000, guid: 1e837bef67adea64bad3f02cbc644a2b, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -260,7 +260,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: a96d54386f24a934d987ed587cce2047, type: 3}
   m_Resource: {fileID: 8300000, guid: a96d54386f24a934d987ed587cce2047, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -518,7 +518,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 21ac2d8fe1858d7468a874255b9a1eec, type: 3}
   m_Resource: {fileID: 8300000, guid: 21ac2d8fe1858d7468a874255b9a1eec, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -776,7 +776,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: ac5e3e8d118882749a6f7b3b4aa91140, type: 3}
   m_Resource: {fileID: 8300000, guid: ac5e3e8d118882749a6f7b3b4aa91140, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1199,9 +1199,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b449204b633fa6140b9aa126f7ad3024, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8681362899708958744}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b449204b633fa6140b9aa126f7ad3024, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5782411943525777123}
   m_SourcePrefab: {fileID: 100100000, guid: b449204b633fa6140b9aa126f7ad3024, type: 3}
 --- !u!4 &4328376765324333410 stripped
 Transform:
