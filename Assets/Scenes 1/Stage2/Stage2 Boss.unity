@@ -2267,7 +2267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SerializedVersion: 0
-  m_AgentTypeID: 287145453
+  m_AgentTypeID: 1018083246
   m_CollectObjects: 0
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
@@ -2282,9 +2282,9 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.375
+  m_VoxelSize: 2.6666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: b0096d7b0c5b7c44b95ad92399a7b808, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 8b092cdd45d7f0548982ce4e37e06c1f, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1001 &462905150
 PrefabInstance:

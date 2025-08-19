@@ -13173,6 +13173,7 @@ GameObject:
   - component: {fileID: 6937860422895984415}
   - component: {fileID: 2129605562238910705}
   - component: {fileID: 8149917237064463831}
+  - component: {fileID: 3113155082266055941}
   m_Layer: 8
   m_Name: Straw King
   m_TagString: StrawKing
@@ -13440,7 +13441,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3258491212266816461}
   m_Enabled: 1
-  m_AgentTypeID: 287145453
+  m_AgentTypeID: 1018083246
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
@@ -13471,10 +13472,33 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.6035378, y: 1.6921662, z: 0.4064103}
   m_Center: {x: 0.00933044, y: 1.1705669, z: 0.010707254}
+--- !u!136 &3113155082266055941
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3258491212266816461}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.17, z: 0}
 --- !u!1 &3350679803834782486
 GameObject:
   m_ObjectHideFlags: 0
