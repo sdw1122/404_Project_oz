@@ -261,6 +261,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void CreditScene()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Credit"); // Stage2으로 전환
+        }
+    }
+
 
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
