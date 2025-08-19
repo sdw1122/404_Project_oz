@@ -389,12 +389,17 @@ public abstract class Enemy : LivingEntity
         {
             navMeshAgent.enabled = false;            
         }
-        gameObject.layer = LayerMask.NameToLayer("Default");
+        pv.RPC("RPC_EnemyLayer", RpcTarget.All);
         enemyAnimator.SetBool("Die", true);
         pv.RPC("RPC_Die", RpcTarget.Others);
         /*enemyAudioPlayer.PlayOneShot(deathSound);*/
     }
 
+    [PunRPC]
+    public void RPC_EnemyLayer()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Default");
+    }
     private IEnumerator DestroyAfterDelay()
     {
         // destroyDelay 만큼 기다립니다.
