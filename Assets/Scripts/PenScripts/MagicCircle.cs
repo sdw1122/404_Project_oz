@@ -49,7 +49,7 @@ public class MagicCircle : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var target = other.GetComponent<LivingEntity>();
-        if (target != null)
+        if (target != null && target.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             Enemy enemy = target as Enemy;
             if (enemy != null)
