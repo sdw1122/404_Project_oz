@@ -39,7 +39,8 @@ public class WisdomCannonBall : MonoBehaviour
             if (other.gameObject.layer == LayerMask.NameToLayer("Shield"))
             {
                 Debug.Log("대포알이 벽과 충돌");
-                other.GetComponent<BossShield>().AddCount();
+
+                other.GetComponent<BossShield>().GetComponent<PhotonView>().RPC("AddCount", RpcTarget.All);
             }
             else if (other.CompareTag("StrawKing"))
             {

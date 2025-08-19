@@ -68,16 +68,16 @@ public class PlayerController : MonoBehaviour
         job = _job;
         Debug.Log($"[PlayerController] Job 설정됨: {job}");
     }
-    //public void ActiveController()
-    //{
-    //    playerInput.enabled = true;
-    //    controller.enabled = true;
-    //}
-    //public void DeactiveController()
-    //{   
-    //    playerInput.enabled = false;
-    //    controller.enabled = false;
-    //}
+    /*public void ActiveController()
+    {
+        playerInput.enabled = true;
+        controller.enabled = true;
+    }
+    public void DeactiveController()
+    {   
+        playerInput.enabled = false;
+        controller.enabled = false;
+    }*/
     [PunRPC]
     void SendMyDataToHost(string currentFlag, string currentScene)
     {
@@ -332,15 +332,19 @@ public class PlayerController : MonoBehaviour
             jumpBufferCounter -= Time.deltaTime;
 
         isGrounded = controller.isGrounded;
-        
-        // 바인드 상태가 아니면 움직임
-        if (canMove)
+        Vector3 inputDir = Vector3.zero;
+        if (canMove && !isCharge)
         {
-            if (jumpBufferCounter > 0)
-                jumpBufferCounter -= Time.deltaTime;
-            // 1. 입력처리 & 이동벡터 산출
-            // 로컬좌표 기준(forward/right)으로 방향 벡터 생성
-            Vector3 inputDir = new Vector3(moveInput.x, 0, moveInput.y);
+            inputDir = new Vector3(moveInput.x, 0, moveInput.y);
+        }
+        if (jumpBufferCounter > 0)
+            jumpBufferCounter -= Time.deltaTime;
+        // 바인드 상태가 아니면 움직임
+
+
+        // 1. 입력처리 & 이동벡터 산출
+        // 로컬좌표 기준(forward/right)으로 방향 벡터 생성
+       
             inputDir = Vector3.ClampMagnitude(inputDir, 1f);
             Vector3 worldDir = transform.TransformDirection(inputDir) * moveSpeed;
 
@@ -368,7 +372,7 @@ public class PlayerController : MonoBehaviour
 
             // 이동거리 합산
             controller.Move(playerDisplacement + platformDisplacement);
-        }
+        
     }
     public void ClearPlatform()
     {

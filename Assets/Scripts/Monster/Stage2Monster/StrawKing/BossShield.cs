@@ -6,11 +6,12 @@ public class BossShield : MonoBehaviour
     public BossGroggy groggy;   
 
     public int cannonCount = 0;
-
+    PhotonView pv;
     public void Start()
     {
-        
+        pv=GetComponent<PhotonView>();
     }
+    [PunRPC]
     public void AddCount()
     {
         groggy.count++;
