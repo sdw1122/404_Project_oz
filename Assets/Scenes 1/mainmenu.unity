@@ -3971,7 +3971,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1601767731}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
-        m_MethodName: EndRoom
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7336,6 +7336,7 @@ PrefabInstance:
     - {fileID: 352860444287884944, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
     - {fileID: 352456314985170094, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
     - {fileID: 352407967478555320, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
+    - {fileID: 6183385701476922722, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 356149429523558998, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
       insertIndex: -1
@@ -7405,9 +7406,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1607670796}
     - targetCorrespondingSourceObject: {fileID: 353319853915849886, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 6183335970694796328, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 2844191079685055902, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}

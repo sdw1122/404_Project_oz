@@ -8,6 +8,11 @@ public class EndingScene : MonoBehaviourPunCallbacks
     public float moveSpeed = 100f; // 초당 이동 픽셀 수    
     private bool goMain = false;
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
     void Update()
     {
         if (targetRect == null) return;

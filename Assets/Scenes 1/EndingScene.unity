@@ -1760,7 +1760,7 @@ MonoBehaviour:
   speakerNameText: {fileID: 443766182}
   dialogueText: {fileID: 443766181}
   typingSpeed: 0.01
-  nextSceneName: mainmenu
+  nextSceneName: Credit
 --- !u!1 &2072978425
 GameObject:
   m_ObjectHideFlags: 0
