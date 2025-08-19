@@ -72,7 +72,7 @@ public class StrawKing : Enemy
     public override void Update()
     {
         if (!PhotonNetwork.IsMasterClient || targetEntity == null) return;
-        navMeshAgent.isStopped = true;  // 허수아비왕은 움직이지 않는다.
+        //navMeshAgent.isStopped = true;  // 허수아비왕은 움직이지 않는다.
         base.Update();
 
 
