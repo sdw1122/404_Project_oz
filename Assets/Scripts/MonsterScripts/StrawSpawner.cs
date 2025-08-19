@@ -64,7 +64,7 @@ public class StrawSpawner : MonoBehaviour
             enemyList.Add(enemy);
 
             enemy.onDeath += () => enemyList.Remove(enemy);
-            enemy.onDeath += () => Destroy(enemy.gameObject);
+            enemy.onDeath += () => PhotonNetwork.Destroy(enemy.gameObject);
         }
     }
 

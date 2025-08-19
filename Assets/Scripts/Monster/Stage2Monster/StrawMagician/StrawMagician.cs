@@ -206,8 +206,9 @@ public class StrawMagician : Enemy
     }
     public override void Update()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
         base.Update();
+        if (!PhotonNetwork.IsMasterClient) return;
+        
         if (!canAct||dead) return;
         if (isGroggy) return;
         if (straw_Teleport!=null&&straw_Teleport.IsReady())
