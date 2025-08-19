@@ -41,6 +41,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private Dictionary<int, GameObject> playerList = new Dictionary<int, GameObject>();
     public void Start()
     {
+        //AudioManager.instance.PlayBgm("Main Menu");
         lobbyView = GetComponent<PhotonView>();
         Debug.Log($"[LobbyManager] PhotonView ID: {lobbyView.ViewID}, IsMine: {lobbyView.IsMine}");
         // 객체 유지를 위해 PlayerPrefs 에 랜덤한 UserId 저장, 플레이어 UserId에도 저장
