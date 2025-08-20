@@ -15,11 +15,6 @@ public class Pen_Skill_1 : MonoBehaviour
     public ParticleSystem ChargeEffect;
     public ParticleSystem bindEffect;
 
-    public AudioSource audioSource;
-    public AudioSource shotSource;
-    public AudioClip audioClip;
-    public AudioClip shotClip;
-
     private bool didChargeLevel1, didChargeLevel2, didChargeLevel3;
     Rigidbody rb;
     Animator animator;
@@ -109,19 +104,19 @@ public class Pen_Skill_1 : MonoBehaviour
             if (!didChargeLevel1 && nomalized >= 0)
             {
                 PlayChargeLevelEffect(1);
-                audioSource.PlayOneShot(audioClip);
+                AudioManager.instance.PlaySfxAtLocation("Player Charge", transform.position);
                 didChargeLevel1 = true;
             }
             if (!didChargeLevel2 && nomalized >= 1f / 3f)
             {
                 PlayChargeLevelEffect(2);
-                audioSource.PlayOneShot(audioClip);
+                AudioManager.instance.PlaySfxAtLocation("Player Charge", transform.position);
                 didChargeLevel2 = true;
             }
             if (!didChargeLevel3 && nomalized >= 2f / 3f)
             {
                 PlayChargeLevelEffect(3);
-                audioSource.PlayOneShot(audioClip);
+                AudioManager.instance.PlaySfxAtLocation("Player Charge", transform.position);
                 didChargeLevel3 = true;
             }
         }
@@ -170,7 +165,7 @@ public class Pen_Skill_1 : MonoBehaviour
         animator.SetBool("Charge", false);
         animator.ResetTrigger("ChargeAttack");
         animator.SetTrigger("ChargeAttack");   // 발사 애니메이션
-        shotSource.PlayOneShot(shotClip);
+        AudioManager.instance.PlaySfxAtLocation("Pen ChargeShot",transform.position);
         
         pv.RPC("RPC_TriggerChargeFinish", RpcTarget.Others);
         pv.RPC("RPC_TriggerChargeAttack", RpcTarget.Others);

@@ -20,13 +20,6 @@ public class Hammer : MonoBehaviour
     public ParticleSystem chAttackEffect;
     public ParticleSystem bindEffect;
 
-    public AudioSource chargeSource;
-    public AudioClip chargeClip;
-    public AudioSource attackSource;
-    public AudioClip attackClip;
-    public AudioSource chargeAttackSource;
-    public AudioClip chargeAttackClip;
-
     private bool isAttackButtonPressed = false;
     private float attackDelay = 1.0f;
     private float attackTimer = 0f;
@@ -155,7 +148,7 @@ public class Hammer : MonoBehaviour
             }
             Skill1(skill1);
             animator.SetTrigger("Charge Attack");
-            chargeAttackSource.PlayOneShot(chargeAttackClip);
+            AudioManager.instance.PlaySfxAtLocation("Hammer ChargeAttack",transform.position);
             pv.RPC("RPC_TriggerEraserChargeAttack", RpcTarget.Others);
             playerController.canMove = true;
             skill1CoolDownTimer = 0;
@@ -207,7 +200,7 @@ public class Hammer : MonoBehaviour
                 main.startColor = chargeColor[0];
                 amain.startColor = chargeColor[0];
                 ChargeEffect.Play();
-                chargeSource.PlayOneShot(chargeClip);
+                AudioManager.instance.PlaySfxAtLocation("Player Charge",transform.position);
                 pv.RPC("RPC_ChargeEffect", RpcTarget.Others, 0);
             }
             if (skill1HoldTime >= 2 && !isCharge2)
@@ -216,7 +209,7 @@ public class Hammer : MonoBehaviour
                 main.startColor = chargeColor[1];
                 amain.startColor = chargeColor[1];
                 ChargeEffect.Play();
-                chargeSource.PlayOneShot(chargeClip);
+                AudioManager.instance.PlaySfxAtLocation("Player Charge", transform.position);
                 pv.RPC("RPC_ChargeEffect", RpcTarget.Others, 1);
             }
             if (skill1HoldTime >= 3 && !isCharge3)
@@ -225,7 +218,7 @@ public class Hammer : MonoBehaviour
                 main.startColor = chargeColor[2];
                 amain.startColor = chargeColor[2];
                 ChargeEffect.Play();
-                chargeSource.PlayOneShot(chargeClip);
+                AudioManager.instance.PlaySfxAtLocation("Player Charge", transform.position);
                 pv.RPC("RPC_ChargeEffect", RpcTarget.Others, 2);
             }
             playerController.canMove = false;
@@ -298,7 +291,7 @@ public class Hammer : MonoBehaviour
 
         // 애니메이션 필요        
         animator.SetLayerWeight(attackLayerIndex, 1f);
-                attackSource.PlayOneShot(attackClip);
+        AudioManager.instance.PlaySfxAtLocation("Hammer Attack",transform.position);
         pv.RPC("RPC_TriggerEraserAttack", RpcTarget.All);
 
         // 다음 공격 스텝으로 전환

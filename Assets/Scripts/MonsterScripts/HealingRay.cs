@@ -13,8 +13,6 @@ public class HealingRay : MonoBehaviour
     public Transform handTransform; // 광선이 발사될 시작 지점
     public LayerMask targetLayer;
     PhotonView pv;
-    public AudioClip healClip;
-    public AudioSource healSource;
     // 광선 효과 지속 시간
     public float lineDisplayDuration = 0.2f;
 
@@ -43,7 +41,7 @@ public class HealingRay : MonoBehaviour
         Vector3 rayDirection = ray.direction;
 
         Vector3 spawnPos = rayStartPoint + rayDirection * minDistance;
-        healSource.PlayOneShot(healClip);
+        AudioManager.instance.PlaySfxAtLocation("Player Heal", transform.position);
         animator.SetTrigger("Interactive");
         healingEffect.Play();
 

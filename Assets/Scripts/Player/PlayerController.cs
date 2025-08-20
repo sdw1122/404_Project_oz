@@ -56,8 +56,6 @@ public class PlayerController : MonoBehaviour
     public GameObject jumpEffect;
     public Transform foot;
     private GameObject jumpEffectins;
-    public AudioSource jumpSound;
-    public AudioClip jumpSoundClip;
     PlayerInput playerInput;
     
     private MovingObj currentPlatform;
@@ -190,6 +188,7 @@ public class PlayerController : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         if (!pv.IsMine || !canMove) return;
+        AudioManager.instance.PlaySfxAtLocation("Player Jump",transform.position);
         //if (context.started && !jumpPressed)
         //{
         //    jumpPressed = true;
@@ -578,6 +577,7 @@ public class PlayerController : MonoBehaviour
     }
     public void SpawnDust()
     {
+        AudioManager.instance.PlaySfxAtLocation("Player Step",transform.position);
         // 1) 위치 & 회전 결정
         Vector3 pos = foot.position;
         // 땅 노말을 따서 정렬하고 싶다면 Raycast로 hit.normal 사용 가능

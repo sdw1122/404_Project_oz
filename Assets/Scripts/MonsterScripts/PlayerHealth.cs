@@ -24,13 +24,6 @@ public class PlayerHealth : LivingEntity
     private string respawnJob;
     private string respawnFlagLabel;
 
-    public AudioClip hitClip;
-    public AudioSource hitSource;
-    public AudioSource resurrectionSource;
-    public AudioClip resurrectionClip;
-    public AudioSource HealSource;
-    public AudioClip HealClip;
-
     private void Awake()
     {
         playerAnimator = GetComponent<Animator>();
@@ -69,7 +62,7 @@ public class PlayerHealth : LivingEntity
         base.Resurrection();
         respawn.DeactiveCol();
 
-        resurrectionSource.PlayOneShot(resurrectionClip);
+        AudioManager.instance.PlaySfxAtLocation("Player Resurrection",transform.position);
         resurrectionEffect.Play();
         pv.RPC("SetDeadState", RpcTarget.All, false);
         pv.RPC("RPC_TriggerPlayerResurrection", RpcTarget.All);
@@ -119,7 +112,7 @@ public class PlayerHealth : LivingEntity
             GetComponent<Pen_Skill_1>()?.CancelCharging();
             GetComponent<Hammer>()?.CancelCharging();
             playerAnimator.SetTrigger("Hit");
-            hitSource.PlayOneShot(hitClip);
+            AudioManager.instance.PlaySfxAtLocation("Player Hit",transform.position);
             pv.RPC("RPC_TriggerPlayerHit", RpcTarget.Others);
         }
 
@@ -269,7 +262,7 @@ public class PlayerHealth : LivingEntity
         {
             health += healAmount;
             HealingEffect.Play();
-            HealSource.PlayOneShot(HealClip);
+            AudioManager.instance.PlaySfxAtLocation("Player Healed", transform.position);
             pv.RPC("RPC_HealEffectPlay", RpcTarget.Others);
             if (health > startingHealth)
             {
@@ -283,7 +276,7 @@ public class PlayerHealth : LivingEntity
     void RPC_HealEffectPlay()
     {
         HealingEffect.Play();
-        HealSource.PlayOneShot(HealClip);
+        AudioManager.instance.PlaySfxAtLocation("Player Healed", transform.position);
     }
 
     [PunRPC]
@@ -316,7 +309,7 @@ public class PlayerHealth : LivingEntity
     {
 
         resurrectionEffect.Play();
-        resurrectionSource.PlayOneShot(resurrectionClip);
+        AudioManager.instance.PlaySfxAtLocation("Player Resurrection", transform.position);
         playerAnimator.ResetTrigger("Die");
         playerAnimator.SetTrigger("Resurrection");
         // 조작활성화,체력 동기화

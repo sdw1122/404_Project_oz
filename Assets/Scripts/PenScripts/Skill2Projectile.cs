@@ -31,6 +31,7 @@ public class Skill2Projectile : MonoBehaviour
             Debug.Log("plane");
             GameObject magicCircle =  PhotonNetwork.Instantiate("test/" + "Pen_Skill2_MagicCircle",pos,Quaternion.identity);
             magicCircle.GetComponent<PhotonView>().RPC("RPC_Initialize", RpcTarget.AllBuffered, damage, tik,viewID2);
+            AudioManager.instance.PlaySfxAtLocation("Pen MagicCircle", transform.position);
             if (pv != null && pv.IsMine)
             {
                 PhotonNetwork.Destroy(gameObject);

@@ -5421,7 +5421,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 25
+    angle: 0
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -5507,7 +5507,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.61938435
+      value: 0.0001
       mode: 0
       spread: 0
       speed:
@@ -9548,7 +9548,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3349fc02d104e2b458470ec533f51c16, type: 2}
+  - {fileID: 2100000, guid: 023a4ec67236da44887874f8fdb1381d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

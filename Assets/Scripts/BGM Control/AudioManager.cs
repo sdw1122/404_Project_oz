@@ -101,7 +101,7 @@ public class AudioManager : MonoBehaviour
 
             source.gameObject.SetActive(true);
             source.Play();
-            StartCoroutine(ReturnToPool(source.gameObject, sound.clip.length / sound.pitch)); // 피치에 따라 재생시간 변경
+            StartCoroutine(ReturnToPool(source.gameObject, sound.clip.length)); // 피치에 따라 재생시간 변경
         }
     }
     #endregion
