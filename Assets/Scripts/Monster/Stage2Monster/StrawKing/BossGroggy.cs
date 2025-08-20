@@ -13,7 +13,7 @@ public class BossGroggy : MonoBehaviour
     public int count = 0;
     public bool isGroggy = false;
     public bool isFirst = true;
-
+    
     private float groggyTime = 10f;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -30,9 +30,12 @@ public class BossGroggy : MonoBehaviour
         {
             if (!isGroggy)
             {
+                animator.ResetTrigger("Shout");
+                animator.ResetTrigger("ChargeAttack");
+                animator.ResetTrigger("Attack");
                 pv.RPC("BossIsGroggy", RpcTarget.All);
                 isGroggy = true;
-
+                
                 if (isFirst)
                 {
                     pv.RPC("MakeRoad", RpcTarget.All);
