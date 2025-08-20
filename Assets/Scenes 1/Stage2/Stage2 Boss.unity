@@ -2982,7 +2982,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 980254102932530956, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
       propertyPath: cannonDamage
-      value: 5600
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 2881836760853966812, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
       propertyPath: m_Name
@@ -5380,7 +5380,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 980254102932530956, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
       propertyPath: cannonDamage
-      value: 5600
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 2881836760853966812, guid: bdb0aaa3cf8599440ac67fa52d046b05, type: 3}
       propertyPath: m_Name
