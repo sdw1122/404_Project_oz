@@ -974,14 +974,11 @@ MonoBehaviour:
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 128
+  name: Magician
   targetEntity: {fileID: 0}
   navMeshAgent: {fileID: 1121428918423500711}
   obstacle: {fileID: 0}
   hitEffect: {fileID: 0}
-  hitSource: {fileID: 0}
-  stepSource: {fileID: 0}
-  dieSource: {fileID: 1260150996487502151}
-  hurtSource: {fileID: 0}
   enemyAnimator: {fileID: 7890420973369486798}
   enemyRenderer: {fileID: 1734513082433498683}
   currentHealth: 0
@@ -1027,10 +1024,6 @@ MonoBehaviour:
   arrowSpeed: 60
   skillRangeYOffset: 1
   firePos: {fileID: 6455634769652430068}
-  attackSource: {fileID: 1736440219420076476}
-  castSource: {fileID: 1621641937620074993}
-  strumbleSource: {fileID: 5032528628248109141}
-  castASource: {fileID: 6519588287175951339}
 --- !u!114 &7434529365115582469
 MonoBehaviour:
   m_ObjectHideFlags: 0

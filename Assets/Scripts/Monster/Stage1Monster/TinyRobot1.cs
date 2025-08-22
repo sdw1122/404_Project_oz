@@ -15,10 +15,6 @@ public class TinyRobot1 : Enemy
 
     private float lastJumpAttackTime = -99f;
 
-    public AudioSource jumpSource;
-    public AudioSource landingSource;
-
-    private AudioClip clip;
     public override bool CanAct()
     {
         // 점프 공격 중에는 부모에서 Attack() 못하도록
@@ -115,12 +111,10 @@ public class TinyRobot1 : Enemy
     }
     public void PlayJumpClip()
     {
-        clip = jumpSource.clip;
-        jumpSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Robot Jump",transform.position);
     }
     public void PlayLandingClip()
     {
-        clip = landingSource.clip;
-        landingSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Robot Landing", transform.position);
     }
 }

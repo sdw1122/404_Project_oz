@@ -4,7 +4,8 @@ public class TR2Weapon : MonoBehaviour
 {
     public float damage;
     public float lifeTime = 5f;
-    public AudioClip clip;
+
+    public string enemy;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,7 +19,7 @@ public class TR2Weapon : MonoBehaviour
         int playerLayer = LayerMask.NameToLayer("Player");
         if (collision.gameObject.layer == playerLayer)
         {
-            AudioSource.PlayClipAtPoint(clip, transform.position);
+            AudioManager.instance.PlaySfxAtLocation(enemy+ " ThrowPoint", transform.position);
             // LivingEntity 컴포넌트가 있으면 데미지 적용
             LivingEntity entity = collision.gameObject.GetComponent<LivingEntity>();
             if (entity != null)

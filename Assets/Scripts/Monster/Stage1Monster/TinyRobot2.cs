@@ -10,9 +10,6 @@ public class TinyRobot2 : Enemy
     public float throwPower = 15f;
     public float fleeDistance = 8f;
 
-    public AudioSource attackSource;
-    private AudioClip clip;
-
     public override bool CanAct()
     {        
         return !isAttacking;
@@ -231,7 +228,6 @@ public class TinyRobot2 : Enemy
     }
     public void PlayAttackClip()
     {
-        clip = attackSource.clip;
-        attackSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Robot Throw",transform.position);
     }
 }

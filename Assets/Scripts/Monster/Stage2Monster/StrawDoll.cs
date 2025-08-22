@@ -6,7 +6,6 @@ public class StrawDoll : Enemy
 {
     public float jumpPower = 10f;
     public float jumpUpPower = 5f;
-    public AudioSource jumpSource;
     public bool Atk = true;
     public override void Attack()
     {
@@ -143,11 +142,10 @@ public class StrawDoll : Enemy
     {
         Vector3 pos = transform.position;
         var go = StrawExplosionPool.instance.GetExp(pos);
+        AudioManager.instance.PlaySfxAtLocation("Doll EXP", pos);
     }
     public void PlayJumpClip()
     {
-        if (jumpSource == null) return;
-        AudioClip clip = jumpSource.clip;
-        jumpSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Doll Jump", transform.position);
     }
 }

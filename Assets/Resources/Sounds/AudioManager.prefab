@@ -41,13 +41,13 @@ AudioSource:
   m_GameObject: {fileID: 2842547557002705295}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3464120448557925559, guid: 204ae77320b536d459d12c2126255a73, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -174,6 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 939dd1f7cc15ceb41a3fe4e336cc3b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxMixerGroup: {fileID: -7128067719386893152, guid: 204ae77320b536d459d12c2126255a73, type: 2}
   bgmSounds:
   - name: Main Menu
     clip: {fileID: 8300000, guid: c671d64922ff6314e8c9df9f95513f1f, type: 3}
@@ -182,11 +183,11 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b137b26ff0085c54986438f1c1d231ca, type: 3}
     volume: 0.2
   - name: Stage1
-    clip: {fileID: 8300000, guid: b137b26ff0085c54986438f1c1d231ca, type: 3}
+    clip: {fileID: 8300000, guid: c41b9f4ee1c1e9b4ba4cc3c411e921cd, type: 3}
     volume: 0.15
   - name: Stage1 Boss
-    clip: {fileID: 8300000, guid: b137b26ff0085c54986438f1c1d231ca, type: 3}
-    volume: 0.05
+    clip: {fileID: 8300000, guid: f94fb9753f98a834dbab407f35a490ff, type: 3}
+    volume: 0.1
   - name: Stage2
     clip: {fileID: 8300000, guid: 8691aa66a2d27954e89dfae534e26d6e, type: 3}
     volume: 0.05
@@ -196,6 +197,216 @@ MonoBehaviour:
   - name: Ending
     clip: {fileID: 8300000, guid: c946c98aecee38c45b0ed645b6763c5d, type: 3}
     volume: 0.1
-  sfxSounds: []
+  sfxSounds:
+  - name: Player Step
+    clip: {fileID: 8300000, guid: 4cfdbd340564af344942d1723858cdc6, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 1
+    maxDistance: 10
+  - name: Player Jump
+    clip: {fileID: 8300000, guid: 0a95a194b93d0ba4e87536bd32be5054, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 1
+    maxDistance: 10
+  - name: Player Hit
+    clip: {fileID: 8300000, guid: 64c9aab8691d7b64984359ef1d0df47b, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 1
+    maxDistance: 10
+  - name: Player Heal
+    clip: {fileID: 8300000, guid: 66244acef9b61074e826df6dc5462a06, type: 3}
+    volume: 0.15
+    pitch: 0.9
+    minDistance: 1
+    maxDistance: 10
+  - name: Player Healed
+    clip: {fileID: 8300000, guid: ffaead79bcff2d949a792debafac30d6, type: 3}
+    volume: 0.7
+    pitch: 1
+    minDistance: 1
+    maxDistance: 10
+  - name: Player Resurrection
+    clip: {fileID: 8300000, guid: 195b96f5481c9f64f8d494ada1ddc443, type: 3}
+    volume: 0.07
+    pitch: 0.5
+    minDistance: 1
+    maxDistance: 10
+  - name: Player Charge
+    clip: {fileID: 8300000, guid: 903895dd4ef6b3d4f8aa61477e4a22db, type: 3}
+    volume: 1
+    pitch: 0.5
+    minDistance: 1
+    maxDistance: 10
+  - name: Pen ChargeShot
+    clip: {fileID: 8300000, guid: c34cf38c2a2e53b4eb4c0a941374f73d, type: 3}
+    volume: 1
+    pitch: 2
+    minDistance: 1
+    maxDistance: 10
+  - name: Pen Attack
+    clip: {fileID: 8300000, guid: 6cda2c43ae11b954dad13a9ce935fe78, type: 3}
+    volume: 0.3
+    pitch: 1
+    minDistance: 1
+    maxDistance: 10
+  - name: Pen Magic
+    clip: {fileID: 8300000, guid: ad98767eb2ff9e643a8bb8a3c248b87e, type: 3}
+    volume: 0.8
+    pitch: 1
+    minDistance: 1
+    maxDistance: 10
+  - name: Pen MagicCircle
+    clip: {fileID: 8300000, guid: dab353217a3cc1443bd30dfeedfafec1, type: 3}
+    volume: 0.4
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: Hammer ChargeAttack
+    clip: {fileID: 8300000, guid: c7308779f8a927541992c6f76f5ae3b1, type: 3}
+    volume: 0.5
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: Hammer Attack
+    clip: {fileID: 8300000, guid: d0c0a485a5fa1384db6c7c22b3f43b6f, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: Hammer Skill
+    clip: {fileID: 8300000, guid: 898d40f8b14ca664bb0794772dfba5f2, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 5
+    maxDistance: 30
+  - name: Robot Step
+    clip: {fileID: 8300000, guid: 26a83d50b5b70354cba3c0cdc7b75b75, type: 3}
+    volume: 0.5
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: Robot Hit
+    clip: {fileID: 8300000, guid: ea8e6bbbd3300e8429b8fbdd030851c2, type: 3}
+    volume: 1
+    pitch: 2
+    minDistance: 1
+    maxDistance: 20
+  - name: Robot Die
+    clip: {fileID: 8300000, guid: a0d90e88d23b7b349bb686c949508600, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: Robot Jump
+    clip: {fileID: 8300000, guid: 01e7b7f5af640b040addb58b471259fd, type: 3}
+    volume: 0.6
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: Robot Landing
+    clip: {fileID: 8300000, guid: 4ea404d73001f674a9e270fdfd7d7be7, type: 3}
+    volume: 0.8
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: Robot Throw
+    clip: {fileID: 8300000, guid: 427e76922170b3c46957995246cd3edc, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: Robot ThrowPoint
+    clip: {fileID: 8300000, guid: c0105468a3beaaa4e990e9c37a6d505d, type: 3}
+    volume: 0.7
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: Golem Step
+    clip: {fileID: 8300000, guid: e52813f512507ba4cbec1e27b2d50114, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 5
+    maxDistance: 20
+  - name: Golem Hit
+    clip: {fileID: 8300000, guid: 86e0952e08f6d944ea6324547da341de, type: 3}
+    volume: 0.3
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: Golem Die
+    clip: {fileID: 8300000, guid: 7eea7da76833c964fb2a1d0f21a9e77b, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: Golem Attack
+    clip: {fileID: 8300000, guid: 5e8ecd50a1402f14bb9472902fc2242c, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 3
+    maxDistance: 20
+  - name: Golem Roar
+    clip: {fileID: 8300000, guid: e97453d28a9ece748a09f6a0c0abf14b, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 5
+    maxDistance: 20
+  - name: Golem Skill
+    clip: {fileID: 8300000, guid: 1cdef9b7b23f5224681b4423435bb618, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 5
+    maxDistance: 20
+  - name: WoodMan Step
+    clip: {fileID: 8300000, guid: 853a2601ef5d0c8469ddf93515056dc9, type: 3}
+    volume: 0.6
+    pitch: 1
+    minDistance: 10
+    maxDistance: 30
+  - name: WoodMan Hit
+    clip: {fileID: 8300000, guid: f85a24bab281ca54184e7d9699c97326, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: WoodMan Die
+    clip: {fileID: 8300000, guid: d2a9206d27d62d1448458412e86dcfb7, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: WoodMan Burst
+    clip: {fileID: 8300000, guid: 77e13edf2d6c939498f8c99b7ef6e7de, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 10
+    maxDistance: 30
+  - name: WoodMan Steam
+    clip: {fileID: 8300000, guid: 77f8b2cbc72141a41993f346933051c1, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 1
+    maxDistance: 20
+  - name: WoodMan Attack
+    clip: {fileID: 8300000, guid: 5e8ecd50a1402f14bb9472902fc2242c, type: 3}
+    volume: 1
+    pitch: 1
+    minDistance: 5
+    maxDistance: 20
+  - name: WoodMan Roar
+    clip: {fileID: 8300000, guid: 1e3a3e3737d2ba641b7582ee046b0252, type: 3}
+    volume: 0.6
+    pitch: 1
+    minDistance: 10
+    maxDistance: 30
+  - name: WoodMan Landing
+    clip: {fileID: 8300000, guid: 6b613281889f39e4fb3d1948e8b43f8f, type: 3}
+    volume: 0.8
+    pitch: 1
+    minDistance: 10
+    maxDistance: 30
   bgmPlayer: {fileID: 538397451570103360}
   poolSize: 10

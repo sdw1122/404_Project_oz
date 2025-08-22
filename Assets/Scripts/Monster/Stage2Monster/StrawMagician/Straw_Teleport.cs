@@ -95,6 +95,7 @@ public class Straw_Teleport : MonoBehaviour
     {
         Vector3 pos = transform.position;
         var go = TeleportPool.Instance.GetBefore(pos);
+        AudioManager.instance.PlaySfxAtLocation("Magician Teleport", pos);
     }
     public void SpawnAfTel()
     {

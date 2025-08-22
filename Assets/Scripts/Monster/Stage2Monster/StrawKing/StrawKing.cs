@@ -9,13 +9,6 @@ public class StrawKing : Enemy
     Skill1 skill1;
     StrawAttack strawAttack;
     private float targetSwitchTimer = 0f;
-    public AudioSource attackSource;
-    public AudioSource laughSource;
-    public AudioSource chargeSource;
-    public AudioSource hit;
-    public AudioSource groggySource;
-    public AudioSource razorSource;
-    public AudioSource shoutSource;
     public override void Awake()
     {
         base.Awake();
@@ -163,45 +156,31 @@ public class StrawKing : Enemy
     }
     public void PlayCanonClip()
     {
-        if (hit == null) return;
-        AudioClip clip = hit.clip;
-        hit.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("King Hit",transform.position);
     }
     public void PlayAttackClip()
     {
-        if(attackSource == null) return;
-        AudioClip clip = attackSource.clip;
-        attackSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("King Attack", transform.position);
     }
     public void PlayLaughClip()
     {
-        if(laughSource == null) return;
-        AudioClip clip = laughSource.clip;
-        laughSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("King Laugh", transform.position);
     }
     public void PlayGroggyClip()
     {
-        if(groggySource == null) return;
-        AudioClip clip = groggySource.clip;
-        groggySource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("King Groggy", transform.position);
     }
     public void PlayChargeClip()
     {
-        if(chargeSource == null) return;
-        AudioClip clip = chargeSource.clip;
-        chargeSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("King Charge", transform.position);
     }
     public void PlayRazorClip()
     {
-        if(razorSource == null) return;
-        AudioClip clip = razorSource.clip;
-        razorSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("King Razor", transform.position);
     }
     public void PlayShoutClip()
     {
-        if(shoutSource == null) return;
-        AudioClip clip = shoutSource.clip;
-        shoutSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("King Shout", transform.position);
     }
 }
 

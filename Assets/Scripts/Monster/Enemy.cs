@@ -8,16 +8,13 @@ public abstract class Enemy : LivingEntity
 {
     public LayerMask whatIsTarget; // 추적 대상 레이어
 
+    public string name;
+
     public LivingEntity targetEntity; // 추적 대상
     public NavMeshAgent navMeshAgent; // 경로 계산 AI 에이전트
     public NavMeshObstacle obstacle;
 
     public ParticleSystem hitEffect; // 피격 시 재생할 파티클 효과
-    public AudioSource hitSource;
-    public AudioSource stepSource;
-    public AudioSource dieSource;
-    public AudioSource hurtSource;
-    private AudioClip enemyClip;
 
     public Animator enemyAnimator; // 애니메이터 컴포넌트
     public Renderer enemyRenderer; // 렌더러 컴포넌트
@@ -392,7 +389,6 @@ public abstract class Enemy : LivingEntity
         gameObject.layer = LayerMask.NameToLayer("Default");
         enemyAnimator.SetBool("Die", true);
         pv.RPC("RPC_Die", RpcTarget.Others);
-        /*enemyAudioPlayer.PlayOneShot(deathSound);*/
     }
 
     private IEnumerator DestroyAfterDelay()
@@ -547,23 +543,16 @@ public abstract class Enemy : LivingEntity
     }
     public void PlayHitClip()
     {
-        enemyClip = hitSource.clip;
-        hitSource.PlayOneShot(enemyClip);
-        if (hurtSource != null)
-        {
-            enemyClip = hurtSource.clip;
-            hurtSource.PlayOneShot(enemyClip);
-        }
+        AudioManager.instance.PlaySfxAtLocation(name+" Hit",transform.position);
+        AudioManager.instance.PlaySfxAtLocation(name+" Hurt", transform.position);
     }
     public void PlayDieClip()
     {
-        enemyClip = dieSource.clip;
-        dieSource.PlayOneShot(enemyClip);
+        AudioManager.instance.PlaySfxAtLocation(name + " Die", transform.position);
     }
     public void PlayStepClip()
     {
-        enemyClip = stepSource.clip;
-        stepSource.PlayOneShot(enemyClip);
+        AudioManager.instance.PlaySfxAtLocation(name+ " Step",transform.position);
     }
 
     [PunRPC]

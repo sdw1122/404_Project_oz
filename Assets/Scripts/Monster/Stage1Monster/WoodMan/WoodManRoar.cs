@@ -18,7 +18,6 @@ public class WoodManRoar : MonoBehaviour
     private WoodMan woodMan;
     private float _lastSkillTime;
 
-    public AudioSource roar;
     private void Awake()
     {
         animator= GetComponent<Animator>();
@@ -109,7 +108,6 @@ public class WoodManRoar : MonoBehaviour
     }
     public void PlayRoarClip()
     {
-        AudioClip clip = roar.clip;
-        roar.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("WoodMan Roar",transform.position);
     }
 }

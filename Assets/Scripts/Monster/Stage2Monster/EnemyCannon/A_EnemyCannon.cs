@@ -29,7 +29,6 @@ public class A_EnemyCannon : MonoBehaviour
     public int fireAmount = 3;
     Animator animator;
     PhotonView pv;
-    public AudioSource fireSource;
     void Start()
     {
         aimLine = GetComponent<LineRenderer>();
@@ -179,8 +178,6 @@ public class A_EnemyCannon : MonoBehaviour
     }
     public void PlayFireClip()
     {
-        if (fireSource == null) return;
-        AudioClip clip = fireSource.clip;
-        fireSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Cannon Fire", transform.position);
     }
 }

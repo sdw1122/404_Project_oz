@@ -151,4 +151,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 3
   lifeTime: 5
-  clip: {fileID: 8300000, guid: 4a9ba3a69123ada48b7e19c32548fa29, type: 3}
+  enemy: Citizen

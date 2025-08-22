@@ -7,7 +7,6 @@ public class HangingCitizen : Enemy
     public GameObject throwObj;
     public Transform throwPoint;
     public float throwPower = 15f;
-    public AudioSource attack;
 
     public override void Awake()
     {
@@ -158,8 +157,7 @@ public class HangingCitizen : Enemy
 
     public void PlayAttackClip()
     {
-        AudioClip clip = attack.clip;
-        attack.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Citizen Shot", transform.position);
     }
 
     [PunRPC]

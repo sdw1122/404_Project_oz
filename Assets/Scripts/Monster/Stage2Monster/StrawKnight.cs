@@ -15,12 +15,6 @@ public class StrawKnight : Enemy
     public float crosscutCoolTime = 0f;
     private float crosscutTime = 4f;
 
-    public AudioSource swingSource;
-    public AudioSource stingSourceA;
-    public AudioSource stingSourceB;
-
-
-
     public override void Update()
     {
         base.Update();                        
@@ -415,20 +409,14 @@ public class StrawKnight : Enemy
 
     public void PlaySwingClip()
     {
-        if (swingSource == null) return;
-        AudioClip clip = swingSource.clip;
-        swingSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Knight Swing", transform.position);
     }
     public void PlayStingAClip()
     {
-        if (stingSourceA == null) return;
-        AudioClip clip = stingSourceA.clip;
-        stingSourceA.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Knight StingA", transform.position);
     }
     public void PlayStingBClip()
     {
-        if(stingSourceB == null) return;
-        AudioClip clip = stingSourceB.clip;
-        stingSourceB.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Knight StingB", transform.position);
     }
 }

@@ -87,8 +87,6 @@ public class WisdomCannon : InteractableBase
     }
     void PlayFireClip()
     {
-        if (fireSource == null) return;
-        AudioClip clip = fireSource.clip;
-        fireSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Cannon Fire", transform.position);
     }
 }

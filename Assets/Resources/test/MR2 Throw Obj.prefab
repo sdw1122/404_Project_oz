@@ -151,4 +151,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 3
   lifeTime: 5
-  clip: {fileID: 8300000, guid: c0105468a3beaaa4e990e9c37a6d505d, type: 3}
+  enemy: Robot

@@ -210,4 +210,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 5
   explosionRadius: 3
-  clip: {fileID: 8300000, guid: 23080ab5ce678294d94da8765799d1a0, type: 3}

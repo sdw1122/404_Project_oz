@@ -23,9 +23,6 @@ public class WoodMan : Enemy
     Rigidbody woodmanRb;    
     Animator animator;
 
-    public AudioSource fireBust;
-    public AudioSource steam;
-
     public enum WoodMan_State 
     {
         
@@ -281,7 +278,7 @@ public class WoodMan : Enemy
         if (other.gameObject.layer == LayerMask.NameToLayer("Lava") && _currentMode == WoodMan_Mode.Normal)
         {
             Debug.Log("[Woodman 상태 변화] Lava와 접촉하여 '과열(Overheat)' 상태로 전환!");
-            PlayBustClip();
+            PlayBurstClip();
             SetMode(WoodMan_Mode.Overheat);
         }
         // "Coolant" 레이어와 겹쳤고, 현재 상태가 "Overheat"일 때
@@ -291,14 +288,12 @@ public class WoodMan : Enemy
             SetMode(WoodMan_Mode.Vulnerable);
         }
     }
-    private void PlayBustClip()
+    private void PlayBurstClip()
     {
-        AudioClip clip = fireBust.clip;
-        fireBust.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("WoodMan Burst", transform.position);
     }
     private void PlaySteamClip()
     {
-        AudioClip clip = steam.clip;
-        steam.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("WoodMan Steam", transform.position);
     }
 }

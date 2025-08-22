@@ -2,6 +2,8 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Audio;
+using static Unity.VisualScripting.Member;
 
 // BGM 정보를 담을 클래스
 [System.Serializable]
@@ -36,6 +38,7 @@ public class SfxSound
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
+    public AudioMixerGroup sfxMixerGroup;
 
     // --- 사운드 데이터 ---
     public BgmSound[] bgmSounds;
@@ -117,6 +120,7 @@ public class AudioManager : MonoBehaviour
             AudioSource source = sfxObject.AddComponent<AudioSource>();
             source.playOnAwake = false;
             source.spatialBlend = 1.0f;
+            source.outputAudioMixerGroup= sfxMixerGroup;
             sfxObject.SetActive(false);
             sfxPool.Add(source);
         }
@@ -137,6 +141,7 @@ public class AudioManager : MonoBehaviour
         AudioSource newSource = newSfxObject.AddComponent<AudioSource>();
         newSource.playOnAwake = false;
         newSource.spatialBlend = 1.0f;
+        newSource.outputAudioMixerGroup = sfxMixerGroup;
         sfxPool.Add(newSource); // 새로 만든 객체도 풀에 추가
         return newSource;
     }

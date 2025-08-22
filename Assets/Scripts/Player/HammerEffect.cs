@@ -21,6 +21,7 @@ public class HammerEffect : MonoBehaviour
 
         if (skill2Effect == null) return;
         skill2EffectInstance = Instantiate(skill2Effect, pos, rot);
+        AudioManager.instance.PlaySfxAtLocation("Hammer Skill", pos);
         StartCoroutine(StopSkill2Effect());
     }
 

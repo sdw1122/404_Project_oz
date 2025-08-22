@@ -12,10 +12,6 @@ public class Straw_MagicArrow : MonoBehaviour
     public Transform firePos;
     Animator animator;
     StrawMagician strawMagician;
-    public AudioSource attackSource;
-    public AudioSource castSource;
-    public AudioSource strumbleSource;
-    public AudioSource castASource;
     Vector3 directionToTarget;
     private void Awake()
     {
@@ -104,26 +100,18 @@ public class Straw_MagicArrow : MonoBehaviour
     }
     public void PlayAttackClip()
     {
-        if (attackSource == null) return;
-        AudioClip clip = attackSource.clip;
-        attackSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Magician Attack", transform.position);
     }
     public void PlayCastClip()
     {
-        if(castSource == null) return;
-        AudioClip clip = castSource.clip;
-        castSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Magician Cast", transform.position);
     }
     public void PlayCastAClip()
     {
-        if (castASource == null) return;
-        AudioClip clip = castASource.clip;
-        castASource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Magician Magic", transform.position);
     }
     public void PlayStrumbleClip()
     {
-        if(strumbleSource == null) return;
-        AudioClip clip = strumbleSource.clip;
-        strumbleSource.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Magician Groggy", transform.position);
     }
 }

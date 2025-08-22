@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class ZombieCitizen : Enemy
 {
-    public AudioSource attackA;
-    public AudioSource attackB;
     public override void Attack()
     {
         if (targetEntity == null || dead) return;
@@ -126,12 +124,10 @@ public class ZombieCitizen : Enemy
     }
     public void PlayAttackAClip()
     {
-        AudioClip clip = attackA.clip;
-        attackA.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Citizen AttackA", transform.position);
     }
     public void PlayAttackBClip()
     {
-        AudioClip clip = attackB.clip;
-        attackB.PlayOneShot(clip);
+        AudioManager.instance.PlaySfxAtLocation("Citizen AttackB", transform.position);
     }
 }
