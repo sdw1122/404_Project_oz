@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviourPunCallbacks
 
     [Tooltip("Hierarchy에 있는 PauseMenuPanel을 연결하세요.")]
     public GameObject pauseMenuUI;
+    public GameObject settingUI;
 
     private PlayerController localPlayerController;
     private PlayerInput localPlayerInput;
@@ -76,6 +77,7 @@ public class PauseMenu : MonoBehaviourPunCallbacks
     public void Resume()
     {
         if (pauseMenuUI != null) pauseMenuUI.SetActive(false);
+        if (settingUI != null) settingUI.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         if (localPlayerController != null) localPlayerController.canMove = true;
@@ -95,6 +97,12 @@ public class PauseMenu : MonoBehaviourPunCallbacks
         }
         if (localPlayerInput != null) localPlayerInput.DeactivateInput();
         IsPaused = true;
+    }
+
+    public void Setting()
+    {
+        if(pauseMenuUI != null) pauseMenuUI.SetActive(false);
+        if (settingUI != null) settingUI.SetActive(true);
     }
 
     /// <summary>

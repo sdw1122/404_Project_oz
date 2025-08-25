@@ -7937,15 +7937,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4213300429507122681, guid: 35ac19af262dbb640950d9670c09eccf, type: 3}
       propertyPath: sfxSounds.Array.data[66].volume
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4213300429507122681, guid: 35ac19af262dbb640950d9670c09eccf, type: 3}
       propertyPath: sfxSounds.Array.data[67].volume
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4213300429507122681, guid: 35ac19af262dbb640950d9670c09eccf, type: 3}
       propertyPath: sfxSounds.Array.data[68].volume
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4213300429507122681, guid: 35ac19af262dbb640950d9670c09eccf, type: 3}
       propertyPath: sfxSounds.Array.data[69].volume
