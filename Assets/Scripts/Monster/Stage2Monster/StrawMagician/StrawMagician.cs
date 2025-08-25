@@ -98,6 +98,7 @@ public class StrawMagician : Enemy
     }
     public void RunFromBind()
     {
+        if (dead) return;
         StopAllCoroutines(); // 현재 진행 중인 모든 코루틴 중단
         canAct = true;     
 
@@ -146,6 +147,7 @@ public class StrawMagician : Enemy
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            if (dead) return;
             isGroggy = true;
             isBinded = true;
             pv.RPC("RPC_PlayStumbleAnim", RpcTarget.All);
@@ -206,8 +208,9 @@ public class StrawMagician : Enemy
     }
     public override void Update()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
         base.Update();
+        if (!PhotonNetwork.IsMasterClient) return;
+        
         if (!canAct||dead) return;
         if (isGroggy) return;
         if (straw_Teleport!=null&&straw_Teleport.IsReady())

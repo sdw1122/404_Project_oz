@@ -21,16 +21,17 @@ public class StrawKing_Poison : MonoBehaviour
     private float lastAttackTime; // 마지막으로 스킬을 사용한 시간
     private Coroutine skillCoroutine; // 실행 중인 스킬 코루틴을 저장
     Animator animator;
+    BossGroggy bossGroggy;
     private void Awake()
     {
         animator = GetComponent<Animator>();
         skill=GetComponent<Skill1>();
         
-        
+        bossGroggy = GetComponent<BossGroggy>();
     }
     public bool IsReady()
     {
-        if (!skill.endAttack) return false;
+        if (!skill.endAttack||bossGroggy.isGroggy) return false;
         return Time.time >= lastAttackTime + cooldown;
     }
     [PunRPC]

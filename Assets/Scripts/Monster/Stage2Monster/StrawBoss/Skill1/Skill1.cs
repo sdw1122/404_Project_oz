@@ -10,7 +10,7 @@ public class Skill1 : MonoBehaviour
     public WisdomCannon[] cannons;
 
     Vector3 boxOffset = new Vector3(0f, 60f, 40f);
-
+    BossGroggy bossGroggy;
     public GameObject[] warning;
     public float waitTime = 0f;
     public float attackTime = 0f;
@@ -35,6 +35,7 @@ public class Skill1 : MonoBehaviour
         razer = GetComponent<StrawKingRazor>();
         poison = GetComponent<StrawKing_Poison>();
         strawKing = GetComponent<StrawKing>();
+        bossGroggy=GetComponent<BossGroggy>();
         lastSkillTime = -cooldown;
     }
     public void SetHit()
@@ -43,7 +44,7 @@ public class Skill1 : MonoBehaviour
     }
     public bool IsReady()
     {
-        if (!poison.endAttack || !isHit) return false;
+        if (!poison.endAttack || !isHit||bossGroggy.isGroggy) return false;
         return Time.time >= lastSkillTime + cooldown;
     }
 

@@ -261,6 +261,7 @@ MonoBehaviour:
   - SendDataClient
   - AddCount
   - NavMesh
+  - RPC_EnemyLayer
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
